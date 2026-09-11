@@ -1,0 +1,29 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - "**/*.qmd"
+  resources:
+    - "entregas/E0_comprension_negocio/fuentes/**"
+
+website:
+  title: "Proyecto Minería de Datos"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Inicio
+      - text: "E0 · Comprensión del negocio"
+        menu:
+          - entregas/E0_comprension_negocio/bitacora.qmd
+          - entregas/E0_comprension_negocio/canvas.qmd
+          - entregas/E0_comprension_negocio/preguntas.qmd
+          - entregas/E0_comprension_negocio/criterio_exito.qmd
+          - entregas/E0_comprension_negocio/riesgos_supuestos.qmd
+          - entregas/E0_comprension_negocio/uso_ia.qmd
+
+format:
+  html:
+    theme: cosmo
+    css: styles.css
+    toc: true
+    lang: es
