@@ -1,0 +1,1033 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>Expediente de fuentes del stakeholder simulado – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../../">
+<script src="../../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" id="quarto-text-highlighting-styles">
+<script src="../../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../../site_libs/bootstrap/bootstrap-172ba59bd5e0b52282274ba0c0cc16fc.min.css" rel="stylesheet" append-hash="true" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+
+
+<link rel="stylesheet" href="../../../styles.css">
+</head>
+
+<body class="nav-fixed quarto-light">
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="../../../index.html"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+  <li class="nav-item dropdown ">
+    <a class="nav-link dropdown-toggle" href="#" id="nav-menu-e0-·-comprensión-del-negocio" role="link" data-bs-toggle="dropdown" aria-expanded="false">
+ <span class="menu-text">E0 · Comprensión del negocio</span>
+    </a>
+    <ul class="dropdown-menu" aria-labelledby="nav-menu-e0-·-comprensión-del-negocio">    
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/bitacora.html">
+ <span class="dropdown-text">1. Bitácora de la reunión con el stakeholder</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/canvas.html">
+ <span class="dropdown-text">Business Understanding Canvas</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/preguntas.html">
+ <span class="dropdown-text">Preguntas de investigación</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/criterio_exito.html">
+ <span class="dropdown-text">Criterio de éxito</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/riesgos_supuestos.html">
+ <span class="dropdown-text">Supuestos y riesgos</span></a>
+  </li>  
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/uso_ia.html">
+ <span class="dropdown-text">Uso de herramientas de IA</span></a>
+  </li>  
+        <li><hr class="dropdown-divider"></li>
+        <li>
+    <a class="dropdown-item" href="../../../entregas/E0_comprension_negocio/fuentes/expediente.html">
+ <span class="dropdown-text">Expediente de fuentes del stakeholder simulado</span></a>
+  </li>  
+    </ul>
+  </li>
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#propósito-de-este-documento" id="toc-propósito-de-este-documento" class="nav-link active" data-scroll-target="#propósito-de-este-documento">Propósito de este documento</a></li>
+  <li><a href="#magnitud-y-composición-del-fraude" id="toc-magnitud-y-composición-del-fraude" class="nav-link" data-scroll-target="#magnitud-y-composición-del-fraude">1. Magnitud y composición del fraude</a>
+  <ul class="collapse">
+  <li><a href="#f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026" id="toc-f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026" class="nav-link" data-scroll-target="#f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026">F-01 · Reclamaciones recibidas en CONDUSEF, enero–mayo 2026</a></li>
+  <li><a href="#f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026" id="toc-f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026" class="nav-link" data-scroll-target="#f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026">F-02 · Perfil demográfico de las víctimas, enero–mayo 2026</a></li>
+  <li><a href="#f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026" id="toc-f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026" class="nav-link" data-scroll-target="#f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026">F-03 · Montos reclamados y restituidos, primer trimestre de 2026</a></li>
+  <li><a href="#f-04-resolución-a-favor-del-usuario-enerojunio-2024" id="toc-f-04-resolución-a-favor-del-usuario-enerojunio-2024" class="nav-link" data-scroll-target="#f-04-resolución-a-favor-del-usuario-enerojunio-2024">F-04 · Resolución a favor del usuario, enero–junio 2024</a></li>
+  <li><a href="#f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026" id="toc-f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026" class="nav-link" data-scroll-target="#f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026">F-14 · Reclamaciones recibidas en CONDUSEF, primer trimestre de 2026</a></li>
+  <li><a href="#f-05-composición-del-fraude-por-canal" id="toc-f-05-composición-del-fraude-por-canal" class="nav-link" data-scroll-target="#f-05-composición-del-fraude-por-canal">F-05 · Composición del fraude por canal</a></li>
+  <li><a href="#f-06-volumen-de-pagos-con-tarjeta" id="toc-f-06-volumen-de-pagos-con-tarjeta" class="nav-link" data-scroll-target="#f-06-volumen-de-pagos-con-tarjeta">F-06 · Volumen de pagos con tarjeta</a></li>
+  <li><a href="#f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico" id="toc-f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico" class="nav-link" data-scroll-target="#f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico">F-07 · Tasa de autorización y contracargos en comercio electrónico</a></li>
+  </ul></li>
+  <li><a href="#el-sector-fintech" id="toc-el-sector-fintech" class="nav-link" data-scroll-target="#el-sector-fintech">3. El sector fintech</a>
+  <ul class="collapse">
+  <li><a href="#f-08-instituciones-de-tecnología-financiera-autorizadas" id="toc-f-08-instituciones-de-tecnología-financiera-autorizadas" class="nav-link" data-scroll-target="#f-08-instituciones-de-tecnología-financiera-autorizadas">F-08 · Instituciones de Tecnología Financiera autorizadas</a></li>
+  <li><a href="#f-09-ecosistema-fintech" id="toc-f-09-ecosistema-fintech" class="nav-link" data-scroll-target="#f-09-ecosistema-fintech">F-09 · Ecosistema fintech</a></li>
+  <li><a href="#f-10-comercio-electrónico-en-méxico" id="toc-f-10-comercio-electrónico-en-méxico" class="nav-link" data-scroll-target="#f-10-comercio-electrónico-en-méxico">F-10 · Comercio electrónico en México</a></li>
+  </ul></li>
+  <li><a href="#marco-regulatorio" id="toc-marco-regulatorio" class="nav-link" data-scroll-target="#marco-regulatorio">4. Marco regulatorio</a>
+  <ul class="collapse">
+  <li><a href="#f-11-ley-fintech" id="toc-f-11-ley-fintech" class="nav-link" data-scroll-target="#f-11-ley-fintech">F-11 · Ley Fintech</a></li>
+  <li><a href="#f-12-obligaciones-de-autenticación" id="toc-f-12-obligaciones-de-autenticación" class="nav-link" data-scroll-target="#f-12-obligaciones-de-autenticación">F-12 · Obligaciones de autenticación</a></li>
+  <li><a href="#f-13-protección-de-datos-personales" id="toc-f-13-protección-de-datos-personales" class="nav-link" data-scroll-target="#f-13-protección-de-datos-personales">F-13 · Protección de datos personales</a></li>
+  </ul></li>
+  <li><a href="#parámetros-asumidos-del-ejercicio" id="toc-parámetros-asumidos-del-ejercicio" class="nav-link" data-scroll-target="#parámetros-asumidos-del-ejercicio">5. Parámetros asumidos del ejercicio</a>
+  <ul class="collapse">
+  <li><a href="#perfil-de-la-institución" id="toc-perfil-de-la-institución" class="nav-link" data-scroll-target="#perfil-de-la-institución">5.1 Perfil de la institución</a></li>
+  <li><a href="#situación-del-fraude" id="toc-situación-del-fraude" class="nav-link" data-scroll-target="#situación-del-fraude">5.2 Situación del fraude</a></li>
+  <li><a href="#capacidad-operativa-de-revisión-manual" id="toc-capacidad-operativa-de-revisión-manual" class="nav-link" data-scroll-target="#capacidad-operativa-de-revisión-manual">5.3 Capacidad operativa de revisión manual</a></li>
+  </ul></li>
+  <li><a href="#información-no-disponible-públicamente" id="toc-información-no-disponible-públicamente" class="nav-link" data-scroll-target="#información-no-disponible-públicamente">6. Información no disponible públicamente</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+<header id="title-block-header" class="quarto-title-block default">
+<div class="quarto-title">
+<h1 class="title">Expediente de fuentes del stakeholder simulado</h1>
+<p class="subtitle lead">Evidencia documental que sustenta el ejercicio de rol</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">13 de septiembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<section id="propósito-de-este-documento" class="level2">
+<h2 class="anchored" data-anchor-id="propósito-de-este-documento">Propósito de este documento</h2>
+<p>El stakeholder de esta entrega fue simulado mediante un ejercicio de rol documentado. Este expediente reúne las fuentes verificables que sustentan cada una de las respuestas registradas en la <a href="../../../entregas/E0_comprension_negocio/bitacora.html">bitácora</a>, y declara de forma explícita qué parámetros del ejercicio son supuestos del equipo y no datos documentados.</p>
+<p>El documento cumple una segunda función: fue el <strong>único contexto de datos</strong> proporcionado al modelo de lenguaje que interpretó a los stakeholders. La versión entregada al modelo no contenía análisis ni interpretación, únicamente los hechos y la declaración de qué información no estaba disponible. El detalle del procedimiento se documenta en la página de <a href="../../../entregas/E0_comprension_negocio/uso_ia.html">uso de herramientas de IA</a>.</p>
+<p>Las fichas están codificadas (F-01, F-02, …) para poder referenciarlas desde la bitácora. La marca <strong>[supuesto: §5.x]</strong> que aparece en la bitácora remite a la sección 5 de este documento.</p>
+<div class="callout callout-style-default callout-important callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Dos advertencias sobre la naturaleza de estas cifras
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><strong>Primera.</strong> CONDUSEF publica dos series estadísticas de magnitudes muy distintas que no son comparables entre sí. Las <em>reclamaciones del sistema financiero</em> (del orden de 1.5 millones por trimestre) son las que las instituciones reportan a la CNBV. Las <em>reclamaciones recibidas directamente en CONDUSEF</em> (del orden de 35 mil en cinco meses) son los casos que el usuario llevó personalmente a la Comisión. Cada ficha indica a cuál de las dos corresponde.</p>
+<p><strong>Segunda.</strong> Todas las cifras de CONDUSEF se refieren a <strong>“posible fraude” reclamado</strong>: no equivalen a fraude confirmado ni a pérdida contable de una institución. La única aproximación pública a fraude confirmado en comercio electrónico mexicano es la tasa de contracargos de Banco de México (F-07), dado que un contracargo es una disputa resuelta y no una queja presentada.</p>
+</div>
+</div>
+<hr>
+</section>
+<section id="magnitud-y-composición-del-fraude" class="level1">
+<h1>1. Magnitud y composición del fraude</h1>
+<section id="f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026" class="level2">
+<h2 class="anchored" data-anchor-id="f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026">F-01 · Reclamaciones recibidas en CONDUSEF, enero–mayo 2026</h2>
+<p><strong>Dato.</strong> Se registraron 35,762 reclamaciones por posible fraude, de las cuales 34,325 correspondieron a banca múltiple. Frente al mismo periodo de 2025, el crecimiento fue de 18 % en banca múltiple, 48 % en SOFIPOS y 49 % en SOFOMES.</p>
+<p><strong>Fuente.</strong> CONDUSEF, documento <em>Consulta y Reporta</em>, 2026.</p>
+<ul>
+<li><a href="https://www.condusef.gob.mx/documentos/prensa/Consulta%20y%20Reporta.pdf">Documento <em>Consulta y Reporta</em> (PDF)</a></li>
+<li><a href="https://www.condusef.gob.mx/?p=contenido&amp;idc=2836&amp;idcat=1">Comunicado asociado</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> El fraude crece a un ritmo casi tres veces mayor fuera de la banca tradicional. Esta asimetría es la que justifica que una institución de tecnología financiera priorice hoy el problema, y sustenta la descripción de la situación actual en el Canvas.</p>
+</section>
+<section id="f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026" class="level2">
+<h2 class="anchored" data-anchor-id="f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026">F-02 · Perfil demográfico de las víctimas, enero–mayo 2026</h2>
+<p><strong>Dato.</strong> Los mayores incrementos se concentran en población en edad productiva: cerca de 25 % en el grupo de 50 a 59 años, 22 % entre 40 y 49, y alrededor de 20 % entre 18 y 29 años.</p>
+<p><strong>Fuente.</strong> La misma que F-01.</p>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Desmiente el supuesto habitual de que el fraude afecta principalmente a adultos mayores y delimita el perfil de los beneficiarios finales del proyecto.</p>
+</section>
+<section id="f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026" class="level2">
+<h2 class="anchored" data-anchor-id="f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026">F-03 · Montos reclamados y restituidos, primer trimestre de 2026</h2>
+<p><strong>Dato.</strong> Del total de 2,008,000 reclamaciones del sistema financiero (+23.1 % anual), 1,515,000 fueron por posible fraude (+31.5 %), es decir tres de cada cuatro. El monto reclamado por posible fraude ascendió a 5,201 millones de pesos, el 67.3 % del total reclamado (7,729 millones).</p>
+<p>Las cifras de restitución deben distinguirse con cuidado, porque corresponden a universos distintos:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Concepto</th>
+<th>Monto reclamado</th>
+<th>Monto abonado</th>
+<th>Proporción restituida</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td><strong>Posible fraude</strong></td>
+<td>5,201 mdp</td>
+<td><strong>1,265 mdp</strong></td>
+<td><strong>24.3 %</strong></td>
+</tr>
+<tr class="even">
+<td><strong>Total de reclamaciones económicas</strong></td>
+<td>7,729 mdp</td>
+<td>2,235 mdp</td>
+<td>28.9 %</td>
+</tr>
+</tbody>
+</table>
+<p>Los 2,235 millones corresponden al agregado de todas las reclamaciones económicas, no exclusivamente a las de fraude. La restitución del fraude es proporcionalmente menor: alrededor de 2 de cada 10 pesos reclamados.</p>
+<p><strong>Fuente.</strong> CONDUSEF, registros del Buró de Entidades Financieras, primer trimestre de 2026, difundidos el 6 de julio de 2026 y reportados por diversos medios.</p>
+<ul>
+<li><a href="https://www.eluniversal.com.mx/cartera/suben-quejas-por-fraudes-bancos-devuelven-24/">El Universal — «Suben quejas por fraudes; bancos devuelven 24%»</a></li>
+<li><a href="https://www.informador.mx/economia/fraude-reclamos-por-las-estafas-bancarias-suben-31.5-20260706-0024.html">El Informador — «Reclamos por las estafas bancarias suben 31.5%»</a></li>
+<li><a href="https://www.fintechexpert.mx/p/el-fraude-bancario-ya-no-se-mide">Fintech Expert — desglose específico del abono por fraude</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> El monto abonado es la aproximación pública más cercana a la pérdida que una institución absorbe efectivamente. Es la referencia que ancla el criterio de éxito expresado en términos de monto, y no de número de transacciones. La brecha entre lo reclamado y lo restituido —más de tres cuartas partes del dinero disputado no se abona— también delimita el costo reputacional que la institución enfrenta ante el usuario.</p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Nota sobre la fecha
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Varias notas citan una declaración del titular de CONDUSEF, Óscar Rosado, fechada el 8 de junio de 2026. Esa fecha corresponde a un pronunciamiento anterior recuperado por los artículos, no a la difusión de las cifras trimestrales, que es del 6 de julio de 2026. El equipo verificó esta distinción para evitar una atribución incorrecta.</p>
+</div>
+</div>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Nota sobre el tipo de fuente
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Esta ficha se sustenta en fuentes periodísticas, modalidad admitida por las especificaciones de la entrega. Las notas reportan registros del Buró de Entidades Financieras, no interpretaciones editoriales. El equipo buscó el documento primario del Buró sin localizar una versión de acceso directo con este desglose; la ficha F-14 aporta cifras equivalentes desde una fuente institucional.</p>
+</div>
+</div>
+</section>
+<section id="f-04-resolución-a-favor-del-usuario-enerojunio-2024" class="level2">
+<h2 class="anchored" data-anchor-id="f-04-resolución-a-favor-del-usuario-enerojunio-2024">F-04 · Resolución a favor del usuario, enero–junio 2024</h2>
+<p><strong>Dato.</strong> CONDUSEF recibió 41,581 reclamaciones por posible fraude, el 31.7 % del total, de las cuales 39,453 correspondieron al sector bancario. El 43.4 % de los asuntos concluidos se resolvió a favor del usuario.</p>
+<p><strong>Fuente.</strong> CONDUSEF, <em>Informe de Autoevaluación Enero–Junio 2024</em>.</p>
+<ul>
+<li><a href="https://www.condusef.gob.mx/documentos/transparencia/IA_ENERO-JUNIO-2024.pdf">Informe de Autoevaluación Enero–Junio 2024 (PDF)</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Documento institucional de acceso directo, el de mayor jerarquía documental del expediente. Aporta la proporción de casos que derivan efectivamente en pérdida para la institución.</p>
+</section>
+<section id="f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026" class="level2">
+<h2 class="anchored" data-anchor-id="f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026">F-14 · Reclamaciones recibidas en CONDUSEF, primer trimestre de 2026</h2>
+<p><strong>Dato.</strong> De las 22,199 reclamaciones recibidas en CONDUSEF a nivel nacional entre enero y marzo de 2026, el 37.4 % estuvieron relacionadas con un posible fraude, y de éstas el 94 % corresponden a banca múltiple. Las reclamaciones por posible robo de identidad en banca múltiple registraron una disminución de 11.0 % respecto al mismo periodo de 2025.</p>
+<p><strong>Fuente.</strong> CONDUSEF, comunicado institucional <em>CONDUSEF alerta sobre incremento de fraudes y llama a fortalecer la educación financiera</em>, junio de 2026.</p>
+<ul>
+<li><a href="https://www.gob.mx/condusef/prensa/condusef-alerta-sobre-incremento-de-fraudes-y-llama-a-fortalecer-la-educacion-financiera">Comunicado en gob.mx</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Fuente institucional de acceso directo que aporta el mismo trimestre que F-03 desde el universo de reclamaciones recibidas por la Comisión. Reduce la dependencia de fuentes periodísticas y permite contrastar ambas series. La disminución del robo de identidad frente al aumento del fraude indica que el problema se desplaza hacia el fraude transaccional, que es precisamente el objeto de este proyecto.</p>
+</section>
+<section id="f-05-composición-del-fraude-por-canal" class="level2">
+<h2 class="anchored" data-anchor-id="f-05-composición-del-fraude-por-canal">F-05 · Composición del fraude por canal</h2>
+<p><strong>Dato.</strong> En el fraude cibernético, el 96 % se origina en comercio electrónico. En el fraude tradicional la distribución es 62 % en terminal punto de venta, 30 % en comercio por teléfono y 6 % en cajero automático. Los consumos no reconocidos constituyen la principal causa de reclamación: 96 % de los casos cibernéticos y 91 % de los tradicionales.</p>
+<p><strong>Fuente.</strong> CONDUSEF, Portal de Fraudes Financieros.</p>
+<ul>
+<li><a href="https://www.condusef.gob.mx/?p=contenido&amp;idc=360&amp;idcat=1">Portal de Fraudes Financieros</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Confirma que el canal de comercio electrónico concentra el problema y establece que los consumos no reconocidos son la causa dominante de reclamación, lo que corresponde directamente al tipo de operación que este proyecto busca detectar. Es la ficha de menor vigencia del expediente: corresponde a 2018 y se utiliza exclusivamente por la estructura relativa que describe —dónde ocurre el fraude y por qué motivo—, nunca como magnitud actual. El equipo no localizó una publicación posterior con un desglose por canal equivalente.</p>
+</section>
+<section id="f-06-volumen-de-pagos-con-tarjeta" class="level2">
+<h2 class="anchored" data-anchor-id="f-06-volumen-de-pagos-con-tarjeta">F-06 · Volumen de pagos con tarjeta</h2>
+<p><strong>Dato.</strong> Entre enero y septiembre de 2025 se realizaron alrededor de 4,207 millones de pagos con tarjeta, de los cuales el comercio electrónico representó el 29 %. En 2023 la cifra fue de 4,626 millones de pagos con e-commerce al 23 %.</p>
+<p><strong>Fuente.</strong> Banco de México, Sistema de Información Económica, Operaciones en TPV; reproducido en el portal estadístico de CONDUSEF.</p>
+<ul>
+<li><a href="https://www.condusef.gob.mx/?p=estadisticas">Portal estadístico de CONDUSEF</a></li>
+<li><a href="https://www.banxico.org.mx/SieInternet/">Sistema de Información Económica, Banco de México</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Dimensiona el canal en el que opera la institución del caso y muestra su crecimiento sostenido en participación.</p>
+</section>
+<section id="f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico" class="level2">
+<h2 class="anchored" data-anchor-id="f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico">F-07 · Tasa de autorización y contracargos en comercio electrónico</h2>
+<p><strong>Dato.</strong> La tasa de compras autorizadas en comercio electrónico se ubica en aproximadamente 67 %. Los contracargos representan cerca del 0.46 % de las compras autorizadas.</p>
+<p><strong>Fuente.</strong> La misma que F-06. La serie continua de tasa de aceptación está disponible desde 2015 en el cuadro CF621 del Sistema de Información Económica de Banco de México.</p>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Es la ficha de mayor valor metodológico del expediente, por dos razones. La tasa de contracargos constituye la única aproximación pública a fraude confirmado, y coincide con el criterio de etiquetado del conjunto de datos que el proyecto empleará en fases posteriores. Por otra parte, el tercio de operaciones no autorizadas delimita el universo donde coexisten fraude real y rechazos erróneos de clientes legítimos, que es la tensión central del problema de negocio.</p>
+<hr>
+</section>
+</section>
+<section id="el-sector-fintech" class="level1">
+<h1>3. El sector fintech</h1>
+<section id="f-08-instituciones-de-tecnología-financiera-autorizadas" class="level2">
+<h2 class="anchored" data-anchor-id="f-08-instituciones-de-tecnología-financiera-autorizadas">F-08 · Instituciones de Tecnología Financiera autorizadas</h2>
+<p><strong>Dato.</strong> Al cierre de 2023 existían 50 IFPE autorizadas, 37 de ellas en operación, con un crecimiento anual de 68 % en instituciones operando. En captación, STP concentra el 35.42 % y Mercado Pago el 30.10 %. A 2026 el total asciende a 88 ITF autorizadas. Fue la primera vez que la CNBV publicó información sobre este sector, en octubre de 2024.</p>
+<p><strong>Fuentes.</strong></p>
+<ul>
+<li><a href="https://tenet.com.mx/insights/cnbv-publica-por-primera-vez-datos-sobre-las-instituciones-de-tecnologia-financiera-en-mexico/">Tenet Consultores — análisis de la primera publicación de datos de ITF por la CNBV</a></li>
+<li><a href="https://www.milenio.com/negocios/cnbv-autoriza-ares-fintech-operar-ifpe">Milenio — cifra actualizada de ITF autorizadas</a></li>
+<li><a href="https://portafolioinfo.cnbv.gob.mx/Paginas/Inicio.aspx">Portafolio de Información de la CNBV (datos primarios)</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Sitúa a la institución del caso como una IFPE supervisada por CNBV y Banxico, dentro de un mercado concentrado donde los dos primeros participantes reúnen cerca de dos tercios de la captación.</p>
+</section>
+<section id="f-09-ecosistema-fintech" class="level2">
+<h2 class="anchored" data-anchor-id="f-09-ecosistema-fintech">F-09 · Ecosistema fintech</h2>
+<p><strong>Dato.</strong> Al cierre de 2025 operaban 795 fintech en México. Durante 2024, el 45 % de las fintech del segmento de Pagos y Remesas procesó más de 30 millones de dólares en transacciones digitales.</p>
+<p><strong>Fuente.</strong> Finnovista, <em>Fintech Radar México 2025</em>. <strong>Fuente de industria, no oficial.</strong></p>
+<ul>
+<li><a href="https://www.finnosummit.com/wp-content/uploads/2025/02/RADAR-MEXICO_25.02.24-3.pdf">Fintech Radar México 2025 (PDF)</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Permite ubicar el volumen transaccional asumido para la institución del caso dentro de un rango plausible del sector.</p>
+</section>
+<section id="f-10-comercio-electrónico-en-méxico" class="level2">
+<h2 class="anchored" data-anchor-id="f-10-comercio-electrónico-en-méxico">F-10 · Comercio electrónico en México</h2>
+<p><strong>Dato.</strong> La venta online de retail alcanzó 789,700 millones de pesos en 2024, con un crecimiento de 20 % frente a 2023, y una penetración de compradores digitales del 84 %. El estudio de 2026 reporta 941 mil millones de pesos y 77.2 millones de compradores.</p>
+<p><strong>Fuente.</strong> AMVO, <em>Estudio de Venta Online 2026</em>. <strong>Fuente de industria, no oficial.</strong></p>
+<ul>
+<li><a href="https://amvo.org.mx/descarga-evo-2026">Estudio de Venta Online 2026 — página de descarga</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<div class="callout callout-style-default callout-note callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Nota de acceso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El estudio es de circulación preferente para afiliados; la descarga completa requiere llenar un formulario de registro. Las cifras citadas son consistentes con la versión pública del estudio.</p>
+</div>
+</div>
+<hr>
+</section>
+</section>
+<section id="marco-regulatorio" class="level1">
+<h1>4. Marco regulatorio</h1>
+<section id="f-11-ley-fintech" class="level2">
+<h2 class="anchored" data-anchor-id="f-11-ley-fintech">F-11 · Ley Fintech</h2>
+<p><strong>Dato.</strong> La Ley para Regular las Instituciones de Tecnología Financiera establece como principios rectores la inclusión e innovación financiera, la protección al consumidor, la prevención de operaciones ilícitas y la neutralidad tecnológica (art. 2). La supervisión corresponde conjuntamente a la CNBV y al Banco de México (art. 3). El artículo 25 regula las operaciones de las IFPE y el artículo 56 la autenticación y el consentimiento del usuario.</p>
+<p><strong>Fuente.</strong> Cámara de Diputados, texto vigente.</p>
+<ul>
+<li><a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LRITF.pdf">Ley para Regular las Instituciones de Tecnología Financiera (PDF)</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> La protección al consumidor es un principio de ley y no una preferencia organizacional. Esto otorga fundamento normativo a la restricción de no incrementar el rechazo de clientes legítimos, que el Canvas recoge como límite y no como objetivo optimizable.</p>
+</section>
+<section id="f-12-obligaciones-de-autenticación" class="level2">
+<h2 class="anchored" data-anchor-id="f-12-obligaciones-de-autenticación">F-12 · Obligaciones de autenticación</h2>
+<p><strong>Dato.</strong> Las disposiciones de carácter general de la CNBV aplicables a las IFPE (arts. 48, 54 y 56) fijan los factores de autenticación exigibles según el canal de instrucción. Las disposiciones de CONDUSEF en materia de transparencia y sanas prácticas exigen consentimiento expreso del usuario mediante firma electrónica avanzada u otro mecanismo conforme al artículo 56 de la Ley Fintech, y prohíben el consentimiento tácito.</p>
+<p><strong>Fuentes.</strong></p>
+<ul>
+<li>CNBV — <a href="https://www.cnbv.gob.mx/Normatividad/Disposiciones%20de%20car%C3%A1cter%20general%20aplicables%20a%20las%20instituciones%20de%20tecnolog%C3%ADa%20financiera.pdf">Disposiciones de carácter general aplicables a las instituciones de tecnología financiera (PDF)</a></li>
+<li>CONDUSEF — <a href="https://sidof.segob.gob.mx/notas/docFuente/5565233">Disposiciones en materia de transparencia y sanas prácticas para ITF (SIDOF)</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Delimita los controles antifraude que la institución está obligada a mantener con independencia de cualquier modelo analítico.</p>
+</section>
+<section id="f-13-protección-de-datos-personales" class="level2">
+<h2 class="anchored" data-anchor-id="f-13-protección-de-datos-personales">F-13 · Protección de datos personales</h2>
+<p><strong>Dato.</strong> La Ley Federal de Protección de Datos Personales en Posesión de los Particulares vigente fue publicada el 20 de marzo de 2025 y entró en vigor el 21 de marzo del mismo año, abrogando la ley de 2010. Su última reforma data del 14 de noviembre de 2025. El INAI desapareció como autoridad reguladora; sus atribuciones corresponden ahora a la Secretaría de Anticorrupción y Buen Gobierno.</p>
+<p><strong>Fuente.</strong> Cámara de Diputados, texto vigente.</p>
+<ul>
+<li><a href="https://www.diputados.gob.mx/LeyesBiblio/pdf/LFPDPPP.pdf">Ley Federal de Protección de Datos Personales en Posesión de los Particulares (PDF)</a></li>
+</ul>
+<p><em>Consultado el 11 de septiembre de 2026.</em></p>
+<p><strong>Pertinencia.</strong> Constituye el marco aplicable al tratamiento de datos transaccionales en un modelo de asignación de riesgo. El equipo verificó expresamente la vigencia de esta norma, dado que buena parte de la bibliografía disponible continúa citando la ley abrogada de 2010 y al INAI como autoridad competente.</p>
+<hr>
+</section>
+</section>
+<section id="parámetros-asumidos-del-ejercicio" class="level1">
+<h1>5. Parámetros asumidos del ejercicio</h1>
+<div class="callout callout-style-default callout-warning callout-titled">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Advertencia
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Ninguno de los parámetros de esta sección cuenta con fuente oficial mexicana. <strong>No son datos documentados</strong>: son supuestos del equipo, calibrados con benchmarks internacionales de industria para mantener la verosimilitud del ejercicio. Las respuestas de la bitácora que dependen de estos valores están marcadas como <em>parámetro asumido</em> y no como respuesta fundamentada.</p>
+<p>Las fuentes de calibración son proveedores de servicios antifraude y asociaciones sectoriales (MRC, Riskified, Adyen, ClearSale, Kount, Ravelin, Stripe), con interés comercial en la dimensión del problema. Se citan como benchmarks de industria, nunca como estadística oficial.</p>
+</div>
+</div>
+<section id="perfil-de-la-institución" class="level2">
+<h2 class="anchored" data-anchor-id="perfil-de-la-institución">5.1 Perfil de la institución</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parámetro</th>
+<th>Valor asumido</th>
+<th>Calibración</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Tipo de entidad</td>
+<td>IFPE autorizada</td>
+<td>F-08</td>
+</tr>
+<tr class="even">
+<td>Antigüedad</td>
+<td>6 años, 4 con licencia</td>
+<td>—</td>
+</tr>
+<tr class="odd">
+<td>Transacciones</td>
+<td>1.2 millones al mes (~40,000 diarias)</td>
+<td>Consistente con F-09</td>
+</tr>
+<tr class="even">
+<td>Ticket promedio</td>
+<td>$850 MXN</td>
+<td>Supuesto sin calibración</td>
+</tr>
+<tr class="odd">
+<td>Volumen mensual</td>
+<td>~$1,020 millones MXN</td>
+<td>Derivado</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="situación-del-fraude" class="level2">
+<h2 class="anchored" data-anchor-id="situación-del-fraude">5.2 Situación del fraude</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parámetro</th>
+<th>Valor asumido</th>
+<th>Calibración</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Pérdida por fraude</td>
+<td>0.8 % del valor transaccionado (~$8.2 M MXN/mes)</td>
+<td>Entre el 0.6 % de programas maduros y el 3.9 % de los inmaduros (MRC 2026)</td>
+</tr>
+<tr class="even">
+<td>Tasa de contracargo</td>
+<td>0.9 % de operaciones autorizadas</td>
+<td>Superior al 0.46 % nacional (F-07); México registra contracargos cercanos al triple del promedio global (ClearSale)</td>
+</tr>
+<tr class="odd">
+<td>Bloqueo automático actual</td>
+<td>4.5 % de las transacciones</td>
+<td>MRC: programas maduros rechazan 2.8 %, inmaduros 5.2 %. La operación descrita usa reglas estáticas sin recalibrar</td>
+</tr>
+<tr class="even">
+<td>Falsos rechazos</td>
+<td>~3 % de transacciones legítimas</td>
+<td>Riskified 2025: 47 % de los comercios estima hasta 5 % de órdenes legítimas rechazadas por error</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="capacidad-operativa-de-revisión-manual" class="level2">
+<h2 class="anchored" data-anchor-id="capacidad-operativa-de-revisión-manual">5.3 Capacidad operativa de revisión manual</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th>Parámetro</th>
+<th>Valor asumido</th>
+<th>Calibración</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td>Equipo</td>
+<td>6 analistas y 1 supervisora</td>
+<td>ClearSale: 1 supervisor por cada 20 revisores</td>
+</tr>
+<tr class="even">
+<td>Tiempo por caso</td>
+<td>6 minutos</td>
+<td>MRC vía Ravelin: 5.6 minutos promedio por revisión</td>
+</tr>
+<tr class="odd">
+<td>Capacidad diaria</td>
+<td>~300 casos (50 por analista)</td>
+<td>Kount: 50 revisiones diarias por analista dedicado</td>
+</tr>
+<tr class="even">
+<td>Alertas generadas</td>
+<td>~900 diarias</td>
+<td>Supuesto del equipo sin calibración externa</td>
+</tr>
+<tr class="odd">
+<td>Proporción bloqueada tras revisión</td>
+<td>~20 %</td>
+<td>MRC 2025: los comercios rechazan cerca del 20 % de lo revisado manualmente</td>
+</tr>
+</tbody>
+</table>
+<p><strong>Implicación para el planteamiento.</strong> La diferencia entre las 900 alertas generadas y las 300 que el equipo puede atender es el elemento que transforma el problema: de una tarea de clasificación binaria a una de ordenamiento de una cola con capacidad finita. Esta restricción es el origen del objetivo de minería de datos y de la métrica técnica formulados en el Canvas.</p>
+<hr>
+</section>
+</section>
+<section id="información-no-disponible-públicamente" class="level1">
+<h1>6. Información no disponible públicamente</h1>
+<p>El equipo buscó sin éxito fuentes públicas para los siguientes datos. Su ausencia está declarada como limitación del ejercicio, y las preguntas de la entrevista que los abordaron recibieron respuesta negativa por parte de los stakeholders simulados, por instrucción expresa del expediente entregado al modelo.</p>
+<ol type="1">
+<li>Costo en pesos de perder a un cliente legítimo bloqueado erróneamente.</li>
+<li>Tasa de abandono posterior a un bloqueo injustificado.</li>
+<li>Tasa real de falsos negativos, dado que solo se conoce el fraude efectivamente reclamado.</li>
+<li>Desglose de pérdida por tipo de comercio o categoría de producto en instituciones mexicanas.</li>
+<li>Costo de operación de un equipo de revisión manual en México.</li>
+<li>Tiempo real de revisión por alerta y tamaño de equipos en fintech mexicanas; únicamente existen benchmarks globales.</li>
+<li>Existencia y contenido de acuerdos de nivel de servicio internos para resolución de contracargos.</li>
+<li>Volumen y valor de operaciones desagregado por cada IFPE individual.</li>
+</ol>
+<blockquote class="blockquote">
+<p><strong>Nota metodológica.</strong> La ausencia de estos datos no es un defecto del ejercicio sino una condición del problema. En particular, el punto 3 —la imposibilidad de conocer el fraude no reclamado— es una limitación estructural que afecta a cualquier sistema de detección real y que el proyecto documenta como riesgo analítico en la página de supuestos y riesgos.</p>
+</blockquote>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+</div> <!-- /content -->
+
+
+
+
+</body></html>
