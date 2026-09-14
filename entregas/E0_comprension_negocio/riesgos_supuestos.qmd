@@ -1,3 +1,69 @@
 ---
-title: "Supuestos y riesgos"
+title: "5. Supuestos y riesgos"
+date: last-modified
 ---
+
+Un **supuesto** es una condición que se da por verdadera sin haberla verificado todavía; debe
+validarse durante el proyecto. Un **riesgo** es un evento incierto que podría afectar su desarrollo
+o sus resultados; debe evaluarse y mitigarse. Esta página recoge unos y otros para el proyecto de
+ordenamiento de alertas de fraude en Pagos Lumen.
+
+## Registro de riesgos
+## Supuestos
+
+1. **Los patrones de fraude del dataset se parecen razonablemente a los que enfrentaría una institución de pagos electrónicos en México.** Esto lo vamos a comprobar en la fase de comprensión de datos (E1), comparando la distribución de montos y qué tan frecuente es el fraude contra las cifras públicas que ya reunimos en el [expediente de fuentes](#expediente-de-fuentes).
+
+2. **La etiqueta del dataset marca un contracargo reportado**, que es el mismo criterio que usa la métrica pública de referencia en comercio electrónico. Asumimos que eso equivale a cómo la institución reconocería un fraude.
+
+3. **La capacidad de revisión manual no cambia durante el proyecto**: no hay contrataciones previstas ni se modifica el procedimiento de confirmar por teléfono.
+
+4. **El monto de la transacción funciona como proxy razonable de la pérdida económica** cuando el fraude sí se consuma.
+
+5. **Las transacciones son lo bastante independientes entre sí** como para no necesitar modelar secuencias por cliente en esta primera iteración.
+
+6. **Los parámetros del volumen, pérdida mensual, capacidad de revisión son verosímiles**, aunque no vengan de una institución real, están calibrados con benchmarks de la industria y quedan declarados como supuestos en la sección de fuentes.
+
+
+| # | Clasificación | Riesgo | Prob. | Impacto | Mitigación |
+| :-- | :--- | :--- | :--- | :--- | :--- |
+| 1 | Datos | El conjunto de datos no es mexicano ni proviene de una institución de pagos: sus patrones podrían no transferirse al contexto descrito por el stakeholder | Alta | Alto | Contrastar distribuciones agregadas contra las fuentes públicas en E1 y declarar de forma explícita el límite de generalización en el reporte final |
+| 2 | Analítico | Desbalance severo de clases: un modelo puede alcanzar una exactitud altísima prediciendo siempre "no fraude" y resultar inútil | Alta | Alto | Excluir la exactitud como medida desde el planteamiento; evaluar sobre el tramo revisable y contra una línea base trivial |
+| 3 | Analítico | Fuga de información: variables derivadas del propio proceso de detección, o agregaciones calculadas sin respetar el orden temporal, inflarían el desempeño de forma artificial | Media | Alto | Revisar el significado de cada variable antes de incorporarla; usar partición temporal en lugar de aleatoria; desconfiar de todo desempeño excepcionalmente bueno en la primera iteración |
+| 4 | Datos | Alta proporción de valores faltantes en la información de identidad del dispositivo; muchas transacciones carecen de registro asociado | Alta | Medio | Verificar primero si la ausencia es informativa (pregunta de investigación 3) antes de decidir entre tratarla como categoría o imputarla |
+| 5 | Legal / ético | Un modelo entrenado sobre variables indirectas —dominio de correo, tipo de dispositivo, región— podría penalizar de forma sistemática a un grupo de usuarios legítimos | Media | Alto | Medir y reportar la tasa de rechazo por segmento; excluir variables sin justificación de negocio; documentar el criterio de inclusión |
+| 6 | Operativo | El criterio de éxito podría no ser alcanzable con los datos disponibles: la meta del 20 % se fijó sin línea base sobre la proporción de fraude contenida en las alertas que hoy no se revisan | Media | Alto | Asentarla como meta de trabajo y no como compromiso; reportar en E4 la reducción efectivamente proyectada aunque quede por debajo, documentando la brecha en lugar de ajustar la meta |
+| 7 | Adopción | El equipo de revisión podría seguir trabajando por orden de llegada si no comprende por qué una transacción fue priorizada | Media | Medio | Acompañar cada alerta con las variables que más pesaron en su puntuación; conservar el procedimiento actual como referencia comparable durante el piloto |
+| 8 | Datos | Un parámetro asumido del ejercicio podría resultar poco plausible —la estimación de 3 % de rechazos indebidos implica que cerca de dos tercios de los bloqueos automáticos serían erróneos— y debilitar el planteamiento | Media | Medio | Revisar la consistencia interna de los parámetros en E1 y ajustarlos si el contraste con las referencias de industria lo sugiere, recalculando lo que dependa de ellos |
+
+## Tratamiento
+
+Los riesgos 1, 2, 4, 5 y 8 se **mitigan**: son inherentes al planteamiento y no pueden eliminarse,
+pero su probabilidad o su impacto se reducen con las medidas indicadas. El riesgo 3 se **evita**
+por diseño, modificando el esquema de validación antes de entrenar cualquier modelo. El riesgo 6
+se **acepta** con contingencia: el equipo se compromete a reportar la brecha en lugar de ajustar la
+meta. El riesgo 7 se **acepta** para esta iteración, por corresponder a una fase de despliegue que
+excede el alcance del proyecto.
+
+El registro se revisará al cierre de cada entrega y se actualizará cuando cambien los datos, el
+modelo o las condiciones del planteamiento.
+
+## Limitaciones de alcance reconocidas
+
+Además de los riesgos anteriores, el proyecto asume dos limitaciones que no son eventos inciertos
+sino condiciones conocidas desde el inicio.
+
+**El horizonte de verificación excede la duración del proyecto.** El criterio de éxito se verifica
+a seis meses en la operación real, plazo que no cabe en el calendario del curso. En consecuencia,
+la fase de evaluación no medirá el resultado en operación sino que **estimará su alcanzabilidad**
+sobre datos históricos mediante partición temporal. Lo que se entregue será una proyección
+condicionada y así debe reportarse.
+
+**Una de las dos pérdidas en juego no puede cuantificarse con las fuentes disponibles.** No existe
+registro de las operaciones rechazadas automáticamente ni del desenlace de los clientes afectados,
+de modo que la
+[pregunta de investigación 4](preguntas.qmd) queda fuera del alcance. El proyecto puede mejorar el
+ordenamiento de la cola de revisión, pero no puede, en esta iteración, poner un número del lado del
+cliente legítimo. Esa asimetría (central en el diagnóstico recogido en la
+[bitácora](bitacora.qmd)) persiste al término del proyecto y conviene declararla antes que
+disimularla.
+

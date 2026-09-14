@@ -4,7 +4,12 @@
     "href": "entregas/E0_comprension_negocio/bitacora.html",
     "title": "1. Bitácora de la reunión con el stakeholder",
     "section": "",
-    "text": "NotaNaturaleza del stakeholder y trazabilidad de las respuestas\n\n\n\nEl stakeholder de esta entrega es simulado. El equipo no obtuvo acceso a personal del área de prevención de fraude de una institución financiera porque la información sobre pérdidas por fraude, tasas de rechazo y capacidad operativa es confidencial y no se publica. Se realizó en su lugar un ejercicio de rol documentado, apoyado en un modelo de lenguaje, sobre un expediente de datos construido previamente por el equipo a partir de fuentes verificables.\nCada respuesta registrada indica su sustento. La notación [F-xx] remite a la ficha número xx del expediente de fuentes, donde constan el título del documento, la institución emisora, la URL y la fecha de consulta. La marca [supuesto: §5.x] indica un parámetro asumido por el equipo para el ejercicio, calibrado con benchmarks de industria y declarado como tal en la sección 5 de ese mismo expediente. El procedimiento completo, incluidos los prompts empleados, se documenta en uso de herramientas de IA."
+    "text": "NotaNaturaleza del stakeholder y trazabilidad de las respuestas\n\n\n\nEl stakeholder de esta entrega es simulado. El equipo no obtuvo acceso a personal del área de prevención de fraude de una institución financiera porque la información sobre pérdidas por fraude, tasas de rechazo y capacidad operativa es confidencial y no se publica. Se realizó en su lugar un ejercicio de rol documentado, apoyado en un modelo de lenguaje, sobre un expediente de datos construido previamente por el equipo a partir de fuentes verificables.\nCada respuesta registrada indica su sustento. La notación [F-xx] remite a la ficha número xx del expediente de fuentes, donde constan el título del documento, la institución emisora, la URL y la fecha de consulta. La marca [supuesto: §5.x] indica un parámetro asumido por el equipo para el ejercicio, calibrado con benchmarks de industria y declarado como tal en la sección 5 de ese mismo expediente. El procedimiento completo, incluidos los prompts empleados, se documenta en uso de herramientas de IA.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "1 · Bitácora"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/bitacora.html#metadatos",
@@ -60,7 +65,12 @@
     "href": "entregas/E0_comprension_negocio/bitacora.html#reflexión-del-equipo",
     "title": "1. Bitácora de la reunión con el stakeholder",
     "section": "Reflexión del equipo",
-    "text": "Reflexión del equipo\nLa entrevista cambió el planteamiento en tres puntos, y en los tres el cambio fue de fondo.\nEl problema no es detectar fraude, es decidir qué revisar. Entramos suponiendo que el objetivo sería clasificar transacciones como fraudulentas o legítimas. Lo que encontramos es una cola de 900 alertas diarias contra una capacidad de 300, priorizada por orden de llegada. El sistema ya detecta más de lo que la organización puede atender; lo que falta no es capacidad de detección sino de ordenamiento. Paola lo formuló mejor que nosotros al decir que le bastaría con que las 300 que revisa sean las que valía la pena revisar.\nLa capacidad no es ampliable, y eso restringe la solución más de lo que esperábamos. Suponíamos que los seis minutos por caso podrían reducirse. Al desglosarlos resultó que el análisis toma alrededor de un minuto y el resto es la llamada de confirmación, obligatoria por regulación. Eso elimina la vía de optimizar el tiempo de revisión y deja como única palanca la selección de casos, lo que a su vez determina la forma de la métrica técnica: el volumen a evaluar está fijado por la operación, no por el modelo.\nEl obstáculo real no es técnico. Dos pérdidas compiten en cada decisión y solo una tiene número. No encontramos a nadie que hubiera decidido priorizar el fraude sobre el cliente; lo que hay es un sistema de medición que solo observa un lado y una estructura de incentivos que, como señaló Marisol, premia la restricción y no penaliza el exceso. Esto reorientó nuestras preguntas de investigación: además de mejorar la detección, conviene preguntarse si el proyecto puede producir evidencia sobre el lado que hoy carece de ella.\nSobre el método. Las primeras respuestas del ejercicio de rol resultaron demasiado breves y de registro informal, por lo que el equipo ajustó el planteamiento y repitió esa parte de la sesión; ambas versiones se conservan como evidencia. La negativa de la stakeholder a fijar la meta de reducción no se trató como una respuesta fallida: las tres carencias de información que invocó para justificarla se incorporaron como supuestos y riesgos del proyecto."
+    "text": "Reflexión del equipo\nAl comienzo del proyecto se tenía en mente detectar el fraude mediante filtros o coincidencias entre las distintas transacciones. Dichas condiciones alertarían sobre un posible fraude donde se llevaría a cabo el proceso para evitar que estas transacciones ocurran, sin embargo, al indagar en la situación, se plantea definir un modelo completamente distinto, en donde debemos priorizar las alertas que sean de mayor importancia de modo que sean analizadas primero, con el objetivo de evitar pérdidas mayores mientras se mantiene la cantidad que se puede manejar de clientes.\nTeniendo en cuenta que la capacidad no es ampliable, se restringe la solución más de lo que esperábamos. Ya que el análisis toma alrededor de un minuto y el resto es la llamada de confirmación, obligatoria por regulación. Eso elimina la vía de optimizar el tiempo de revisión, dejando como única opción la selección de casos, donde: el volumen a evaluar está fijado por la operación, no por el modelo.\nPara llegar a la solución no es tan simple como definir la meta, si no cada pregunta que nos guíe hacia los “criterios de éxito”, ya que, está la perspectiva del equipo de datos (nosotros) y del equipo de Lumen (los entrevistados) sobre cuál sería el éxito en la situación, donde se debe llegar al acuerdo de un éxito que sea posible y medible mediante la implementación que realizaremos, el cual deberá seguir siendo útil adaptándose a las circunstancias (transacciones de mayor monto, distintas formas de fraude, mayor número de clientes con el mismo número de analistas), por lo que el sistema que se implemente debe ser capaz de manejar el cambio.\nPor otro lado, como menciona Diego, al bloquear a clientes legítimos entra la posibilidad de perder su confianza, priorizando la protección de los ingresos con la desventaja de que continúen dando uso a la plataforma por los problemas o retrasos que esta llegue a generar, de modo que el umbral que definiremos para las transacciones legítimas tratara de no perjudicar a los clientes, logrando así que se logren las transacciones eficientemente y los clientes estén satisfechos con el servicio. De este modo tanto el departamento de Diego y Marisol mejoran sus resultados, menos pérdidas y mayor retención de los clientes, respectivamente.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "1 · Bitácora"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/bitacora.html#contexto-de-la-operación",
@@ -74,132 +84,554 @@
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "",
-    "text": "El stakeholder de esta entrega fue simulado mediante un ejercicio de rol documentado. Este expediente reúne las fuentes verificables que sustentan cada una de las respuestas registradas en la bitácora, y declara de forma explícita qué parámetros del ejercicio son supuestos del equipo y no datos documentados.\nEl documento cumple una segunda función: fue el único contexto de datos proporcionado al modelo de lenguaje que interpretó a los stakeholders. La versión entregada al modelo no contenía análisis ni interpretación, únicamente los hechos y la declaración de qué información no estaba disponible. El detalle del procedimiento se documenta en la página de uso de herramientas de IA.\nLas fichas están codificadas (F-01, F-02, …) para poder referenciarlas desde la bitácora. La marca [supuesto: §5.x] que aparece en la bitácora remite a la sección 5 de este documento.\n\n\n\n\n\n\nImportanteDos advertencias sobre la naturaleza de estas cifras\n\n\n\nPrimera. CONDUSEF publica dos series estadísticas de magnitudes muy distintas que no son comparables entre sí. Las reclamaciones del sistema financiero (del orden de 1.5 millones por trimestre) son las que las instituciones reportan a la CNBV. Las reclamaciones recibidas directamente en CONDUSEF (del orden de 35 mil en cinco meses) son los casos que el usuario llevó personalmente a la Comisión. Cada ficha indica a cuál de las dos corresponde.\nSegunda. Todas las cifras de CONDUSEF se refieren a “posible fraude” reclamado: no equivalen a fraude confirmado ni a pérdida contable de una institución. La única aproximación pública a fraude confirmado en comercio electrónico mexicano es la tasa de contracargos de Banco de México (F-07), dado que un contracargo es una disputa resuelta y no una queja presentada."
+    "text": "El stakeholder de esta entrega fue simulado mediante un ejercicio de rol documentado. Este expediente reúne las fuentes verificables que sustentan cada una de las respuestas registradas en la bitácora, y declara de forma explícita qué parámetros del ejercicio son supuestos del equipo y no datos documentados.\nEl documento cumple una segunda función: fue el único contexto de datos proporcionado al modelo de lenguaje que interpretó a los stakeholders. La versión entregada al modelo no contenía análisis ni interpretación, únicamente los hechos y la declaración de qué información no estaba disponible. El detalle del procedimiento se documenta en la página de uso de herramientas de IA.\nLas fichas están codificadas (F-01, F-02, …) para poder referenciarlas desde la bitácora. La marca [supuesto: §5.x] que aparece en la bitácora remite a la sección 5 de este documento.\n\n\n\n\n\n\nImportanteDos advertencias sobre la naturaleza de estas cifras\n\n\n\nPrimera. CONDUSEF publica dos series estadísticas de magnitudes muy distintas que no son comparables entre sí. Las reclamaciones del sistema financiero (del orden de 1.5 millones por trimestre) son las que las instituciones reportan a la CNBV. Las reclamaciones recibidas directamente en CONDUSEF (del orden de 35 mil en cinco meses) son los casos que el usuario llevó personalmente a la Comisión. Cada ficha indica a cuál de las dos corresponde.\nSegunda. Todas las cifras de CONDUSEF se refieren a “posible fraude” reclamado: no equivalen a fraude confirmado ni a pérdida contable de una institución. La única aproximación pública a fraude confirmado en comercio electrónico mexicano es la tasa de contracargos de Banco de México (F-07), dado que un contracargo es una disputa resuelta y no una queja presentada.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#propósito-de-este-documento",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#propósito-de-este-documento",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "",
-    "text": "El stakeholder de esta entrega fue simulado mediante un ejercicio de rol documentado. Este expediente reúne las fuentes verificables que sustentan cada una de las respuestas registradas en la bitácora, y declara de forma explícita qué parámetros del ejercicio son supuestos del equipo y no datos documentados.\nEl documento cumple una segunda función: fue el único contexto de datos proporcionado al modelo de lenguaje que interpretó a los stakeholders. La versión entregada al modelo no contenía análisis ni interpretación, únicamente los hechos y la declaración de qué información no estaba disponible. El detalle del procedimiento se documenta en la página de uso de herramientas de IA.\nLas fichas están codificadas (F-01, F-02, …) para poder referenciarlas desde la bitácora. La marca [supuesto: §5.x] que aparece en la bitácora remite a la sección 5 de este documento.\n\n\n\n\n\n\nImportanteDos advertencias sobre la naturaleza de estas cifras\n\n\n\nPrimera. CONDUSEF publica dos series estadísticas de magnitudes muy distintas que no son comparables entre sí. Las reclamaciones del sistema financiero (del orden de 1.5 millones por trimestre) son las que las instituciones reportan a la CNBV. Las reclamaciones recibidas directamente en CONDUSEF (del orden de 35 mil en cinco meses) son los casos que el usuario llevó personalmente a la Comisión. Cada ficha indica a cuál de las dos corresponde.\nSegunda. Todas las cifras de CONDUSEF se refieren a “posible fraude” reclamado: no equivalen a fraude confirmado ni a pérdida contable de una institución. La única aproximación pública a fraude confirmado en comercio electrónico mexicano es la tasa de contracargos de Banco de México (F-07), dado que un contracargo es una disputa resuelta y no una queja presentada."
+    "text": "El stakeholder de esta entrega fue simulado mediante un ejercicio de rol documentado. Este expediente reúne las fuentes verificables que sustentan cada una de las respuestas registradas en la bitácora, y declara de forma explícita qué parámetros del ejercicio son supuestos del equipo y no datos documentados.\nEl documento cumple una segunda función: fue el único contexto de datos proporcionado al modelo de lenguaje que interpretó a los stakeholders. La versión entregada al modelo no contenía análisis ni interpretación, únicamente los hechos y la declaración de qué información no estaba disponible. El detalle del procedimiento se documenta en la página de uso de herramientas de IA.\nLas fichas están codificadas (F-01, F-02, …) para poder referenciarlas desde la bitácora. La marca [supuesto: §5.x] que aparece en la bitácora remite a la sección 5 de este documento.\n\n\n\n\n\n\nImportanteDos advertencias sobre la naturaleza de estas cifras\n\n\n\nPrimera. CONDUSEF publica dos series estadísticas de magnitudes muy distintas que no son comparables entre sí. Las reclamaciones del sistema financiero (del orden de 1.5 millones por trimestre) son las que las instituciones reportan a la CNBV. Las reclamaciones recibidas directamente en CONDUSEF (del orden de 35 mil en cinco meses) son los casos que el usuario llevó personalmente a la Comisión. Cada ficha indica a cuál de las dos corresponde.\nSegunda. Todas las cifras de CONDUSEF se refieren a “posible fraude” reclamado: no equivalen a fraude confirmado ni a pérdida contable de una institución. La única aproximación pública a fraude confirmado en comercio electrónico mexicano es la tasa de contracargos de Banco de México (F-07), dado que un contracargo es una disputa resuelta y no una queja presentada.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-01-reclamaciones-recibidas-en-condusef-eneromayo-2026",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-01 · Reclamaciones recibidas en CONDUSEF, enero–mayo 2026",
-    "text": "F-01 · Reclamaciones recibidas en CONDUSEF, enero–mayo 2026\nDato. Se registraron 35,762 reclamaciones por posible fraude, de las cuales 34,325 correspondieron a banca múltiple. Frente al mismo periodo de 2025, el crecimiento fue de 18 % en banca múltiple, 48 % en SOFIPOS y 49 % en SOFOMES.\nFuente. CONDUSEF, documento Consulta y Reporta, 2026.\n\nDocumento Consulta y Reporta (PDF)\nComunicado asociado\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. El fraude crece a un ritmo casi tres veces mayor fuera de la banca tradicional. Esta asimetría es la que justifica que una institución de tecnología financiera priorice hoy el problema, y sustenta la descripción de la situación actual en el Canvas."
+    "text": "F-01 · Reclamaciones recibidas en CONDUSEF, enero–mayo 2026\nDato. Se registraron 35,762 reclamaciones por posible fraude, de las cuales 34,325 correspondieron a banca múltiple. Frente al mismo periodo de 2025, el crecimiento fue de 18 % en banca múltiple, 48 % en SOFIPOS y 49 % en SOFOMES.\nFuente. CONDUSEF, documento Consulta y Reporta, 2026.\n\nDocumento Consulta y Reporta (PDF)\nComunicado asociado\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. El fraude crece a un ritmo casi tres veces mayor fuera de la banca tradicional. Esta asimetría es la que justifica que una institución de tecnología financiera priorice hoy el problema, y sustenta la descripción de la situación actual en el Canvas.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-02-perfil-demográfico-de-las-víctimas-eneromayo-2026",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-02 · Perfil demográfico de las víctimas, enero–mayo 2026",
-    "text": "F-02 · Perfil demográfico de las víctimas, enero–mayo 2026\nDato. Los mayores incrementos se concentran en población en edad productiva: cerca de 25 % en el grupo de 50 a 59 años, 22 % entre 40 y 49, y alrededor de 20 % entre 18 y 29 años.\nFuente. La misma que F-01.\nConsultado el 11 de septiembre de 2026.\nPertinencia. Desmiente el supuesto habitual de que el fraude afecta principalmente a adultos mayores y delimita el perfil de los beneficiarios finales del proyecto."
+    "text": "F-02 · Perfil demográfico de las víctimas, enero–mayo 2026\nDato. Los mayores incrementos se concentran en población en edad productiva: cerca de 25 % en el grupo de 50 a 59 años, 22 % entre 40 y 49, y alrededor de 20 % entre 18 y 29 años.\nFuente. La misma que F-01.\nConsultado el 11 de septiembre de 2026.\nPertinencia. Desmiente el supuesto habitual de que el fraude afecta principalmente a adultos mayores y delimita el perfil de los beneficiarios finales del proyecto.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-03-montos-reclamados-y-restituidos-primer-trimestre-de-2026",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-03 · Montos reclamados y restituidos, primer trimestre de 2026",
-    "text": "F-03 · Montos reclamados y restituidos, primer trimestre de 2026\nDato. Del total de 2,008,000 reclamaciones del sistema financiero (+23.1 % anual), 1,515,000 fueron por posible fraude (+31.5 %), es decir tres de cada cuatro. El monto reclamado por posible fraude ascendió a 5,201 millones de pesos, el 67.3 % del total reclamado (7,729 millones).\nLas cifras de restitución deben distinguirse con cuidado, porque corresponden a universos distintos:\n\n\n\n\n\n\n\n\n\nConcepto\nMonto reclamado\nMonto abonado\nProporción restituida\n\n\n\n\nPosible fraude\n5,201 mdp\n1,265 mdp\n24.3 %\n\n\nTotal de reclamaciones económicas\n7,729 mdp\n2,235 mdp\n28.9 %\n\n\n\nLos 2,235 millones corresponden al agregado de todas las reclamaciones económicas, no exclusivamente a las de fraude. La restitución del fraude es proporcionalmente menor: alrededor de 2 de cada 10 pesos reclamados.\nFuente. CONDUSEF, registros del Buró de Entidades Financieras, primer trimestre de 2026, difundidos el 6 de julio de 2026 y reportados por diversos medios.\n\nEl Universal — «Suben quejas por fraudes; bancos devuelven 24%»\nEl Informador — «Reclamos por las estafas bancarias suben 31.5%»\nFintech Expert — desglose específico del abono por fraude\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. El monto abonado es la aproximación pública más cercana a la pérdida que una institución absorbe efectivamente. Es la referencia que ancla el criterio de éxito expresado en términos de monto, y no de número de transacciones. La brecha entre lo reclamado y lo restituido —más de tres cuartas partes del dinero disputado no se abona— también delimita el costo reputacional que la institución enfrenta ante el usuario.\n\n\n\n\n\n\nNotaNota sobre la fecha\n\n\n\nVarias notas citan una declaración del titular de CONDUSEF, Óscar Rosado, fechada el 8 de junio de 2026. Esa fecha corresponde a un pronunciamiento anterior recuperado por los artículos, no a la difusión de las cifras trimestrales, que es del 6 de julio de 2026. El equipo verificó esta distinción para evitar una atribución incorrecta.\n\n\n\n\n\n\n\n\nNotaNota sobre el tipo de fuente\n\n\n\nEsta ficha se sustenta en fuentes periodísticas, modalidad admitida por las especificaciones de la entrega. Las notas reportan registros del Buró de Entidades Financieras, no interpretaciones editoriales. El equipo buscó el documento primario del Buró sin localizar una versión de acceso directo con este desglose; la ficha F-14 aporta cifras equivalentes desde una fuente institucional."
+    "text": "F-03 · Montos reclamados y restituidos, primer trimestre de 2026\nDato. Del total de 2,008,000 reclamaciones del sistema financiero (+23.1 % anual), 1,515,000 fueron por posible fraude (+31.5 %), es decir tres de cada cuatro. El monto reclamado por posible fraude ascendió a 5,201 millones de pesos, el 67.3 % del total reclamado (7,729 millones).\nLas cifras de restitución deben distinguirse con cuidado, porque corresponden a universos distintos:\n\n\n\n\n\n\n\n\n\nConcepto\nMonto reclamado\nMonto abonado\nProporción restituida\n\n\n\n\nPosible fraude\n5,201 mdp\n1,265 mdp\n24.3 %\n\n\nTotal de reclamaciones económicas\n7,729 mdp\n2,235 mdp\n28.9 %\n\n\n\nLos 2,235 millones corresponden al agregado de todas las reclamaciones económicas, no exclusivamente a las de fraude. La restitución del fraude es proporcionalmente menor: alrededor de 2 de cada 10 pesos reclamados.\nFuente. CONDUSEF, registros del Buró de Entidades Financieras, primer trimestre de 2026, difundidos el 6 de julio de 2026 y reportados por diversos medios.\n\nEl Universal — «Suben quejas por fraudes; bancos devuelven 24%»\nEl Informador — «Reclamos por las estafas bancarias suben 31.5%»\nFintech Expert — desglose específico del abono por fraude\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. El monto abonado es la aproximación pública más cercana a la pérdida que una institución absorbe efectivamente. Es la referencia que ancla el criterio de éxito expresado en términos de monto, y no de número de transacciones. La brecha entre lo reclamado y lo restituido —más de tres cuartas partes del dinero disputado no se abona— también delimita el costo reputacional que la institución enfrenta ante el usuario.\n\n\n\n\n\n\nNotaNota sobre la fecha\n\n\n\nVarias notas citan una declaración del titular de CONDUSEF, Óscar Rosado, fechada el 8 de junio de 2026. Esa fecha corresponde a un pronunciamiento anterior recuperado por los artículos, no a la difusión de las cifras trimestrales, que es del 6 de julio de 2026. El equipo verificó esta distinción para evitar una atribución incorrecta.\n\n\n\n\n\n\n\n\nNotaNota sobre el tipo de fuente\n\n\n\nEsta ficha se sustenta en fuentes periodísticas, modalidad admitida por las especificaciones de la entrega. Las notas reportan registros del Buró de Entidades Financieras, no interpretaciones editoriales. El equipo buscó el documento primario del Buró sin localizar una versión de acceso directo con este desglose; la ficha F-14 aporta cifras equivalentes desde una fuente institucional.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-04-resolución-a-favor-del-usuario-enerojunio-2024",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-04-resolución-a-favor-del-usuario-enerojunio-2024",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-04 · Resolución a favor del usuario, enero–junio 2024",
-    "text": "F-04 · Resolución a favor del usuario, enero–junio 2024\nDato. CONDUSEF recibió 41,581 reclamaciones por posible fraude, el 31.7 % del total, de las cuales 39,453 correspondieron al sector bancario. El 43.4 % de los asuntos concluidos se resolvió a favor del usuario.\nFuente. CONDUSEF, Informe de Autoevaluación Enero–Junio 2024.\n\nInforme de Autoevaluación Enero–Junio 2024 (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Documento institucional de acceso directo, el de mayor jerarquía documental del expediente. Aporta la proporción de casos que derivan efectivamente en pérdida para la institución."
+    "text": "F-04 · Resolución a favor del usuario, enero–junio 2024\nDato. CONDUSEF recibió 41,581 reclamaciones por posible fraude, el 31.7 % del total, de las cuales 39,453 correspondieron al sector bancario. El 43.4 % de los asuntos concluidos se resolvió a favor del usuario.\nFuente. CONDUSEF, Informe de Autoevaluación Enero–Junio 2024.\n\nInforme de Autoevaluación Enero–Junio 2024 (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Documento institucional de acceso directo, el de mayor jerarquía documental del expediente. Aporta la proporción de casos que derivan efectivamente en pérdida para la institución.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-14-reclamaciones-recibidas-en-condusef-primer-trimestre-de-2026",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-14 · Reclamaciones recibidas en CONDUSEF, primer trimestre de 2026",
-    "text": "F-14 · Reclamaciones recibidas en CONDUSEF, primer trimestre de 2026\nDato. De las 22,199 reclamaciones recibidas en CONDUSEF a nivel nacional entre enero y marzo de 2026, el 37.4 % estuvieron relacionadas con un posible fraude, y de éstas el 94 % corresponden a banca múltiple. Las reclamaciones por posible robo de identidad en banca múltiple registraron una disminución de 11.0 % respecto al mismo periodo de 2025.\nFuente. CONDUSEF, comunicado institucional CONDUSEF alerta sobre incremento de fraudes y llama a fortalecer la educación financiera, junio de 2026.\n\nComunicado en gob.mx\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Fuente institucional de acceso directo que aporta el mismo trimestre que F-03 desde el universo de reclamaciones recibidas por la Comisión. Reduce la dependencia de fuentes periodísticas y permite contrastar ambas series. La disminución del robo de identidad frente al aumento del fraude indica que el problema se desplaza hacia el fraude transaccional, que es precisamente el objeto de este proyecto."
+    "text": "F-14 · Reclamaciones recibidas en CONDUSEF, primer trimestre de 2026\nDato. De las 22,199 reclamaciones recibidas en CONDUSEF a nivel nacional entre enero y marzo de 2026, el 37.4 % estuvieron relacionadas con un posible fraude, y de éstas el 94 % corresponden a banca múltiple. Las reclamaciones por posible robo de identidad en banca múltiple registraron una disminución de 11.0 % respecto al mismo periodo de 2025.\nFuente. CONDUSEF, comunicado institucional CONDUSEF alerta sobre incremento de fraudes y llama a fortalecer la educación financiera, junio de 2026.\n\nComunicado en gob.mx\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Fuente institucional de acceso directo que aporta el mismo trimestre que F-03 desde el universo de reclamaciones recibidas por la Comisión. Reduce la dependencia de fuentes periodísticas y permite contrastar ambas series. La disminución del robo de identidad frente al aumento del fraude indica que el problema se desplaza hacia el fraude transaccional, que es precisamente el objeto de este proyecto.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-05-composición-del-fraude-por-canal",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-05-composición-del-fraude-por-canal",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-05 · Composición del fraude por canal",
-    "text": "F-05 · Composición del fraude por canal\nDato. En el fraude cibernético, el 96 % se origina en comercio electrónico. En el fraude tradicional la distribución es 62 % en terminal punto de venta, 30 % en comercio por teléfono y 6 % en cajero automático. Los consumos no reconocidos constituyen la principal causa de reclamación: 96 % de los casos cibernéticos y 91 % de los tradicionales.\nFuente. CONDUSEF, Portal de Fraudes Financieros.\n\nPortal de Fraudes Financieros\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Confirma que el canal de comercio electrónico concentra el problema y establece que los consumos no reconocidos son la causa dominante de reclamación, lo que corresponde directamente al tipo de operación que este proyecto busca detectar. Es la ficha de menor vigencia del expediente: corresponde a 2018 y se utiliza exclusivamente por la estructura relativa que describe —dónde ocurre el fraude y por qué motivo—, nunca como magnitud actual. El equipo no localizó una publicación posterior con un desglose por canal equivalente."
+    "text": "F-05 · Composición del fraude por canal\nDato. En el fraude cibernético, el 96 % se origina en comercio electrónico. En el fraude tradicional la distribución es 62 % en terminal punto de venta, 30 % en comercio por teléfono y 6 % en cajero automático. Los consumos no reconocidos constituyen la principal causa de reclamación: 96 % de los casos cibernéticos y 91 % de los tradicionales.\nFuente. CONDUSEF, Portal de Fraudes Financieros.\n\nPortal de Fraudes Financieros\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Confirma que el canal de comercio electrónico concentra el problema y establece que los consumos no reconocidos son la causa dominante de reclamación, lo que corresponde directamente al tipo de operación que este proyecto busca detectar. Es la ficha de menor vigencia del expediente: corresponde a 2018 y se utiliza exclusivamente por la estructura relativa que describe —dónde ocurre el fraude y por qué motivo—, nunca como magnitud actual. El equipo no localizó una publicación posterior con un desglose por canal equivalente.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-06-volumen-de-pagos-con-tarjeta",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-06-volumen-de-pagos-con-tarjeta",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-06 · Volumen de pagos con tarjeta",
-    "text": "F-06 · Volumen de pagos con tarjeta\nDato. Entre enero y septiembre de 2025 se realizaron alrededor de 4,207 millones de pagos con tarjeta, de los cuales el comercio electrónico representó el 29 %. En 2023 la cifra fue de 4,626 millones de pagos con e-commerce al 23 %.\nFuente. Banco de México, Sistema de Información Económica, Operaciones en TPV; reproducido en el portal estadístico de CONDUSEF.\n\nPortal estadístico de CONDUSEF\nSistema de Información Económica, Banco de México\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Dimensiona el canal en el que opera la institución del caso y muestra su crecimiento sostenido en participación."
+    "text": "F-06 · Volumen de pagos con tarjeta\nDato. Entre enero y septiembre de 2025 se realizaron alrededor de 4,207 millones de pagos con tarjeta, de los cuales el comercio electrónico representó el 29 %. En 2023 la cifra fue de 4,626 millones de pagos con e-commerce al 23 %.\nFuente. Banco de México, Sistema de Información Económica, Operaciones en TPV; reproducido en el portal estadístico de CONDUSEF.\n\nPortal estadístico de CONDUSEF\nSistema de Información Económica, Banco de México\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Dimensiona el canal en el que opera la institución del caso y muestra su crecimiento sostenido en participación.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-07-tasa-de-autorización-y-contracargos-en-comercio-electrónico",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-07 · Tasa de autorización y contracargos en comercio electrónico",
-    "text": "F-07 · Tasa de autorización y contracargos en comercio electrónico\nDato. La tasa de compras autorizadas en comercio electrónico se ubica en aproximadamente 67 %. Los contracargos representan cerca del 0.46 % de las compras autorizadas.\nFuente. La misma que F-06. La serie continua de tasa de aceptación está disponible desde 2015 en el cuadro CF621 del Sistema de Información Económica de Banco de México.\nConsultado el 11 de septiembre de 2026.\nPertinencia. Es la ficha de mayor valor metodológico del expediente, por dos razones. La tasa de contracargos constituye la única aproximación pública a fraude confirmado, y coincide con el criterio de etiquetado del conjunto de datos que el proyecto empleará en fases posteriores. Por otra parte, el tercio de operaciones no autorizadas delimita el universo donde coexisten fraude real y rechazos erróneos de clientes legítimos, que es la tensión central del problema de negocio."
+    "text": "F-07 · Tasa de autorización y contracargos en comercio electrónico\nDato. La tasa de compras autorizadas en comercio electrónico se ubica en aproximadamente 67 %. Los contracargos representan cerca del 0.46 % de las compras autorizadas.\nFuente. La misma que F-06. La serie continua de tasa de aceptación está disponible desde 2015 en el cuadro CF621 del Sistema de Información Económica de Banco de México.\nConsultado el 11 de septiembre de 2026.\nPertinencia. Es la ficha de mayor valor metodológico del expediente, por dos razones. La tasa de contracargos constituye la única aproximación pública a fraude confirmado, y coincide con el criterio de etiquetado del conjunto de datos que el proyecto empleará en fases posteriores. Por otra parte, el tercio de operaciones no autorizadas delimita el universo donde coexisten fraude real y rechazos erróneos de clientes legítimos, que es la tensión central del problema de negocio.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-08-instituciones-de-tecnología-financiera-autorizadas",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-08-instituciones-de-tecnología-financiera-autorizadas",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-08 · Instituciones de Tecnología Financiera autorizadas",
-    "text": "F-08 · Instituciones de Tecnología Financiera autorizadas\nDato. Al cierre de 2023 existían 50 IFPE autorizadas, 37 de ellas en operación, con un crecimiento anual de 68 % en instituciones operando. En captación, STP concentra el 35.42 % y Mercado Pago el 30.10 %. A 2026 el total asciende a 88 ITF autorizadas. Fue la primera vez que la CNBV publicó información sobre este sector, en octubre de 2024.\nFuentes.\n\nTenet Consultores — análisis de la primera publicación de datos de ITF por la CNBV\nMilenio — cifra actualizada de ITF autorizadas\nPortafolio de Información de la CNBV (datos primarios)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Sitúa a la institución del caso como una IFPE supervisada por CNBV y Banxico, dentro de un mercado concentrado donde los dos primeros participantes reúnen cerca de dos tercios de la captación."
+    "text": "F-08 · Instituciones de Tecnología Financiera autorizadas\nDato. Al cierre de 2023 existían 50 IFPE autorizadas, 37 de ellas en operación, con un crecimiento anual de 68 % en instituciones operando. En captación, STP concentra el 35.42 % y Mercado Pago el 30.10 %. A 2026 el total asciende a 88 ITF autorizadas. Fue la primera vez que la CNBV publicó información sobre este sector, en octubre de 2024.\nFuentes.\n\nTenet Consultores — análisis de la primera publicación de datos de ITF por la CNBV\nMilenio — cifra actualizada de ITF autorizadas\nPortafolio de Información de la CNBV (datos primarios)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Sitúa a la institución del caso como una IFPE supervisada por CNBV y Banxico, dentro de un mercado concentrado donde los dos primeros participantes reúnen cerca de dos tercios de la captación.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-09-ecosistema-fintech",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-09-ecosistema-fintech",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-09 · Ecosistema fintech",
-    "text": "F-09 · Ecosistema fintech\nDato. Al cierre de 2025 operaban 795 fintech en México. Durante 2024, el 45 % de las fintech del segmento de Pagos y Remesas procesó más de 30 millones de dólares en transacciones digitales.\nFuente. Finnovista, Fintech Radar México 2025. Fuente de industria, no oficial.\n\nFintech Radar México 2025 (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Permite ubicar el volumen transaccional asumido para la institución del caso dentro de un rango plausible del sector."
+    "text": "F-09 · Ecosistema fintech\nDato. Al cierre de 2025 operaban 795 fintech en México. Durante 2024, el 45 % de las fintech del segmento de Pagos y Remesas procesó más de 30 millones de dólares en transacciones digitales.\nFuente. Finnovista, Fintech Radar México 2025. Fuente de industria, no oficial.\n\nFintech Radar México 2025 (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Permite ubicar el volumen transaccional asumido para la institución del caso dentro de un rango plausible del sector.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-10-comercio-electrónico-en-méxico",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-10-comercio-electrónico-en-méxico",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-10 · Comercio electrónico en México",
-    "text": "F-10 · Comercio electrónico en México\nDato. La venta online de retail alcanzó 789,700 millones de pesos en 2024, con un crecimiento de 20 % frente a 2023, y una penetración de compradores digitales del 84 %. El estudio de 2026 reporta 941 mil millones de pesos y 77.2 millones de compradores.\nFuente. AMVO, Estudio de Venta Online 2026. Fuente de industria, no oficial.\n\nEstudio de Venta Online 2026 — página de descarga\n\nConsultado el 11 de septiembre de 2026.\n\n\n\n\n\n\nNotaNota de acceso\n\n\n\nEl estudio es de circulación preferente para afiliados; la descarga completa requiere llenar un formulario de registro. Las cifras citadas son consistentes con la versión pública del estudio."
+    "text": "F-10 · Comercio electrónico en México\nDato. La venta online de retail alcanzó 789,700 millones de pesos en 2024, con un crecimiento de 20 % frente a 2023, y una penetración de compradores digitales del 84 %. El estudio de 2026 reporta 941 mil millones de pesos y 77.2 millones de compradores.\nFuente. AMVO, Estudio de Venta Online 2026. Fuente de industria, no oficial.\n\nEstudio de Venta Online 2026 — página de descarga\n\nConsultado el 11 de septiembre de 2026.\n\n\n\n\n\n\nNotaNota de acceso\n\n\n\nEl estudio es de circulación preferente para afiliados; la descarga completa requiere llenar un formulario de registro. Las cifras citadas son consistentes con la versión pública del estudio.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-11-ley-fintech",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-11-ley-fintech",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-11 · Ley Fintech",
-    "text": "F-11 · Ley Fintech\nDato. La Ley para Regular las Instituciones de Tecnología Financiera establece como principios rectores la inclusión e innovación financiera, la protección al consumidor, la prevención de operaciones ilícitas y la neutralidad tecnológica (art. 2). La supervisión corresponde conjuntamente a la CNBV y al Banco de México (art. 3). El artículo 25 regula las operaciones de las IFPE y el artículo 56 la autenticación y el consentimiento del usuario.\nFuente. Cámara de Diputados, texto vigente.\n\nLey para Regular las Instituciones de Tecnología Financiera (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. La protección al consumidor es un principio de ley y no una preferencia organizacional. Esto otorga fundamento normativo a la restricción de no incrementar el rechazo de clientes legítimos, que el Canvas recoge como límite y no como objetivo optimizable."
+    "text": "F-11 · Ley Fintech\nDato. La Ley para Regular las Instituciones de Tecnología Financiera establece como principios rectores la inclusión e innovación financiera, la protección al consumidor, la prevención de operaciones ilícitas y la neutralidad tecnológica (art. 2). La supervisión corresponde conjuntamente a la CNBV y al Banco de México (art. 3). El artículo 25 regula las operaciones de las IFPE y el artículo 56 la autenticación y el consentimiento del usuario.\nFuente. Cámara de Diputados, texto vigente.\n\nLey para Regular las Instituciones de Tecnología Financiera (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. La protección al consumidor es un principio de ley y no una preferencia organizacional. Esto otorga fundamento normativo a la restricción de no incrementar el rechazo de clientes legítimos, que el Canvas recoge como límite y no como objetivo optimizable.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-12-obligaciones-de-autenticación",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-12-obligaciones-de-autenticación",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-12 · Obligaciones de autenticación",
-    "text": "F-12 · Obligaciones de autenticación\nDato. Las disposiciones de carácter general de la CNBV aplicables a las IFPE (arts. 48, 54 y 56) fijan los factores de autenticación exigibles según el canal de instrucción. Las disposiciones de CONDUSEF en materia de transparencia y sanas prácticas exigen consentimiento expreso del usuario mediante firma electrónica avanzada u otro mecanismo conforme al artículo 56 de la Ley Fintech, y prohíben el consentimiento tácito.\nFuentes.\n\nCNBV — Disposiciones de carácter general aplicables a las instituciones de tecnología financiera (PDF)\nCONDUSEF — Disposiciones en materia de transparencia y sanas prácticas para ITF (SIDOF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Delimita los controles antifraude que la institución está obligada a mantener con independencia de cualquier modelo analítico."
+    "text": "F-12 · Obligaciones de autenticación\nDato. Las disposiciones de carácter general de la CNBV aplicables a las IFPE (arts. 48, 54 y 56) fijan los factores de autenticación exigibles según el canal de instrucción. Las disposiciones de CONDUSEF en materia de transparencia y sanas prácticas exigen consentimiento expreso del usuario mediante firma electrónica avanzada u otro mecanismo conforme al artículo 56 de la Ley Fintech, y prohíben el consentimiento tácito.\nFuentes.\n\nCNBV — Disposiciones de carácter general aplicables a las instituciones de tecnología financiera (PDF)\nCONDUSEF — Disposiciones en materia de transparencia y sanas prácticas para ITF (SIDOF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Delimita los controles antifraude que la institución está obligada a mantener con independencia de cualquier modelo analítico.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-13-protección-de-datos-personales",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#f-13-protección-de-datos-personales",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "F-13 · Protección de datos personales",
-    "text": "F-13 · Protección de datos personales\nDato. La Ley Federal de Protección de Datos Personales en Posesión de los Particulares vigente fue publicada el 20 de marzo de 2025 y entró en vigor el 21 de marzo del mismo año, abrogando la ley de 2010. Su última reforma data del 14 de noviembre de 2025. El INAI desapareció como autoridad reguladora; sus atribuciones corresponden ahora a la Secretaría de Anticorrupción y Buen Gobierno.\nFuente. Cámara de Diputados, texto vigente.\n\nLey Federal de Protección de Datos Personales en Posesión de los Particulares (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Constituye el marco aplicable al tratamiento de datos transaccionales en un modelo de asignación de riesgo. El equipo verificó expresamente la vigencia de esta norma, dado que buena parte de la bibliografía disponible continúa citando la ley abrogada de 2010 y al INAI como autoridad competente."
+    "text": "F-13 · Protección de datos personales\nDato. La Ley Federal de Protección de Datos Personales en Posesión de los Particulares vigente fue publicada el 20 de marzo de 2025 y entró en vigor el 21 de marzo del mismo año, abrogando la ley de 2010. Su última reforma data del 14 de noviembre de 2025. El INAI desapareció como autoridad reguladora; sus atribuciones corresponden ahora a la Secretaría de Anticorrupción y Buen Gobierno.\nFuente. Cámara de Diputados, texto vigente.\n\nLey Federal de Protección de Datos Personales en Posesión de los Particulares (PDF)\n\nConsultado el 11 de septiembre de 2026.\nPertinencia. Constituye el marco aplicable al tratamiento de datos transaccionales en un modelo de asignación de riesgo. El equipo verificó expresamente la vigencia de esta norma, dado que buena parte de la bibliografía disponible continúa citando la ley abrogada de 2010 y al INAI como autoridad competente.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#perfil-de-la-institución",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#perfil-de-la-institución",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "5.1 Perfil de la institución",
-    "text": "5.1 Perfil de la institución\n\n\n\n\n\n\n\n\nParámetro\nValor asumido\nCalibración\n\n\n\n\nTipo de entidad\nIFPE autorizada\nF-08\n\n\nAntigüedad\n6 años, 4 con licencia\n—\n\n\nTransacciones\n1.2 millones al mes (~40,000 diarias)\nConsistente con F-09\n\n\nTicket promedio\n$850 MXN\nSupuesto sin calibración\n\n\nVolumen mensual\n~$1,020 millones MXN\nDerivado"
+    "text": "5.1 Perfil de la institución\n\n\n\n\n\n\n\n\nParámetro\nValor asumido\nCalibración\n\n\n\n\nTipo de entidad\nIFPE autorizada\nF-08\n\n\nAntigüedad\n6 años, 4 con licencia\n—\n\n\nTransacciones\n1.2 millones al mes (~40,000 diarias)\nConsistente con F-09\n\n\nTicket promedio\n$850 MXN\nSupuesto sin calibración\n\n\nVolumen mensual\n~$1,020 millones MXN\nDerivado",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#situación-del-fraude",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#situación-del-fraude",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "5.2 Situación del fraude",
-    "text": "5.2 Situación del fraude\n\n\n\n\n\n\n\n\nParámetro\nValor asumido\nCalibración\n\n\n\n\nPérdida por fraude\n0.8 % del valor transaccionado (~$8.2 M MXN/mes)\nEntre el 0.6 % de programas maduros y el 3.9 % de los inmaduros (MRC 2026)\n\n\nTasa de contracargo\n0.9 % de operaciones autorizadas\nSuperior al 0.46 % nacional (F-07); México registra contracargos cercanos al triple del promedio global (ClearSale)\n\n\nBloqueo automático actual\n4.5 % de las transacciones\nMRC: programas maduros rechazan 2.8 %, inmaduros 5.2 %. La operación descrita usa reglas estáticas sin recalibrar\n\n\nFalsos rechazos\n~3 % de transacciones legítimas\nRiskified 2025: 47 % de los comercios estima hasta 5 % de órdenes legítimas rechazadas por error"
+    "text": "5.2 Situación del fraude\n\n\n\n\n\n\n\n\nParámetro\nValor asumido\nCalibración\n\n\n\n\nPérdida por fraude\n0.8 % del valor transaccionado (~$8.2 M MXN/mes)\nEntre el 0.6 % de programas maduros y el 3.9 % de los inmaduros (MRC 2026)\n\n\nTasa de contracargo\n0.9 % de operaciones autorizadas\nSuperior al 0.46 % nacional (F-07); México registra contracargos cercanos al triple del promedio global (ClearSale)\n\n\nBloqueo automático actual\n4.5 % de las transacciones\nMRC: programas maduros rechazan 2.8 %, inmaduros 5.2 %. La operación descrita usa reglas estáticas sin recalibrar\n\n\nFalsos rechazos\n~3 % de transacciones legítimas\nRiskified 2025: 47 % de los comercios estima hasta 5 % de órdenes legítimas rechazadas por error",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
   },
   {
     "objectID": "entregas/E0_comprension_negocio/fuentes/expediente.html#capacidad-operativa-de-revisión-manual",
     "href": "entregas/E0_comprension_negocio/fuentes/expediente.html#capacidad-operativa-de-revisión-manual",
     "title": "Expediente de fuentes del stakeholder simulado",
     "section": "5.3 Capacidad operativa de revisión manual",
-    "text": "5.3 Capacidad operativa de revisión manual\n\n\n\n\n\n\n\n\nParámetro\nValor asumido\nCalibración\n\n\n\n\nEquipo\n6 analistas y 1 supervisora\nClearSale: 1 supervisor por cada 20 revisores\n\n\nTiempo por caso\n6 minutos\nMRC vía Ravelin: 5.6 minutos promedio por revisión\n\n\nCapacidad diaria\n~300 casos (50 por analista)\nKount: 50 revisiones diarias por analista dedicado\n\n\nAlertas generadas\n~900 diarias\nSupuesto del equipo sin calibración externa\n\n\nProporción bloqueada tras revisión\n~20 %\nMRC 2025: los comercios rechazan cerca del 20 % de lo revisado manualmente\n\n\n\nImplicación para el planteamiento. La diferencia entre las 900 alertas generadas y las 300 que el equipo puede atender es el elemento que transforma el problema: de una tarea de clasificación binaria a una de ordenamiento de una cola con capacidad finita. Esta restricción es el origen del objetivo de minería de datos y de la métrica técnica formulados en el Canvas."
+    "text": "5.3 Capacidad operativa de revisión manual\n\n\n\n\n\n\n\n\nParámetro\nValor asumido\nCalibración\n\n\n\n\nEquipo\n6 analistas y 1 supervisora\nClearSale: 1 supervisor por cada 20 revisores\n\n\nTiempo por caso\n6 minutos\nMRC vía Ravelin: 5.6 minutos promedio por revisión\n\n\nCapacidad diaria\n~300 casos (50 por analista)\nKount: 50 revisiones diarias por analista dedicado\n\n\nAlertas generadas\n~900 diarias\nSupuesto del equipo sin calibración externa\n\n\nProporción bloqueada tras revisión\n~20 %\nMRC 2025: los comercios rechazan cerca del 20 % de lo revisado manualmente\n\n\n\nImplicación para el planteamiento. La diferencia entre las 900 alertas generadas y las 300 que el equipo puede atender es el elemento que transforma el problema: de una tarea de clasificación binaria a una de ordenamiento de una cola con capacidad finita. Esta restricción es el origen del objetivo de minería de datos y de la métrica técnica formulados en el Canvas.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "Material de respaldo",
+      "Expediente de fuentes"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html",
+    "title": "4. Criterio de éxito",
+    "section": "",
+    "text": "TipEnunciado de negocio\n\n\n\n“Al término de un periodo de seis meses, reducir en al menos un 20 % el monto mensual perdido por fraude respecto de la línea base de $8.2 millones de pesos (alrededor de $1.6 millones menos al mes) sin que el bloqueo automático supere el 4.5 % actual de las transacciones, sin ampliar el equipo de revisión manual, y contabilizando como costo del proyecto cualquier aumento de la fricción para el cliente.”\nLas tres condiciones no son accesorias: cierran las vías por las que la reducción podría alcanzarse sin resolver el problema (apretando umbrales, contratando más analistas o trasladando el costo a más llamadas de confirmación) y dejan como única palanca mejorar qué casos entran a la revisión. Las tres surgieron de la bitácora y fueron confirmadas por sus responsables en la sesión de validación. El plazo es de seis meses, y no de tres, porque una operación autorizada hoy puede convertirse en contracargo varios meses después.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "4 · Criterio de éxito"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#las-tres-condiciones-que-acotan-el-criterio",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#las-tres-condiciones-que-acotan-el-criterio",
+    "title": "4. Criterio de éxito",
+    "section": "Las tres condiciones que acotan el criterio",
+    "text": "Las tres condiciones que acotan el criterio\nEl enunciado no es únicamente una meta de reducción: incorpora tres restricciones que impiden alcanzarla por vías que la organización considera inaceptables. Las tres surgieron de la bitácora y fueron confirmadas por sus responsables en la sesión de validación.\n\n\n\n\n\n\n\n\nCondición\nOrigen\nQué impide\n\n\n\n\nEl bloqueo automático no supera el 4.5 % de las transacciones\nDiego Arreola, Experiencia de Usuario\nQue la pérdida baje simplemente apretando los umbrales, trasladando el costo al cliente legítimo\n\n\nNo se amplía el equipo de revisión manual\nPaola Cantú, revisión manual\nQue la mejora provenga de más capacidad y no de mejor criterio de selección\n\n\nLa fricción adicional al cliente se contabiliza como costo\nDiego Arreola, Experiencia de Usuario\nQue el costo se traslade a otra columna: más llamadas o más pasos de confirmación\n\n\n\nLas tres condiciones en conjunto cierran las alternativas de mejora por volumen o por severidad, y dejan como única palanca disponible mejorar qué casos entran a la revisión. De ahí se deriva directamente el objetivo de minería de datos formulado en el Canvas.\n\n\n\n\n\n\nNotaSobre la redacción de la segunda condición\n\n\n\nEl enunciado dice “sin ampliar el equipo de revisión” y no “sin exceder 300 casos diarios”, a petición expresa de la analista de revisión manual: 300 es el techo de capacidad en condiciones normales, pero desciende cuando algún integrante del equipo está ausente. Comprometer un volumen fijo sería comprometer algo que el área no controla."
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#criterio-de-negocio-y-criterio-técnico",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#criterio-de-negocio-y-criterio-técnico",
+    "title": "4. Criterio de éxito",
+    "section": "Criterio de negocio y criterio técnico",
+    "text": "Criterio de negocio y criterio técnico\n\n\n\n\n\n\n\n\nTipo de criterio\nEnunciado en este proyecto\n¿Quién lo evalúa?\n\n\n\n\nNegocio — determina si el proyecto se aprueba o se cancela\nReducción de al menos 20 % del monto mensual perdido por fraude, bajo las tres condiciones anteriores, medida a seis meses contra la línea base\nGerenta de Prevención de Fraude, ante la dirección\n\n\nTécnico — lo usa el equipo para iterar el modelo\nCapacidad del ordenamiento por riesgo para concentrar el fraude, y el monto defraudado, en el tramo que la operación alcanza a revisar cada día\nEquipo de análisis de datos",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "4 · Criterio de éxito"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#mapeo-entre-el-criterio-de-negocio-y-las-medidas-técnicas",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#mapeo-entre-el-criterio-de-negocio-y-las-medidas-técnicas",
+    "title": "4. Criterio de éxito",
+    "section": "Mapeo entre el criterio de negocio y las medidas técnicas",
+    "text": "Mapeo entre el criterio de negocio y las medidas técnicas\nEl modelo produce un ordenamiento de las transacciones por riesgo, del que la operación toma cada día las primeras hasta agotar su capacidad. Las cuatro medidas siguientes evalúan ese ordenamiento y se corresponden, una a una, con las partes del enunciado de negocio.\n\n\n\n\n\n\n\n\nCriterio de negocio\nMedida técnica\nVínculo\n\n\n\n\nCapacidad de revisión acotada por la operación\nAciertos en el tramo revisado. Proporción de fraudes reales entre las transacciones peor evaluadas por el modelo, evaluada sobre un tramo del tamaño de la capacidad diaria de revisión: 300 de unas 40,000 transacciones, equivalente al 0.75 % del flujo\nLa longitud de la cola no la decide el modelo sino la operación, de modo que la medición debe hacerse sobre un tramo de tamaño fijo y no sobre el conjunto completo de transacciones\n\n\nReducción del 20 % del monto perdido\nMonto cubierto por el tramo revisado. Fracción del dinero total defraudado contenida en ese mismo tramo, medida en pesos y no en número de operaciones\nEs el puente aritmético directo con el enunciado: si el tramo superior concentra una fracción determinada del monto defraudado, esa fracción proyecta la reducción alcanzable sobre la línea base\n\n\nEl bloqueo automático no supera el 4.5 %\nProporción de transacciones rechazadas sin intervención humana por el umbral más estricto del sistema, que no puede exceder 4.5 %\nEs una cota sobre cuántas operaciones se detienen en total, no sobre la proporción de clientes legítimos mal clasificados; el modelo se ajusta al umbral que respete esa proporción aunque exista otro con mejor desempeño global\n\n\nLa fricción no aumenta\nConfirmaciones telefónicas por transacción procesada, que no debe crecer respecto de la operación actual\nTraduce la condición de Experiencia de Usuario a una cantidad observable, de modo que el costo quede contabilizado y no se absorba como efecto colateral\n\n\n\nLas dos primeras se miden sobre el mismo tramo porque responden preguntas distintas sobre él: la primera indica si el equipo de revisión ocupa su jornada en casos que valen la pena; la segunda, cuánto dinero alcanza a interceptar. Un ordenamiento puede ser bueno en la primera y mediocre en la segunda si concentra fraudes numerosos pero de importe pequeño.\n\n\n\n\n\n\nImportanteEstado de los umbrales técnicos\n\n\n\nEste documento fija qué se va a medir, no los valores que deberán alcanzarse. Los umbrales concretos se establecerán en la fase de comprensión de datos (E1), una vez medida la línea base sobre el conjunto de datos. Comprometer un valor antes de conocer la distribución de la variable objetivo produciría una meta arbitraria, que es precisamente la objeción que la propia stakeholder planteó respecto de la meta de negocio.\nComo referencia de partida, el desempeño actual del proceso es que alrededor del 20 % de los casos revisados manualmente termina en bloqueo, sin que exista medición de cuántos de ellos correspondían a fraude confirmado. Cualquier umbral que se fije deberá superar con holgura esa proporción para justificar el proyecto.\nLas dos medidas descritas arriba corresponden a métricas estándar de evaluación sobre un tramo fijo del ordenamiento; se enuncian aquí en términos operativos, y su denominación técnica se adoptará en las fases de modelado y evaluación."
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#cómo-se-verificará",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#cómo-se-verificará",
+    "title": "4. Criterio de éxito",
+    "section": "Cómo se verificará",
+    "text": "Cómo se verificará\nLa medición se hace contra la línea base del estado actual: $8.2 millones mensuales de pérdida, bloqueo automático en 4.5 % y capacidad de revisión de 300 casos diarios. Junto con el monto perdido se medirá también la tasa de contracargo, hoy en 0.9 % de las operaciones autorizadas, por recomendación expresa de la stakeholder: si el monto desciende pero el contracargo no se mueve, es indicio de que el efecto aún no termina de manifestarse y así debe reportarse.\nEl horizonte es de seis meses y no de tres porque una operación autorizada hoy puede convertirse en contracargo varios meses después, de modo que un plazo menor no permitiría un juicio limpio.\n\n\n\n\n\n\nAdvertenciaNaturaleza de la meta del 20 %\n\n\n\nLa meta fue propuesta por el equipo, no fijada por la stakeholder, quien declinó confirmarla por carecer de línea base sobre las alertas que hoy se autorizan sin revisión. Sí validó su defendibilidad y recomendó asentarla como meta de trabajo y no como compromiso. La limitación se registra en supuestos y riesgos."
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#las-condiciones-que-lo-acotan",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#las-condiciones-que-lo-acotan",
+    "title": "4. Criterio de éxito",
+    "section": "Las condiciones que lo acotan",
+    "text": "Las condiciones que lo acotan\nEl enunciado no es solo una meta de reducción: incorpora tres restricciones que impiden alcanzarla por vías que la organización considera inaceptables. Las tres surgieron de la bitácora y fueron confirmadas por sus responsables en la sesión de validación.\n\n\n\n\n\n\n\n\nCondición\nConfirmada por\nQué impide\n\n\n\n\nEl bloqueo automático no supera el 4.5 % de las transacciones\nDiego Arreola, Experiencia de Usuario\nQue la pérdida baje apretando los umbrales, trasladando el costo al cliente legítimo\n\n\nNo se amplía el equipo de revisión manual (redactado así, y no como “300 casos diarios”, porque 300 es el techo de capacidad y desciende cuando falta personal)\nPaola Cantú, revisión manual\nQue la mejora provenga de más capacidad y no de mejor criterio de selección\n\n\nLa fricción adicional al cliente se contabiliza como costo\nDiego Arreola, Experiencia de Usuario\nQue el costo se traslade a otra columna: más llamadas o más pasos de confirmación\n\n\n\nLas tres cierran en conjunto las alternativas de mejora por volumen o por severidad, y dejan como única palanca mejorar qué casos entran a la revisión. De ahí se deriva el objetivo de minería de datos formulado en el Canvas."
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#vínculo-con-las-medidas-técnicas",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#vínculo-con-las-medidas-técnicas",
+    "title": "4. Criterio de éxito",
+    "section": "Vínculo con las medidas técnicas",
+    "text": "Vínculo con las medidas técnicas\nEl modelo produce un ordenamiento de las transacciones por riesgo, del que la operación toma cada día las primeras hasta agotar su capacidad. Las cuatro medidas siguientes evalúan ese ordenamiento y se corresponden, una a una, con las partes del enunciado.\n\n\n\n\n\n\n\n\nCriterio de negocio\nMedida técnica\nVínculo\n\n\n\n\nCapacidad de revisión acotada por la operación\nAciertos en el tramo revisado. Proporción de fraudes reales entre las transacciones peor evaluadas por el modelo, sobre un tramo del tamaño de la capacidad diaria: 300 de unas 40,000, el 0.75 % del flujo\nLa longitud de la cola la fija la operación, no el modelo; la medición se hace sobre un tramo de tamaño fijo y no sobre el conjunto completo\n\n\nReducción del 20 % del monto perdido\nMonto cubierto por el tramo revisado. Fracción del dinero total defraudado contenida en ese mismo tramo, medida en pesos y no en número de operaciones\nEs el puente aritmético con el enunciado: la fracción del monto que concentra el tramo proyecta la reducción alcanzable sobre la línea base\n\n\nEl bloqueo automático no supera el 4.5 %\nProporción de transacciones rechazadas sin intervención humana por el umbral más estricto\nEs una cota sobre cuántas operaciones se detienen en total, no sobre la proporción de clientes legítimos mal clasificados\n\n\nLa fricción no aumenta\nConfirmaciones telefónicas por transacción procesada, que no debe crecer respecto de la operación actual\nTraduce la condición de Experiencia de Usuario a una cantidad observable, para que ese costo quede contabilizado\n\n\n\nLas dos primeras se miden sobre el mismo tramo porque responden preguntas distintas: si el equipo ocupa su jornada en casos que valen la pena, y cuánto dinero alcanza a interceptar. Un ordenamiento puede ser bueno en la primera y mediocre en la segunda si concentra fraudes numerosos pero de importe pequeño.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "4 · Criterio de éxito"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/criterio_exito.html#precisiones-sobre-la-verificación",
+    "href": "entregas/E0_comprension_negocio/criterio_exito.html#precisiones-sobre-la-verificación",
+    "title": "4. Criterio de éxito",
+    "section": "Precisiones sobre la verificación",
+    "text": "Precisiones sobre la verificación\nLa medición se hace contra la línea base del estado actual: $8.2 millones mensuales de pérdida, bloqueo automático en 4.5 % y capacidad de 300 casos diarios. Junto con el monto se mide también la tasa de contracargo, hoy en 0.9 %, por recomendación de la stakeholder: si el monto baja y el contracargo no se mueve, el efecto todavía no termina de manifestarse.\nEste documento fija qué se va a medir, no los valores que deberán alcanzarse. Los umbrales de las medidas técnicas se establecerán en la fase de comprensión de datos (E1), una vez conocida la línea base sobre el conjunto de datos.\nLa meta del 20 % fue propuesta por el equipo y no fijada por la stakeholder, quien declinó confirmarla por carecer de tres insumos, aunque sí validó su defendibilidad ante la dirección. Esa limitación se registra en supuestos y riesgos.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "4 · Criterio de éxito"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/preguntas.html",
+    "href": "entregas/E0_comprension_negocio/preguntas.html",
+    "title": "3. Preguntas de investigación priorizadas",
+    "section": "",
+    "text": "El objetivo de minería de datos formulado en el Canvas (rdenar las transacciones por riesgo para alimentar una cola de revisión de longitud fija) se descompone en las preguntas siguientes. Mencionando que se priorizan según su impacto en el problema de negocio y la factibilidad de responderlas con los datos disponibles.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "3 · Preguntas de investigación"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/preguntas.html#por-qué-en-ese-orden",
+    "href": "entregas/E0_comprension_negocio/preguntas.html#por-qué-en-ese-orden",
+    "title": "3. Preguntas de investigación priorizadas",
+    "section": "Por qué en ese orden",
+    "text": "Por qué en ese orden\nLa pregunta 1 es el núcleo porque su respuesta condiciona a todas las demás. Es también la que traduce directamente el hallazgo central de la bitácora: el sistema ya detecta más de lo que la organización puede atender, de modo que el problema no es identificar fraude sino ordenarlo. Apunta a una tarea de clasificación supervisada cuya salida se usa como criterio de ordenamiento, no como etiqueta binaria.\nLa pregunta 2 es la que conecta el modelo con el criterio de éxito. La meta está expresada en pesos, no en número de operaciones, y un clasificador convencional trata igual un fraude de doscientos pesos que uno de quince mil. Responderla exige aprendizaje sensible al costo, es decir, incorporar el importe como peso del error, y medir el resultado en dinero interceptado. Sin esta pregunta, el proyecto podría producir un modelo que acierta mucho y recupera poco.\nLa pregunta 3 tiene menor impacto pero alta factibilidad, y su respuesta condiciona toda la fase de preparación de datos. Una porción considerable de las transacciones del conjunto de datos carece de registro de identidad asociado. Si esa ausencia resulta estar correlacionada con el fraude, tratarla como un valor faltante a imputar destruiría información útil; si no lo está, imputarla es lo correcto. Apunta a una tarea de tratamiento de valores faltantes con verificación previa de su carácter informativo.\nLa pregunta 4 queda fuera del alcance, y se documenta en lugar de descartarse. Es la que el área de Experiencia de Usuario pidió explícitamente durante la entrevista, y la que permitiría que el lado hoy sin números llegue a la mesa con evidencia. No es respondible en esta iteración porque requiere un insumo que no existe: el registro de las operaciones rechazadas y de lo que ocurrió después con esos clientes. Ninguna fuente disponible lo contiene. Se deja asentada para una segunda iteración y se recoge como limitación en supuestos y riesgos.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "3 · Preguntas de investigación"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/preguntas.html#una-nota-sobre-el-paso-del-tiempo",
+    "href": "entregas/E0_comprension_negocio/preguntas.html#una-nota-sobre-el-paso-del-tiempo",
+    "title": "3. Preguntas de investigación priorizadas",
+    "section": "Una nota sobre el paso del tiempo",
+    "text": "Una nota sobre el paso del tiempo\nEl deterioro del desempeño conforme los defraudadores adaptan su comportamiento no se formula aquí como pregunta de investigación, sino como requisito del método: toda evaluación se hará sobre una partición temporal (entrenar con el periodo antiguo, validar con el reciente) y no sobre un muestreo aleatorio. La ventana disponible no permite estudiar el fenómeno a fondo, pero sí impide que el desempeño reportado resulte artificialmente optimista, que es el riesgo concreto para esta entrega.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "3 · Preguntas de investigación"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/riesgos_supuestos.html",
+    "href": "entregas/E0_comprension_negocio/riesgos_supuestos.html",
+    "title": "5. Supuestos y riesgos",
+    "section": "",
+    "text": "Un supuesto es una condición que se da por verdadera sin haberla verificado todavía; debe validarse durante el proyecto. Un riesgo es un evento incierto que podría afectar su desarrollo o sus resultados; debe evaluarse y mitigarse. Esta página recoge unos y otros para el proyecto de ordenamiento de alertas de fraude en Pagos Lumen.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "5 · Supuestos y riesgos"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/riesgos_supuestos.html#supuestos",
+    "href": "entregas/E0_comprension_negocio/riesgos_supuestos.html#supuestos",
+    "title": "5. Supuestos y riesgos",
+    "section": "Supuestos",
+    "text": "Supuestos\n\nLos patrones de fraude del dataset se parecen razonablemente a los que enfrentaría una institución de pagos electrónicos en México. Esto lo vamos a comprobar en la fase de comprensión de datos (E1), comparando la distribución de montos y qué tan frecuente es el fraude contra las cifras públicas que ya reunimos en el expediente de fuentes.\nLa etiqueta del dataset marca un contracargo reportado, que es el mismo criterio que usa la métrica pública de referencia en comercio electrónico. Asumimos que eso equivale a cómo la institución reconocería un fraude.\nLa capacidad de revisión manual no cambia durante el proyecto: no hay contrataciones previstas ni se modifica el procedimiento de confirmar por teléfono.\nEl monto de la transacción funciona como proxy razonable de la pérdida económica cuando el fraude sí se consuma.\nLas transacciones son lo bastante independientes entre sí como para no necesitar modelar secuencias por cliente en esta primera iteración.\nLos parámetros del volumen, pérdida mensual, capacidad de revisión son verosímiles, aunque no vengan de una institución real, están calibrados con benchmarks de la industria y quedan declarados como supuestos en la sección de fuentes.\n\n\n\n\n\n\n\n\n\n\n\n\n#\nClasificación\nRiesgo\nProb.\nImpacto\nMitigación\n\n\n\n\n1\nDatos\nEl conjunto de datos no es mexicano ni proviene de una institución de pagos: sus patrones podrían no transferirse al contexto descrito por el stakeholder\nAlta\nAlto\nContrastar distribuciones agregadas contra las fuentes públicas en E1 y declarar de forma explícita el límite de generalización en el reporte final\n\n\n2\nAnalítico\nDesbalance severo de clases: un modelo puede alcanzar una exactitud altísima prediciendo siempre “no fraude” y resultar inútil\nAlta\nAlto\nExcluir la exactitud como medida desde el planteamiento; evaluar sobre el tramo revisable y contra una línea base trivial\n\n\n3\nAnalítico\nFuga de información: variables derivadas del propio proceso de detección, o agregaciones calculadas sin respetar el orden temporal, inflarían el desempeño de forma artificial\nMedia\nAlto\nRevisar el significado de cada variable antes de incorporarla; usar partición temporal en lugar de aleatoria; desconfiar de todo desempeño excepcionalmente bueno en la primera iteración\n\n\n4\nDatos\nAlta proporción de valores faltantes en la información de identidad del dispositivo; muchas transacciones carecen de registro asociado\nAlta\nMedio\nVerificar primero si la ausencia es informativa (pregunta de investigación 3) antes de decidir entre tratarla como categoría o imputarla\n\n\n5\nLegal / ético\nUn modelo entrenado sobre variables indirectas —dominio de correo, tipo de dispositivo, región— podría penalizar de forma sistemática a un grupo de usuarios legítimos\nMedia\nAlto\nMedir y reportar la tasa de rechazo por segmento; excluir variables sin justificación de negocio; documentar el criterio de inclusión\n\n\n6\nOperativo\nEl criterio de éxito podría no ser alcanzable con los datos disponibles: la meta del 20 % se fijó sin línea base sobre la proporción de fraude contenida en las alertas que hoy no se revisan\nMedia\nAlto\nAsentarla como meta de trabajo y no como compromiso; reportar en E4 la reducción efectivamente proyectada aunque quede por debajo, documentando la brecha en lugar de ajustar la meta\n\n\n7\nAdopción\nEl equipo de revisión podría seguir trabajando por orden de llegada si no comprende por qué una transacción fue priorizada\nMedia\nMedio\nAcompañar cada alerta con las variables que más pesaron en su puntuación; conservar el procedimiento actual como referencia comparable durante el piloto\n\n\n8\nDatos\nUn parámetro asumido del ejercicio podría resultar poco plausible —la estimación de 3 % de rechazos indebidos implica que cerca de dos tercios de los bloqueos automáticos serían erróneos— y debilitar el planteamiento\nMedia\nMedio\nRevisar la consistencia interna de los parámetros en E1 y ajustarlos si el contraste con las referencias de industria lo sugiere, recalculando lo que dependa de ellos",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "5 · Supuestos y riesgos"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/riesgos_supuestos.html#registro-de-riesgos",
+    "href": "entregas/E0_comprension_negocio/riesgos_supuestos.html#registro-de-riesgos",
+    "title": "5. Supuestos y riesgos",
+    "section": "Registro de riesgos",
+    "text": "Registro de riesgos",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "5 · Supuestos y riesgos"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/riesgos_supuestos.html#tratamiento",
+    "href": "entregas/E0_comprension_negocio/riesgos_supuestos.html#tratamiento",
+    "title": "5. Supuestos y riesgos",
+    "section": "Tratamiento",
+    "text": "Tratamiento\nLos riesgos 1, 2, 4, 5 y 8 se mitigan: son inherentes al planteamiento y no pueden eliminarse, pero su probabilidad o su impacto se reducen con las medidas indicadas. El riesgo 3 se evita por diseño, modificando el esquema de validación antes de entrenar cualquier modelo. El riesgo 6 se acepta con contingencia: el equipo se compromete a reportar la brecha en lugar de ajustar la meta. El riesgo 7 se acepta para esta iteración, por corresponder a una fase de despliegue que excede el alcance del proyecto.\nEl registro se revisará al cierre de cada entrega y se actualizará cuando cambien los datos, el modelo o las condiciones del planteamiento.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "5 · Supuestos y riesgos"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/riesgos_supuestos.html#limitaciones-de-alcance-reconocidas",
+    "href": "entregas/E0_comprension_negocio/riesgos_supuestos.html#limitaciones-de-alcance-reconocidas",
+    "title": "5. Supuestos y riesgos",
+    "section": "Limitaciones de alcance reconocidas",
+    "text": "Limitaciones de alcance reconocidas\nAdemás de los riesgos anteriores, el proyecto asume dos limitaciones que no son eventos inciertos sino condiciones conocidas desde el inicio.\nEl horizonte de verificación excede la duración del proyecto. El criterio de éxito se verifica a seis meses en la operación real, plazo que no cabe en el calendario del curso. En consecuencia, la fase de evaluación no medirá el resultado en operación sino que estimará su alcanzabilidad sobre datos históricos mediante partición temporal. Lo que se entregue será una proyección condicionada y así debe reportarse.\nUna de las dos pérdidas en juego no puede cuantificarse con las fuentes disponibles. No existe registro de las operaciones rechazadas automáticamente ni del desenlace de los clientes afectados, de modo que la pregunta de investigación 4 queda fuera del alcance. El proyecto puede mejorar el ordenamiento de la cola de revisión, pero no puede, en esta iteración, poner un número del lado del cliente legítimo. Esa asimetría (central en el diagnóstico recogido en la bitácora) persiste al término del proyecto y conviene declararla antes que disimularla.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "5 · Supuestos y riesgos"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/canvas.html",
+    "href": "entregas/E0_comprension_negocio/canvas.html",
+    "title": "2. Business Understanding Canvas",
+    "section": "",
+    "text": "Proyecto: Ordenamiento por riesgo de la cola de revisión de fraude · Organización: Pagos Lumen, Institución de Fondos de Pago Electrónico (Ley Fintech) · Equipo: Luis Flores, Alan García, Melanie Rangel — Facultad de Ciencias, UNAM\n\n\n  \n    1. Objetivo de Negocio\n    Reducir el monto perdido por fraude en transacciones de e-commerce, sin aumentar el rechazo de clientes legítimos ni la carga de trabajo al equipo de revisión manual.\n  \n\n  \n    2. Criterio de Éxito (Negocio)\n    Reducir ≥20% el monto mensual perdido por fraude en seis meses ($8.2M → ~$6.6M MXN), sin superar el 4.5 % de bloqueo automático, sin ampliar el equipo de revisión y contabilizando toda fricción añadida como costo del proyecto.\n  \n\n  \n    3. Evaluación de la Situación\n    \n      Stakeholders y beneficiarios: Gerencia de Prevención de Fraude (patrocinadora, alto poder / alto interés); Experiencia de Usuario (alto poder / bajo interés, impone el límite de fricción); Equipo de revisión manual (bajo poder / alto interés, usuario directo). Beneficiarios finales: tarjetahabientes y comercios afiliados.\n      Dolor actual: el motor de reglas lleva años sin recalibrarse. Genera ~900 alertas diarias frente a una capacidad de 300; las 600 restantes se autorizan solas al cierre. La cola se atiende por orden de llegada y no por riesgo, y nunca se ha medido cuánto fraude contienen las alertas no revisadas.\n      Recursos: conjunto de datos IEEE-CIS Fraud Detection (transacciones etiquetadas por contracargo reportado, tablas de transacción e identidad); equipo de tres personas; Python y bibliotecas de análisis y modelado.\n      Restricciones y requisitos: la decisión sobre la transacción ocurre en tiempo real, pero el piloto opera en lote diario. Capacidad fija de 300 revisiones sin contratación. Marco regulatorio: factores de autenticación por canal (CNBV), consentimiento expreso del usuario (CONDUSEF) y Ley Federal de Protección de Datos Personales vigente desde 2025. El resultado debe poder expresarse en pesos.\n      Supuestos: los patrones del conjunto de datos son razonablemente representativos del contexto mexicano; la etiqueta por contracargo equivale al criterio de la institución; la capacidad de revisión se mantiene constante; el importe es un proxy aceptable de la pérdida.\n      Riesgos principales: validez externa del conjunto de datos (no mexicano); desbalance severo de clases; fuga de información si la validación no respeta el orden temporal; sesgo contra segmentos de usuarios por variables indirectas; y que la meta del 20% resulte inalcanzable, al haberse fijado sin línea base sobre las alertas no revisadas.\n    \n  \n\n  \n    4. Objetivo de Minería de Datos\n    Estimar, mediante clasificación supervisada sobre clases desbalanceadas, la probabilidad de que cada transacción sea fraudulenta, y ordenar las operaciones del día por esa probabilidad ponderada por el importe, de modo que la cola de revisión —de longitud fija— contenga las de mayor pérdida esperada, buscando un ordenamiento.\n  \n\n  \n    5. Éxito Técnico\n    Sobre el 0.75 % de transacciones peor evaluadas (300 de ~40,000 diarias): proporción de fraudes reales y fracción del monto defraudado contenidas en ese tramo, ambas por encima del desempeño actual del proceso. Evaluación con partición temporal. Umbrales a fijar en E1.\n  \n\n  \n    6. Plan del Proyecto\n    E0 · Comprensión del negocio: levantamiento con el stakeholder, criterio de éxito y riesgos (esta entrega). E1 · Comprensión de los datos: exploración, contraste de representatividad contra cifras públicas y fijación de los umbrales técnicos. E2 · Preparación: tratamiento de faltantes, codificación de categóricas y partición temporal. E3 · Modelado: línea base por reglas frente a modelos de ensamble, ponderando por importe. E4 · Evaluación: proyección del ahorro sobre la línea base de $8.2M mensuales. El horizonte de verificación de negocio (seis meses) excede la duración del proyecto: E4 entrega una proyección sobre datos históricos, no una medición en operación.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "2 · Canvas"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html",
+    "title": "6. Uso de herramientas de IA",
+    "section": "",
+    "text": "ImportanteDeclaración general\n\n\n\nEl equipo sí utilizó herramientas de IA en esta entrega, en cuatro tareas distintas que se detallan a continuación. La más relevante metodológicamente es la cuarta: el stakeholder de esta entrega es simulado y su interpretación se realizó mediante un modelo de lenguaje, sobre un expediente de datos construido y verificado previamente por el equipo.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html#resumen-de-usos",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html#resumen-de-usos",
+    "title": "6. Uso de herramientas de IA",
+    "section": "Resumen de usos",
+    "text": "Resumen de usos\n\n\n\n#\nHerramienta y modelo\nTarea\nSección donde se detalla\n\n\n\n\n1\nClaude (Anthropic), modelo Opus 5\nAsesoría metodológica sobre la estructura de la entrega\n§1\n\n\n2\nClaude (Anthropic), modelo Opus 5, con búsqueda web\nLocalización de fuentes públicas para el expediente\n§2\n\n\n3\nClaude (Anthropic), modelo Opus 5\nInterpretación de los tres stakeholders simulados\n§3\n\n\n4\nClaude (Anthropic), modelo Opus 5\nRevisión de los documentos de la entrega\n§4",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html#uso-1",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html#uso-1",
+    "title": "6. Uso de herramientas de IA",
+    "section": "Uso 1 · Asesoría metodológica",
+    "text": "Uso 1 · Asesoría metodológica\nTarea. Discutir la elección del tema del proyecto entre las diez propuestas del banco, contrastar las especificaciones de la entrega con las notas del curso, y decidir la estructura de cada entregable.\nPrompts empleados. Conversación abierta de varias sesiones. Los planteamientos del equipo incluyeron, entre otros: la solicitud de evaluar qué temas del banco eran más viables en cuanto a disponibilidad de datos y facilidad de cumplir los requisitos; la petición de contrastar el documento de la entrega con el capítulo de Business Understanding Canvas de las notas del curso; y consultas puntuales sobre cómo articular el criterio de éxito con una métrica técnica.\nQué se hizo con la salida. Las recomendaciones se discutieron en equipo antes de adoptarlas.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html#uso-2",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html#uso-2",
+    "title": "6. Uso de herramientas de IA",
+    "section": "Uso 2 · Localización de fuentes",
+    "text": "Uso 2 · Localización de fuentes\nTarea. Buscar fuentes públicas verificables sobre fraude financiero en México, el sector fintech y el marco regulatorio aplicable, para fundamentar las respuestas del stakeholder simulado.\nPrompt empleado (resumen fiel). Se solicitó una investigación que devolviera fuentes reales y citables —con URL, institución emisora y fecha— organizadas en cinco bloques: magnitud y composición del fraude en México; datos del sector fintech y de pagos; benchmarks operativos de industria; marco regulatorio aplicable; y documentación del conjunto de datos IEEE-CIS. Se pidió expresamente que se señalara qué datos no existen públicamente, para no fingir sustento donde no lo hay.\nQué se hizo con la salida. Ésta es la parte del trabajo que el equipo revisó con mayor detenimiento, por ser la que sustenta todo el ejercicio.\n\nSe verificaron los catorce enlaces uno por uno. Tres presentaron problemas de acceso, que quedaron documentados en el propio expediente: el directorio de reportes trimestrales de CONDUSEF rechaza las peticiones directas, el portal estadístico no responde de forma consistente, y el estudio de la AMVO requiere registro previo.\nEl equipo detectó una inconsistencia de fechas en la ficha F-03: las notas periodísticas citaban una declaración del 8 de junio de 2026, pero los artículos son del 6 de julio. Al solicitar la verificación, se descubrió además un error de fondo: la cifra de 2,235 millones de pesos abonados corresponde al total de reclamaciones económicas y no a las de fraude, cuyo abono fue de 1,265 millones (24.3 % en lugar de 28.9 %). Ambos errores se corrigieron y la distinción quedó asentada en el expediente. verificadas.\nSe clasificaron las fuentes por jerarquía documental, distinguiendo las institucionales de las periodísticas y las de industria, y advirtiendo en cada caso el alcance de lo que sustentan.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html#uso-3",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html#uso-3",
+    "title": "6. Uso de herramientas de IA",
+    "section": "Uso 3 · Ejercicio de rol de los stakeholders simulados",
+    "text": "Uso 3 · Ejercicio de rol de los stakeholders simulados\nTarea. Interpretar a tres personas de una fintech de pagos —Gerencia de Prevención de Fraude, Experiencia de Usuario y revisión manual— durante una entrevista de levantamiento de requerimientos.\nMontaje. Se configuró un Proyecto dedicado con dos componentes: el expediente de fuentes cargado como base de conocimiento, y las instrucciones de rol en la configuración del Proyecto. La búsqueda web se desactivó para impedir que el modelo introdujera información ajena al expediente.\nPrincipio de diseño. El modelo no fue la fuente de los datos, sino únicamente el intérprete. Todo dato citado por los personajes proviene del expediente construido por el equipo; el modelo aportó la voz, la ambigüedad y el desacuerdo entre áreas, no la información.\n\n\n\n\n\n\nNotaPrompt íntegro — instrucciones del Proyecto (versión final)\n\n\n\n\n\nVas a participar en un ejercicio de rol documentado con fines académicos. Interpretas a tres\npersonas que trabajan en una fintech de pagos en México, Pagos Lumen. Un equipo de estudiantes de\nminería de datos te entrevista para levantar un problema de negocio. Es una reunión de trabajo\nformal: los tres son profesionales competentes que colaboran con el equipo de buena fe.\n\n## Los tres personajes\n\n**1. MARISOL VEGA — Gerenta de Prevención de Fraude.**\nOcho años en el área, llegó de un banco tradicional. Responde por el monto perdido por fraude,\nasí que razona en términos económicos y pide que los resultados se expresen de esa forma. Ha\nvisto dos proyectos de analítica que no llegaron a implementarse, por lo que solicita claridad\nsobre qué se espera lograr y en qué plazo. Se expresa con precisión y estructura sus respuestas.\n\n**2. DIEGO ARREOLA — Responsable de Experiencia de Usuario.**\nViene del área de producto. Responde por retención y satisfacción del cliente. Sostiene que el\ncliente bloqueado injustamente representa una pérdida real que la empresa no contabiliza en\nningún estado financiero. Su desacuerdo con Marisol es de criterio profesional, no personal: se\nrespetan, han trabajado juntos varios años y cada uno entiende la posición del otro. Argumenta\ncon datos y ejemplos, nunca con reproches.\n\n**3. PAOLA CANTÚ — Analista del equipo de revisión manual.**\nRevisa alertas de fraude a diario. Aporta el detalle operativo que los otros dos no manejan:\ntiempos reales de revisión, volúmenes, criterios de priorización, qué ocurre cuando la cola se\nsatura. Habla desde la práctica y con conocimiento de causa. Tiene menos jerarquía que los\notros dos, pero cuando le preguntan directamente responde con seguridad y detalle.\n\n## Tono de la reunión\n\n- Es una reunión profesional entre áreas. Los tres son colegas que buscan resolver un problema\n  compartido, no adversarios.\n- Cuando Marisol y Diego discrepan, lo hacen sobre el criterio de decisión y sus consecuencias\n  para el negocio. Reconocen la validez del argumento contrario antes de matizarlo. No hay\n  reproches personales, sarcasmo, alusiones a conflictos previos ni comentarios sobre la actitud\n  del otro.\n- Ninguno de los dos abandona su posición por comodidad. Si el equipo propone algo que afecta\n  los objetivos de tu área, exponlo con argumentos y pide que se considere, manteniendo el tono\n  cordial. El desacuerdo se sostiene con razones, no con insistencia.\n- Registro formal y cuidado, como en una junta con personas externas a la empresa. Evita\n  coloquialismos, expresiones cortantes y muletillas.\n\n## Extensión y profundidad de las respuestas\n\n- Responde de forma desarrollada: normalmente entre cuatro y ocho oraciones, más si la pregunta\n  lo amerita.\n- Acompaña cada afirmación con contexto: cómo llegaron a esa situación, qué han intentado antes,\n  qué consecuencias tiene en la operación.\n- Cuando sea pertinente, ilustra con un ejemplo concreto de un caso o una situación típica.\n- Si una pregunta es amplia, respóndela por partes en lugar de resumirla.\n- Si dos personas tienen algo que aportar, ambas intervienen en el mismo turno.\n- Responde con amplitud lo que se te pregunta, pero mantente dentro del tema planteado: no\n  adelantes información sobre asuntos que el equipo todavía no ha abordado. Si algo relevante\n  queda fuera de la pregunta, espera a que lo pregunten.\n\n## Regla fundamental: el expediente manda\n\nEn la base de conocimiento de este Proyecto está el documento «Expediente interno». Consúltalo\nantes de dar cualquier cifra.\n\n- Toda cifra que menciones debe provenir del expediente. **No inventes números bajo ninguna\n  circunstancia**, ni siquiera para que la conversación fluya mejor.\n- **No busques información en internet.** El expediente es tu única fuente. Los enlaces que\n  contiene son referencias para el equipo, no para ti.\n- Si te preguntan algo que está en la Sección 3 del expediente, explica con naturalidad por qué\n  no se dispone de ese dato —nunca se ha medido, no está segmentado, corresponde a otra área—\n  en lugar de negarlo secamente. No lo estimes bajo ninguna circunstancia.\n- Puedes expresar las cifras del expediente de forma aproximada y en lenguaje natural, pero el\n  número de fondo debe ser el del expediente.\n- No cites fuentes ni códigos de ficha durante la conversación: son referencia administrativa\n  interna y nadie habla así en una reunión.\n\n## Límites del personaje\n\n- Habla en el lenguaje de tu dominio, nunca en el de la minería de datos. Ninguno de los tres\n  conoce métricas de evaluación, algoritmos ni conjuntos de datos. Si el equipo emplea esos\n  términos, pide que los expliquen en términos de negocio. Nunca propongas una métrica técnica,\n  un algoritmo ni una fuente de datos.\n- No resuelvas el problema por ellos. No propongas el objetivo de minería de datos, las\n  preguntas de investigación ni el diseño del modelo. Tu papel es describir tu realidad y tus\n  necesidades; el planteamiento de la solución corresponde al equipo.\n- No salgas del personaje para dar consejos sobre el proyecto académico.\n- No menciones el expediente, las fuentes, ni que eres un modelo de lenguaje.\n- Habla uno a la vez, con el formato **NOMBRE:** seguido de su intervención.\n\n\n\n\n\n\n\n\n\nNotaPrompt íntegro — mensaje de apertura de la entrevista\n\n\n\n\n\nSomos el equipo de datos de la Facultad de Ciencias. Vamos a hacerles preguntas durante unos\n45 minutos para entender el problema antes de proponer nada. No traemos ninguna solución pensada.\n\nMarisol, para empezar: ¿cómo es su forma de trabajo en la empresa?\nLas catorce preguntas de la entrevista se formularon una por una, en turnos sucesivos, y en la bitácora se enlistan ocho de ellas, con la respuesta resumida pero parafraseadas de manera fiel al contenido de la transcripción. La sesión de seguimiento se abrió presentando al modelo un criterio de éxito ya redactado por el equipo, con tres preguntas cerradas sobre la meta de reducción, el techo de bloqueo y el plazo.\n\n\n\nCorrección del prompt a mitad del ejercicio. La primera versión de las instrucciones produjo respuestas breves, de registro informal y con un desacuerdo entre los dos primeros personajes que derivaba hacia lo personal en lugar de lo profesional. El equipo identificó las tres cláusulas responsables —una que autorizaba respuestas escuetas ante preguntas vagas, otra que describía la relación entre ambos como tensa, y una tercera que pedía no ceder «aunque sea incómodo»— y las sustituyó por las que aparecen arriba. La parte afectada de la sesión se repitió. Ambas versiones del prompt y ambas transcripciones se conservan como evidencia.\nValidación del montaje antes de usarlo. Se ejecutó una prueba de control en una conversación desechable, con dos preguntas: una cuya respuesta debía provenir del expediente y otra cuya respuesta debía ser que el dato no existe. El montaje superó ambas antes de iniciar la entrevista real.\nQué se hizo con la salida.\n\nSe verificó cada cifra de la transcripción contra el expediente. No se detectaron números inventados. Las cifras se clasificaron en la bitácora según su sustento: con ficha documental [F-xx] o como parámetro asumido [supuesto: §5.x].\nLa transcripción se editó, no se transcribió. De catorce preguntas se seleccionaron ocho para la bitácora, atendiendo a las cuatro dimensiones que el documento de la entrega pide explorar. Las citas textuales se limitaron a los pasajes que pierden sentido al parafrasearse; el resto se reformuló.\nUna respuesta del stakeholder contradijo la expectativa del equipo y se respetó. Al presentársele el criterio de éxito, la Gerenta de Prevención de Fraude declinó fijar la meta de reducción y explicó por qué. El equipo no reformuló la pregunta para obtener el número deseado: asentó la meta como propuesta propia y convirtió las tres carencias de información que ella invocó en supuestos y riesgos del proyecto.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html#uso-4",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html#uso-4",
+    "title": "6. Uso de herramientas de IA",
+    "section": "Uso 4 · Redacción y revisión de los documentos",
+    "text": "Uso 4 · Redacción y revisión de los documentos\nTarea. Elaborar borradores de los cinco entregables y revisar los que el equipo había escrito previamente.\nPrompts empleados (resumen fiel). Para cada entregable el equipo realizó una versión inicial, que se le presentó al modelo con instrucciones de revisión y edición. Se pidió que el modelo corrigiera errores de redacción, verificara la consistencia interna, propusiera mejoras de claridad y brevedad, y sugiriera cambios de formato.\nEn todos los casos fue un proceso iterativo: el equipo revisó la salida, incorporó lo que consideró útil o pertinente, y volvió a presentar al modelo la versión revisada para una nueva ronda de edición. Las revisiones fueron evaluadas por todo el equipo antes de incorporarlas a la versión final.\nEn el caso del expediente de fuentes, se solicitó además que el modelo detectara errores de verificación y omitiera fuentes no verificadas. En todos los casos se pidió que el modelo no inventara información ni cifras y que no incorporara fuentes no verificadas.\nQué se hizo con la salida. Ningún documento se incorporó sin revisión.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "entregas/E0_comprension_negocio/uso_ia.html#sobre-el-alcance-de-esta-declaración",
+    "href": "entregas/E0_comprension_negocio/uso_ia.html#sobre-el-alcance-de-esta-declaración",
+    "title": "6. Uso de herramientas de IA",
+    "section": "Sobre el alcance de esta declaración",
+    "text": "Sobre el alcance de esta declaración\nEsta entrega se produjo con asistencia sustancial de un modelo de lenguaje en el ejercicio de rol. El equipo asume la responsabilidad del contenido: verificó las fuentes, corrigió los errores detectados —incluido uno de fondo en una cifra oficial—, rechazó las recomendaciones que no compartía y tomó las decisiones de alcance, priorización y formato.",
+    "crumbs": [
+      "Inicio",
+      "E0 · Comprensión del negocio",
+      "6 · Uso de herramientas de IA"
+    ]
+  },
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "Proyecto Integrador de Minería de Datos",
+    "section": "",
+    "text": "Almacenes y Minería de Datos · Facultad de Ciencias, UNAM Equipo: Luis Flores · Alan García · Melanie Rangel Profesora: Jessica Santizo Galicia · Ayudantes: Diego Antonio Villalba González (teoría) y Emma Alicia Jiménez Sánchez (laboratorio)",
+    "crumbs": [
+      "Inicio"
+    ]
+  },
+  {
+    "objectID": "index.html#el-problema",
+    "href": "index.html#el-problema",
+    "title": "Proyecto Integrador de Minería de Datos",
+    "section": "El problema",
+    "text": "El problema\nUna institución de fondos de pago electrónico pierde alrededor de 8.2 millones de pesos mensuales por fraude en transacciones de comercio electrónico. Su motor de reglas genera unas 900 alertas diarias, pero el equipo de revisión manual solo alcanza a atender 300: las 600 restantes se autorizan automáticamente al cierre del día, no por decisión sino por falta de capacidad. Y las que sí se revisan se toman por orden de llegada, no por nivel de riesgo.\nEl problema, entonces, no es detectar fraude (el sistema ya detecta más de lo que la organización puede atender) sino decidir qué revisar. Este proyecto construye un ordenamiento por riesgo para que las 300 revisiones diarias sean las que más pérdida evitan, sin aumentar los bloqueos a clientes legítimos ni la carga del equipo.",
+    "crumbs": [
+      "Inicio"
+    ]
+  },
+  {
+    "objectID": "index.html#entrega-actual-e0-comprensión-del-negocio",
+    "href": "index.html#entrega-actual-e0-comprensión-del-negocio",
+    "title": "Proyecto Integrador de Minería de Datos",
+    "section": "Entrega actual: E0 — Comprensión del negocio",
+    "text": "Entrega actual: E0 — Comprensión del negocio\nEsta fase levanta el problema con el stakeholder y lo traduce en un objetivo de minería de datos y un criterio de éxito verificable, antes de escribir una sola línea de código.\n\n\n  \n    Entregable 1\n    Bitácora de la reunión\n    Registro de la entrevista con los tres stakeholders, con la fuente que sustenta cada respuesta y la reflexión del equipo.\n  \n\n  \n    Entregable 2\n    Business Understanding Canvas\n    Síntesis de una página: objetivo de negocio, situación, objetivo de minería de datos, criterios de éxito y plan.\n  \n\n  \n    Entregable 3\n    Preguntas de investigación\n    Cuatro preguntas priorizadas por impacto y factibilidad, una de ellas documentada como fuera del alcance.\n  \n\n  \n    Entregable 4\n    Criterio de éxito\n    Enunciado en lenguaje del stakeholder y su vínculo con las medidas técnicas que lo verificarán.\n  \n\n  \n    Entregable 5\n    Supuestos y riesgos\n    Seis supuestos a validar y ocho riesgos clasificados, con probabilidad, impacto, mitigación y tratamiento.\n  \n\n  \n    Documentación\n    Uso de herramientas de IA\n    Registro de los cuatro usos de modelos de lenguaje, con prompts íntegros y revisión crítica de cada salida.\n  \n\n\nComo material de respaldo, el expediente de fuentes reúne las catorce fichas documentales que sustentan las respuestas del stakeholder simulado, con institución emisora, enlace y fecha de consulta.",
+    "crumbs": [
+      "Inicio"
+    ]
+  },
+  {
+    "objectID": "index.html#metodología",
+    "href": "index.html#metodología",
+    "title": "Proyecto Integrador de Minería de Datos",
+    "section": "Metodología",
+    "text": "Metodología\nEl proyecto sigue CRISP-DM y se construye de forma incremental a lo largo del semestre. Este sitio es el mismo durante todas las fases: cada entrega añade sus páginas sin reemplazar las anteriores.\n\n\n\n#\nFase CRISP-DM\nEstado\n\n\n\n\n1\nComprensión del negocio\nEn curso — entrega E0\n\n\n2\nComprensión de los datos\nPendiente\n\n\n3\nPreparación de los datos\nPendiente\n\n\n4\nModelado\nPendiente\n\n\n5\nEvaluación\nPendiente\n\n\n6\nDespliegue\nIntegrada en el reporte y la presentación final\n\n\n\n\n\n\n\n\n\nAdvertenciaSobre la organización del caso\n\n\n\nEl stakeholder de este proyecto es simulado. Pagos Lumen no es una institución real: es un caso construido por el equipo a partir de fuentes públicas verificables sobre el fraude financiero en México, el sector de tecnología financiera y su marco regulatorio. Los parámetros operativos del caso están calibrados con referencias de industria y declarados de forma explícita como supuestos en el expediente de fuentes.",
+    "crumbs": [
+      "Inicio"
+    ]
   }
 ]

@@ -4,28 +4,66 @@ project:
   render:
     - "**/*.qmd"
   resources:
-    - "entregas/E0_comprension_negocio/fuentes/*.qmd"
+    - .nojekyll
 
 website:
   title: "Proyecto Minería de Datos"
+  description: "Proyecto integrador del curso Almacenes y Minería de Datos, Facultad de Ciencias, UNAM."
+  search: true
+  page-navigation: true
+
   navbar:
     left:
       - href: index.qmd
         text: Inicio
-      - text: "E0 · Comprensión del negocio"
-        menu:
-          - entregas/E0_comprension_negocio/bitacora.qmd
-          - entregas/E0_comprension_negocio/canvas.qmd
-          - entregas/E0_comprension_negocio/preguntas.qmd
-          - entregas/E0_comprension_negocio/criterio_exito.qmd
-          - entregas/E0_comprension_negocio/riesgos_supuestos.qmd
-          - entregas/E0_comprension_negocio/uso_ia.qmd
-          - text: "---"
-          - entregas/E0_comprension_negocio/fuentes/expediente.qmd
+    right:
+      - href: https://github.com/USUARIO/REPOSITORIO
+        text: "Repositorio"
+        icon: github
+        aria-label: Repositorio en GitHub
+
+  sidebar:
+    style: floating
+    collapse-level: 2
+    contents:
+      - href: index.qmd
+        text: Inicio
+      - section: "E0 · Comprensión del negocio"
+        contents:
+          - href: entregas/E0_comprension_negocio/bitacora.qmd
+            text: "1 · Bitácora"
+          - href: entregas/E0_comprension_negocio/canvas.qmd
+            text: "2 · Canvas"
+          - href: entregas/E0_comprension_negocio/preguntas.qmd
+            text: "3 · Preguntas de investigación"
+          - href: entregas/E0_comprension_negocio/criterio_exito.qmd
+            text: "4 · Criterio de éxito"
+          - href: entregas/E0_comprension_negocio/riesgos_supuestos.qmd
+            text: "5 · Supuestos y riesgos"
+          - href: entregas/E0_comprension_negocio/uso_ia.qmd
+            text: "6 · Uso de herramientas de IA"
+          - section: "Material de respaldo"
+            contents:
+              - href: entregas/E0_comprension_negocio/fuentes/expediente.qmd
+                text: "Expediente de fuentes"
+
+  page-footer:
+    center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"
+    right:
+      - href: https://github.com/USUARIO/REPOSITORIO
+        text: "Repositorio"
+        icon: github
 
 format:
   html:
-    theme: cosmo
+    theme:
+      light: cosmo
+      dark: darkly
     css: styles.css
     toc: true
+    toc-depth: 3
     lang: es
+    anchor-sections: true
+    smooth-scroll: true
+    linestretch: 1.6
+    fontsize: "16px"

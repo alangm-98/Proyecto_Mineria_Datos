@@ -1,1 +1,331 @@
-/* css styles */
+/* ============================================================
+   Proyecto Integrador de Minería de Datos
+   Hoja de estilos del sitio
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. TIPOGRAFÍA Y TEXTO
+
+   ------------------------------------------------------------ */
+
+p,
+li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto; /* evita ríos de espacio en blanco */
+}
+
+/* El justificado estorba en tablas y encabezados */
+td,
+th,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-align: left;
+  hyphens: none;
+}
+
+/* Un poco más de aire entre líneas para lectura larga */
+main p {
+  line-height: 1.65;
+}
+
+/* ------------------------------------------------------------
+   2. TABLAS
+   Las de riesgos y de mapeo tienen muchas columnas.
+   ------------------------------------------------------------ */
+
+main table {
+  font-size: 0.92em;
+  width: 100%;
+}
+
+main table th {
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 600;
+  vertical-align: bottom;
+}
+
+main table td {
+  vertical-align: top;
+  padding: 0.55em 0.6em;
+}
+
+/* Alterna el fondo de las filas: ayuda mucho en tablas largas */
+main table tbody tr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.015);
+}
+
+/* Primera columna angosta cuando es un número de ficha o riesgo */
+/* ============================================================
+   Proyecto Integrador de Minería de Datos
+   Hoja de estilos del sitio
+   ============================================================ */
+
+/* ------------------------------------------------------------
+   1. TIPOGRAFÍA Y TEXTO
+
+   ------------------------------------------------------------ */
+
+p,
+li {
+  text-align: justify;
+  text-justify: inter-word;
+  hyphens: auto; /* evita ríos de espacio en blanco */
+}
+
+/* El justificado estorba en tablas y encabezados */
+td,
+th,
+h1,
+h2,
+h3,
+h4,
+h5 {
+  text-align: left;
+  hyphens: none;
+}
+
+/* Un poco más de aire entre líneas para lectura larga */
+main p {
+  line-height: 1.65;
+}
+
+/* ------------------------------------------------------------
+   2. TABLAS
+   Las de riesgos y de mapeo tienen muchas columnas.
+   ------------------------------------------------------------ */
+
+main table {
+  font-size: 0.92em;
+  width: 100%;
+}
+
+main table th {
+  background: rgba(0, 0, 0, 0.04);
+  font-weight: 600;
+  vertical-align: bottom;
+}
+
+main table td {
+  vertical-align: top;
+  padding: 0.55em 0.6em;
+}
+
+/* Alterna el fondo de las filas: ayuda mucho en tablas largas */
+main table tbody tr:nth-child(odd) {
+  background: rgba(0, 0, 0, 0.015);
+}
+
+/* Primera columna angosta cuando es un número de ficha o riesgo */
+main table td:first-child {
+  white-space: nowrap;
+}
+
+/* En pantallas chicas, deja la tabla desplazable en lugar de romperla */
+@media (max-width: 768px) {
+  main table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+  main table td {
+    white-space: normal;
+    min-width: 140px;
+  }
+}
+
+/* ------------------------------------------------------------
+   3. ENLACES LARGOS
+   El expediente tiene URLs de normatividad muy extensas.
+   ------------------------------------------------------------ */
+
+main a {
+  overflow-wrap: anywhere;
+  word-break: normal;
+}
+
+/* Las listas de fuentes se leen mejor con menos separación */
+main ul li {
+  margin-bottom: 0.25em;
+}
+
+/* ------------------------------------------------------------
+   4. CALLOUTS
+   Se usan mucho en bitácora, criterio de éxito y expediente.
+   ------------------------------------------------------------ */
+
+/* Los "minimal" quedan algo apretados por defecto */
+.callout.callout-style-simple {
+  padding: 0.5em 0.8em;
+}
+
+.callout-title {
+  margin-bottom: 0.4em !important;
+}
+
+/* Las citas dentro de la bitácora: distinguirlas del resto */
+.callout em {
+  font-style: italic;
+  opacity: 0.92;
+}
+
+/* ------------------------------------------------------------
+   5. BLOQUES DE CÓDIGO
+   Los prompts íntegros de uso_ia.qmd son muy largos.
+   ------------------------------------------------------------ */
+
+.callout pre {
+  max-height: 420px;
+  overflow-y: auto;
+  font-size: 0.82em;
+  line-height: 1.5;
+}
+
+/* ------------------------------------------------------------
+   6. CANVAS
+   Debe caber en una página. En móvil, la rejilla de 3 columnas
+   es ilegible: se colapsa a una sola.
+   ------------------------------------------------------------ */
+
+@media (max-width: 900px) {
+  .buc-canvas {
+    grid-template-columns: 1fr !important;
+  }
+  .buc-canvas > div {
+    grid-column: span 1 !important;
+  }
+  .buc-canvas > div > div[style*="grid"] {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+/* ------------------------------------------------------------
+   7. IMPRESIÓN
+   Importa para el Canvas, que la rúbrica exige en una página.
+   ------------------------------------------------------------ */
+
+@media print {
+  /* Fuera navegación y elementos del sitio */
+  .navbar,
+  #quarto-sidebar,
+  #quarto-margin-sidebar,
+  .nav-footer,
+  #TOC,
+  .toc-actions {
+    display: none !important;
+  }
+
+  main {
+    max-width: 100% !important;
+    margin: 0 !important;
+  }
+
+  /* Conserva los colores de los bloques del canvas */
+  .buc-canvas,
+  .buc-canvas * {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  /* Evita que un bloque del canvas quede partido entre páginas */
+  .buc-canvas > div,
+  .callout,
+  table {
+    break-inside: avoid;
+  }
+
+  a {
+    text-decoration: none;
+    color: inherit;
+  }
+}
+
+/* ------------------------------------------------------------
+   8. PORTADA
+   Tarjetas de acceso a los entregables.
+   ------------------------------------------------------------ */
+
+.tarjeta {
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
+}
+
+.tarjeta:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.08);
+}
+
+/* ============================================================
+   9. MODO OSCURO
+
+   ============================================================ */
+
+/* --- Tablas --------------------------------------------------- */
+
+body.quarto-dark main table th {
+  background: rgba(255, 255, 255, 0.07);
+}
+
+body.quarto-dark main table tbody tr:nth-child(odd) {
+  background: rgba(255, 255, 255, 0.025);
+}
+
+/* --- Canvas: títulos de bloque -------------------------------- */
+/* Los tonos originales son oscuros y desaparecen sobre negro.    */
+
+body.quarto-dark .buc-canvas h5 {
+  filter: brightness(2.6) saturate(0.85);
+}
+
+/* El bloque 6 usa un gris casi blanco que se pierde en oscuro */
+body.quarto-dark .buc-canvas > div[style*="rgba(0,0,0,0.02)"] {
+  background: rgba(255, 255, 255, 0.045) !important;
+  border-color: #888 !important;
+}
+
+body.quarto-dark .buc-canvas > div[style*="rgba(0,0,0,0.02)"] h5 {
+  color: #d8d8d8 !important;
+  filter: none;
+}
+
+/* Los fondos tintados funcionan igual en ambos modos, pero en
+   oscuro conviene subirles un poco la opacidad para que se vean */
+body.quarto-dark .buc-canvas > div {
+  background-blend-mode: screen;
+}
+
+/* --- Portada: tarjetas de entregables -------------------------- */
+
+body.quarto-dark .tarjeta {
+  background: rgba(255, 255, 255, 0.04) !important;
+}
+
+body.quarto-dark .tarjeta:hover {
+  background: rgba(255, 255, 255, 0.07) !important;
+  box-shadow: 0 3px 10px rgba(0, 0, 0, 0.4);
+}
+
+/* --- Callouts -------------------------------------------------- */
+
+body.quarto-dark .callout-title {
+  color: inherit;
+}
+
+/* --- Impresión ------------------------------------------------- */
+/* Imprimir en modo oscuro gasta tinta y se lee mal: se fuerza
+   la apariencia clara en el papel.                               */
+
+@media print {
+  body.quarto-dark,
+  body.quarto-dark main {
+    background: #fff !important;
+    color: #000 !important;
+  }
+  body.quarto-dark .buc-canvas h5 {
+    filter: none !important;
+  }
+}

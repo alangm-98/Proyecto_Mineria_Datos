@@ -4,17 +4,6 @@ date: last-modified
 toc: false
 ---
 
-<style>
-  p, li {
-    text-align: justify;
-    text-justify: inter-word;
-  }
-  .tarjeta:hover {
-    transform: translateY(-2px);
-    transition: transform 0.15s ease;
-  }
-</style>
-
 ::: {.callout-note appearance="minimal"}
 **Almacenes y Minería de Datos** · Facultad de Ciencias, UNAM
 **Equipo:** Luis Flores · Alan García · Melanie Rangel

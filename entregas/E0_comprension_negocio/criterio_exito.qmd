@@ -4,12 +4,6 @@ subtitle: "Enunciado de negocio y su vínculo con la medida técnica"
 date: last-modified
 ---
 
-<style>
-  p, li, table {
-    text-align: justify;
-    text-justify: inter-word;
-  }
-</style>
 
 ::: {.callout-tip appearance="minimal" title="Enunciado de negocio"}
 

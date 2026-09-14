@@ -3,13 +3,6 @@ title: "3. Preguntas de investigación priorizadas"
 date: last-modified
 ---
 
-<style>
-  p, li, table {
-    text-align: justify;
-    text-justify: inter-word;
-  }
-</style>
-
 El objetivo de minería de datos formulado en el [Canvas](canvas.qmd) (rdenar las transacciones
 por riesgo para alimentar una cola de revisión de longitud fija) se descompone en las preguntas
 siguientes. Mencionando que se priorizan según su impacto en el problema de negocio y la factibilidad de

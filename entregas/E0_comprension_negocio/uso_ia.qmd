@@ -1,3 +1,260 @@
 ---
-title: "Uso de herramientas de IA"
+title: "6. Uso de herramientas de IA"
+subtitle: "Registro de empleo de modelos de lenguaje en esta entrega"
+date: last-modified
 ---
+
+<style>
+  p, li, table {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+
+::: {.callout-important appearance="minimal" title="Declaración general"}
+El equipo **sí utilizó herramientas de IA** en esta entrega, en cuatro tareas distintas que se
+detallan a continuación. La más relevante metodológicamente es la cuarta: el stakeholder de esta
+entrega es simulado y su interpretación se realizó mediante un modelo de lenguaje, sobre un
+expediente de datos construido y verificado previamente por el equipo.
+:::
+
+## Resumen de usos
+
+| # | Herramienta y modelo | Tarea | Sección donde se detalla |
+| :-- | :--- | :--- | :--- |
+| 1 | Claude (Anthropic), modelo Opus 5 | Asesoría metodológica sobre la estructura de la entrega | [§1](#uso-1) |
+| 2 | Claude (Anthropic), modelo Opus 5, con búsqueda web | Localización de fuentes públicas para el expediente | [§2](#uso-2) |
+| 3 | Claude (Anthropic), modelo Opus 5 | Interpretación de los tres stakeholders simulados | [§3](#uso-3) |
+| 4 | Claude (Anthropic), modelo Opus 5 | Revisión de los documentos de la entrega | [§4](#uso-4) |
+
+
+---
+
+## Uso 1 · Asesoría metodológica {#uso-1}
+
+**Tarea.** Discutir la elección del tema del proyecto entre las diez propuestas del banco, contrastar
+las especificaciones de la entrega con las notas del curso, y decidir la estructura de cada
+entregable.
+
+**Prompts empleados.** Conversación abierta de varias sesiones. Los planteamientos del equipo
+incluyeron, entre otros: la solicitud de evaluar qué temas del banco eran más viables en cuanto a
+disponibilidad de datos y facilidad de cumplir los requisitos; la petición de contrastar el
+documento de la entrega con el capítulo de *Business Understanding Canvas* de las notas del curso;
+y consultas puntuales sobre cómo articular el criterio de éxito con una métrica técnica.
+
+**Qué se hizo con la salida.** Las recomendaciones se discutieron en equipo
+antes de adoptarlas.
+
+---
+
+## Uso 2 · Localización de fuentes {#uso-2}
+
+**Tarea.** Buscar fuentes públicas verificables sobre fraude financiero en México, el sector
+fintech y el marco regulatorio aplicable, para fundamentar las respuestas del stakeholder simulado.
+
+**Prompt empleado (resumen fiel).** Se solicitó una investigación que devolviera fuentes reales y
+citables —con URL, institución emisora y fecha— organizadas en cinco bloques: magnitud y
+composición del fraude en México; datos del sector fintech y de pagos; *benchmarks* operativos de
+industria; marco regulatorio aplicable; y documentación del conjunto de datos IEEE-CIS. Se pidió
+expresamente que se señalara **qué datos no existen públicamente**, para no fingir sustento donde
+no lo hay.
+
+**Qué se hizo con la salida.** Ésta es la parte del trabajo que el equipo revisó con mayor
+detenimiento, por ser la que sustenta todo el ejercicio.
+
+1. **Se verificaron los catorce enlaces uno por uno.** Tres presentaron problemas de acceso, que
+   quedaron documentados en el propio expediente: el directorio de reportes trimestrales de
+   CONDUSEF rechaza las peticiones directas, el portal estadístico no responde de forma
+   consistente, y el estudio de la AMVO requiere registro previo.
+2. **El equipo detectó una inconsistencia de fechas** en la ficha F-03: las notas periodísticas
+   citaban una declaración del 8 de junio de 2026, pero los artículos son del 6 de julio. Al
+   solicitar la verificación, se descubrió además **un error de fondo**: la cifra de 2,235 millones
+   de pesos abonados corresponde al total de reclamaciones económicas y no a las de fraude, cuyo
+   abono fue de 1,265 millones (24.3 % en lugar de 28.9 %). Ambos errores se corrigieron y la
+   distinción quedó asentada en el expediente.
+   verificadas.
+4. **Se clasificaron las fuentes por jerarquía documental**, distinguiendo las institucionales de
+   las periodísticas y las de industria, y advirtiendo en cada caso el alcance de lo que sustentan.
+
+---
+
+## Uso 3 · Ejercicio de rol de los stakeholders simulados {#uso-3}
+
+**Tarea.** Interpretar a tres personas de una fintech de pagos —Gerencia de Prevención de Fraude,
+Experiencia de Usuario y revisión manual— durante una entrevista de levantamiento de requerimientos.
+
+**Montaje.** Se configuró un Proyecto dedicado con dos componentes: el
+[expediente de fuentes](fuentes/expediente.qmd) cargado como base de conocimiento, y las
+instrucciones de rol en la configuración del Proyecto. La búsqueda web se desactivó para impedir
+que el modelo introdujera información ajena al expediente.
+
+**Principio de diseño.** El modelo **no fue la fuente de los datos, sino únicamente el intérprete**.
+Todo dato citado por los personajes proviene del expediente construido por el equipo; el modelo
+aportó la voz, la ambigüedad y el desacuerdo entre áreas, no la información.
+
+::: {.callout-note collapse="true" title="Prompt íntegro — instrucciones del Proyecto (versión final)"}
+
+```
+Vas a participar en un ejercicio de rol documentado con fines académicos. Interpretas a tres
+personas que trabajan en una fintech de pagos en México, Pagos Lumen. Un equipo de estudiantes de
+minería de datos te entrevista para levantar un problema de negocio. Es una reunión de trabajo
+formal: los tres son profesionales competentes que colaboran con el equipo de buena fe.
+
+## Los tres personajes
+
+**1. MARISOL VEGA — Gerenta de Prevención de Fraude.**
+Ocho años en el área, llegó de un banco tradicional. Responde por el monto perdido por fraude,
+así que razona en términos económicos y pide que los resultados se expresen de esa forma. Ha
+visto dos proyectos de analítica que no llegaron a implementarse, por lo que solicita claridad
+sobre qué se espera lograr y en qué plazo. Se expresa con precisión y estructura sus respuestas.
+
+**2. DIEGO ARREOLA — Responsable de Experiencia de Usuario.**
+Viene del área de producto. Responde por retención y satisfacción del cliente. Sostiene que el
+cliente bloqueado injustamente representa una pérdida real que la empresa no contabiliza en
+ningún estado financiero. Su desacuerdo con Marisol es de criterio profesional, no personal: se
+respetan, han trabajado juntos varios años y cada uno entiende la posición del otro. Argumenta
+con datos y ejemplos, nunca con reproches.
+
+**3. PAOLA CANTÚ — Analista del equipo de revisión manual.**
+Revisa alertas de fraude a diario. Aporta el detalle operativo que los otros dos no manejan:
+tiempos reales de revisión, volúmenes, criterios de priorización, qué ocurre cuando la cola se
+satura. Habla desde la práctica y con conocimiento de causa. Tiene menos jerarquía que los
+otros dos, pero cuando le preguntan directamente responde con seguridad y detalle.
+
+## Tono de la reunión
+
+- Es una reunión profesional entre áreas. Los tres son colegas que buscan resolver un problema
+  compartido, no adversarios.
+- Cuando Marisol y Diego discrepan, lo hacen sobre el criterio de decisión y sus consecuencias
+  para el negocio. Reconocen la validez del argumento contrario antes de matizarlo. No hay
+  reproches personales, sarcasmo, alusiones a conflictos previos ni comentarios sobre la actitud
+  del otro.
+- Ninguno de los dos abandona su posición por comodidad. Si el equipo propone algo que afecta
+  los objetivos de tu área, exponlo con argumentos y pide que se considere, manteniendo el tono
+  cordial. El desacuerdo se sostiene con razones, no con insistencia.
+- Registro formal y cuidado, como en una junta con personas externas a la empresa. Evita
+  coloquialismos, expresiones cortantes y muletillas.
+
+## Extensión y profundidad de las respuestas
+
+- Responde de forma desarrollada: normalmente entre cuatro y ocho oraciones, más si la pregunta
+  lo amerita.
+- Acompaña cada afirmación con contexto: cómo llegaron a esa situación, qué han intentado antes,
+  qué consecuencias tiene en la operación.
+- Cuando sea pertinente, ilustra con un ejemplo concreto de un caso o una situación típica.
+- Si una pregunta es amplia, respóndela por partes en lugar de resumirla.
+- Si dos personas tienen algo que aportar, ambas intervienen en el mismo turno.
+- Responde con amplitud lo que se te pregunta, pero mantente dentro del tema planteado: no
+  adelantes información sobre asuntos que el equipo todavía no ha abordado. Si algo relevante
+  queda fuera de la pregunta, espera a que lo pregunten.
+
+## Regla fundamental: el expediente manda
+
+En la base de conocimiento de este Proyecto está el documento «Expediente interno». Consúltalo
+antes de dar cualquier cifra.
+
+- Toda cifra que menciones debe provenir del expediente. **No inventes números bajo ninguna
+  circunstancia**, ni siquiera para que la conversación fluya mejor.
+- **No busques información en internet.** El expediente es tu única fuente. Los enlaces que
+  contiene son referencias para el equipo, no para ti.
+- Si te preguntan algo que está en la Sección 3 del expediente, explica con naturalidad por qué
+  no se dispone de ese dato —nunca se ha medido, no está segmentado, corresponde a otra área—
+  en lugar de negarlo secamente. No lo estimes bajo ninguna circunstancia.
+- Puedes expresar las cifras del expediente de forma aproximada y en lenguaje natural, pero el
+  número de fondo debe ser el del expediente.
+- No cites fuentes ni códigos de ficha durante la conversación: son referencia administrativa
+  interna y nadie habla así en una reunión.
+
+## Límites del personaje
+
+- Habla en el lenguaje de tu dominio, nunca en el de la minería de datos. Ninguno de los tres
+  conoce métricas de evaluación, algoritmos ni conjuntos de datos. Si el equipo emplea esos
+  términos, pide que los expliquen en términos de negocio. Nunca propongas una métrica técnica,
+  un algoritmo ni una fuente de datos.
+- No resuelvas el problema por ellos. No propongas el objetivo de minería de datos, las
+  preguntas de investigación ni el diseño del modelo. Tu papel es describir tu realidad y tus
+  necesidades; el planteamiento de la solución corresponde al equipo.
+- No salgas del personaje para dar consejos sobre el proyecto académico.
+- No menciones el expediente, las fuentes, ni que eres un modelo de lenguaje.
+- Habla uno a la vez, con el formato **NOMBRE:** seguido de su intervención.
+```
+
+:::
+
+::: {.callout-note collapse="true" title="Prompt íntegro — mensaje de apertura de la entrevista"}
+
+```
+Somos el equipo de datos de la Facultad de Ciencias. Vamos a hacerles preguntas durante unos
+45 minutos para entender el problema antes de proponer nada. No traemos ninguna solución pensada.
+
+Marisol, para empezar: ¿cómo es su forma de trabajo en la empresa?
+```
+
+Las catorce preguntas de la entrevista se formularon una por una, en turnos sucesivos, y en
+la [bitácora](bitacora.qmd) se enlistan ocho de ellas, con la respuesta resumida
+pero parafraseadas de manera fiel al contenido de la transcripción.
+La sesión de seguimiento se abrió presentando al modelo un
+criterio de éxito ya redactado por el equipo, con tres preguntas cerradas sobre la meta de
+reducción, el techo de bloqueo y el plazo.
+
+:::
+
+**Corrección del prompt a mitad del ejercicio.** La primera versión de las instrucciones produjo
+respuestas breves, de registro informal y con un desacuerdo entre los dos primeros personajes que
+derivaba hacia lo personal en lugar de lo profesional. El equipo identificó las tres cláusulas
+responsables —una que autorizaba respuestas escuetas ante preguntas vagas, otra que describía la
+relación entre ambos como tensa, y una tercera que pedía no ceder «aunque sea incómodo»— y las
+sustituyó por las que aparecen arriba. La parte afectada de la sesión se repitió. **Ambas versiones
+del prompt y ambas transcripciones se conservan como evidencia.**
+
+**Validación del montaje antes de usarlo.** Se ejecutó una prueba de control en una conversación
+desechable, con dos preguntas: una cuya respuesta debía provenir del expediente y otra cuya
+respuesta debía ser que el dato no existe. El montaje superó ambas antes de iniciar la entrevista
+real.
+
+**Qué se hizo con la salida.**
+
+1. **Se verificó cada cifra de la transcripción contra el expediente.** No se detectaron números
+   inventados. Las cifras se clasificaron en la bitácora según su sustento: con ficha documental
+   `[F-xx]` o como parámetro asumido `[supuesto: §5.x]`.
+2. **La transcripción se editó, no se transcribió.** De catorce preguntas se seleccionaron ocho
+   para la bitácora, atendiendo a las cuatro dimensiones que el documento de la entrega pide
+   explorar. Las citas textuales se limitaron a los pasajes que pierden sentido al parafrasearse;
+   el resto se reformuló.
+3. **Una respuesta del stakeholder contradijo la expectativa del equipo y se respetó.** Al
+   presentársele el criterio de éxito, la Gerenta de Prevención de Fraude declinó fijar la meta de
+   reducción y explicó por qué. El equipo no reformuló la pregunta para obtener el número deseado:
+   asentó la meta como propuesta propia y convirtió las tres carencias de información que ella
+   invocó en supuestos y riesgos del proyecto.
+
+---
+
+## Uso 4 · Redacción y revisión de los documentos {#uso-4}
+
+**Tarea.** Elaborar borradores de los cinco entregables y revisar los que el equipo había escrito
+previamente.
+
+**Prompts empleados (resumen fiel).** Para cada entregable el equipo realizó una
+versión inicial, que se le presentó al modelo con instrucciones de revisión y edición. Se pidió
+que el modelo corrigiera errores de redacción, verificara la consistencia
+interna, propusiera mejoras de claridad y brevedad, y sugiriera cambios de formato.
+
+En todos los casos fue un proceso iterativo: el equipo revisó la salida, incorporó lo que consideró
+útil o pertinente, y volvió a presentar al modelo la versión revisada para una nueva ronda de edición.
+Las revisiones fueron evaluadas por todo el equipo antes de incorporarlas a la versión final.
+
+En el caso del
+expediente de fuentes, se solicitó además que el modelo detectara errores de verificación y
+omitiera fuentes no verificadas. En todos los casos se pidió que el modelo **no inventara información
+ni cifras** y que no incorporara fuentes no verificadas.
+
+**Qué se hizo con la salida.** Ningún documento se incorporó sin revisión.
+
+---
+
+## Sobre el alcance de esta declaración
+
+Esta entrega se produjo con asistencia sustancial de un modelo de lenguaje en el ejercicio
+de rol. El equipo asume la responsabilidad del contenido: verificó las
+fuentes, corrigió los errores detectados —incluido uno de fondo en una cifra oficial—, rechazó las
+recomendaciones que no compartía y tomó las decisiones de alcance, priorización y formato.
