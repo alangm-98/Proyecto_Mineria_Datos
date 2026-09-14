@@ -110,23 +110,23 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/canvas.html">
- <span class="dropdown-text">Business Understanding Canvas</span></a>
+ <span class="dropdown-text">2. Business Understanding Canvas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/preguntas.html">
- <span class="dropdown-text">Preguntas de investigación</span></a>
+ <span class="dropdown-text">3. Preguntas de investigación priorizadas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/criterio_exito.html">
- <span class="dropdown-text">Criterio de éxito</span></a>
+ <span class="dropdown-text">4. Criterio de éxito</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html">
- <span class="dropdown-text">Supuestos y riesgos</span></a>
+ <span class="dropdown-text">5. Supuestos y riesgos</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/uso_ia.html">
- <span class="dropdown-text">Uso de herramientas de IA</span></a>
+ <span class="dropdown-text">6. Uso de herramientas de IA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -246,19 +246,19 @@ ul.task-list li input[type="checkbox"] {
 </tr>
 </tbody>
 </table>
-<p><strong>Contexto</strong>: Pagos Lumen es una Institución de Fondos de Pago Electrónico autorizada conforme a la Ley Fintech <strong>[F-11]</strong>, con unos 1.2 millones de transacciones mensuales —cerca de 40 mil diarias, con ticket promedio de $850— concentradas en comercio electrónico <em>[supuesto: §5.1]</em>. Cada transacción pasa por un motor de reglas fijas que decide en tiempo real si la autoriza, la rechaza automáticamente —alrededor del 4.5 % de las operaciones— o la envía a revisión manual. El equipo operativo, de seis analistas y una supervisora, recibe unas 900 alertas diarias pero solo alcanza a revisar 300, porque cada caso toma en promedio seis minutos por la confirmación telefónica; las 600 restantes se autorizan automáticamente al cierre del día por falta de capacidad <em>[supuesto: §5.3]</em>. La reunión se convoca para determinar si un proyecto de datos puede mejorar esa detección, después de dos intentos previos de analítica que no llegaron a implementarse.</p>
+<p><strong>Contexto</strong>: Pagos Lumen es una Institución de Fondos de Pago Electrónico autorizada conforme a la Ley Fintech <strong>[F-11]</strong>, con 1.2 millones de transacciones mensuales (cerca de 40 mil diarias, con ticket promedio de $850) concentradas en comercio electrónico <em>[supuesto: §5.1]</em>. Cada transacción pasa por un motor de reglas fijas que decide en tiempo real si la autoriza, la rechaza automáticamente (donde alrededor del 4.5 % de las operaciones son rechazadas) o la envía a revisión manual. El equipo operativo, de seis analistas y una supervisora, recibe unas 900 alertas diarias pero solo se alcanza a revisar 300, esto debido a que cada caso toma en promedio seis minutos por la confirmación telefónica; mientras que las 600 restantes se autorizan automáticamente al cierre del día por falta de capacidad <em>[supuesto: §5.3]</em>. La reunión se convoca para determinar si un proyecto de datos puede mejorar esa detección de anomalías, después de dos intentos previos de analítica que no llegaron a implementarse.</p>
 <p><strong>Preguntas formuladas y respuestas</strong>:</p>
 <ul>
 <li><em>“¿Cuál es el problema y desde cuándo lo han identificado?”</em>
 <ul>
-<li><strong>Marisol Vega</strong> <em>[supuesto: §5.2 · referencia externa F-07]</em>: la pérdida por fraude ronda el 0.8 % del valor transaccionado, unos 8.2 millones de pesos mensuales, con una tasa de contracargo de 0.9 % frente a una referencia de mercado cercana al 0.46 %. No lo atribuye a un incidente puntual sino a un deterioro sostenido: <em>“los umbrales con los que opera el sistema llevan años sin recalibrarse, y el mercado no se quedó quieto en ese tiempo.”</em></li>
-<li><strong>Paola Cantú</strong> <em>[supuesto: §5.3]</em>: sitúa el punto de quiebre en otro momento y por otra señal. Para ella el problema se hizo evidente <em>“el día en que la cola dejó de vaciarse”</em>: terminar la jornada con casos sin abrir pasó de ser excepción a norma.</li>
-<li><strong>Diego Arreola</strong> <em>[supuesto: §5.2]</em>: lo formula de otra manera —no solo cuánto fraude entra, sino a cuánta gente honesta se le rechaza la compra para lograrlo— y estima en 3 % los rechazos indebidos sobre transacciones legítimas, advirtiendo que es una estimación de escritorio y no una medición.</li>
+<li><strong>Marisol Vega</strong> <em>[supuesto: §5.2 · referencia externa F-07]</em>: la pérdida por fraude ronda el 0.8 % del valor transaccionado, unos 8.2 millones de pesos mensuales, con una tasa de contracargo de 0.9 % frente a una referencia de mercado cercana al 0.46 %. No lo atribuye a un incidente puntual sino a un deterioro sostenido: <em>“los umbrales con los que opera el sistema llevan años sin reajustarse, y el mercado no se quedó quieto en ese tiempo.”</em></li>
+<li><strong>Paola Cantú</strong> <em>[supuesto: §5.3]</em>: sitúa el punto de quiebre en otro momento y por otra señal. Para ella el problema se hizo evidente,<em>“el día en que la cola dejó de vaciarse”</em>: terminar la jornada con casos sin abrir pasó de ser excepción a norma.</li>
+<li><strong>Diego Arreola</strong> <em>[supuesto: §5.2]</em>: lo formula de otra manera (plantea que no solo se basa en cuánto fraude entra, sino a cuánta gente honesta se le rechaza la compra para lograrlo) y estima en 3 % los rechazos indebidos sobre transacciones legítimas, advirtiendo que es una estimación de escritorio y no una medición.</li>
 </ul></li>
 <li><em>“¿Qué decisiones toman hoy sin ningún apoyo de datos?”</em>
 <ul>
-<li><strong>Paola Cantú</strong> <em>[supuesto: §5.3]</em>: la más frecuente es cuál caso abrir. Las alertas se toman por orden de llegada, sin señal de prioridad ni de monto en riesgo, lo que implica que cada día se decide sin saberlo que unos 600 casos se autoricen solos: <em>“Es una decisión que toma el reloj, no el criterio.”</em></li>
-<li><strong>Marisol Vega</strong> <em>[supuesto: §5.2]</em>: los valores exactos de las reglas no están documentados ni se sabe quién los fijó. La decisión de bloquear o no —40 mil veces al día— se toma con parámetros cuyo origen no puede reconstruirse.</li>
+<li><strong>Paola Cantú</strong> <em>[supuesto: §5.3]</em>: la más frecuente es cuál caso abrir. Las alertas se toman por orden de llegada, sin señal de prioridad ni de monto en riesgo, lo que implica que cada día se decide sin saber lo que unos 600 casos autorizan de manera automática: <em>“Es una decisión que toma el reloj, no el criterio.”</em></li>
+<li><strong>Marisol Vega</strong> <em>[supuesto: §5.2]</em>: los valores exactos de las reglas no están documentados ni se sabe quién los fijó. La decisión de bloquear o no (40 mil veces al día) se toma con parámetros cuyo origen no puede reconstruirse.</li>
 <li><strong>Diego Arreola</strong>: sostener el nivel de restricción actual también es una decisión sin datos sobre el cliente legítimo, y por eso ese costo <em>“en cualquier discusión interna pierde por incomparecencia”</em>: no se evalúa y se descarta, sino que no llega a la mesa con un número.</li>
 </ul></li>
 <li><em>“¿Quién planteó esas decisiones y con qué motivo?”</em>
@@ -267,7 +267,7 @@ ul.task-list li input[type="checkbox"] {
 </ul></li>
 <li><em>“¿Cuántas alertas pueden revisar sin contratar a nadie, y cuánto tardan en cada una?”</em>
 <ul>
-<li><strong>Paola Cantú</strong> <em>[supuesto: §5.3 · marco regulatorio F-12]</em>: 300 casos diarios como techo —seis analistas a unos 50 casos cada uno— con seis minutos promedio por caso. Precisa que el análisis de la operación toma un minuto o minuto y medio y que el resto se va en localizar al tarjetahabiente por teléfono, obligatorio porque la regulación prohíbe el consentimiento tácito: <em>“El límite no es la velocidad del analista ni las ganas, es la llamada.”</em></li>
+<li><strong>Paola Cantú</strong> <em>[supuesto: §5.3 · marco regulatorio F-12]</em>: 300 casos diarios como techo (seis analistas destinados a unos 50 casos cada uno) con seis minutos promedio por caso. Precisa que el análisis de la operación toma un minuto o minuto y medio, y que el resto se va en localizar al tarjetahabiente por teléfono, de manera obligatoria porque la regulación prohíbe el consentimiento tácito: <em>“El límite no es la velocidad del analista ni las ganas, es la llamada.”</em></li>
 <li><strong>Diego Arreola</strong>: matiza que ampliar el equipo no resolvería el problema, porque revisar el doble con el mismo criterio produciría también el doble de bloqueos.</li>
 </ul></li>
 <li><em>“¿Qué pasa con las alertas que no alcanzan a revisar? ¿Saben cuántas eran fraude?”</em>
@@ -284,7 +284,7 @@ ul.task-list li input[type="checkbox"] {
 <li><em>“¿Qué tendría que pasar para que dentro de tres meses digan que valió la pena?”</em>
 <ul>
 <li><strong>Marisol Vega</strong>: pide que el resultado se exprese en pesos y contra la línea base actual, y advierte que tres meses es corto porque una operación autorizada hoy puede volver como contracargo meses después. Añade un criterio que no es numérico: que exista una decisión operativa que hoy se toma de una manera y a partir de esto se tome de otra. Atribuye a esa ausencia el fracaso de los dos intentos previos: <em>“cuando llegó el momento de preguntar qué hacemos distinto el lunes siguiente, no había respuesta.”</em></li>
-<li><strong>Diego Arreola</strong>: plantea una condición de fracaso —que la pérdida baje porque se bloquea más— por ser trivialmente alcanzable apretando umbrales. <strong>Marisol Vega</strong> coincide sin reservas: <em>“tiene que cambiar la calidad de la decisión, no su severidad.”</em></li>
+<li><strong>Diego Arreola</strong>: plantea una condición de fracaso (que la pérdida baje porque se bloquea más) por ser trivialmente alcanzable apretando umbrales. <strong>Marisol Vega</strong> coincide sin reservas: <em>“tiene que cambiar la calidad de la decisión, no su severidad.”</em></li>
 <li><strong>Paola Cantú</strong>: lo mediría por la cola. Le bastaría con <em>“que las 300 que revisamos sean las 300 que valía la pena revisar”</em>, aunque el número de casos siguiera igual.</li>
 </ul></li>
 <li><em>“¿Qué restricciones debemos considerar antes de proponerles cualquier cosa?”</em>
@@ -326,7 +326,7 @@ ul.task-list li input[type="checkbox"] {
 <ul>
 <li><em>“¿El 20 % de reducción es una cifra que podría defender ante dirección como meta?”</em>
 <ul>
-<li><strong>Marisol Vega</strong>: declina fijar la meta y explica por qué. Para evaluar si un 20 % es ambicioso o modesto necesitaría saber dónde se concentra la pérdida —no está segmentada—, qué parte entró por las alertas no revisadas —nunca se midió— y con qué valores operan las reglas —no están documentados—. <em>“Cualquier cifra que yo les diera sería una invención con apariencia de criterio.”</em> Rechaza también dar un rango por la misma razón.</li>
+<li><strong>Marisol Vega</strong>: declina fijar la meta y explica por qué. Para evaluar si un 20 % es ambicioso o modesto necesitaría saber dónde se concentra la pérdida (no está segmentada), qué parte entró por las alertas no revisadas (nunca se midió) y con qué valores operan las reglas (no están documentados). <em>“Cualquier cifra que yo les diera sería una invención con apariencia de criterio.”</em> Rechaza también dar un rango por la misma razón.</li>
 <li>Confirma en cambio la <strong>línea base</strong> (8.2 millones mensuales, bloqueo en 4.5 %, capacidad de 300) y la <strong>defendibilidad</strong> de la meta propuesta: un 20 % equivale a cerca de 1.6 millones de pesos mensuales, cifra que sostendría ante dirección. Sugiere asentarla como meta de trabajo y no como compromiso, dejando escrito que se fijó sin línea base sobre las alertas no revisadas, y recomienda medir también la tasa de contracargo, porque si el monto baja y el contracargo no se mueve el efecto aún no termina de manifestarse.</li>
 </ul></li>
 <li><em>“¿El techo del 4.5 % recoge bien su condición, o pediría que además bajara?”</em>
@@ -349,11 +349,10 @@ ul.task-list li input[type="checkbox"] {
 </div>
 <section id="reflexión-del-equipo" class="level2">
 <h2 class="anchored" data-anchor-id="reflexión-del-equipo">Reflexión del equipo</h2>
-<p>La entrevista cambió el planteamiento en tres puntos, y en los tres el cambio fue de fondo.</p>
-<p><strong>El problema no es detectar fraude, es decidir qué revisar.</strong> Entramos suponiendo que el objetivo sería clasificar transacciones como fraudulentas o legítimas. Lo que encontramos es una cola de 900 alertas diarias contra una capacidad de 300, priorizada por orden de llegada. El sistema ya detecta más de lo que la organización puede atender; lo que falta no es capacidad de detección sino de ordenamiento. Paola lo formuló mejor que nosotros al decir que le bastaría con que las 300 que revisa sean las que valía la pena revisar.</p>
-<p><strong>La capacidad no es ampliable, y eso restringe la solución más de lo que esperábamos.</strong> Suponíamos que los seis minutos por caso podrían reducirse. Al desglosarlos resultó que el análisis toma alrededor de un minuto y el resto es la llamada de confirmación, obligatoria por regulación. Eso elimina la vía de optimizar el tiempo de revisión y deja como única palanca la selección de casos, lo que a su vez determina la forma de la métrica técnica: el volumen a evaluar está fijado por la operación, no por el modelo.</p>
-<p><strong>El obstáculo real no es técnico.</strong> Dos pérdidas compiten en cada decisión y solo una tiene número. No encontramos a nadie que hubiera decidido priorizar el fraude sobre el cliente; lo que hay es un sistema de medición que solo observa un lado y una estructura de incentivos que, como señaló Marisol, premia la restricción y no penaliza el exceso. Esto reorientó nuestras preguntas de investigación: además de mejorar la detección, conviene preguntarse si el proyecto puede producir evidencia sobre el lado que hoy carece de ella.</p>
-<p><strong>Sobre el método.</strong> Las primeras respuestas del ejercicio de rol resultaron demasiado breves y de registro informal, por lo que el equipo ajustó el planteamiento y repitió esa parte de la sesión; ambas versiones se conservan como evidencia. La negativa de la stakeholder a fijar la meta de reducción no se trató como una respuesta fallida: las tres carencias de información que invocó para justificarla se incorporaron como supuestos y riesgos del proyecto.</p>
+<p>Al comienzo del proyecto se tenía en mente detectar el fraude mediante filtros o coincidencias entre las distintas transacciones. Dichas condiciones alertarían sobre un posible fraude donde se llevaría a cabo el proceso para evitar que estas transacciones ocurran, sin embargo, al indagar en la situación, se plantea definir un modelo completamente distinto, en donde debemos priorizar las alertas que sean de mayor importancia de modo que sean analizadas primero, con el objetivo de evitar pérdidas mayores mientras se mantiene la cantidad que se puede manejar de clientes.</p>
+<p>Teniendo en cuenta que la capacidad no es ampliable, se restringe la solución más de lo que esperábamos. Ya que el análisis toma alrededor de un minuto y el resto es la llamada de confirmación, obligatoria por regulación. Eso elimina la vía de optimizar el tiempo de revisión, dejando como única opción la selección de casos, donde: el volumen a evaluar está fijado por la operación, no por el modelo.</p>
+<p>Para llegar a la solución no es tan simple como definir la meta, si no cada pregunta que nos guíe hacia los “criterios de éxito”, ya que, está la perspectiva del equipo de datos (nosotros) y del equipo de Lumen (los entrevistados) sobre cuál sería el éxito en la situación, donde se debe llegar al acuerdo de un éxito que sea posible y medible mediante la implementación que realizaremos, el cual deberá seguir siendo útil adaptándose a las circunstancias (transacciones de mayor monto, distintas formas de fraude, mayor número de clientes con el mismo número de analistas), por lo que el sistema que se implemente debe ser capaz de manejar el cambio.</p>
+<p>Por otro lado, como menciona Diego, al bloquear a clientes legítimos entra la posibilidad de perder su confianza, priorizando la protección de los ingresos con la desventaja de que continúen dando uso a la plataforma por los problemas o retrasos que esta llegue a generar, de modo que el umbral que definiremos para las transacciones legítimas tratara de no perjudicar a los clientes, logrando así que se logren las transacciones eficientemente y los clientes estén satisfechos con el servicio. De este modo tanto el departamento de Diego y Marisol mejoran sus resultados, menos pérdidas y mayor retención de los clientes, respectivamente.</p>
 
 
 </section>

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Proyecto Integrador — Almacenes y Minería de Datos – Proyecto Minería de Datos</title>
+<title>Proyecto Integrador de Minería de Datos – Proyecto Minería de Datos</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -78,7 +78,7 @@ ul.task-list li input[type="checkbox"] {
 <link rel="stylesheet" href="styles.css">
 </head>
 
-<body class="nav-fixed quarto-light">
+<body class="nav-fixed fullcontent quarto-light">
 
 <div id="quarto-search-results"></div>
   <header id="quarto-header" class="headroom fixed-top">
@@ -110,23 +110,23 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="./entregas/E0_comprension_negocio/canvas.html">
- <span class="dropdown-text">Business Understanding Canvas</span></a>
+ <span class="dropdown-text">2. Business Understanding Canvas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./entregas/E0_comprension_negocio/preguntas.html">
- <span class="dropdown-text">Preguntas de investigación</span></a>
+ <span class="dropdown-text">3. Preguntas de investigación priorizadas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./entregas/E0_comprension_negocio/criterio_exito.html">
- <span class="dropdown-text">Criterio de éxito</span></a>
+ <span class="dropdown-text">4. Criterio de éxito</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./entregas/E0_comprension_negocio/riesgos_supuestos.html">
- <span class="dropdown-text">Supuestos y riesgos</span></a>
+ <span class="dropdown-text">5. Supuestos y riesgos</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="./entregas/E0_comprension_negocio/uso_ia.html">
- <span class="dropdown-text">Uso de herramientas de IA</span></a>
+ <span class="dropdown-text">6. Uso de herramientas de IA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -146,15 +146,13 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
-    </div>
+    
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Proyecto Integrador — Almacenes y Minería de Datos</h1>
+<h1 class="title">Proyecto Integrador de Minería de Datos</h1>
 </div>
 
 
@@ -162,6 +160,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">13 de septiembre de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -171,8 +175,135 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<style>
+  p, li {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .tarjeta:hover {
+    transform: translateY(-2px);
+    transition: transform 0.15s ease;
+  }
+</style>
+<div class="callout callout-style-simple callout-note no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>Almacenes y Minería de Datos</strong> · Facultad de Ciencias, UNAM <strong>Equipo:</strong> Luis Flores · Alan García · Melanie Rangel <strong>Profesora:</strong> Jessica Santizo Galicia · <strong>Ayudantes:</strong> Diego Antonio Villalba González (teoría) y Emma Alicia Jiménez Sánchez (laboratorio)</p>
+</div>
+</div>
+</div>
+<section id="el-problema" class="level2">
+<h2 class="anchored" data-anchor-id="el-problema">El problema</h2>
+<p>Una institución de fondos de pago electrónico pierde alrededor de <strong>8.2 millones de pesos mensuales</strong> por fraude en transacciones de comercio electrónico. Su motor de reglas genera unas <strong>900 alertas diarias</strong>, pero el equipo de revisión manual solo alcanza a atender <strong>300</strong>: las 600 restantes se autorizan automáticamente al cierre del día, no por decisión sino por falta de capacidad. Y las que sí se revisan se toman por orden de llegada, no por nivel de riesgo.</p>
+<p>El problema, entonces, no es detectar fraude —el sistema ya detecta más de lo que la organización puede atender— sino <strong>decidir qué revisar</strong>. Este proyecto construye un ordenamiento por riesgo para que las 300 revisiones diarias sean las que más pérdida evitan, sin aumentar los bloqueos a clientes legítimos ni la carga del equipo.</p>
+</section>
+<section id="entrega-actual-e0-comprensión-del-negocio" class="level2">
+<h2 class="anchored" data-anchor-id="entrega-actual-e0-comprensión-del-negocio">Entrega actual: E0 — Comprensión del negocio</h2>
+<p>Esta fase levanta el problema con el stakeholder y lo traduce en un objetivo de minería de datos y un criterio de éxito verificable, antes de escribir una sola línea de código.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 1.5rem 0;">
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/bitacora.html" style="display: block; text-decoration: none; background: rgba(0, 123, 255, 0.05); border: 1px solid rgba(0, 123, 255, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 1</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Bitácora de la reunión</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Registro de la entrevista con los tres stakeholders, con la fuente que sustenta cada respuesta y la reflexión del equipo.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/canvas.html" style="display: block; text-decoration: none; background: rgba(255, 193, 7, 0.05); border: 1px solid rgba(255, 193, 7, 0.45); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 2</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Business Understanding Canvas</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Síntesis de una página: objetivo de negocio, situación, objetivo de minería de datos, criterios de éxito y plan.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/preguntas.html" style="display: block; text-decoration: none; background: rgba(74, 20, 140, 0.05); border: 1px solid rgba(106, 27, 154, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 3</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Preguntas de investigación</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Cuatro preguntas priorizadas por impacto y factibilidad, una de ellas documentada como fuera del alcance.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/criterio_exito.html" style="display: block; text-decoration: none; background: rgba(40, 167, 69, 0.05); border: 1px solid rgba(40, 167, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 4</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Criterio de éxito</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Enunciado en lenguaje del stakeholder y su vínculo con las medidas técnicas que lo verificarán.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/riesgos_supuestos.html" style="display: block; text-decoration: none; background: rgba(220, 53, 69, 0.05); border: 1px solid rgba(220, 53, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 5</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Supuestos y riesgos</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Seis supuestos a validar y ocho riesgos clasificados, con probabilidad, impacto, mitigación y tratamiento.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/uso_ia.html" style="display: block; text-decoration: none; background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Documentación</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Uso de herramientas de IA</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Registro de los cuatro usos de modelos de lenguaje, con prompts íntegros y revisión crítica de cada salida.</div>
+  </a>
+
+</div>
+<p>Como material de respaldo, el <a href="./entregas/E0_comprension_negocio/fuentes/expediente.html">expediente de fuentes</a> reúne las catorce fichas documentales que sustentan las respuestas del stakeholder simulado, con institución emisora, enlace y fecha de consulta.</p>
+</section>
+<section id="metodología" class="level2">
+<h2 class="anchored" data-anchor-id="metodología">Metodología</h2>
+<p>El proyecto sigue <strong>CRISP-DM</strong> y se construye de forma incremental a lo largo del semestre. Este sitio es el mismo durante todas las fases: cada entrega añade sus páginas sin reemplazar las anteriores.</p>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Fase CRISP-DM</th>
+<th style="text-align: left;">Estado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Comprensión del negocio</td>
+<td style="text-align: left;"><strong>En curso — entrega E0</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Comprensión de los datos</td>
+<td style="text-align: left;">Pendiente</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Preparación de los datos</td>
+<td style="text-align: left;">Pendiente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Modelado</td>
+<td style="text-align: left;">Pendiente</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Evaluación</td>
+<td style="text-align: left;">Pendiente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">Despliegue</td>
+<td style="text-align: left;">Integrada en el reporte y la presentación final</td>
+</tr>
+</tbody>
+</table>
+<div class="callout callout-style-simple callout-warning no-icon callout-titled" title="Sobre la organización del caso">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Sobre la organización del caso
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El stakeholder de este proyecto es <strong>simulado</strong>. Pagos Lumen no es una institución real: es un caso construido por el equipo a partir de fuentes públicas verificables sobre el fraude financiero en México, el sector de tecnología financiera y su marco regulatorio. Los parámetros operativos del caso están calibrados con referencias de industria y declarados de forma explícita como supuestos en el <a href="./entregas/E0_comprension_negocio/fuentes/expediente.html">expediente de fuentes</a>.</p>
+</div>
+</div>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

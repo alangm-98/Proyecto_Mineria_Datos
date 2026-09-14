@@ -1,3 +1,110 @@
 ---
-title: "Proyecto Integrador — Almacenes y Minería de Datos"
+title: "Proyecto Integrador de Minería de Datos"
+date: last-modified
+toc: false
 ---
+
+<style>
+  p, li {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+  .tarjeta:hover {
+    transform: translateY(-2px);
+    transition: transform 0.15s ease;
+  }
+</style>
+
+::: {.callout-note appearance="minimal"}
+**Almacenes y Minería de Datos** · Facultad de Ciencias, UNAM
+**Equipo:** Luis Flores · Alan García · Melanie Rangel
+**Profesora:** Jessica Santizo Galicia · **Ayudantes:** Diego Antonio Villalba González (teoría) y Emma Alicia Jiménez Sánchez (laboratorio)
+:::
+
+## El problema
+
+Una institución de fondos de pago electrónico pierde alrededor de **8.2 millones de pesos
+mensuales** por fraude en transacciones de comercio electrónico. Su motor de reglas genera unas
+**900 alertas diarias**, pero el equipo de revisión manual solo alcanza a atender **300**: las 600
+restantes se autorizan automáticamente al cierre del día, no por decisión sino por falta de
+capacidad. Y las que sí se revisan se toman por orden de llegada, no por nivel de riesgo.
+
+El problema, entonces, no es detectar fraude —el sistema ya detecta más de lo que la organización
+puede atender— sino **decidir qué revisar**. Este proyecto construye un ordenamiento por riesgo
+para que las 300 revisiones diarias sean las que más pérdida evitan, sin aumentar los bloqueos a
+clientes legítimos ni la carga del equipo.
+
+## Entrega actual: E0 — Comprensión del negocio
+
+Esta fase levanta el problema con el stakeholder y lo traduce en un objetivo de minería de datos y
+un criterio de éxito verificable, antes de escribir una sola línea de código.
+
+```{=html}
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 1.5rem 0;">
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/bitacora.html" style="display: block; text-decoration: none; background: rgba(0, 123, 255, 0.05); border: 1px solid rgba(0, 123, 255, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 1</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Bitácora de la reunión</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Registro de la entrevista con los tres stakeholders, con la fuente que sustenta cada respuesta y la reflexión del equipo.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/canvas.html" style="display: block; text-decoration: none; background: rgba(255, 193, 7, 0.05); border: 1px solid rgba(255, 193, 7, 0.45); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 2</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Business Understanding Canvas</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Síntesis de una página: objetivo de negocio, situación, objetivo de minería de datos, criterios de éxito y plan.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/preguntas.html" style="display: block; text-decoration: none; background: rgba(74, 20, 140, 0.05); border: 1px solid rgba(106, 27, 154, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 3</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Preguntas de investigación</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Cuatro preguntas priorizadas por impacto y factibilidad, una de ellas documentada como fuera del alcance.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/criterio_exito.html" style="display: block; text-decoration: none; background: rgba(40, 167, 69, 0.05); border: 1px solid rgba(40, 167, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 4</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Criterio de éxito</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Enunciado en lenguaje del stakeholder y su vínculo con las medidas técnicas que lo verificarán.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/riesgos_supuestos.html" style="display: block; text-decoration: none; background: rgba(220, 53, 69, 0.05); border: 1px solid rgba(220, 53, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 5</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Supuestos y riesgos</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Seis supuestos a validar y ocho riesgos clasificados, con probabilidad, impacto, mitigación y tratamiento.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E0_comprension_negocio/uso_ia.html" style="display: block; text-decoration: none; background: rgba(0, 0, 0, 0.03); border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Documentación</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Uso de herramientas de IA</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Registro de los cuatro usos de modelos de lenguaje, con prompts íntegros y revisión crítica de cada salida.</div>
+  </a>
+
+</div>
+```
+
+Como material de respaldo, el
+[expediente de fuentes](entregas/E0_comprension_negocio/fuentes/expediente.qmd) reúne las catorce
+fichas documentales que sustentan las respuestas del stakeholder simulado, con institución emisora,
+enlace y fecha de consulta.
+
+## Metodología
+
+El proyecto sigue **CRISP-DM** y se construye de forma incremental a lo largo del semestre. Este
+sitio es el mismo durante todas las fases: cada entrega añade sus páginas sin reemplazar las
+anteriores.
+
+| # | Fase CRISP-DM | Estado |
+| :-- | :--- | :--- |
+| 1 | Comprensión del negocio | **En curso — entrega E0** |
+| 2 | Comprensión de los datos | Pendiente |
+| 3 | Preparación de los datos | Pendiente |
+| 4 | Modelado | Pendiente |
+| 5 | Evaluación | Pendiente |
+| 6 | Despliegue | Integrada en el reporte y la presentación final |
+
+::: {.callout-warning appearance="minimal" title="Sobre la organización del caso"}
+El stakeholder de este proyecto es **simulado**. Pagos Lumen no es una institución real: es un caso
+construido por el equipo a partir de fuentes públicas verificables sobre el fraude financiero en
+México, el sector de tecnología financiera y su marco regulatorio. Los parámetros operativos del
+caso están calibrados con referencias de industria y declarados de forma explícita como supuestos
+en el [expediente de fuentes](entregas/E0_comprension_negocio/fuentes/expediente.qmd).
+:::

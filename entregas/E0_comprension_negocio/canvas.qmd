@@ -1,3 +1,51 @@
 ---
-title: "Business Understanding Canvas"
+title: "2. Business Understanding Canvas"
+date: last-modified
 ---
+
+**Proyecto:** Ordenamiento por riesgo de la cola de revisión de fraude · **Organización:** Pagos
+Lumen, Institución de Fondos de Pago Electrónico (Ley Fintech) · **Equipo:** Luis Flores, Alan
+García, Melanie Rangel — Facultad de Ciencias, UNAM
+
+```{=html}
+<div class="buc-canvas" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 1.5rem 0; font-family: system-ui, -apple-system, sans-serif;">
+
+  <div style="grid-column: span 2; background: rgba(0, 123, 255, 0.06); border: 2px solid #007bff; border-radius: 8px; padding: 14px;">
+    <h5 style="margin: 0 0 6px 0; font-size: 0.9em; font-weight: bold; color: #004085; border: none; padding: 0; text-transform: uppercase;">1. Objetivo de Negocio</h5>
+    <p style="margin: 0; font-size: 0.85em; line-height: 1.4;">Reducir el monto perdido por fraude en transacciones de e-commerce, sin aumentar el rechazo de clientes legítimos ni la carga de trabajo al equipo de revisión manual.</p>
+  </div>
+
+  <div style="background: rgba(40, 167, 69, 0.06); border: 2px solid #28a745; border-radius: 8px; padding: 14px;">
+    <h5 style="margin: 0 0 6px 0; font-size: 0.9em; font-weight: bold; color: #155724; border: none; padding: 0; text-transform: uppercase;">2. Criterio de Éxito (Negocio)</h5>
+    <p style="margin: 0; font-size: 0.85em; line-height: 1.4;">Reducir <strong>≥20% el monto mensual perdido por fraude</strong> en seis meses ($8.2M → ~$6.6M MXN), <strong>sin</strong> superar el 4.5 % de bloqueo automático, <strong>sin</strong> ampliar el equipo de revisión y contabilizando toda fricción añadida como costo del proyecto.</p>
+  </div>
+
+  <div style="grid-column: span 3; background: rgba(255, 193, 7, 0.06); border: 2px solid #ffc107; border-radius: 8px; padding: 14px;">
+    <h5 style="margin: 0 0 8px 0; font-size: 0.9em; font-weight: bold; color: #856404; border: none; padding: 0; text-transform: uppercase;">3. Evaluación de la Situación</h5>
+    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px 14px; font-size: 0.8em; line-height: 1.4;">
+      <p style="margin: 0;"><strong>Stakeholders y beneficiarios:</strong> Gerencia de Prevención de Fraude (patrocinadora, alto poder / alto interés); Experiencia de Usuario (alto poder / bajo interés, impone el límite de fricción); Equipo de revisión manual (bajo poder / alto interés, usuario directo). Beneficiarios finales: tarjetahabientes y comercios afiliados.</p>
+      <p style="margin: 0;"><strong>Dolor actual:</strong> el motor de reglas lleva años sin recalibrarse. Genera ~900 alertas diarias frente a una capacidad de 300; las 600 restantes se autorizan solas al cierre. La cola se atiende por orden de llegada y no por riesgo, y nunca se ha medido cuánto fraude contienen las alertas no revisadas.</p>
+      <p style="margin: 0;"><strong>Recursos:</strong> conjunto de datos IEEE-CIS Fraud Detection (transacciones etiquetadas por contracargo reportado, tablas de transacción e identidad); equipo de tres personas; Python y bibliotecas de análisis y modelado.</p>
+      <p style="margin: 0;"><strong>Restricciones y requisitos:</strong> la decisión sobre la transacción ocurre en tiempo real, pero el piloto opera en lote diario. Capacidad fija de 300 revisiones sin contratación. Marco regulatorio: factores de autenticación por canal (CNBV), consentimiento expreso del usuario (CONDUSEF) y Ley Federal de Protección de Datos Personales vigente desde 2025. El resultado debe poder expresarse en pesos.</p>
+      <p style="margin: 0;"><strong>Supuestos:</strong> los patrones del conjunto de datos son razonablemente representativos del contexto mexicano; la etiqueta por contracargo equivale al criterio de la institución; la capacidad de revisión se mantiene constante; el importe es un proxy aceptable de la pérdida.</p>
+      <p style="margin: 0;"><strong>Riesgos principales:</strong> validez externa del conjunto de datos (no mexicano); desbalance severo de clases; fuga de información si la validación no respeta el orden temporal; sesgo contra segmentos de usuarios por variables indirectas; y que la meta del 20% resulte inalcanzable, al haberse fijado sin línea base sobre las alertas no revisadas.</p>
+    </div>
+  </div>
+
+  <div style="grid-column: span 2; background: rgba(74, 20, 140, 0.06); border: 2px solid #6a1b9a; border-radius: 8px; padding: 14px;">
+    <h5 style="margin: 0 0 6px 0; font-size: 0.9em; font-weight: bold; color: #4a148c; border: none; padding: 0; text-transform: uppercase;">4. Objetivo de Minería de Datos</h5>
+    <p style="margin: 0; font-size: 0.85em; line-height: 1.4;">Estimar, mediante <strong>clasificación supervisada sobre clases desbalanceadas</strong>, la probabilidad de que cada transacción sea fraudulenta, y <strong>ordenar las operaciones del día por esa probabilidad ponderada por el importe</strong>, de modo que la cola de revisión —de longitud fija— contenga las de mayor pérdida esperada, buscando un ordenamiento.</p>
+  </div>
+
+  <div style="background: rgba(220, 53, 69, 0.06); border: 2px solid #dc3545; border-radius: 8px; padding: 14px;">
+    <h5 style="margin: 0 0 6px 0; font-size: 0.9em; font-weight: bold; color: #721c24; border: none; padding: 0; text-transform: uppercase;">5. Éxito Técnico</h5>
+    <p style="margin: 0; font-size: 0.85em; line-height: 1.4;">Sobre el <strong>0.75 % de transacciones peor evaluadas</strong> (300 de ~40,000 diarias): proporción de fraudes reales y fracción del monto defraudado contenidas en ese tramo, ambas por encima del desempeño actual del proceso. Evaluación con <strong>partición temporal</strong>. Umbrales a fijar en E1.</p>
+  </div>
+
+  <div style="grid-column: span 3; background: rgba(0,0,0,0.02); border: 2px solid #999; border-radius: 8px; padding: 14px;">
+    <h5 style="margin: 0 0 6px 0; font-size: 0.9em; font-weight: bold; color: #333; border: none; padding: 0; text-transform: uppercase;">6. Plan del Proyecto</h5>
+    <p style="margin: 0; font-size: 0.85em; line-height: 1.4;"><strong>E0 · Comprensión del negocio:</strong> levantamiento con el stakeholder, criterio de éxito y riesgos (esta entrega). <strong>E1 · Comprensión de los datos:</strong> exploración, contraste de representatividad contra cifras públicas y fijación de los umbrales técnicos. <strong>E2 · Preparación:</strong> tratamiento de faltantes, codificación de categóricas y partición temporal. <strong>E3 · Modelado:</strong> línea base por reglas frente a modelos de ensamble, ponderando por importe. <strong>E4 · Evaluación:</strong> proyección del ahorro sobre la línea base de $8.2M mensuales. <em>El horizonte de verificación de negocio (seis meses) excede la duración del proyecto: E4 entrega una proyección sobre datos históricos, no una medición en operación.</em></p>
+  </div>
+
+</div>
+```

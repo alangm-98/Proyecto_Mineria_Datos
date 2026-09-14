@@ -4,7 +4,7 @@ project:
   render:
     - "**/*.qmd"
   resources:
-    - "entregas/E0_comprension_negocio/fuentes/**"
+    - "entregas/E0_comprension_negocio/fuentes/*.qmd"
 
 website:
   title: "Proyecto Minería de Datos"
@@ -20,6 +20,8 @@ website:
           - entregas/E0_comprension_negocio/criterio_exito.qmd
           - entregas/E0_comprension_negocio/riesgos_supuestos.qmd
           - entregas/E0_comprension_negocio/uso_ia.qmd
+          - text: "---"
+          - entregas/E0_comprension_negocio/fuentes/expediente.qmd
 
 format:
   html:
