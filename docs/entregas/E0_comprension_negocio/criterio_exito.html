@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Criterio de éxito – Proyecto Minería de Datos</title>
+<title>4. Criterio de éxito – Proyecto Minería de Datos</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -110,23 +110,23 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/canvas.html">
- <span class="dropdown-text">Business Understanding Canvas</span></a>
+ <span class="dropdown-text">2. Business Understanding Canvas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/preguntas.html">
- <span class="dropdown-text">Preguntas de investigación</span></a>
+ <span class="dropdown-text">3. Preguntas de investigación priorizadas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/criterio_exito.html">
- <span class="dropdown-text">Criterio de éxito</span></a>
+ <span class="dropdown-text">4. Criterio de éxito</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html">
- <span class="dropdown-text">Supuestos y riesgos</span></a>
+ <span class="dropdown-text">5. Supuestos y riesgos</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/uso_ia.html">
- <span class="dropdown-text">Uso de herramientas de IA</span></a>
+ <span class="dropdown-text">6. Uso de herramientas de IA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -146,15 +146,24 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#criterio-de-negocio-y-criterio-técnico" id="toc-criterio-de-negocio-y-criterio-técnico" class="nav-link active" data-scroll-target="#criterio-de-negocio-y-criterio-técnico">Criterio de negocio y criterio técnico</a></li>
+  <li><a href="#vínculo-con-las-medidas-técnicas" id="toc-vínculo-con-las-medidas-técnicas" class="nav-link" data-scroll-target="#vínculo-con-las-medidas-técnicas">Vínculo con las medidas técnicas</a></li>
+  <li><a href="#precisiones-sobre-la-verificación" id="toc-precisiones-sobre-la-verificación" class="nav-link" data-scroll-target="#precisiones-sobre-la-verificación">Precisiones sobre la verificación</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Criterio de éxito</h1>
+<h1 class="title">4. Criterio de éxito</h1>
+<p class="subtitle lead">Enunciado de negocio y su vínculo con la medida técnica</p>
 </div>
 
 
@@ -162,6 +171,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">13 de septiembre de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -171,8 +186,104 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<style>
+  p, li, table {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+<div class="callout callout-style-simple callout-tip no-icon callout-titled" title="Enunciado de negocio">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Tip</span>Enunciado de negocio
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p><em>“Al término de un periodo de seis meses, reducir en al menos un <strong>20 % el monto mensual perdido por fraude</strong> respecto de la línea base de <strong>$8.2 millones de pesos</strong> (alrededor de <strong>$1.6 millones menos al mes</strong>) sin que el bloqueo automático supere el <strong>4.5 %</strong> actual de las transacciones, sin ampliar el equipo de revisión manual, y contabilizando como costo del proyecto cualquier aumento de la fricción para el cliente.”</em></p>
+</div>
+</div>
+<p>Las tres condiciones no son accesorias: cierran las vías por las que la reducción podría alcanzarse sin resolver el problema (apretando umbrales, contratando más analistas o trasladando el costo a más llamadas de confirmación) y dejan como única palanca <strong>mejorar qué casos entran a la revisión</strong>. Las tres surgieron de la <a href="../../entregas/E0_comprension_negocio/bitacora.html">bitácora</a> y fueron confirmadas por sus responsables en la sesión de validación. El plazo es de seis meses, y no de tres, porque una operación autorizada hoy puede convertirse en contracargo varios meses después.</p>
+<section id="criterio-de-negocio-y-criterio-técnico" class="level2">
+<h2 class="anchored" data-anchor-id="criterio-de-negocio-y-criterio-técnico">Criterio de negocio y criterio técnico</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tipo de criterio</th>
+<th style="text-align: left;">Enunciado en este proyecto</th>
+<th style="text-align: left;">¿Quién lo evalúa?</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Negocio</strong> — determina si el proyecto se aprueba o se cancela</td>
+<td style="text-align: left;">Reducción de al menos 20 % del monto mensual perdido por fraude, bajo las tres condiciones anteriores, medida a seis meses contra la línea base</td>
+<td style="text-align: left;">Gerenta de Prevención de Fraude, ante la dirección</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Técnico</strong> — lo usa el equipo para iterar el modelo</td>
+<td style="text-align: left;">Capacidad del ordenamiento por riesgo para concentrar el fraude, y el monto defraudado, en el tramo que la operación alcanza a revisar cada día</td>
+<td style="text-align: left;">Equipo de análisis de datos</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="vínculo-con-las-medidas-técnicas" class="level2">
+<h2 class="anchored" data-anchor-id="vínculo-con-las-medidas-técnicas">Vínculo con las medidas técnicas</h2>
+<p>El modelo produce un <strong>ordenamiento de las transacciones por riesgo</strong>, del que la operación toma cada día las primeras hasta agotar su capacidad. Las cuatro medidas siguientes evalúan ese ordenamiento y se corresponden, una a una, con las partes del enunciado.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 33%">
+<col style="width: 33%">
+<col style="width: 33%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Criterio de negocio</th>
+<th style="text-align: left;">Medida técnica</th>
+<th style="text-align: left;">Vínculo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Capacidad de revisión acotada por la operación</td>
+<td style="text-align: left;"><strong>Aciertos en el tramo revisado.</strong> Proporción de fraudes reales entre las transacciones peor evaluadas por el modelo, sobre un tramo del tamaño de la capacidad diaria: 300 de unas 40,000, el <strong>0.75 % del flujo</strong></td>
+<td style="text-align: left;">La longitud de la cola la fija la operación, no el modelo; la medición se hace sobre un tramo de tamaño fijo y no sobre el conjunto completo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Reducción del 20 % del monto perdido</td>
+<td style="text-align: left;"><strong>Monto cubierto por el tramo revisado.</strong> Fracción del dinero total defraudado contenida en ese mismo tramo, medida en pesos y no en número de operaciones</td>
+<td style="text-align: left;">Es el puente aritmético con el enunciado: la fracción del monto que concentra el tramo proyecta la reducción alcanzable sobre la línea base</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">El bloqueo automático no supera el 4.5 %</td>
+<td style="text-align: left;"><strong>Proporción de transacciones rechazadas</strong> sin intervención humana por el umbral más estricto</td>
+<td style="text-align: left;">Es una cota sobre cuántas operaciones se detienen en total, no sobre la proporción de clientes legítimos mal clasificados</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">La fricción no aumenta</td>
+<td style="text-align: left;"><strong>Confirmaciones telefónicas por transacción procesada</strong>, que no debe crecer respecto de la operación actual</td>
+<td style="text-align: left;">Traduce la condición de Experiencia de Usuario a una cantidad observable, para que ese costo quede contabilizado</td>
+</tr>
+</tbody>
+</table>
+<p>Las dos primeras se miden sobre el mismo tramo porque responden preguntas distintas: si el equipo ocupa su jornada en casos que valen la pena, y cuánto dinero alcanza a interceptar. Un ordenamiento puede ser bueno en la primera y mediocre en la segunda si concentra fraudes numerosos pero de importe pequeño.</p>
+</section>
+<section id="precisiones-sobre-la-verificación" class="level2">
+<h2 class="anchored" data-anchor-id="precisiones-sobre-la-verificación">Precisiones sobre la verificación</h2>
+<p>La medición se hace contra la <strong>línea base del estado actual</strong>: $8.2 millones mensuales de pérdida, bloqueo automático en 4.5 % y capacidad de 300 casos diarios. Junto con el monto se mide también la <strong>tasa de contracargo</strong>, hoy en 0.9 %, por recomendación de la stakeholder: si el monto baja y el contracargo no se mueve, el efecto todavía no termina de manifestarse.</p>
+<p>Este documento fija <strong>qué se va a medir, no los valores que deberán alcanzarse</strong>. Los umbrales de las medidas técnicas se establecerán en la fase de comprensión de datos (E1), una vez conocida la línea base sobre el conjunto de datos.</p>
+<p>La meta del 20 % <strong>fue propuesta por el equipo y no fijada por la stakeholder</strong>, quien declinó confirmarla por carecer de tres insumos, aunque sí validó su defendibilidad ante la dirección. Esa limitación se registra en <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html">supuestos y riesgos</a>.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">

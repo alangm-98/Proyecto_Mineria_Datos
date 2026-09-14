@@ -29,8 +29,8 @@ mensuales** por fraude en transacciones de comercio electrónico. Su motor de re
 restantes se autorizan automáticamente al cierre del día, no por decisión sino por falta de
 capacidad. Y las que sí se revisan se toman por orden de llegada, no por nivel de riesgo.
 
-El problema, entonces, no es detectar fraude —el sistema ya detecta más de lo que la organización
-puede atender— sino **decidir qué revisar**. Este proyecto construye un ordenamiento por riesgo
+El problema, entonces, no es detectar fraude (el sistema ya detecta más de lo que la organización
+puede atender) sino **decidir qué revisar**. Este proyecto construye un ordenamiento por riesgo
 para que las 300 revisiones diarias sean las que más pérdida evitan, sin aumentar los bloqueos a
 clientes legítimos ni la carga del equipo.
 

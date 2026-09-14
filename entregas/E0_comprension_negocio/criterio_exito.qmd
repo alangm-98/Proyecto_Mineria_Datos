@@ -1,3 +1,69 @@
 ---
-title: "Criterio de éxito"
+title: "4. Criterio de éxito"
+subtitle: "Enunciado de negocio y su vínculo con la medida técnica"
+date: last-modified
 ---
+
+<style>
+  p, li, table {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+
+::: {.callout-tip appearance="minimal" title="Enunciado de negocio"}
+
+*"Al término de un periodo de seis meses, reducir en al menos un **20 % el monto mensual
+perdido por fraude** respecto de la línea base de **$8.2 millones de pesos** (alrededor de **$1.6
+millones menos al mes**) sin que el bloqueo automático supere el **4.5 %** actual de las
+transacciones, sin ampliar el equipo de revisión manual, y contabilizando como costo del proyecto
+cualquier aumento de la fricción para el cliente."*
+
+:::
+
+Las tres condiciones no son accesorias: cierran las vías por las que la reducción podría
+alcanzarse sin resolver el problema (apretando umbrales, contratando más analistas o trasladando
+el costo a más llamadas de confirmación) y dejan como única palanca **mejorar qué casos entran a
+la revisión**. Las tres surgieron de la [bitácora](bitacora.qmd) y fueron confirmadas por sus
+responsables en la sesión de validación. El plazo es de seis meses, y no de tres, porque una
+operación autorizada hoy puede convertirse en contracargo varios meses después.
+
+## Criterio de negocio y criterio técnico
+
+| Tipo de criterio | Enunciado en este proyecto | ¿Quién lo evalúa? |
+| :--- | :--- | :--- |
+| **Negocio** — determina si el proyecto se aprueba o se cancela | Reducción de al menos 20 % del monto mensual perdido por fraude, bajo las tres condiciones anteriores, medida a seis meses contra la línea base | Gerenta de Prevención de Fraude, ante la dirección |
+| **Técnico** — lo usa el equipo para iterar el modelo | Capacidad del ordenamiento por riesgo para concentrar el fraude, y el monto defraudado, en el tramo que la operación alcanza a revisar cada día | Equipo de análisis de datos |
+ 
+## Vínculo con las medidas técnicas
+
+El modelo produce un **ordenamiento de las transacciones por riesgo**, del que la operación toma
+cada día las primeras hasta agotar su capacidad. Las cuatro medidas siguientes evalúan ese
+ordenamiento y se corresponden, una a una, con las partes del enunciado.
+
+| Criterio de negocio | Medida técnica | Vínculo |
+| :--- | :--- | :--- |
+| Capacidad de revisión acotada por la operación | **Aciertos en el tramo revisado.** Proporción de fraudes reales entre las transacciones peor evaluadas por el modelo, sobre un tramo del tamaño de la capacidad diaria: 300 de unas 40,000, el **0.75 % del flujo** | La longitud de la cola la fija la operación, no el modelo; la medición se hace sobre un tramo de tamaño fijo y no sobre el conjunto completo |
+| Reducción del 20 % del monto perdido | **Monto cubierto por el tramo revisado.** Fracción del dinero total defraudado contenida en ese mismo tramo, medida en pesos y no en número de operaciones | Es el puente aritmético con el enunciado: la fracción del monto que concentra el tramo proyecta la reducción alcanzable sobre la línea base |
+| El bloqueo automático no supera el 4.5 % | **Proporción de transacciones rechazadas** sin intervención humana por el umbral más estricto | Es una cota sobre cuántas operaciones se detienen en total, no sobre la proporción de clientes legítimos mal clasificados |
+| La fricción no aumenta | **Confirmaciones telefónicas por transacción procesada**, que no debe crecer respecto de la operación actual | Traduce la condición de Experiencia de Usuario a una cantidad observable, para que ese costo quede contabilizado |
+
+Las dos primeras se miden sobre el mismo tramo porque responden preguntas distintas: si el equipo
+ocupa su jornada en casos que valen la pena, y cuánto dinero alcanza a interceptar. Un
+ordenamiento puede ser bueno en la primera y mediocre en la segunda si concentra fraudes numerosos
+pero de importe pequeño.
+
+## Precisiones sobre la verificación
+
+La medición se hace contra la **línea base del estado actual**: $8.2 millones mensuales de
+pérdida, bloqueo automático en 4.5 % y capacidad de 300 casos diarios. Junto con el monto se mide
+también la **tasa de contracargo**, hoy en 0.9 %, por recomendación de la stakeholder: si el monto
+baja y el contracargo no se mueve, el efecto todavía no termina de manifestarse.
+
+Este documento fija **qué se va a medir, no los valores que deberán alcanzarse**. Los umbrales de
+las medidas técnicas se establecerán en la fase de comprensión de datos (E1), una vez conocida la
+línea base sobre el conjunto de datos.
+
+La meta del 20 % **fue propuesta por el equipo y no fijada por la stakeholder**, quien declinó
+confirmarla por carecer de tres insumos, aunque sí validó su defendibilidad ante la dirección. Esa
+limitación se registra en [supuestos y riesgos](riesgos_supuestos.qmd).

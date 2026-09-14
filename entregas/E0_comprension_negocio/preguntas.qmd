@@ -1,3 +1,61 @@
 ---
-title: "Preguntas de investigación"
+title: "3. Preguntas de investigación priorizadas"
+date: last-modified
 ---
+
+<style>
+  p, li, table {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+
+El objetivo de minería de datos formulado en el [Canvas](canvas.qmd) (rdenar las transacciones
+por riesgo para alimentar una cola de revisión de longitud fija) se descompone en las preguntas
+siguientes. Mencionando que se priorizan según su impacto en el problema de negocio y la factibilidad de
+responderlas con los datos disponibles.
+
+| # | Pregunta de investigación | Impacto de negocio | Factibilidad de datos | Prioridad |
+| :-- | :--- | :--- | :--- | :--- |
+| 1 | ¿Qué combinación de atributos de la transacción y del dispositivo separa mejor una operación fraudulenta de una legítima, y basta con ordenar por esa señal para que las 300 revisiones diarias contengan más fraude del que contienen hoy? | Alto | Alta | **1 (núcleo)** |
+| 2 | ¿Qué fracción del *monto* defraudado queda contenida en el 0.75 % de transacciones peor evaluadas, y mejora esa fracción si el modelo pondera cada operación por su importe en lugar de tratarlas todas por igual? | Alto | Alta | **2** |
+| 3 | ¿La ausencia de información de identidad del dispositivo constituye en sí misma una señal de riesgo, o es únicamente un hueco que conviene imputar? | Medio | Alta | **3** |
+| 4 | ¿Cuántas de las transacciones que hoy se rechazan automáticamente eran en realidad legítimas? | Alto | Baja (no existen datos de operaciones bloqueadas ni de su desenlace) | **4 (fuera del alcance)** |
+
+## Por qué en ese orden
+
+**La pregunta 1 es el núcleo** porque su respuesta condiciona a todas las demás. Es también la que
+traduce directamente el hallazgo central de la [bitácora](bitacora.qmd): el sistema ya detecta más
+de lo que la organización puede atender, de modo que el problema no es identificar fraude sino
+ordenarlo. Apunta a una tarea de **clasificación supervisada** cuya salida se usa como criterio de
+ordenamiento, no como etiqueta binaria.
+
+**La pregunta 2 es la que conecta el modelo con el criterio de éxito.** La meta está expresada en
+pesos, no en número de operaciones, y un clasificador convencional trata igual un fraude de
+doscientos pesos que uno de quince mil. Responderla exige **aprendizaje sensible al costo**, es
+decir, incorporar el importe como peso del error, y medir el resultado en dinero interceptado. Sin
+esta pregunta, el proyecto podría producir un modelo que acierta mucho y recupera poco.
+
+**La pregunta 3 tiene menor impacto pero alta factibilidad**, y su respuesta condiciona toda la
+fase de preparación de datos. Una porción considerable de las transacciones del conjunto de datos
+carece de registro de identidad asociado. Si esa ausencia resulta estar correlacionada con el
+fraude, tratarla como un valor faltante a imputar destruiría información útil; si no lo está,
+imputarla es lo correcto. Apunta a una tarea de **tratamiento de valores faltantes** con
+verificación previa de su carácter informativo.
+
+**La pregunta 4 queda fuera del alcance, y se documenta en lugar de descartarse.** Es la que el
+área de Experiencia de Usuario pidió explícitamente durante la entrevista, y la que permitiría que
+el lado hoy sin números llegue a la mesa con evidencia. No es respondible en esta iteración porque
+requiere un insumo que no existe: el registro de las operaciones rechazadas y de lo que ocurrió
+después con esos clientes. Ninguna fuente disponible lo contiene. Se deja asentada para una
+segunda iteración y se recoge como limitación en
+[supuestos y riesgos](riesgos_supuestos.qmd).
+
+## Una nota sobre el paso del tiempo
+
+El deterioro del desempeño conforme los defraudadores adaptan su comportamiento no se formula aquí
+como pregunta de investigación, sino como **requisito del método**: toda evaluación se hará sobre
+una partición temporal (entrenar con el periodo antiguo, validar con el reciente) y no sobre un
+muestreo aleatorio. La ventana disponible no permite estudiar el fenómeno a fondo, pero sí impide
+que el desempeño reportado resulte artificialmente optimista, que es el riesgo concreto para esta
+entrega.

@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 
-<title>Preguntas de investigación – Proyecto Minería de Datos</title>
+<title>3. Preguntas de investigación priorizadas – Proyecto Minería de Datos</title>
 <style>
 /* Default styles provided by pandoc.
 ** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
@@ -110,23 +110,23 @@ ul.task-list li input[type="checkbox"] {
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/canvas.html">
- <span class="dropdown-text">Business Understanding Canvas</span></a>
+ <span class="dropdown-text">2. Business Understanding Canvas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/preguntas.html">
- <span class="dropdown-text">Preguntas de investigación</span></a>
+ <span class="dropdown-text">3. Preguntas de investigación priorizadas</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/criterio_exito.html">
- <span class="dropdown-text">Criterio de éxito</span></a>
+ <span class="dropdown-text">4. Criterio de éxito</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html">
- <span class="dropdown-text">Supuestos y riesgos</span></a>
+ <span class="dropdown-text">5. Supuestos y riesgos</span></a>
   </li>  
         <li>
     <a class="dropdown-item" href="../../entregas/E0_comprension_negocio/uso_ia.html">
- <span class="dropdown-text">Uso de herramientas de IA</span></a>
+ <span class="dropdown-text">6. Uso de herramientas de IA</span></a>
   </li>  
         <li><hr class="dropdown-divider"></li>
         <li>
@@ -146,15 +146,22 @@ ul.task-list li input[type="checkbox"] {
 <div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
 <!-- sidebar -->
 <!-- margin-sidebar -->
-    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar zindex-bottom">
-        
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#por-qué-en-ese-orden" id="toc-por-qué-en-ese-orden" class="nav-link active" data-scroll-target="#por-qué-en-ese-orden">Por qué en ese orden</a></li>
+  <li><a href="#una-nota-sobre-el-paso-del-tiempo" id="toc-una-nota-sobre-el-paso-del-tiempo" class="nav-link" data-scroll-target="#una-nota-sobre-el-paso-del-tiempo">Una nota sobre el paso del tiempo</a></li>
+  </ul>
+</nav>
     </div>
 <!-- main -->
 <main class="content" id="quarto-document-content">
 
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
-<h1 class="title">Preguntas de investigación</h1>
+<h1 class="title">3. Preguntas de investigación priorizadas</h1>
 </div>
 
 
@@ -162,6 +169,12 @@ ul.task-list li input[type="checkbox"] {
 <div class="quarto-title-meta">
 
     
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">13 de septiembre de 2026</p>
+    </div>
+  </div>
   
     
   </div>
@@ -171,8 +184,74 @@ ul.task-list li input[type="checkbox"] {
 </header>
 
 
+<style>
+  p, li, table {
+    text-align: justify;
+    text-justify: inter-word;
+  }
+</style>
+<p>El objetivo de minería de datos formulado en el <a href="../../entregas/E0_comprension_negocio/canvas.html">Canvas</a> (rdenar las transacciones por riesgo para alimentar una cola de revisión de longitud fija) se descompone en las preguntas siguientes. Mencionando que se priorizan según su impacto en el problema de negocio y la factibilidad de responderlas con los datos disponibles.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 15%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+<col style="width: 21%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Pregunta de investigación</th>
+<th style="text-align: left;">Impacto de negocio</th>
+<th style="text-align: left;">Factibilidad de datos</th>
+<th style="text-align: left;">Prioridad</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">¿Qué combinación de atributos de la transacción y del dispositivo separa mejor una operación fraudulenta de una legítima, y basta con ordenar por esa señal para que las 300 revisiones diarias contengan más fraude del que contienen hoy?</td>
+<td style="text-align: left;">Alto</td>
+<td style="text-align: left;">Alta</td>
+<td style="text-align: left;"><strong>1 (núcleo)</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">¿Qué fracción del <em>monto</em> defraudado queda contenida en el 0.75 % de transacciones peor evaluadas, y mejora esa fracción si el modelo pondera cada operación por su importe en lugar de tratarlas todas por igual?</td>
+<td style="text-align: left;">Alto</td>
+<td style="text-align: left;">Alta</td>
+<td style="text-align: left;"><strong>2</strong></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">¿La ausencia de información de identidad del dispositivo constituye en sí misma una señal de riesgo, o es únicamente un hueco que conviene imputar?</td>
+<td style="text-align: left;">Medio</td>
+<td style="text-align: left;">Alta</td>
+<td style="text-align: left;"><strong>3</strong></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">¿Cuántas de las transacciones que hoy se rechazan automáticamente eran en realidad legítimas?</td>
+<td style="text-align: left;">Alto</td>
+<td style="text-align: left;">Baja (no existen datos de operaciones bloqueadas ni de su desenlace)</td>
+<td style="text-align: left;"><strong>4 (fuera del alcance)</strong></td>
+</tr>
+</tbody>
+</table>
+<section id="por-qué-en-ese-orden" class="level2">
+<h2 class="anchored" data-anchor-id="por-qué-en-ese-orden">Por qué en ese orden</h2>
+<p><strong>La pregunta 1 es el núcleo</strong> porque su respuesta condiciona a todas las demás. Es también la que traduce directamente el hallazgo central de la <a href="../../entregas/E0_comprension_negocio/bitacora.html">bitácora</a>: el sistema ya detecta más de lo que la organización puede atender, de modo que el problema no es identificar fraude sino ordenarlo. Apunta a una tarea de <strong>clasificación supervisada</strong> cuya salida se usa como criterio de ordenamiento, no como etiqueta binaria.</p>
+<p><strong>La pregunta 2 es la que conecta el modelo con el criterio de éxito.</strong> La meta está expresada en pesos, no en número de operaciones, y un clasificador convencional trata igual un fraude de doscientos pesos que uno de quince mil. Responderla exige <strong>aprendizaje sensible al costo</strong>, es decir, incorporar el importe como peso del error, y medir el resultado en dinero interceptado. Sin esta pregunta, el proyecto podría producir un modelo que acierta mucho y recupera poco.</p>
+<p><strong>La pregunta 3 tiene menor impacto pero alta factibilidad</strong>, y su respuesta condiciona toda la fase de preparación de datos. Una porción considerable de las transacciones del conjunto de datos carece de registro de identidad asociado. Si esa ausencia resulta estar correlacionada con el fraude, tratarla como un valor faltante a imputar destruiría información útil; si no lo está, imputarla es lo correcto. Apunta a una tarea de <strong>tratamiento de valores faltantes</strong> con verificación previa de su carácter informativo.</p>
+<p><strong>La pregunta 4 queda fuera del alcance, y se documenta en lugar de descartarse.</strong> Es la que el área de Experiencia de Usuario pidió explícitamente durante la entrevista, y la que permitiría que el lado hoy sin números llegue a la mesa con evidencia. No es respondible en esta iteración porque requiere un insumo que no existe: el registro de las operaciones rechazadas y de lo que ocurrió después con esos clientes. Ninguna fuente disponible lo contiene. Se deja asentada para una segunda iteración y se recoge como limitación en <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html">supuestos y riesgos</a>.</p>
+</section>
+<section id="una-nota-sobre-el-paso-del-tiempo" class="level2">
+<h2 class="anchored" data-anchor-id="una-nota-sobre-el-paso-del-tiempo">Una nota sobre el paso del tiempo</h2>
+<p>El deterioro del desempeño conforme los defraudadores adaptan su comportamiento no se formula aquí como pregunta de investigación, sino como <strong>requisito del método</strong>: toda evaluación se hará sobre una partición temporal (entrenar con el periodo antiguo, validar con el reciente) y no sobre un muestreo aleatorio. La ventana disponible no permite estudiar el fenómeno a fondo, pero sí impide que el desempeño reportado resulte artificialmente optimista, que es el riesgo concreto para esta entrega.</p>
 
 
+</section>
 
 </main> <!-- /main -->
 <script id="quarto-html-after-body" type="application/javascript">
