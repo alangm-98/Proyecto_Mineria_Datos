@@ -46,7 +46,7 @@ semestre.
 | #   | Fase CRISP-DM            | Estado                        |
 | :-- | :----------------------- | :---------------------------- |
 | 1   | Comprensión del negocio  | Entrega E0, completada        |
-| 2   | Comprensión de los datos | Pendiente                     |
+| 2   | Comprensión de los datos | Entrega E1, en curso          |
 | 3   | Preparación de los datos | Pendiente                     |
 | 4   | Modelado                 | Pendiente                     |
 | 5   | Evaluación               | Pendiente                     |
@@ -70,6 +70,31 @@ Todos ubicados en `entregas/E0_comprension_negocio/`.
 
 ---
 
+## Entrega E1: Arquitectura del DW
+
+Búsqueda y verificación de fuentes de datos, diseño del almacén en tres capas (staging, DW y
+DataMart) y esquema estrella, con trazabilidad a las preguntas de E0. La implementación en
+BigQuery es a escala reducida: muestras en staging, tablas creadas y consultas válidas.
+
+| Entregable                                              | Archivo                  |
+| :------------------------------------------------------ | :----------------------- |
+| Búsqueda documentada, catálogo de fuentes e integración | `fuentes.qmd`            |
+| Arquitectura de tres capas y consultas del DataMart     | `arquitectura.qmd`       |
+| Esquema estrella: grano, diagrama y DDL                 | `estrella.qmd`           |
+| Matriz de trazabilidad a E0                             | `trazabilidad.qmd`       |
+| Uso de herramientas de IA                               | `uso_ia.qmd`             |
+| DDL del esquema estrella                                | `sql/ddl_dw.sql`         |
+| Consultas del DataMart                                  | `sql/consultas_mart.sql` |
+| Capturas de las fuentes y de BigQuery                   | `img/`                   |
+
+Todos ubicados en `entregas/E1_arquitectura_dw/`. No hubo pivote, por lo que no existe
+`pivote.qmd`.
+
+El repositorio no contiene archivos de datos: las reglas de la fuente principal prohíben
+redistribuirlos. Tampoco contiene credenciales.
+
+---
+
 ## Estructura del repositorio
 
 ```
@@ -80,15 +105,25 @@ Todos ubicados en `entregas/E0_comprension_negocio/`.
 ├── .nojekyll                        Requerido por GitHub Pages
 ├── docs/                            Sitio compilado, publicado por Pages
 └── entregas/
-    └── E0_comprension_negocio/
-        ├── bitacora.qmd
-        ├── canvas.qmd
-        ├── preguntas.qmd
-        ├── criterio_exito.qmd
-        ├── riesgos_supuestos.qmd
+    ├── E0_comprension_negocio/
+    │   ├── bitacora.qmd
+    │   ├── canvas.qmd
+    │   ├── preguntas.qmd
+    │   ├── criterio_exito.qmd
+    │   ├── riesgos_supuestos.qmd
+    │   ├── uso_ia.qmd
+    │   └── fuentes/
+    │       └── expediente.qmd
+    └── E1_arquitectura_dw/
+        ├── fuentes.qmd
+        ├── arquitectura.qmd
+        ├── estrella.qmd
+        ├── trazabilidad.qmd
         ├── uso_ia.qmd
-        └── fuentes/
-            └── expediente.qmd
+        ├── sql/
+        │   ├── ddl_dw.sql
+        │   └── consultas_mart.sql
+        └── img/                     Capturas de pantalla
 ```
 
 ---

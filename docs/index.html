@@ -432,7 +432,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">13 de septiembre de 2026</p>
+      <p class="date">9 de octubre de 2026</p>
     </div>
   </div>
   
@@ -459,8 +459,45 @@ ul.task-list li input[type="checkbox"] {
 <p>Una institución de fondos de pago electrónico pierde alrededor de <strong>8.2 millones de pesos mensuales</strong> por fraude en transacciones de comercio electrónico. Su motor de reglas genera unas <strong>900 alertas diarias</strong>, pero el equipo de revisión manual solo alcanza a atender <strong>300</strong>: las 600 restantes se autorizan automáticamente al cierre del día, no por decisión sino por falta de capacidad. Y las que sí se revisan se toman por orden de llegada, no por nivel de riesgo.</p>
 <p>El problema, entonces, no es detectar fraude (el sistema ya detecta más de lo que la organización puede atender) sino <strong>decidir qué revisar</strong>. Este proyecto construye un ordenamiento por riesgo para que las 300 revisiones diarias sean las que más pérdida evitan, sin aumentar los bloqueos a clientes legítimos ni la carga del equipo.</p>
 </section>
-<section id="entrega-actual-e0-comprensión-del-negocio" class="level2">
-<h2 class="anchored" data-anchor-id="entrega-actual-e0-comprensión-del-negocio">Entrega actual: E0 — Comprensión del negocio</h2>
+<section id="entrega-actual-e1-arquitectura-del-dw" class="level2">
+<h2 class="anchored" data-anchor-id="entrega-actual-e1-arquitectura-del-dw">Entrega actual: E1 · Arquitectura del DW</h2>
+<p>Esta fase busca y verifica las fuentes de datos, diseña el almacén en tres capas y modela un esquema estrella, demostrando que cada dimensión y cada métrica responde a una pregunta de E0. La implementación en BigQuery es a escala reducida: muestras en staging, tablas creadas y consultas válidas.</p>
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 1.5rem 0;">
+
+  <a class="tarjeta" href="entregas/E1_arquitectura_dw/fuentes.html" style="display: block; text-decoration: none; background: rgba(0, 123, 255, 0.05); border: 1px solid rgba(0, 123, 255, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 1</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Fuentes de datos e integración</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Búsqueda documentada, diez candidatas evaluadas, catálogo de cuatro fuentes verificadas y análisis de integración.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E1_arquitectura_dw/arquitectura.html" style="display: block; text-decoration: none; background: rgba(255, 193, 7, 0.05); border: 1px solid rgba(255, 193, 7, 0.45); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 1</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Arquitectura de tres capas</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Staging, DW y DataMart en BigQuery, con la evidencia de cada capa y una consulta por pregunta.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E1_arquitectura_dw/estrella.html" style="display: block; text-decoration: none; background: rgba(106, 27, 154, 0.05); border: 1px solid rgba(106, 27, 154, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 2</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Esquema estrella</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Grano, dos tablas de hechos, cinco dimensiones, diagrama y DDL ejecutado.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E1_arquitectura_dw/trazabilidad.html" style="display: block; text-decoration: none; background: rgba(40, 167, 69, 0.05); border: 1px solid rgba(40, 167, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 3</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Trazabilidad a E0</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Matriz que liga cada pregunta con sus métricas, dimensiones y fuentes, y el estado de cobertura de cada una.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E1_arquitectura_dw/uso_ia.html" style="display: block; text-decoration: none; background: rgba(0, 0, 0, 0.05); border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Documentación</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Uso de herramientas de IA</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Registro de los cinco usos de modelos de lenguaje, con sus prompts y la verificación de cada salida.</div>
+  </a>
+
+</div>
+</section>
+<section id="entrega-anterior-e0-comprensión-del-negocio" class="level2">
+<h2 class="anchored" data-anchor-id="entrega-anterior-e0-comprensión-del-negocio">Entrega anterior: E0 · Comprensión del negocio</h2>
 <p>Esta fase levanta el problema con el stakeholder y lo traduce en un objetivo de minería de datos y un criterio de éxito verificable, antes de escribir una sola línea de código.</p>
 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 1.5rem 0;">
 
@@ -507,6 +544,11 @@ ul.task-list li input[type="checkbox"] {
 <h2 class="anchored" data-anchor-id="metodología">Metodología</h2>
 <p>El proyecto sigue <strong>CRISP-DM</strong> y se construye de forma incremental a lo largo del semestre. Este sitio es el mismo durante todas las fases: cada entrega añade sus páginas sin reemplazar las anteriores.</p>
 <table class="caption-top table">
+<colgroup>
+<col style="width: 27%">
+<col style="width: 36%">
+<col style="width: 36%">
+</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">#</th>
@@ -518,12 +560,12 @@ ul.task-list li input[type="checkbox"] {
 <tr class="odd">
 <td style="text-align: left;">1</td>
 <td style="text-align: left;">Comprensión del negocio</td>
-<td style="text-align: left;"><strong>En curso — entrega E0</strong></td>
+<td style="text-align: left;">Cubierta en la entrega E0</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">2</td>
 <td style="text-align: left;">Comprensión de los datos</td>
-<td style="text-align: left;">Pendiente</td>
+<td style="text-align: left;"><strong>En curso: entrega E1</strong>, fuentes y arquitectura del almacén</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">3</td>
