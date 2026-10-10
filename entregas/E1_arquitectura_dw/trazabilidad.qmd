@@ -12,10 +12,10 @@ date: last-modified
   }
 </style>
 
-Esta página demuestra que el diseño del almacén responde a lo planteado en E0. Liga cada
+En esta página se comprueba que el diseño del almacén responde a lo planteado en E0, ligando cada
 [pregunta de investigación](../E0_comprension_negocio/preguntas.qmd) con su tarea de minería, sus
-métricas, sus dimensiones y sus fuentes, y declara qué queda cubierto, qué queda cubierto a medias
-y qué no. La revisión se hace en los dos sentidos: de las preguntas al diseño y del diseño a las
+métricas, sus dimensiones y sus fuentes, y se declara qué queda cubierto, qué queda cubierto a
+medias y qué no. La revisión se hace en los dos sentidos: de las preguntas al diseño y del diseño a las
 preguntas.
 
 El objetivo de minería de datos y el criterio de éxito de E0 se mantienen sin cambios. Una de las
@@ -134,10 +134,10 @@ medidas técnicas. La tabla indica cuáles puede medir el diseño.
 
 - **Las dos medidas medibles son las que evalúan el ordenamiento**, que es el objeto del proyecto.
 - **Las dos no medibles corresponden a condiciones que E0 fijó como límites**, no como objetivo. El
-  proyecto no puede verificarlas con datos, y así se declara.
+  proyecto no puede verificarlas con datos, y así lo declaramos.
 - **Los importes de la fuente A están en dólares y la meta de E0, en pesos.** No es un obstáculo:
-  lo que se mide es una fracción del monto defraudado, que no tiene unidad, y E0 establece que esa
-  fracción se proyecta sobre la línea base de 8.2 millones de pesos mensuales.
+  de hecho, lo que se mide es una fracción del monto defraudado, que no tiene unidad, y en E0
+  establecimos que esa fracción se proyecta sobre la línea base de 8.2 millones de pesos mensuales.
 
 ## Limitaciones y ajustes
 
@@ -171,10 +171,9 @@ criterio de éxito, y ninguno de los dos cambió:
 
 ## Compromisos de E0 que pasan a la entrega siguiente
 
-E0 situó tres tareas en una entrega de comprensión de los datos, a la que llamó E1. En el
-calendario del curso, E1 es la arquitectura del almacén. Esas tres tareas requieren explorar los
-datos, de modo que se realizarán en la entrega siguiente. Las páginas de E0 se conservan como se
-entregaron; el cambio de calendario se declara aquí.
+E0 situó tres tareas en una entrega de comprensión de los datos. Como requieren explorar los
+datos, y esta entrega se dedica a la arquitectura del almacén, se realizarán en la siguiente. Las
+páginas de E0 se conservan como se entregaron; el cambio de calendario se declara aquí.
 
 | Compromiso de E0 | Dónde consta | Avance en esta entrega | Pendiente |
 | :--- | :--- | :--- | :--- |

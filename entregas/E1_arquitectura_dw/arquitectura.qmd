@@ -22,15 +22,15 @@ los datos crudos de las [fuentes del catálogo](fuentes.qmd), el
 [esquema estrella](estrella.qmd) y las consultas que responden las
 [preguntas de investigación de E0](../E0_comprension_negocio/preguntas.qmd).
 
-La implementación es a escala reducida: staging contiene muestras, las tablas del esquema están
-creadas y vacías, y las consultas son válidas pero todavía no devuelven filas. Poblar el almacén
-corresponde a la preparación de los datos.
+Staging contiene muestras, las tablas del esquema están creadas y vacías, y las consultas son
+válidas pero todavía no devuelven filas. Llenar el almacén corresponde a la preparación de los
+datos.
 
 ## Las tres capas
 
-| Capa | Dataset | Papel | Contenido en esta entrega |
+| Capa | Dataset | Rol | Contenido en esta entrega |
 | :--- | :--- | :--- | :--- |
-| **Staging** | `lumen_staging` | Recibir los datos tal como llegan de cada fuente, sin limpiar ni transformar | Cinco tablas con una muestra cruda de cada fuente |
+| **Staging** | `lumen_staging` | Recibir los datos crudos de cada fuente, sin limpiar ni transformar | Cinco tablas con datos crudos de cada fuente |
 | **DW** | `lumen_dw` | Guardar los datos ya integrados, en el esquema estrella | Dos tablas de hechos y cinco dimensiones, vacías |
 | **DataMart** | `lumen_mart` | Responder las preguntas de E0 a partir del esquema estrella | Cuatro vistas, una o dos por pregunta |
 
@@ -49,13 +49,12 @@ flowchart LR
 ```
 :::
 
-La flecha punteada marca lo que esta entrega no implementa: el paso de staging al DW requiere
+El paso de staging al DW requiere
 transformar los datos, y esa transformación pertenece a la etapa siguiente. Las vistas del
 DataMart leen del DW.
 
-Los tres datasets están en el proyecto `pagos-lumen-dw` y en la misma ubicación, **US**. BigQuery
-no permite consultas entre datasets de ubicaciones distintas, de modo que esa coincidencia es
-condición para que las vistas del DataMart puedan leer del DW.
+Los tres datasets están en el proyecto `pagos-lumen-dw` y en la misma ubicación, **US**, ya que BigQuery
+no permite consultas entre datasets de ubicaciones distintas.
 
 ![Los tres datasets y su ubicación, consultados en el catálogo de BigQuery](img/bq_datasets_ubicacion.png)
 
@@ -66,9 +65,9 @@ BigQuery registra la fuente y la fecha de carga.
 
 | Tabla | Fuente | Filas | Columnas | Contenido | Forma de carga |
 | :--- | :--- | --: | --: | :--- | :--- |
-| `ieee_train_transaction` | A | 56,059 | 394 | Muestra: los primeros 14 días del conjunto | Archivo CSV desde la consola; esquema detectado |
-| `ieee_train_identity` | A | 18,964 | 41 | Registros de identidad de esas mismas transacciones | Archivo CSV desde la consola; esquema detectado |
-| `banxico_cf621_series` | B | 46 | 25 | Los 45 trimestres del cuadro y una fila vacía | Archivo CSV desde la consola; esquema explícito y 19 líneas iniciales omitidas |
+| `ieee_train_transaction` | A | 56,059 | 394 | Los primeros 14 días del conjunto | Archivo CSV desde la consola, esquema detectado |
+| `ieee_train_identity` | A | 18,964 | 41 | Registros de identidad de esas mismas transacciones | Archivo CSV desde la consola, esquema detectado |
+| `banxico_cf621_series` | B | 46 | 25 | Los 45 trimestres del cuadro y una fila vacía | Archivo CSV desde la consola, esquema explícito y 19 líneas iniciales omitidas |
 | `ulb_fraud_detection` | C | 284,807 | 31 | Copia completa de la tabla pública | Sentencia `CREATE TABLE ... AS SELECT` |
 | `free_email_domains` | D | 14,326 | 1 | Una fila por línea del archivo JSON | Archivo cargado como texto, en una sola columna |
 
@@ -79,7 +78,7 @@ el de transacciones pesa 683 MB. La muestra se tomó por ventana de tiempo, y no
 filas, para que las dos tablas se correspondan: catorce días son dos semanas completas y pesan
 64 MB. La tabla de identidad se filtró a las transacciones de esa ventana.
 
-**Datos crudos.** Conforme al papel de la capa, las tablas conservan las condiciones de formato de
+**Datos crudos.** Las tablas conservan las condiciones de formato de
 cada fuente, descritas en el [análisis de integración](fuentes.qmd#condiciones-de-formato-y-de-carga):
 la fecha de Banco de México se guarda como texto, su archivo deja una fila vacía al final, y la
 lista de dominios conserva los corchetes, las comillas y las comas del JSON. En esas dos tablas el
@@ -180,7 +179,7 @@ competencia prohíben redistribuir sus datos.
 ![Trabajos de carga registrados por BigQuery](img/stg_cargas.png)
 :::
 
-BigQuery registró seis trabajos de carga, todos terminados sin error. Tres corresponden a
+BigQuery registró seis trabajos de carga, tres de
 `banxico_cf621_series`: los dos primeros se descartaron, uno por no omitir las líneas de
 metadatos y otro por la fecha mal interpretada, y quedó el tercero. `ulb_fraud_detection` no
 aparece en esa lista porque se creó con una sentencia SQL y no con un trabajo de carga.
@@ -191,16 +190,16 @@ La capa contiene las siete tablas del esquema estrella, creadas con SQL el 9 de 
 todavía vacías. El grano, las medidas, las dimensiones, el diagrama, el DDL y la captura del
 esquema de cada tabla se documentan en la página del [esquema estrella](estrella.qmd).
 
-La consulta siguiente, hecha sobre el catálogo de BigQuery, resume el conjunto: cada tabla con sus
-llaves declaradas y las preguntas de E0 que responde, según la descripción de la propia tabla.
+La consulta siguiente, hecha en BigQuery, resume cada tabla con sus llaves declaradas y las
+preguntas de E0 que responde, según la descripción de la propia tabla.
 
 ![Tablas de `lumen_dw`, con sus llaves y las preguntas que responden](img/dw_tablas_llaves.png)
 
 ## DataMart
 
-La capa contiene cuatro vistas que leen únicamente de `lumen_dw`. Cada una responde una pregunta
+La capa contiene cuatro vistas que leen de `lumen_dw`. Cada una responde una pregunta
 de E0, y las cuatro usan operaciones OLAP: agrupaciones con `CUBE` o `ROLLUP` y funciones de
-ventana. Su código corresponde al archivo `sql/consultas_mart.sql` del repositorio.
+ventana. El código corresponde al archivo `sql/consultas_mart.sql` del repositorio.
 
 | Vista | Pregunta | Qué devuelve | Operación OLAP |
 | :--- | :--- | :--- | :--- |
@@ -211,8 +210,8 @@ ventana. Su código corresponde al archivo `sql/consultas_mart.sql` del reposito
 
 : {tbl-colwidths="[22,10,46,22]"}
 
-Las cuatro consultas son válidas en BigQuery: se ejecutaron sin error y las vistas quedaron
-creadas. Como el DW está vacío, todavía no devuelven filas, y esta entrega no reporta resultados.
+Las cuatro consultas se ejecutaron en BigQuery sin error para crear las vistas. Al no haber datos
+en el DW, no devuelven filas, y esta entrega no reporta resultados.
 
 ![Las cuatro vistas de `lumen_mart` y la pregunta que responde cada una](img/mart_vistas.png)
 
@@ -269,7 +268,7 @@ GROUP BY CUBE (p.producto_cd, t.tipo_tarjeta, d.tipo_dispositivo, c.es_gratuito)
 ### P2 · Monto defraudado en el tramo revisable
 
 `p2_tramo_diario` mide qué fracción del monto defraudado queda dentro del 0.75 % de las
-transacciones de cada día, que es la capacidad de revisión fijada en E0.
+transacciones de cada día.
 
 - Las funciones de ventana numeran las transacciones de cada día según un orden (`ROW_NUMBER`) y
   cuentan cuántas hubo ese día (`COUNT(*) OVER`); `PARTITION BY` reinicia el cálculo cada día.
@@ -363,7 +362,7 @@ GROUP BY ROLLUP (f.anio, t.tipo_tarjeta);
 ![La vista `p2_referencia_mexico`, creada en BigQuery](img/mart_p2_referencia_mexico.png)
 :::
 
-### P3 · Ausencia de identidad como señal de riesgo
+### P3 · Falta de identidad como señal de riesgo
 
 `p3_identidad` compara la tasa de fraude de las transacciones con y sin registro de identidad del
 dispositivo. Si las dos tasas difieren, la ausencia es una señal y no conviene imputarla; si son
@@ -371,7 +370,7 @@ parecidas, es solo un hueco.
 
 - `ROLLUP` produce el detalle por tipo de dispositivo, el subtotal de cada grupo y el total.
 - La tasa se calcula por número y por monto, porque el criterio de éxito de E0 está expresado en
-  dinero y no en número de operaciones.
+  dinero.
 
 ::: {.panel-tabset}
 ## Consulta

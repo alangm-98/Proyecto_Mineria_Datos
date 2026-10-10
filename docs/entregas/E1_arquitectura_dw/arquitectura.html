@@ -474,7 +474,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#p1-combinaciones-de-atributos-que-separan-el-fraude" id="toc-p1-combinaciones-de-atributos-que-separan-el-fraude" class="nav-link" data-scroll-target="#p1-combinaciones-de-atributos-que-separan-el-fraude">P1 · Combinaciones de atributos que separan el fraude</a></li>
   <li><a href="#p2-monto-defraudado-en-el-tramo-revisable" id="toc-p2-monto-defraudado-en-el-tramo-revisable" class="nav-link" data-scroll-target="#p2-monto-defraudado-en-el-tramo-revisable">P2 · Monto defraudado en el tramo revisable</a></li>
   <li><a href="#p2-referencia-de-méxico" id="toc-p2-referencia-de-méxico" class="nav-link" data-scroll-target="#p2-referencia-de-méxico">P2 · Referencia de México</a></li>
-  <li><a href="#p3-ausencia-de-identidad-como-señal-de-riesgo" id="toc-p3-ausencia-de-identidad-como-señal-de-riesgo" class="nav-link" data-scroll-target="#p3-ausencia-de-identidad-como-señal-de-riesgo">P3 · Ausencia de identidad como señal de riesgo</a></li>
+  <li><a href="#p3-falta-de-identidad-como-señal-de-riesgo" id="toc-p3-falta-de-identidad-como-señal-de-riesgo" class="nav-link" data-scroll-target="#p3-falta-de-identidad-como-señal-de-riesgo">P3 · Falta de identidad como señal de riesgo</a></li>
   <li><a href="#p4-sin-consulta" id="toc-p4-sin-consulta" class="nav-link" data-scroll-target="#p4-sin-consulta">P4 · Sin consulta</a></li>
   </ul></li>
   </ul>
@@ -519,7 +519,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   }
 </style>
 <p>Esta página describe la arquitectura del almacén de datos del proyecto y la evidencia de su implementación en BigQuery. El almacén se organiza en tres capas, cada una en su propio dataset: los datos crudos de las <a href="../../entregas/E1_arquitectura_dw/fuentes.html">fuentes del catálogo</a>, el <a href="../../entregas/E1_arquitectura_dw/estrella.html">esquema estrella</a> y las consultas que responden las <a href="../../entregas/E0_comprension_negocio/preguntas.html">preguntas de investigación de E0</a>.</p>
-<p>La implementación es a escala reducida: staging contiene muestras, las tablas del esquema están creadas y vacías, y las consultas son válidas pero todavía no devuelven filas. Poblar el almacén corresponde a la preparación de los datos.</p>
+<p>Staging contiene muestras, las tablas del esquema están creadas y vacías, y las consultas son válidas pero todavía no devuelven filas. Llenar el almacén corresponde a la preparación de los datos.</p>
 <section id="las-tres-capas" class="level2">
 <h2 class="anchored" data-anchor-id="las-tres-capas">Las tres capas</h2>
 <table class="caption-top table">
@@ -533,7 +533,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="header">
 <th style="text-align: left;">Capa</th>
 <th style="text-align: left;">Dataset</th>
-<th style="text-align: left;">Papel</th>
+<th style="text-align: left;">Rol</th>
 <th style="text-align: left;">Contenido en esta entrega</th>
 </tr>
 </thead>
@@ -541,8 +541,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;"><strong>Staging</strong></td>
 <td style="text-align: left;"><code>lumen_staging</code></td>
-<td style="text-align: left;">Recibir los datos tal como llegan de cada fuente, sin limpiar ni transformar</td>
-<td style="text-align: left;">Cinco tablas con una muestra cruda de cada fuente</td>
+<td style="text-align: left;">Recibir los datos crudos de cada fuente, sin limpiar ni transformar</td>
+<td style="text-align: left;">Cinco tablas con datos crudos de cada fuente</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><strong>DW</strong></td>
@@ -579,8 +579,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>La flecha punteada marca lo que esta entrega no implementa: el paso de staging al DW requiere transformar los datos, y esa transformación pertenece a la etapa siguiente. Las vistas del DataMart leen del DW.</p>
-<p>Los tres datasets están en el proyecto <code>pagos-lumen-dw</code> y en la misma ubicación, <strong>US</strong>. BigQuery no permite consultas entre datasets de ubicaciones distintas, de modo que esa coincidencia es condición para que las vistas del DataMart puedan leer del DW.</p>
+<p>El paso de staging al DW requiere transformar los datos, y esa transformación pertenece a la etapa siguiente. Las vistas del DataMart leen del DW.</p>
+<p>Los tres datasets están en el proyecto <code>pagos-lumen-dw</code> y en la misma ubicación, <strong>US</strong>, ya que BigQuery no permite consultas entre datasets de ubicaciones distintas.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="img/bq_datasets_ubicacion.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Los tres datasets y su ubicación, consultados en el catálogo de BigQuery"><img src="img/bq_datasets_ubicacion.png" class="img-fluid figure-img" alt="Los tres datasets y su ubicación, consultados en el catálogo de BigQuery"></a></p>
@@ -616,8 +616,8 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: left;">A</td>
 <td style="text-align: right;">56,059</td>
 <td style="text-align: right;">394</td>
-<td style="text-align: left;">Muestra: los primeros 14 días del conjunto</td>
-<td style="text-align: left;">Archivo CSV desde la consola; esquema detectado</td>
+<td style="text-align: left;">Los primeros 14 días del conjunto</td>
+<td style="text-align: left;">Archivo CSV desde la consola, esquema detectado</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>ieee_train_identity</code></td>
@@ -625,7 +625,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">18,964</td>
 <td style="text-align: right;">41</td>
 <td style="text-align: left;">Registros de identidad de esas mismas transacciones</td>
-<td style="text-align: left;">Archivo CSV desde la consola; esquema detectado</td>
+<td style="text-align: left;">Archivo CSV desde la consola, esquema detectado</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;"><code>banxico_cf621_series</code></td>
@@ -633,7 +633,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <td style="text-align: right;">46</td>
 <td style="text-align: right;">25</td>
 <td style="text-align: left;">Los 45 trimestres del cuadro y una fila vacía</td>
-<td style="text-align: left;">Archivo CSV desde la consola; esquema explícito y 19 líneas iniciales omitidas</td>
+<td style="text-align: left;">Archivo CSV desde la consola, esquema explícito y 19 líneas iniciales omitidas</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>ulb_fraud_detection</code></td>
@@ -654,7 +654,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tbody>
 </table>
 <p><strong>La muestra de IEEE-CIS.</strong> La consola de BigQuery limita la carga a unos 100 MB por archivo, y el de transacciones pesa 683 MB. La muestra se tomó por ventana de tiempo, y no por número de filas, para que las dos tablas se correspondan: catorce días son dos semanas completas y pesan 64 MB. La tabla de identidad se filtró a las transacciones de esa ventana.</p>
-<p><strong>Datos crudos.</strong> Conforme al papel de la capa, las tablas conservan las condiciones de formato de cada fuente, descritas en el <a href="../../entregas/E1_arquitectura_dw/fuentes.html#condiciones-de-formato-y-de-carga">análisis de integración</a>: la fecha de Banco de México se guarda como texto, su archivo deja una fila vacía al final, y la lista de dominios conserva los corchetes, las comillas y las comas del JSON. En esas dos tablas el esquema se indicó de forma explícita: en la primera, porque la detección automática interpretaba mal la fecha; en la segunda, para recibir cada línea como un solo texto.</p>
+<p><strong>Datos crudos.</strong> Las tablas conservan las condiciones de formato de cada fuente, descritas en el <a href="../../entregas/E1_arquitectura_dw/fuentes.html#condiciones-de-formato-y-de-carga">análisis de integración</a>: la fecha de Banco de México se guarda como texto, su archivo deja una fila vacía al final, y la lista de dominios conserva los corchetes, las comillas y las comas del JSON. En esas dos tablas el esquema se indicó de forma explícita: en la primera, porque la detección automática interpretaba mal la fecha; en la segunda, para recibir cada línea como un solo texto.</p>
 <section id="evidencia-por-tabla" class="level3">
 <h3 class="anchored" data-anchor-id="evidencia-por-tabla">Evidencia por tabla</h3>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
@@ -874,13 +874,13 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </div>
-<p>BigQuery registró seis trabajos de carga, todos terminados sin error. Tres corresponden a <code>banxico_cf621_series</code>: los dos primeros se descartaron, uno por no omitir las líneas de metadatos y otro por la fecha mal interpretada, y quedó el tercero. <code>ulb_fraud_detection</code> no aparece en esa lista porque se creó con una sentencia SQL y no con un trabajo de carga.</p>
+<p>BigQuery registró seis trabajos de carga, tres de <code>banxico_cf621_series</code>: los dos primeros se descartaron, uno por no omitir las líneas de metadatos y otro por la fecha mal interpretada, y quedó el tercero. <code>ulb_fraud_detection</code> no aparece en esa lista porque se creó con una sentencia SQL y no con un trabajo de carga.</p>
 </section>
 </section>
 <section id="dw" class="level2">
 <h2 class="anchored" data-anchor-id="dw">DW</h2>
 <p>La capa contiene las siete tablas del esquema estrella, creadas con SQL el 9 de octubre de 2026 y todavía vacías. El grano, las medidas, las dimensiones, el diagrama, el DDL y la captura del esquema de cada tabla se documentan en la página del <a href="../../entregas/E1_arquitectura_dw/estrella.html">esquema estrella</a>.</p>
-<p>La consulta siguiente, hecha sobre el catálogo de BigQuery, resume el conjunto: cada tabla con sus llaves declaradas y las preguntas de E0 que responde, según la descripción de la propia tabla.</p>
+<p>La consulta siguiente, hecha en BigQuery, resume cada tabla con sus llaves declaradas y las preguntas de E0 que responde, según la descripción de la propia tabla.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="img/dw_tablas_llaves.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Tablas de lumen_dw, con sus llaves y las preguntas que responden"><img src="img/dw_tablas_llaves.png" class="img-fluid figure-img" alt="Tablas de lumen_dw, con sus llaves y las preguntas que responden"></a></p>
@@ -890,7 +890,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="datamart" class="level2">
 <h2 class="anchored" data-anchor-id="datamart">DataMart</h2>
-<p>La capa contiene cuatro vistas que leen únicamente de <code>lumen_dw</code>. Cada una responde una pregunta de E0, y las cuatro usan operaciones OLAP: agrupaciones con <code>CUBE</code> o <code>ROLLUP</code> y funciones de ventana. Su código corresponde al archivo <code>sql/consultas_mart.sql</code> del repositorio.</p>
+<p>La capa contiene cuatro vistas que leen de <code>lumen_dw</code>. Cada una responde una pregunta de E0, y las cuatro usan operaciones OLAP: agrupaciones con <code>CUBE</code> o <code>ROLLUP</code> y funciones de ventana. El código corresponde al archivo <code>sql/consultas_mart.sql</code> del repositorio.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 22%">
@@ -933,7 +933,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </tr>
 </tbody>
 </table>
-<p>Las cuatro consultas son válidas en BigQuery: se ejecutaron sin error y las vistas quedaron creadas. Como el DW está vacío, todavía no devuelven filas, y esta entrega no reporta resultados.</p>
+<p>Las cuatro consultas se ejecutaron en BigQuery sin error para crear las vistas. Al no haber datos en el DW, no devuelven filas, y esta entrega no reporta resultados.</p>
 <div class="quarto-figure quarto-figure-center">
 <figure class="figure">
 <p><a href="img/mart_vistas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Las cuatro vistas de lumen_mart y la pregunta que responde cada una"><img src="img/mart_vistas.png" class="img-fluid figure-img" alt="Las cuatro vistas de lumen_mart y la pregunta que responde cada una"></a></p>
@@ -995,7 +995,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </section>
 <section id="p2-monto-defraudado-en-el-tramo-revisable" class="level3">
 <h3 class="anchored" data-anchor-id="p2-monto-defraudado-en-el-tramo-revisable">P2 · Monto defraudado en el tramo revisable</h3>
-<p><code>p2_tramo_diario</code> mide qué fracción del monto defraudado queda dentro del 0.75 % de las transacciones de cada día, que es la capacidad de revisión fijada en E0.</p>
+<p><code>p2_tramo_diario</code> mide qué fracción del monto defraudado queda dentro del 0.75 % de las transacciones de cada día.</p>
 <ul>
 <li>Las funciones de ventana numeran las transacciones de cada día según un orden (<code>ROW_NUMBER</code>) y cuentan cuántas hubo ese día (<code>COUNT(*) OVER</code>); <code>PARTITION BY</code> reinicia el cálculo cada día.</li>
 <li>Con eso se marca el 0.75 % superior de cada día y se resume cuánto fraude y cuánto monto contiene. <code>ROLLUP</code> agrega una fila con el total del periodo.</li>
@@ -1092,12 +1092,12 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 </section>
-<section id="p3-ausencia-de-identidad-como-señal-de-riesgo" class="level3">
-<h3 class="anchored" data-anchor-id="p3-ausencia-de-identidad-como-señal-de-riesgo">P3 · Ausencia de identidad como señal de riesgo</h3>
+<section id="p3-falta-de-identidad-como-señal-de-riesgo" class="level3">
+<h3 class="anchored" data-anchor-id="p3-falta-de-identidad-como-señal-de-riesgo">P3 · Falta de identidad como señal de riesgo</h3>
 <p><code>p3_identidad</code> compara la tasa de fraude de las transacciones con y sin registro de identidad del dispositivo. Si las dos tasas difieren, la ausencia es una señal y no conviene imputarla; si son parecidas, es solo un hueco.</p>
 <ul>
 <li><code>ROLLUP</code> produce el detalle por tipo de dispositivo, el subtotal de cada grupo y el total.</li>
-<li>La tasa se calcula por número y por monto, porque el criterio de éxito de E0 está expresado en dinero y no en número de operaciones.</li>
+<li>La tasa se calcula por número y por monto, porque el criterio de éxito de E0 está expresado en dinero.</li>
 </ul>
 <div class="tabset-margin-container"></div><div class="panel-tabset">
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Consulta</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Validación en BigQuery</a></li></ul>

@@ -13,8 +13,9 @@ date: last-modified
 </style>
 
 ::: {.callout-important appearance="minimal" title="Declaración general"}
-El equipo **sí utilizó herramientas de IA** en esta entrega. Un modelo de
-lenguaje propuso las fuentes, colaboró en el diseño del almacén, el código SQL, debugging del mismo y propuestas de  redacción de las páginas.
+El equipo **sí utilizó herramientas de IA** en esta entrega. Un modelo de lenguaje propuso las
+fuentes y colaboró en el diseño del almacén, en el código SQL y su depuración, y en propuestas de
+redacción de las páginas.
 El equipo abrió y verificó cada fuente, tomó las decisiones de diseño, ejecutó todo el trabajo en
 BigQuery y en Kaggle, y revisó y corrigió las salidas. Una segunda herramienta, en modo de
 investigación profunda, se usó para contrastar la búsqueda de fuentes.
@@ -43,13 +44,13 @@ búsqueda de contraste se reproduce íntegro.
 ## Uso 1 · Planeación de la entrega y guía de las plataformas {#uso-1}
 
 **Tarea.** Leer las indicaciones de la entrega y el trabajo de E0, proponer un plan por fases y
-guiar al equipo en el uso de BigQuery Kaggle, en la preparación de las dos plataformas.
+guiar al equipo en el uso de BigQuery y Kaggle, en la preparación de las dos plataformas.
 
 **Prompts empleados (resumen fiel).** El equipo entregó al modelo un documento interno de
 contexto con lo decidido en E0, el enlace del repositorio y las indicaciones de E0 y de E1.
-Después pidió identificar qué exige E1, cómo se relaciona con esos
-compromisos, qué decisiones había que tomar y un plan de implementación, con la instrucción de esperar la
-validación del equipo siempre.
+Después pidió identificar qué exige E1, cómo se relaciona con los compromisos de E0, qué
+decisiones había que tomar y un plan de implementación, con la instrucción de esperar siempre la
+validación del equipo.
 
 **Qué se hizo con la salida.** El equipo validó el plan y lo siguió fase por fase, cerrando cada
 una antes de abrir la siguiente. Creó el proyecto y los tres datasets, y aceptó las reglas de la
@@ -176,16 +177,15 @@ por mensaje, con la explicación de cada parte.
 
 ## Uso 5 · Redacción de las páginas y revisión del sitio {#uso-5}
 
-**Tarea.** Apoyar con la redacción de las las cinco páginas de esta entrega a
-partir de lo decidido.
+**Tarea.** Apoyar con la redacción de las cinco páginas de esta entrega a partir de lo decidido.
 
-**Prompts empleados (resumen fiel).** El equipo propuso borradores, que revisó el modelo y propuso
-ajustes, que el equipó valoró y decidió si integraba o no en un proceso iterativo,
-una página a la vez, para publicar cada una al terminarla.
+**Prompts empleados (resumen fiel).** El equipo propuso borradores; el modelo los revisó y propuso
+ajustes, que el equipo valoró para decidir si los integraba o no, en un proceso iterativo, una
+página a la vez, para publicar cada una al terminarla.
 
 **Qué se hizo con la salida.** El equipo revisó y ajustó la redacción de cada página, y la publicó.
 Ninguna salida del modelo se publicó sin revisión. El equipo también pidió al modelo que revisara
-el sitio completo, y propuso ajustes de estilo y consistencia que el equipo aceptó o rechazó.
+el sitio completo, y este propuso ajustes de estilo y consistencia que el equipo aceptó o rechazó.
 
 ---
 
@@ -220,4 +220,3 @@ ninguna salida se usó sin verificar.
 | Incluyó en un hecho dos columnas que no respondían ninguna pregunta de E0 | Al revisar el propio modelo la matriz de trazabilidad en sentido inverso | El equipo volvió a crear la tabla sin ellas |
 
 : {tbl-colwidths="[40,26,34]"}
-
