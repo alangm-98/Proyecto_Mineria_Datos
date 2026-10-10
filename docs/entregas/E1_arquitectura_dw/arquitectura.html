@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>2. Arquitectura de tres capas – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../entregas/E1_arquitectura_dw/estrella.html" rel="next">
+<link href="../../entregas/E1_arquitectura_dw/fuentes.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-97bc63ea392d9b08ece34d04c8d9f81c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<meta name="mermaid-theme" content="default">
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text">Repositorio</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">E1 · Arquitectura del DW</a></li><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/arquitectura.html">2 · Arquitectura de tres capas</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">E0 · Comprensión del negocio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/bitacora.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Bitácora</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/canvas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Canvas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/preguntas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Preguntas de investigación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/criterio_exito.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Criterio de éxito</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Supuestos y riesgos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Material de respaldo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expediente de fuentes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">E1 · Arquitectura del DW</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Fuentes e integración</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/arquitectura.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">2 · Arquitectura de tres capas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/estrella.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Esquema estrella</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#las-tres-capas" id="toc-las-tres-capas" class="nav-link active" data-scroll-target="#las-tres-capas">Las tres capas</a></li>
+  <li><a href="#staging" id="toc-staging" class="nav-link" data-scroll-target="#staging">Staging</a>
+  <ul class="collapse">
+  <li><a href="#evidencia-por-tabla" id="toc-evidencia-por-tabla" class="nav-link" data-scroll-target="#evidencia-por-tabla">Evidencia por tabla</a></li>
+  <li><a href="#evidencia-del-conjunto" id="toc-evidencia-del-conjunto" class="nav-link" data-scroll-target="#evidencia-del-conjunto">Evidencia del conjunto</a></li>
+  </ul></li>
+  <li><a href="#dw" id="toc-dw" class="nav-link" data-scroll-target="#dw">DW</a></li>
+  <li><a href="#datamart" id="toc-datamart" class="nav-link" data-scroll-target="#datamart">DataMart</a>
+  <ul class="collapse">
+  <li><a href="#p1-combinaciones-de-atributos-que-separan-el-fraude" id="toc-p1-combinaciones-de-atributos-que-separan-el-fraude" class="nav-link" data-scroll-target="#p1-combinaciones-de-atributos-que-separan-el-fraude">P1 · Combinaciones de atributos que separan el fraude</a></li>
+  <li><a href="#p2-monto-defraudado-en-el-tramo-revisable" id="toc-p2-monto-defraudado-en-el-tramo-revisable" class="nav-link" data-scroll-target="#p2-monto-defraudado-en-el-tramo-revisable">P2 · Monto defraudado en el tramo revisable</a></li>
+  <li><a href="#p2-referencia-de-méxico" id="toc-p2-referencia-de-méxico" class="nav-link" data-scroll-target="#p2-referencia-de-méxico">P2 · Referencia de México</a></li>
+  <li><a href="#p3-ausencia-de-identidad-como-señal-de-riesgo" id="toc-p3-ausencia-de-identidad-como-señal-de-riesgo" class="nav-link" data-scroll-target="#p3-ausencia-de-identidad-como-señal-de-riesgo">P3 · Ausencia de identidad como señal de riesgo</a></li>
+  <li><a href="#p4-sin-consulta" id="toc-p4-sin-consulta" class="nav-link" data-scroll-target="#p4-sin-consulta">P4 · Sin consulta</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">E1 · Arquitectura del DW</a></li><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/arquitectura.html">2 · Arquitectura de tres capas</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">2. Arquitectura de tres capas</h1>
+<p class="subtitle lead">Staging, DW y DataMart en BigQuery</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de octubre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  /* El diagrama conserva fondo claro también en el tema oscuro, para que siga siendo legible */
+  .diagrama-capas {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 12px;
+  }
+</style>
+<p>Esta página describe la arquitectura del almacén de datos del proyecto y la evidencia de su implementación en BigQuery. El almacén se organiza en tres capas, cada una en su propio dataset: los datos crudos de las <a href="../../entregas/E1_arquitectura_dw/fuentes.html">fuentes del catálogo</a>, el <a href="../../entregas/E1_arquitectura_dw/estrella.html">esquema estrella</a> y las consultas que responden las <a href="../../entregas/E0_comprension_negocio/preguntas.html">preguntas de investigación de E0</a>.</p>
+<p>La implementación es a escala reducida: staging contiene muestras, las tablas del esquema están creadas y vacías, y las consultas son válidas pero todavía no devuelven filas. Poblar el almacén corresponde a la preparación de los datos.</p>
+<section id="las-tres-capas" class="level2">
+<h2 class="anchored" data-anchor-id="las-tres-capas">Las tres capas</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 12%">
+<col style="width: 18%">
+<col style="width: 38%">
+<col style="width: 32%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Capa</th>
+<th style="text-align: left;">Dataset</th>
+<th style="text-align: left;">Papel</th>
+<th style="text-align: left;">Contenido en esta entrega</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Staging</strong></td>
+<td style="text-align: left;"><code>lumen_staging</code></td>
+<td style="text-align: left;">Recibir los datos tal como llegan de cada fuente, sin limpiar ni transformar</td>
+<td style="text-align: left;">Cinco tablas con una muestra cruda de cada fuente</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>DW</strong></td>
+<td style="text-align: left;"><code>lumen_dw</code></td>
+<td style="text-align: left;">Guardar los datos ya integrados, en el esquema estrella</td>
+<td style="text-align: left;">Dos tablas de hechos y cinco dimensiones, vacías</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>DataMart</strong></td>
+<td style="text-align: left;"><code>lumen_mart</code></td>
+<td style="text-align: left;">Responder las preguntas de E0 a partir del esquema estrella</td>
+<td style="text-align: left;">Cuatro vistas, una o dos por pregunta</td>
+</tr>
+</tbody>
+</table>
+<div class="diagrama-capas">
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart LR
+    F["&lt;b&gt;Fuentes&lt;/b&gt;&lt;br/&gt;A · IEEE-CIS&lt;br/&gt;B · Banco de México&lt;br/&gt;C · ULB&lt;br/&gt;D · Dominios de correo"]
+    S["&lt;b&gt;lumen_staging&lt;/b&gt;&lt;br/&gt;datos crudos&lt;br/&gt;5 tablas"]
+    W["&lt;b&gt;lumen_dw&lt;/b&gt;&lt;br/&gt;esquema estrella&lt;br/&gt;2 hechos y 5 dimensiones"]
+    M["&lt;b&gt;lumen_mart&lt;/b&gt;&lt;br/&gt;consultas&lt;br/&gt;4 vistas"]
+    F --&gt;|"muestras"| S
+    S -.-&gt;|"carga pendiente"| W
+    W --&gt;|"lectura"| M
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+</div>
+<p>La flecha punteada marca lo que esta entrega no implementa: el paso de staging al DW requiere transformar los datos, y esa transformación pertenece a la etapa siguiente. Las vistas del DataMart leen del DW.</p>
+<p>Los tres datasets están en el proyecto <code>pagos-lumen-dw</code> y en la misma ubicación, <strong>US</strong>. BigQuery no permite consultas entre datasets de ubicaciones distintas, de modo que esa coincidencia es condición para que las vistas del DataMart puedan leer del DW.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/bq_datasets_ubicacion.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Los tres datasets y su ubicación, consultados en el catálogo de BigQuery"><img src="img/bq_datasets_ubicacion.png" class="img-fluid figure-img" alt="Los tres datasets y su ubicación, consultados en el catálogo de BigQuery"></a></p>
+<figcaption>Los tres datasets y su ubicación, consultados en el catálogo de BigQuery</figcaption>
+</figure>
+</div>
+</section>
+<section id="staging" class="level2">
+<h2 class="anchored" data-anchor-id="staging">Staging</h2>
+<p>La capa contiene cinco tablas, cargadas el 9 de octubre de 2026. La descripción de cada tabla en BigQuery registra la fuente y la fecha de carga.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 7%">
+<col style="width: 9%">
+<col style="width: 9%">
+<col style="width: 27%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tabla</th>
+<th style="text-align: left;">Fuente</th>
+<th style="text-align: right;">Filas</th>
+<th style="text-align: right;">Columnas</th>
+<th style="text-align: left;">Contenido</th>
+<th style="text-align: left;">Forma de carga</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>ieee_train_transaction</code></td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">56,059</td>
+<td style="text-align: right;">394</td>
+<td style="text-align: left;">Muestra: los primeros 14 días del conjunto</td>
+<td style="text-align: left;">Archivo CSV desde la consola; esquema detectado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ieee_train_identity</code></td>
+<td style="text-align: left;">A</td>
+<td style="text-align: right;">18,964</td>
+<td style="text-align: right;">41</td>
+<td style="text-align: left;">Registros de identidad de esas mismas transacciones</td>
+<td style="text-align: left;">Archivo CSV desde la consola; esquema detectado</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>banxico_cf621_series</code></td>
+<td style="text-align: left;">B</td>
+<td style="text-align: right;">46</td>
+<td style="text-align: right;">25</td>
+<td style="text-align: left;">Los 45 trimestres del cuadro y una fila vacía</td>
+<td style="text-align: left;">Archivo CSV desde la consola; esquema explícito y 19 líneas iniciales omitidas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ulb_fraud_detection</code></td>
+<td style="text-align: left;">C</td>
+<td style="text-align: right;">284,807</td>
+<td style="text-align: right;">31</td>
+<td style="text-align: left;">Copia completa de la tabla pública</td>
+<td style="text-align: left;">Sentencia <code>CREATE TABLE ... AS SELECT</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>free_email_domains</code></td>
+<td style="text-align: left;">D</td>
+<td style="text-align: right;">14,326</td>
+<td style="text-align: right;">1</td>
+<td style="text-align: left;">Una fila por línea del archivo JSON</td>
+<td style="text-align: left;">Archivo cargado como texto, en una sola columna</td>
+</tr>
+</tbody>
+</table>
+<p><strong>La muestra de IEEE-CIS.</strong> La consola de BigQuery limita la carga a unos 100 MB por archivo, y el de transacciones pesa 683 MB. La muestra se tomó por ventana de tiempo, y no por número de filas, para que las dos tablas se correspondan: catorce días son dos semanas completas y pesan 64 MB. La tabla de identidad se filtró a las transacciones de esa ventana.</p>
+<p><strong>Datos crudos.</strong> Conforme al papel de la capa, las tablas conservan las condiciones de formato de cada fuente, descritas en el <a href="../../entregas/E1_arquitectura_dw/fuentes.html#condiciones-de-formato-y-de-carga">análisis de integración</a>: la fecha de Banco de México se guarda como texto, su archivo deja una fila vacía al final, y la lista de dominios conserva los corchetes, las comillas y las comas del JSON. En esas dos tablas el esquema se indicó de forma explícita: en la primera, porque la detección automática interpretaba mal la fecha; en la segunda, para recibir cada línea como un solo texto.</p>
+<section id="evidencia-por-tabla" class="level3">
+<h3 class="anchored" data-anchor-id="evidencia-por-tabla">Evidencia por tabla</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-6-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-1" role="tab" aria-controls="tabset-6-1" aria-selected="true" href="">ieee_train_transaction</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-2" role="tab" aria-controls="tabset-6-2" aria-selected="false" href="">ieee_train_identity</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-3" role="tab" aria-controls="tabset-6-3" aria-selected="false" href="">banxico_cf621_series</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-4" role="tab" aria-controls="tabset-6-4" aria-selected="false" href="">ulb_fraud_detection</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-6-5-tab" data-bs-toggle="tab" data-bs-target="#tabset-6-5" role="tab" aria-controls="tabset-6-5" aria-selected="false" href="">free_email_domains</a></li></ul>
+<div class="tab-content">
+<div id="tabset-6-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-6-1-tab">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Detalles</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Filas</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Esquema</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_transaction_detalles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Detalles de ieee_train_transaction"><img src="img/stg_ieee_transaction_detalles.png" class="img-fluid figure-img" alt="Detalles de ieee_train_transaction"></a></p>
+<figcaption>Detalles de <code>ieee_train_transaction</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_transaction_filas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Número de filas y tamaño de ieee_train_transaction"><img src="img/stg_ieee_transaction_filas.png" class="img-fluid figure-img" alt="Número de filas y tamaño de ieee_train_transaction"></a></p>
+<figcaption>Número de filas y tamaño de <code>ieee_train_transaction</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_transaction_esquema.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Primeros campos del esquema de ieee_train_transaction"><img src="img/stg_ieee_transaction_esquema.png" class="img-fluid figure-img" alt="Primeros campos del esquema de ieee_train_transaction"></a></p>
+<figcaption>Primeros campos del esquema de <code>ieee_train_transaction</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_transaction_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Vista previa de ieee_train_transaction"><img src="img/stg_ieee_transaction_preview.png" class="img-fluid figure-img" alt="Vista previa de ieee_train_transaction"></a></p>
+<figcaption>Vista previa de <code>ieee_train_transaction</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-2-tab">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Detalles</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Filas</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-3" role="tab" aria-controls="tabset-2-3" aria-selected="false" href="">Esquema</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-4" role="tab" aria-controls="tabset-2-4" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_identity_detalles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Detalles de ieee_train_identity"><img src="img/stg_ieee_identity_detalles.png" class="img-fluid figure-img" alt="Detalles de ieee_train_identity"></a></p>
+<figcaption>Detalles de <code>ieee_train_identity</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_identity_filas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Número de filas y tamaño de ieee_train_identity"><img src="img/stg_ieee_identity_filas.png" class="img-fluid figure-img" alt="Número de filas y tamaño de ieee_train_identity"></a></p>
+<figcaption>Número de filas y tamaño de <code>ieee_train_identity</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_identity_esquema.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Primeros campos del esquema de ieee_train_identity"><img src="img/stg_ieee_identity_esquema.png" class="img-fluid figure-img" alt="Primeros campos del esquema de ieee_train_identity"></a></p>
+<figcaption>Primeros campos del esquema de <code>ieee_train_identity</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ieee_identity_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-9" title="Vista previa de ieee_train_identity"><img src="img/stg_ieee_identity_preview.png" class="img-fluid figure-img" alt="Vista previa de ieee_train_identity"></a></p>
+<figcaption>Vista previa de <code>ieee_train_identity</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-3-tab">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Detalles</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Esquema</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-3" role="tab" aria-controls="tabset-3-3" aria-selected="false" href="">Vista previa</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-4" role="tab" aria-controls="tabset-3-4" aria-selected="false" href="">Fecha mal interpretada</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_banxico_detalles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-10" title="Detalles de banxico_cf621_series"><img src="img/stg_banxico_detalles.png" class="img-fluid figure-img" alt="Detalles de banxico_cf621_series"></a></p>
+<figcaption>Detalles de <code>banxico_cf621_series</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_banxico_esquema.png" class="lightbox" data-gallery="quarto-lightbox-gallery-11" title="Primeros campos del esquema de banxico_cf621_series"><img src="img/stg_banxico_esquema.png" class="img-fluid figure-img" alt="Primeros campos del esquema de banxico_cf621_series"></a></p>
+<figcaption>Primeros campos del esquema de <code>banxico_cf621_series</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-3-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_banxico_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-12" title="Vista previa de banxico_cf621_series, con la fecha como texto"><img src="img/stg_banxico_preview.png" class="img-fluid figure-img" alt="Vista previa de banxico_cf621_series, con la fecha como texto"></a></p>
+<figcaption>Vista previa de <code>banxico_cf621_series</code>, con la fecha como texto</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-4-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_banxico_problema_fecha.png" class="lightbox" data-gallery="quarto-lightbox-gallery-13" title="Carga descartada: la detección automática leyó la fecha como mes/día/año"><img src="img/stg_banxico_problema_fecha.png" class="img-fluid figure-img" alt="Carga descartada: la detección automática leyó la fecha como mes/día/año"></a></p>
+<figcaption>Carga descartada: la detección automática leyó la fecha como mes/día/año</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-4-tab">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Carga</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Detalles</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-3" role="tab" aria-controls="tabset-4-3" aria-selected="false" href="">Esquema</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-4" role="tab" aria-controls="tabset-4-4" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ulb_carga.png" class="lightbox" data-gallery="quarto-lightbox-gallery-14" title="Sentencia con la que se creó ulb_fraud_detection"><img src="img/stg_ulb_carga.png" class="img-fluid figure-img" alt="Sentencia con la que se creó ulb_fraud_detection"></a></p>
+<figcaption>Sentencia con la que se creó <code>ulb_fraud_detection</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ulb_detalles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-15" title="Detalles de ulb_fraud_detection"><img src="img/stg_ulb_detalles.png" class="img-fluid figure-img" alt="Detalles de ulb_fraud_detection"></a></p>
+<figcaption>Detalles de <code>ulb_fraud_detection</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-3-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ulb_esquema.png" class="lightbox" data-gallery="quarto-lightbox-gallery-16" title="Primeros campos del esquema de ulb_fraud_detection"><img src="img/stg_ulb_esquema.png" class="img-fluid figure-img" alt="Primeros campos del esquema de ulb_fraud_detection"></a></p>
+<figcaption>Primeros campos del esquema de <code>ulb_fraud_detection</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-4-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_ulb_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-17" title="Vista previa de ulb_fraud_detection"><img src="img/stg_ulb_preview.png" class="img-fluid figure-img" alt="Vista previa de ulb_fraud_detection"></a></p>
+<figcaption>Vista previa de <code>ulb_fraud_detection</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="tabset-6-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-6-5-tab">
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-5-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-1" role="tab" aria-controls="tabset-5-1" aria-selected="true" href="">Detalles</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-2" role="tab" aria-controls="tabset-5-2" aria-selected="false" href="">Esquema</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-5-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-5-3" role="tab" aria-controls="tabset-5-3" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-5-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-5-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_correos_detalles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-18" title="Detalles de free_email_domains"><img src="img/stg_correos_detalles.png" class="img-fluid figure-img" alt="Detalles de free_email_domains"></a></p>
+<figcaption>Detalles de <code>free_email_domains</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_correos_esquema.png" class="lightbox" data-gallery="quarto-lightbox-gallery-19" title="Esquema de free_email_domains"><img src="img/stg_correos_esquema.png" class="img-fluid figure-img" alt="Esquema de free_email_domains"></a></p>
+<figcaption>Esquema de <code>free_email_domains</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-5-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-5-3-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_correos_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-20" title="Vista previa de free_email_domains"><img src="img/stg_correos_preview.png" class="img-fluid figure-img" alt="Vista previa de free_email_domains"></a></p>
+<figcaption>Vista previa de <code>free_email_domains</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<p>Las vistas previas de IEEE-CIS muestran pocas filas y pocas columnas, porque las reglas de la competencia prohíben redistribuir sus datos.</p>
+</section>
+<section id="evidencia-del-conjunto" class="level3">
+<h3 class="anchored" data-anchor-id="evidencia-del-conjunto">Evidencia del conjunto</h3>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-7-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-1" role="tab" aria-controls="tabset-7-1" aria-selected="true" href="">Tablas del dataset</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-7-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-7-2" role="tab" aria-controls="tabset-7-2" aria-selected="false" href="">Trabajos de carga</a></li></ul>
+<div class="tab-content">
+<div id="tabset-7-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-7-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_dataset_tablas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-21" title="Las cinco tablas de lumen_staging"><img src="img/stg_dataset_tablas.png" class="img-fluid figure-img" alt="Las cinco tablas de lumen_staging"></a></p>
+<figcaption>Las cinco tablas de <code>lumen_staging</code></figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-7-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-7-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/stg_cargas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-22" title="Trabajos de carga registrados por BigQuery"><img src="img/stg_cargas.png" class="img-fluid figure-img" alt="Trabajos de carga registrados por BigQuery"></a></p>
+<figcaption>Trabajos de carga registrados por BigQuery</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+<p>BigQuery registró seis trabajos de carga, todos terminados sin error. Tres corresponden a <code>banxico_cf621_series</code>: los dos primeros se descartaron, uno por no omitir las líneas de metadatos y otro por la fecha mal interpretada, y quedó el tercero. <code>ulb_fraud_detection</code> no aparece en esa lista porque se creó con una sentencia SQL y no con un trabajo de carga.</p>
+</section>
+</section>
+<section id="dw" class="level2">
+<h2 class="anchored" data-anchor-id="dw">DW</h2>
+<p>La capa contiene las siete tablas del esquema estrella, creadas con SQL el 9 de octubre de 2026 y todavía vacías. El grano, las medidas, las dimensiones, el diagrama, el DDL y la captura del esquema de cada tabla se documentan en la página del <a href="../../entregas/E1_arquitectura_dw/estrella.html">esquema estrella</a>.</p>
+<p>La consulta siguiente, hecha sobre el catálogo de BigQuery, resume el conjunto: cada tabla con sus llaves declaradas y las preguntas de E0 que responde, según la descripción de la propia tabla.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/dw_tablas_llaves.png" class="lightbox" data-gallery="quarto-lightbox-gallery-23" title="Tablas de lumen_dw, con sus llaves y las preguntas que responden"><img src="img/dw_tablas_llaves.png" class="img-fluid figure-img" alt="Tablas de lumen_dw, con sus llaves y las preguntas que responden"></a></p>
+<figcaption>Tablas de <code>lumen_dw</code>, con sus llaves y las preguntas que responden</figcaption>
+</figure>
+</div>
+</section>
+<section id="datamart" class="level2">
+<h2 class="anchored" data-anchor-id="datamart">DataMart</h2>
+<p>La capa contiene cuatro vistas que leen únicamente de <code>lumen_dw</code>. Cada una responde una pregunta de E0, y las cuatro usan operaciones OLAP: agrupaciones con <code>CUBE</code> o <code>ROLLUP</code> y funciones de ventana. Su código corresponde al archivo <code>sql/consultas_mart.sql</code> del repositorio.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 22%">
+<col style="width: 10%">
+<col style="width: 46%">
+<col style="width: 22%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Vista</th>
+<th style="text-align: left;">Pregunta</th>
+<th style="text-align: left;">Qué devuelve</th>
+<th style="text-align: left;">Operación OLAP</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>p1_tasa_por_segmento</code></td>
+<td style="text-align: left;">P1</td>
+<td style="text-align: left;">Tasa de fraude de cada combinación de producto, tipo de tarjeta, dispositivo y correo gratuito, comparada con la tasa global</td>
+<td style="text-align: left;"><code>GROUP BY CUBE</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>p2_tramo_diario</code></td>
+<td style="text-align: left;">P2 y P1</td>
+<td style="text-align: left;">Por día, el fraude y el monto defraudado contenidos en el 0.75 % mejor ordenado, frente a lo esperado con un orden al azar</td>
+<td style="text-align: left;">Funciones de ventana y <code>GROUP BY ROLLUP</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>p2_referencia_mexico</code></td>
+<td style="text-align: left;">P2</td>
+<td style="text-align: left;">Por año y tipo de tarjeta en México: autorizaciones, compra promedio y contracargos por número y por monto</td>
+<td style="text-align: left;"><code>GROUP BY ROLLUP</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>p3_identidad</code></td>
+<td style="text-align: left;">P3</td>
+<td style="text-align: left;">Tasa de fraude con y sin registro de identidad, y por tipo de dispositivo</td>
+<td style="text-align: left;"><code>GROUP BY ROLLUP</code></td>
+</tr>
+</tbody>
+</table>
+<p>Las cuatro consultas son válidas en BigQuery: se ejecutaron sin error y las vistas quedaron creadas. Como el DW está vacío, todavía no devuelven filas, y esta entrega no reporta resultados.</p>
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/mart_vistas.png" class="lightbox" data-gallery="quarto-lightbox-gallery-24" title="Las cuatro vistas de lumen_mart y la pregunta que responde cada una"><img src="img/mart_vistas.png" class="img-fluid figure-img" alt="Las cuatro vistas de lumen_mart y la pregunta que responde cada una"></a></p>
+<figcaption>Las cuatro vistas de <code>lumen_mart</code> y la pregunta que responde cada una</figcaption>
+</figure>
+</div>
+<section id="p1-combinaciones-de-atributos-que-separan-el-fraude" class="level3">
+<h3 class="anchored" data-anchor-id="p1-combinaciones-de-atributos-que-separan-el-fraude">P1 · Combinaciones de atributos que separan el fraude</h3>
+<p><code>p1_tasa_por_segmento</code> responde la primera parte de P1: qué combinación de atributos de la transacción y del dispositivo separa mejor una operación fraudulenta de una legítima.</p>
+<ul>
+<li><code>GROUP BY CUBE</code> calcula todas las combinaciones de los cuatro atributos: cada uno por separado, por pares, por tríos, los cuatro juntos y el total.</li>
+<li><code>GROUPING</code> distingue un subtotal de un valor vacío real; las filas de subtotal se rotulan «Todos».</li>
+<li><code>veces_tasa_global</code> divide la tasa de fraude del segmento entre la tasa de todo el periodo. Un valor de 3 indica un segmento con el triple de fraude que el promedio.</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-8-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-1" role="tab" aria-controls="tabset-8-1" aria-selected="true" href="">Consulta</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-8-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-8-2" role="tab" aria-controls="tabset-8-2" aria-selected="false" href="">Validación en BigQuery</a></li></ul>
+<div class="tab-content">
+<div id="tabset-8-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-8-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_mart.p1_tasa_por_segmento`</span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a>OPTIONS (</span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">'Tasa de fraude por combinación de producto, tipo de tarjeta, dispositivo y correo gratuito, y cuántas veces supera a la tasa global. Todos marca un subtotal. Responde: P1.'</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> tasa_global <span class="kw">AS</span> (</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span> SAFE_DIVIDE(<span class="fu">SUM</span>(es_fraude), <span class="fu">COUNT</span>(<span class="op">*</span>)) <span class="kw">AS</span> tasa</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.hechos_transaccion`</span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(p.producto_cd) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todos'</span>, p.producto_cd) <span class="kw">AS</span> producto,</span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(t.tipo_tarjeta) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todos'</span>, t.tipo_tarjeta) <span class="kw">AS</span> tipo_tarjeta,</span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(d.tipo_dispositivo) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todos'</span>, d.tipo_dispositivo) <span class="kw">AS</span> dispositivo,</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>  <span class="cf">CASE</span></span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> <span class="fu">GROUPING</span>(c.es_gratuito) <span class="op">=</span> <span class="dv">1</span> <span class="cf">THEN</span> <span class="st">'Todos'</span></span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> c.es_gratuito <span class="kw">IS</span> <span class="kw">NULL</span> <span class="cf">THEN</span> <span class="st">'Sin dato'</span></span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a>    <span class="cf">WHEN</span> c.es_gratuito <span class="cf">THEN</span> <span class="st">'Gratuito'</span></span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a>    <span class="cf">ELSE</span> <span class="st">'No gratuito'</span></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a>  <span class="cf">END</span> <span class="kw">AS</span> correo,</span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> transacciones,</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(h.es_fraude) <span class="kw">AS</span> fraudes,</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(h.es_fraude), <span class="fu">COUNT</span>(<span class="op">*</span>)) <span class="kw">AS</span> tasa_fraude,</span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(SAFE_DIVIDE(<span class="fu">SUM</span>(h.es_fraude), <span class="fu">COUNT</span>(<span class="op">*</span>)), ANY_VALUE(g.tasa)) <span class="kw">AS</span> veces_tasa_global</span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.hechos_transaccion` <span class="kw">AS</span> h</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_producto` <span class="kw">AS</span> p <span class="kw">ON</span> p.producto_key <span class="op">=</span> h.producto_key</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_tipo_tarjeta` <span class="kw">AS</span> t <span class="kw">ON</span> t.tipo_tarjeta_key <span class="op">=</span> h.tipo_tarjeta_key</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_dispositivo` <span class="kw">AS</span> d <span class="kw">ON</span> d.dispositivo_key <span class="op">=</span> h.dispositivo_key</span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_dominio_correo` <span class="kw">AS</span> c <span class="kw">ON</span> c.dominio_correo_key <span class="op">=</span> h.dominio_correo_key</span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">CROSS</span> <span class="kw">JOIN</span> tasa_global <span class="kw">AS</span> g</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">CUBE</span> (p.producto_cd, t.tipo_tarjeta, d.tipo_dispositivo, c.es_gratuito);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-8-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-8-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/mart_p1_tasa_por_segmento.png" class="lightbox" data-gallery="quarto-lightbox-gallery-25" title="La vista p1_tasa_por_segmento, creada en BigQuery"><img src="img/mart_p1_tasa_por_segmento.png" class="img-fluid figure-img" alt="La vista p1_tasa_por_segmento, creada en BigQuery"></a></p>
+<figcaption>La vista <code>p1_tasa_por_segmento</code>, creada en BigQuery</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="p2-monto-defraudado-en-el-tramo-revisable" class="level3">
+<h3 class="anchored" data-anchor-id="p2-monto-defraudado-en-el-tramo-revisable">P2 · Monto defraudado en el tramo revisable</h3>
+<p><code>p2_tramo_diario</code> mide qué fracción del monto defraudado queda dentro del 0.75 % de las transacciones de cada día, que es la capacidad de revisión fijada en E0.</p>
+<ul>
+<li>Las funciones de ventana numeran las transacciones de cada día según un orden (<code>ROW_NUMBER</code>) y cuentan cuántas hubo ese día (<code>COUNT(*) OVER</code>); <code>PARTITION BY</code> reinicia el cálculo cada día.</li>
+<li>Con eso se marca el 0.75 % superior de cada día y se resume cuánto fraude y cuánto monto contiene. <code>ROLLUP</code> agrega una fila con el total del periodo.</li>
+<li><code>fraccion_esperada_al_azar</code> es la proporción que ocupa el tramo. Es lo que contendría con un orden aleatorio, y sirve de línea base.</li>
+</ul>
+<p>El orden que usa la vista, de mayor a menor importe, es una regla simple que ocupa el lugar del modelo, que todavía no existe. Cuando exista, bastará sustituir el <code>ORDER BY</code> de la ventana por su puntaje. Por eso la vista sirve también a P1, como línea base de reglas simples. El corte diario es una forma de simular la evaluación: en operación, el puntaje se asigna a cada transacción al llegar.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-9-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-1" role="tab" aria-controls="tabset-9-1" aria-selected="true" href="">Consulta</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-9-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-9-2" role="tab" aria-controls="tabset-9-2" aria-selected="false" href="">Validación en BigQuery</a></li></ul>
+<div class="tab-content">
+<div id="tabset-9-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-9-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb2"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_mart.p2_tramo_diario`</span>
+<span id="cb2-2"><a href="#cb2-2" aria-hidden="true" tabindex="-1"></a>OPTIONS (</span>
+<span id="cb2-3"><a href="#cb2-3" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">'Por día: fraude y monto defraudado contenidos en el 0.75 % de transacciones mejor ordenadas con una regla simple (mayor importe primero), frente a lo esperado con un orden al azar. La fila sin fecha es el total. Responde: P1, P2.'</span></span>
+<span id="cb2-4"><a href="#cb2-4" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span></span>
+<span id="cb2-5"><a href="#cb2-5" aria-hidden="true" tabindex="-1"></a><span class="kw">WITH</span> ordenadas <span class="kw">AS</span> (</span>
+<span id="cb2-6"><a href="#cb2-6" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span></span>
+<span id="cb2-7"><a href="#cb2-7" aria-hidden="true" tabindex="-1"></a>    fecha_key,</span>
+<span id="cb2-8"><a href="#cb2-8" aria-hidden="true" tabindex="-1"></a>    es_fraude,</span>
+<span id="cb2-9"><a href="#cb2-9" aria-hidden="true" tabindex="-1"></a>    monto_fraude_usd,</span>
+<span id="cb2-10"><a href="#cb2-10" aria-hidden="true" tabindex="-1"></a>    <span class="fu">ROW_NUMBER</span>() <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> fecha_key <span class="kw">ORDER</span> <span class="kw">BY</span> monto_usd <span class="kw">DESC</span>, transaccion_id) <span class="kw">AS</span> posicion,</span>
+<span id="cb2-11"><a href="#cb2-11" aria-hidden="true" tabindex="-1"></a>    <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">OVER</span> (<span class="kw">PARTITION</span> <span class="kw">BY</span> fecha_key) <span class="kw">AS</span> transacciones_dia</span>
+<span id="cb2-12"><a href="#cb2-12" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.hechos_transaccion`</span>
+<span id="cb2-13"><a href="#cb2-13" aria-hidden="true" tabindex="-1"></a>),</span>
+<span id="cb2-14"><a href="#cb2-14" aria-hidden="true" tabindex="-1"></a>marcadas <span class="kw">AS</span> (</span>
+<span id="cb2-15"><a href="#cb2-15" aria-hidden="true" tabindex="-1"></a>  <span class="kw">SELECT</span></span>
+<span id="cb2-16"><a href="#cb2-16" aria-hidden="true" tabindex="-1"></a>    fecha_key,</span>
+<span id="cb2-17"><a href="#cb2-17" aria-hidden="true" tabindex="-1"></a>    es_fraude,</span>
+<span id="cb2-18"><a href="#cb2-18" aria-hidden="true" tabindex="-1"></a>    monto_fraude_usd,</span>
+<span id="cb2-19"><a href="#cb2-19" aria-hidden="true" tabindex="-1"></a>    posicion <span class="op">&lt;=</span> <span class="fu">CEIL</span>(<span class="fl">0.0075</span> <span class="op">*</span> transacciones_dia) <span class="kw">AS</span> en_tramo</span>
+<span id="cb2-20"><a href="#cb2-20" aria-hidden="true" tabindex="-1"></a>  <span class="kw">FROM</span> ordenadas</span>
+<span id="cb2-21"><a href="#cb2-21" aria-hidden="true" tabindex="-1"></a>)</span>
+<span id="cb2-22"><a href="#cb2-22" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb2-23"><a href="#cb2-23" aria-hidden="true" tabindex="-1"></a>  f.fecha,</span>
+<span id="cb2-24"><a href="#cb2-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> transacciones,</span>
+<span id="cb2-25"><a href="#cb2-25" aria-hidden="true" tabindex="-1"></a>  COUNTIF(m.en_tramo) <span class="kw">AS</span> transacciones_en_tramo,</span>
+<span id="cb2-26"><a href="#cb2-26" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(m.es_fraude) <span class="kw">AS</span> fraudes,</span>
+<span id="cb2-27"><a href="#cb2-27" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">IF</span>(m.en_tramo, m.es_fraude, <span class="dv">0</span>)) <span class="kw">AS</span> fraudes_en_tramo,</span>
+<span id="cb2-28"><a href="#cb2-28" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(m.monto_fraude_usd) <span class="kw">AS</span> monto_fraude_usd,</span>
+<span id="cb2-29"><a href="#cb2-29" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(<span class="cf">IF</span>(m.en_tramo, m.monto_fraude_usd, <span class="dv">0</span>)) <span class="kw">AS</span> monto_fraude_en_tramo_usd,</span>
+<span id="cb2-30"><a href="#cb2-30" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(<span class="cf">IF</span>(m.en_tramo, m.monto_fraude_usd, <span class="dv">0</span>)), <span class="fu">SUM</span>(m.monto_fraude_usd)) <span class="kw">AS</span> fraccion_monto_en_tramo,</span>
+<span id="cb2-31"><a href="#cb2-31" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(COUNTIF(m.en_tramo), <span class="fu">COUNT</span>(<span class="op">*</span>)) <span class="kw">AS</span> fraccion_esperada_al_azar</span>
+<span id="cb2-32"><a href="#cb2-32" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> marcadas <span class="kw">AS</span> m</span>
+<span id="cb2-33"><a href="#cb2-33" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_fecha` <span class="kw">AS</span> f <span class="kw">ON</span> f.fecha_key <span class="op">=</span> m.fecha_key</span>
+<span id="cb2-34"><a href="#cb2-34" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">ROLLUP</span> (f.fecha);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-9-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-9-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/mart_p2_tramo_diario.png" class="lightbox" data-gallery="quarto-lightbox-gallery-26" title="La vista p2_tramo_diario, creada en BigQuery"><img src="img/mart_p2_tramo_diario.png" class="img-fluid figure-img" alt="La vista p2_tramo_diario, creada en BigQuery"></a></p>
+<figcaption>La vista <code>p2_tramo_diario</code>, creada en BigQuery</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="p2-referencia-de-méxico" class="level3">
+<h3 class="anchored" data-anchor-id="p2-referencia-de-méxico">P2 · Referencia de México</h3>
+<p><code>p2_referencia_mexico</code> da el contexto nacional de P2: cuánto representan los contracargos por número y por monto en el comercio electrónico mexicano. Es la consulta que usa la segunda tabla de hechos y las dos dimensiones compartidas.</p>
+<ul>
+<li><code>ROLLUP</code> produce tres niveles: año y tipo de tarjeta, el subtotal de cada año y el total.</li>
+<li>Los porcentajes de contracargos no son aditivos. Para agregarlos, cada uno se multiplica por su volumen, se suma y se divide entre el volumen total: un promedio ponderado.</li>
+<li><code>compra_promedio_mxn</code> divide el monto autorizado entre el número de autorizaciones.</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-10-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-1" role="tab" aria-controls="tabset-10-1" aria-selected="true" href="">Consulta</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-10-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-10-2" role="tab" aria-controls="tabset-10-2" aria-selected="false" href="">Validación en BigQuery</a></li></ul>
+<div class="tab-content">
+<div id="tabset-10-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-10-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb3"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb3-1"><a href="#cb3-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_mart.p2_referencia_mexico`</span>
+<span id="cb3-2"><a href="#cb3-2" aria-hidden="true" tabindex="-1"></a>OPTIONS (</span>
+<span id="cb3-3"><a href="#cb3-3" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">'Por año y tipo de tarjeta: autorizaciones, monto, compra promedio y porcentaje de contracargos por número y por monto en comercio electrónico en México (Banxico, CF621). Todos marca un subtotal. Responde: P2.'</span></span>
+<span id="cb3-4"><a href="#cb3-4" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span></span>
+<span id="cb3-5"><a href="#cb3-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb3-6"><a href="#cb3-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(f.anio) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todos'</span>, <span class="fu">CAST</span>(f.anio <span class="kw">AS</span> STRING)) <span class="kw">AS</span> anio,</span>
+<span id="cb3-7"><a href="#cb3-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(t.tipo_tarjeta) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todos'</span>, t.tipo_tarjeta) <span class="kw">AS</span> tipo_tarjeta,</span>
+<span id="cb3-8"><a href="#cb3-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(h.num_autorizaciones) <span class="kw">AS</span> num_autorizaciones,</span>
+<span id="cb3-9"><a href="#cb3-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(h.monto_autorizado_mdp) <span class="kw">AS</span> monto_autorizado_mdp,</span>
+<span id="cb3-10"><a href="#cb3-10" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(h.monto_autorizado_mdp) <span class="op">*</span> <span class="dv">1000000</span>, <span class="fu">SUM</span>(h.num_autorizaciones)) <span class="kw">AS</span> compra_promedio_mxn,</span>
+<span id="cb3-11"><a href="#cb3-11" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(h.pct_contracargo_num <span class="op">*</span> h.num_autorizaciones), <span class="fu">SUM</span>(h.num_autorizaciones)) <span class="kw">AS</span> pct_contracargo_num,</span>
+<span id="cb3-12"><a href="#cb3-12" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(h.pct_contracargo_monto <span class="op">*</span> h.monto_autorizado_mdp), <span class="fu">SUM</span>(h.monto_autorizado_mdp)) <span class="kw">AS</span> pct_contracargo_monto</span>
+<span id="cb3-13"><a href="#cb3-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.hechos_pagos_trimestre` <span class="kw">AS</span> h</span>
+<span id="cb3-14"><a href="#cb3-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_fecha` <span class="kw">AS</span> f <span class="kw">ON</span> f.fecha_key <span class="op">=</span> h.fecha_key</span>
+<span id="cb3-15"><a href="#cb3-15" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_tipo_tarjeta` <span class="kw">AS</span> t <span class="kw">ON</span> t.tipo_tarjeta_key <span class="op">=</span> h.tipo_tarjeta_key</span>
+<span id="cb3-16"><a href="#cb3-16" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">ROLLUP</span> (f.anio, t.tipo_tarjeta);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-10-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-10-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/mart_p2_referencia_mexico.png" class="lightbox" data-gallery="quarto-lightbox-gallery-27" title="La vista p2_referencia_mexico, creada en BigQuery"><img src="img/mart_p2_referencia_mexico.png" class="img-fluid figure-img" alt="La vista p2_referencia_mexico, creada en BigQuery"></a></p>
+<figcaption>La vista <code>p2_referencia_mexico</code>, creada en BigQuery</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="p3-ausencia-de-identidad-como-señal-de-riesgo" class="level3">
+<h3 class="anchored" data-anchor-id="p3-ausencia-de-identidad-como-señal-de-riesgo">P3 · Ausencia de identidad como señal de riesgo</h3>
+<p><code>p3_identidad</code> compara la tasa de fraude de las transacciones con y sin registro de identidad del dispositivo. Si las dos tasas difieren, la ausencia es una señal y no conviene imputarla; si son parecidas, es solo un hueco.</p>
+<ul>
+<li><code>ROLLUP</code> produce el detalle por tipo de dispositivo, el subtotal de cada grupo y el total.</li>
+<li>La tasa se calcula por número y por monto, porque el criterio de éxito de E0 está expresado en dinero y no en número de operaciones.</li>
+</ul>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-11-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-1" role="tab" aria-controls="tabset-11-1" aria-selected="true" href="">Consulta</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-11-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-11-2" role="tab" aria-controls="tabset-11-2" aria-selected="false" href="">Validación en BigQuery</a></li></ul>
+<div class="tab-content">
+<div id="tabset-11-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-11-1-tab">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb4"><pre class="sourceCode sql code-with-copy"><code class="sourceCode sql"><span id="cb4-1"><a href="#cb4-1" aria-hidden="true" tabindex="-1"></a><span class="kw">CREATE</span> <span class="kw">OR</span> <span class="kw">REPLACE</span> <span class="kw">VIEW</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_mart.p3_identidad`</span>
+<span id="cb4-2"><a href="#cb4-2" aria-hidden="true" tabindex="-1"></a>OPTIONS (</span>
+<span id="cb4-3"><a href="#cb4-3" aria-hidden="true" tabindex="-1"></a>  description <span class="op">=</span> <span class="st">'Tasa de fraude, por número y por monto, de las transacciones con y sin registro de identidad, y por tipo de dispositivo. Todos y Todas marcan un subtotal. Responde: P3.'</span></span>
+<span id="cb4-4"><a href="#cb4-4" aria-hidden="true" tabindex="-1"></a>) <span class="kw">AS</span></span>
+<span id="cb4-5"><a href="#cb4-5" aria-hidden="true" tabindex="-1"></a><span class="kw">SELECT</span></span>
+<span id="cb4-6"><a href="#cb4-6" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(d.tiene_identidad) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todas'</span>, <span class="cf">IF</span>(d.tiene_identidad, <span class="st">'Con identidad'</span>, <span class="st">'Sin identidad'</span>)) <span class="kw">AS</span> registro_identidad,</span>
+<span id="cb4-7"><a href="#cb4-7" aria-hidden="true" tabindex="-1"></a>  <span class="cf">IF</span>(<span class="fu">GROUPING</span>(d.tipo_dispositivo) <span class="op">=</span> <span class="dv">1</span>, <span class="st">'Todos'</span>, d.tipo_dispositivo) <span class="kw">AS</span> dispositivo,</span>
+<span id="cb4-8"><a href="#cb4-8" aria-hidden="true" tabindex="-1"></a>  <span class="fu">COUNT</span>(<span class="op">*</span>) <span class="kw">AS</span> transacciones,</span>
+<span id="cb4-9"><a href="#cb4-9" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(h.es_fraude) <span class="kw">AS</span> fraudes,</span>
+<span id="cb4-10"><a href="#cb4-10" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(h.es_fraude), <span class="fu">COUNT</span>(<span class="op">*</span>)) <span class="kw">AS</span> tasa_fraude,</span>
+<span id="cb4-11"><a href="#cb4-11" aria-hidden="true" tabindex="-1"></a>  <span class="fu">SUM</span>(h.monto_fraude_usd) <span class="kw">AS</span> monto_fraude_usd,</span>
+<span id="cb4-12"><a href="#cb4-12" aria-hidden="true" tabindex="-1"></a>  SAFE_DIVIDE(<span class="fu">SUM</span>(h.monto_fraude_usd), <span class="fu">SUM</span>(h.monto_usd)) <span class="kw">AS</span> tasa_fraude_monto</span>
+<span id="cb4-13"><a href="#cb4-13" aria-hidden="true" tabindex="-1"></a><span class="kw">FROM</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.hechos_transaccion` <span class="kw">AS</span> h</span>
+<span id="cb4-14"><a href="#cb4-14" aria-hidden="true" tabindex="-1"></a><span class="kw">JOIN</span> `pagos<span class="op">-</span>lumen<span class="op">-</span>dw.lumen_dw.dim_dispositivo` <span class="kw">AS</span> d <span class="kw">ON</span> d.dispositivo_key <span class="op">=</span> h.dispositivo_key</span>
+<span id="cb4-15"><a href="#cb4-15" aria-hidden="true" tabindex="-1"></a><span class="kw">GROUP</span> <span class="kw">BY</span> <span class="kw">ROLLUP</span> (d.tiene_identidad, d.tipo_dispositivo);</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+<div id="tabset-11-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-11-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/mart_p3_identidad.png" class="lightbox" data-gallery="quarto-lightbox-gallery-28" title="La vista p3_identidad, creada en BigQuery"><img src="img/mart_p3_identidad.png" class="img-fluid figure-img" alt="La vista p3_identidad, creada en BigQuery"></a></p>
+<figcaption>La vista <code>p3_identidad</code>, creada en BigQuery</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="p4-sin-consulta" class="level3">
+<h3 class="anchored" data-anchor-id="p4-sin-consulta">P4 · Sin consulta</h3>
+<p>P4 pregunta cuántas de las transacciones rechazadas automáticamente eran en realidad legítimas. No puede responderse con este diseño, por dos razones:</p>
+<ul>
+<li>Ninguna fuente del catálogo registra operaciones rechazadas ni su desenlace. IEEE-CIS trae la etiqueta de fraude de cada transacción, pero ninguna columna que indique si fue rechazada.</li>
+<li>En consecuencia, el esquema no tiene un hecho que las represente.</li>
+</ul>
+<p>Lo más cercano son los porcentajes de aceptación de <code>hechos_pagos_trimestre</code>, que indican qué proporción de los intentos de pago se acepta en México. Miden el tamaño del rechazo, no cuántos de los rechazados eran legítimos. La pregunta queda sin cubrir, como E0 ya había declarado.</p>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="pagination-link" aria-label="1 · Fuentes e integración">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">1 · Fuentes e integración</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../entregas/E1_arquitectura_dw/estrella.html" class="pagination-link" aria-label="3 · Esquema estrella">
+        <span class="nav-page-text">3 · Esquema estrella</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM</p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos">
+<p>Repositorio</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
