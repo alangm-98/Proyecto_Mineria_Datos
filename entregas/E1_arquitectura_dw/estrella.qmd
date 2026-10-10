@@ -1,0 +1,301 @@
+---
+title: "3. Esquema estrella"
+subtitle: "Grano, hechos, dimensiones, diagrama y DDL"
+date: last-modified
+lightbox: true
+mermaid:
+  theme: default
+---
+
+<style>
+  /* El diagrama conserva fondo claro también en el tema oscuro, para que siga siendo legible */
+  .diagrama-er {
+    background: #ffffff;
+    border-radius: 8px;
+    padding: 12px;
+  }
+</style>
+
+Esta página define el modelo dimensional del almacén: el grano de cada tabla de hechos, sus
+medidas, las dimensiones con su llave sustituta y su tipo de cambio lento, el diagrama y el DDL
+ejecutado en BigQuery. El diseño parte de las [fuentes del catálogo](fuentes.qmd) y de las
+[preguntas de investigación de E0](../E0_comprension_negocio/preguntas.qmd), identificadas como
+P1 a P4.
+
+El esquema tiene **dos tablas de hechos y cinco dimensiones**. Dos de las dimensiones, la de
+fecha y la de tipo de tarjeta, son compartidas por los dos hechos.
+
+## Grano
+
+El grano de la tabla de hechos principal es:
+
+::: {.callout-tip appearance="minimal"}
+**Una fila por transacción con tarjeta en comercio electrónico.**
+:::
+
+Es el grano de la fuente principal: IEEE-CIS tiene 590,540 filas y su identificador de
+transacción es único. También es el que exige el objetivo de minería de E0, que consiste en
+ordenar transacciones individuales por riesgo.
+
+### Granos considerados
+
+| Grano | Qué permite | Qué pierde |
+| :--- | :--- | :--- |
+| **Una fila por transacción** | Responder P1, P2 y P3 | Nada de lo planteado en E0 |
+| Una fila por día, producto y tipo de tarjeta | Tasas de fraude por segmento | P1 y P2: ya no pueden ordenarse transacciones ni tomarse el 0.75 % de cada día |
+| Una fila por trimestre y tipo de tarjeta | Comparar con las cifras de Banco de México | P1, P2 y P3 |
+
+: {tbl-colwidths="[34,30,36]"}
+
+El tercer grano es el de la fuente de Banco de México. Usarlo como denominador común de las dos
+fuentes habría reducido 590,540 transacciones a unas cuantas filas por trimestre. En su lugar, esa
+fuente conserva su propio grano en una segunda tabla de hechos:
+
+::: {.callout-tip appearance="minimal"}
+**Una fila por trimestre y tipo de tarjeta.**
+:::
+
+## Tablas de hechos
+
+### `hechos_transaccion`
+
+Registra cada transacción de IEEE-CIS. Responde P1, P2 y P3.
+
+| Columna | Papel | Origen | Aditiva |
+| :--- | :--- | :--- | :--- |
+| `transaccion_id` | Llave primaria; dimensión degenerada | `TransactionID` | No aplica |
+| `fecha_key` | Llave foránea a `dim_fecha` | `TransactionDT`, con el supuesto de fecha | No aplica |
+| `tipo_tarjeta_key` | Llave foránea a `dim_tipo_tarjeta` | `card6` | No aplica |
+| `producto_key` | Llave foránea a `dim_producto` | `ProductCD` | No aplica |
+| `dispositivo_key` | Llave foránea a `dim_dispositivo` | `DeviceType` y la existencia de registro de identidad | No aplica |
+| `dominio_correo_key` | Llave foránea a `dim_dominio_correo` | `P_emaildomain` | No aplica |
+| `segundo_relativo` | Atributo: el tiempo original de la fuente | `TransactionDT`, sin cambios | No |
+| `monto_usd` | Medida: importe de la transacción | `TransactionAmt` | Sí |
+| `es_fraude` | Medida: 1 si la transacción es fraude, 0 si no | `isFraud` | Sí; su suma es el número de fraudes |
+| `monto_fraude_usd` | Medida derivada: `monto_usd` por `es_fraude` | Cálculo | Sí |
+
+: {tbl-colwidths="[24,30,28,18]"}
+
+- El identificador de la transacción es una **dimensión degenerada**: vive en el hecho, sin tabla
+  propia. Sirve además para unir cada fila con las columnas de la fuente que no entran al esquema.
+- El número de transacciones no es una columna: se obtiene contando filas.
+- La hora del día se obtiene de `segundo_relativo` (su residuo entre 86,400) y no depende de
+  ningún supuesto sobre la fecha.
+
+### `hechos_pagos_trimestre`
+
+Registra los totales trimestrales de comercio electrónico en México, del cuadro CF621 de Banco de
+México. Es la referencia nacional para P2.
+
+| Columna | Papel | Aditiva |
+| :--- | :--- | :--- |
+| `fecha_key` | Parte de la llave primaria; llave foránea a `dim_fecha` (primer día del trimestre) | No aplica |
+| `tipo_tarjeta_key` | Parte de la llave primaria; llave foránea a `dim_tipo_tarjeta` | No aplica |
+| `num_autorizaciones` | Medida: número de pagos autorizados | Sí |
+| `monto_autorizado_mdp` | Medida: monto autorizado, en millones de pesos | Sí |
+| `pct_aceptacion_num` y `pct_aceptacion_monto` | Medidas: porcentaje de aceptación, por número y por monto | No |
+| `pct_contracargo_num` y `pct_contracargo_monto` | Medidas: porcentaje de contracargos, por número y por monto | No |
+
+: {tbl-colwidths="[36,46,18]"}
+
+Los porcentajes no son aditivos: no pueden sumarse ni promediarse entre trimestres o entre tipos
+de tarjeta. Para agregarlos se ponderan por el número o por el monto de autorizaciones. La tabla
+guarda las series de crédito y de débito, y no las de «total», que son su suma.
+
+## Dimensiones
+
+Las cinco dimensiones siguen las mismas convenciones:
+
+- **Llave sustituta** entera, con sufijo `_key`, independiente de los códigos de la fuente.
+- **Miembro 0** para el dato ausente, en todas salvo la de fecha. Así ninguna transacción queda
+  sin dimensión.
+- **`fecha_key`** con forma AAAAMMDD, por ejemplo 20180101.
+
+| Dimensión | Atributos principales | Tipo de cambio lento y motivo | Preguntas |
+| :--- | :--- | :--- | :--- |
+| `dim_fecha` | `fecha`, `anio`, `trimestre`, `mes`, `nombre_mes`, `dia_mes`, `dia_relativo_ieee` | **Tipo 1.** El calendario no cambia. Lo único corregible es el supuesto sobre las fechas de IEEE-CIS, y en ese caso se sobrescribe | P1, P2 |
+| `dim_tipo_tarjeta` | `tipo_tarjeta`, `codigo_ieee`, `etiqueta_banxico` | **Tipo 1.** Catálogo cerrado; una corrección de etiqueta se sobrescribe, sin historia que conservar | P1, P2 |
+| `dim_producto` | `producto_cd`, `descripcion` | **Tipo 1.** La fuente es estática desde 2019 y sus códigos no cambian | P1 |
+| `dim_dispositivo` | `tipo_dispositivo`, `codigo_ieee`, `tiene_identidad` | **Tipo 1.** Catálogo cerrado de una fuente estática | P1, P3 |
+| `dim_dominio_correo` | `dominio`, `terminacion`, `es_gratuito`, `valido_desde`, `valido_hasta`, `es_actual` | **Tipo 2.** `es_gratuito` proviene de una lista que cambia con frecuencia. Cada cambio crea una versión nueva y conserva la anterior, para poder reproducir un resultado con la versión con la que se obtuvo | P1 |
+
+: {tbl-colwidths="[18,27,43,12]"}
+
+### Dimensiones compartidas
+
+`dim_fecha` y `dim_tipo_tarjeta` son **dimensiones conformadas**: tienen el mismo significado en
+los dos hechos. El tipo de tarjeta une el valor de `card6` de IEEE-CIS con la separación entre
+crédito y débito de Banco de México.
+
+| `tipo_tarjeta_key` | `tipo_tarjeta` | `codigo_ieee` | `etiqueta_banxico` | Transacciones en IEEE-CIS |
+| :-- | :--- | :--- | :--- | --: |
+| 0 | Desconocido | (vacío) | | 1,571 |
+| 1 | Débito | `debit` | Débito | 439,938 |
+| 2 | Crédito | `credit` | Crédito | 148,986 |
+| 3 | Débito o crédito | `debit or credit` | | 30 |
+| 4 | Tarjeta de cargo | `charge card` | | 15 |
+
+Banco de México solo reporta crédito y débito, de modo que `hechos_pagos_trimestre` usa las filas
+1 y 2.
+
+`dim_fecha` tiene un día por fila, del 1 de enero de 2015 al 31 de marzo de 2026: 4,108 días, que
+cubren los trimestres de Banco de México y la ventana de IEEE-CIS.
+
+::: {.callout-warning appearance="minimal" title="Supuesto sobre las fechas de IEEE-CIS"}
+La fuente no publica fechas: `TransactionDT` es un número de segundos desde una referencia que no
+se revela. El esquema toma como referencia el **1 de diciembre de 2017**, valor que usa una
+[discusión de la competencia](https://www.kaggle.com/competitions/ieee-fraud-detection/discussion/102157)
+y que la fuente no confirma. Con esa referencia, los 182 días van del 2 de diciembre de 2017 al
+1 de junio de 2018.
+
+La fecha asignada puede estar corrida un día. Por eso `dim_fecha` **no incluye el día de la
+semana**, que es el único atributo sensible a ese corrimiento, y el hecho conserva el valor
+original en `segundo_relativo`. El supuesto queda en un solo lugar: la columna
+`dia_relativo_ieee`, que indica qué fecha se asignó a cada día relativo de la fuente.
+:::
+
+### Dimensión de dispositivo
+
+`dim_dispositivo` es la dimensión de P3. Distingue dos ausencias que la fuente mezcla: la
+transacción sin ningún registro de identidad y la que sí lo tiene pero no informa el tipo de
+dispositivo.
+
+| `dispositivo_key` | `tipo_dispositivo` | `codigo_ieee` | `tiene_identidad` | Transacciones en IEEE-CIS |
+| :-- | :--- | :--- | :--- | --: |
+| 0 | Sin registro de identidad | (sin fila) | Falso | 446,307 |
+| 1 | Escritorio | `desktop` | Verdadero | 85,165 |
+| 2 | Móvil | `mobile` | Verdadero | 55,645 |
+| 3 | Tipo no informado | (vacío) | Verdadero | 3,423 |
+
+Los conteos de las dos tablas anteriores describen la fuente completa y justifican los miembros
+de cada dimensión; no son filas cargadas en el almacén.
+
+## Diagrama
+
+::: {.column-page-right .diagrama-er}
+```{mermaid}
+erDiagram
+    DIM_FECHA ||--o{ HECHOS_TRANSACCION : fecha_key
+    DIM_TIPO_TARJETA ||--o{ HECHOS_TRANSACCION : tipo_tarjeta_key
+    DIM_PRODUCTO ||--o{ HECHOS_TRANSACCION : producto_key
+    DIM_DISPOSITIVO ||--o{ HECHOS_TRANSACCION : dispositivo_key
+    DIM_DOMINIO_CORREO ||--o{ HECHOS_TRANSACCION : dominio_correo_key
+    DIM_FECHA ||--o{ HECHOS_PAGOS_TRIMESTRE : fecha_key
+    DIM_TIPO_TARJETA ||--o{ HECHOS_PAGOS_TRIMESTRE : tipo_tarjeta_key
+
+    HECHOS_TRANSACCION {
+        INT64 transaccion_id PK
+        INT64 fecha_key FK
+        INT64 tipo_tarjeta_key FK
+        INT64 producto_key FK
+        INT64 dispositivo_key FK
+        INT64 dominio_correo_key FK
+        INT64 segundo_relativo
+        NUMERIC monto_usd
+        INT64 es_fraude
+        NUMERIC monto_fraude_usd
+    }
+    HECHOS_PAGOS_TRIMESTRE {
+        INT64 fecha_key PK, FK
+        INT64 tipo_tarjeta_key PK, FK
+        INT64 num_autorizaciones
+        INT64 monto_autorizado_mdp
+        FLOAT64 pct_aceptacion_num
+        FLOAT64 pct_aceptacion_monto
+        FLOAT64 pct_contracargo_num
+        FLOAT64 pct_contracargo_monto
+    }
+    DIM_FECHA {
+        INT64 fecha_key PK
+        DATE fecha
+        INT64 anio
+        INT64 trimestre
+        INT64 mes
+        STRING nombre_mes
+        INT64 dia_mes
+        INT64 dia_relativo_ieee
+    }
+    DIM_TIPO_TARJETA {
+        INT64 tipo_tarjeta_key PK
+        STRING tipo_tarjeta
+        STRING codigo_ieee
+        STRING etiqueta_banxico
+    }
+    DIM_PRODUCTO {
+        INT64 producto_key PK
+        STRING producto_cd
+        STRING descripcion
+    }
+    DIM_DISPOSITIVO {
+        INT64 dispositivo_key PK
+        STRING tipo_dispositivo
+        STRING codigo_ieee
+        BOOL tiene_identidad
+    }
+    DIM_DOMINIO_CORREO {
+        INT64 dominio_correo_key PK
+        STRING dominio
+        STRING terminacion
+        BOOL es_gratuito
+        DATE valido_desde
+        DATE valido_hasta
+        BOOL es_actual
+    }
+```
+:::
+
+## DDL
+
+El código siguiente, que corresponde al archivo `sql/ddl_dw.sql` del repositorio, define las
+siete tablas del dataset `lumen_dw`, creadas en BigQuery el 9 de octubre de 2026. Las tablas
+están vacías: poblarlas corresponde a la preparación de los datos.
+
+BigQuery no hace cumplir las llaves primarias ni las foráneas. Se declaran con `NOT ENFORCED` para
+documentar el diseño, y la consistencia deberá cuidarse al cargar los datos. La descripción de
+cada tabla registra su grano o su papel y las preguntas que responde.
+
+```sql
+{{< include sql/ddl_dw.sql >}}
+```
+
+## Esquema de cada tabla en BigQuery
+
+Las capturas muestran el esquema de cada tabla tal como quedó creada. La consola de BigQuery
+nombra los tipos de otra forma: `INTEGER` por `INT64`, `FLOAT` por `FLOAT64` y `BOOLEAN` por
+`BOOL`. Son los mismos tipos.
+
+::: {.panel-tabset}
+## hechos_transaccion
+![Esquema de `hechos_transaccion`](img/dw_hechos_transaccion_esquema.png)
+
+## hechos_pagos_trimestre
+![Esquema de `hechos_pagos_trimestre`](img/dw_hechos_pagos_trimestre_esquema.png)
+
+## dim_fecha
+![Esquema de `dim_fecha`](img/dw_dim_fecha_esquema.png)
+
+## dim_tipo_tarjeta
+![Esquema de `dim_tipo_tarjeta`](img/dw_dim_tipo_tarjeta_esquema.png)
+
+## dim_producto
+![Esquema de `dim_producto`](img/dw_dim_producto_esquema.png)
+
+## dim_dispositivo
+![Esquema de `dim_dispositivo`](img/dw_dim_dispositivo_esquema.png)
+
+## dim_dominio_correo
+![Esquema de `dim_dominio_correo`](img/dw_dim_dominio_correo_esquema.png)
+:::
+
+## Lo que queda fuera del esquema
+
+El esquema modela lo necesario para responder las preguntas de E0 dentro del límite de cinco
+dimensiones. Lo demás permanece en staging y se declara:
+
+- **La fuente ULB.** No tiene producto, dispositivo, correo ni fecha, de modo que casi todas sus
+  dimensiones quedarían como «no aplica». Se conserva como población de contraste.
+- **El resto de las columnas de IEEE-CIS**, entre ellas la marca de la tarjeta (`card4`), el
+  dominio de correo del receptor (`R_emaildomain`) y las variables enmascaradas. Se unirán por
+  `transaccion_id` en la etapa de modelado.
+- **Las series de «total» y de devoluciones de Banco de México.** Las primeras son la suma de
+  crédito y débito; las segundas no responden ninguna pregunta de E0.

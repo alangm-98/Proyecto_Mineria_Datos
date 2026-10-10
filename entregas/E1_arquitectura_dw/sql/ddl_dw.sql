@@ -94,7 +94,7 @@ CREATE TABLE `pagos-lumen-dw.lumen_dw.dim_dominio_correo` (
   PRIMARY KEY (dominio_correo_key) NOT ENFORCED
 )
 OPTIONS (
-  description = 'Dimensión de dominio de correo del comprador. Integra la lista free-email-domains en el atributo es_gratuito. SCD tipo 2: la lista se actualiza a diario y cada cambio crea una versión nueva sin borrar la anterior. Responde: P1.'
+  description = 'Dimensión de dominio de correo del comprador. Integra la lista free-email-domains en el atributo es_gratuito. SCD tipo 2: la lista cambia con frecuencia y cada cambio crea una versión nueva sin borrar la anterior. Responde: P1.'
 );
 
 

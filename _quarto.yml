@@ -50,6 +50,8 @@ website:
         contents:
           - href: entregas/E1_arquitectura_dw/fuentes.qmd
             text: "1 · Fuentes e integración"
+          - href: entregas/E1_arquitectura_dw/estrella.qmd
+            text: "3 · Esquema estrella"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"
