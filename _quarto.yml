@@ -54,6 +54,8 @@ website:
             text: "2 · Arquitectura de tres capas"
           - href: entregas/E1_arquitectura_dw/estrella.qmd
             text: "3 · Esquema estrella"
+          - href: entregas/E1_arquitectura_dw/trazabilidad.qmd
+            text: "4 · Trazabilidad a E0"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"

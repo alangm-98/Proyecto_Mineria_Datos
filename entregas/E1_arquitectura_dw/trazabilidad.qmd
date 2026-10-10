@@ -1,0 +1,214 @@
+---
+title: "4. Trazabilidad a E0"
+subtitle: "De cada pregunta a su métrica, sus dimensiones y sus fuentes"
+date: last-modified
+---
+
+<style>
+  /* La hoja de estilos del sitio impide el salto de línea en la primera columna de las tablas,
+     pensando en columnas de numeración. En esta página la primera columna lleva texto largo. */
+  body main table td:first-child {
+    white-space: normal;
+  }
+</style>
+
+Esta página demuestra que el diseño del almacén responde a lo planteado en E0. Liga cada
+[pregunta de investigación](../E0_comprension_negocio/preguntas.qmd) con su tarea de minería, sus
+métricas, sus dimensiones y sus fuentes, y declara qué queda cubierto, qué queda cubierto a medias
+y qué no. La revisión se hace en los dos sentidos: de las preguntas al diseño y del diseño a las
+preguntas.
+
+El objetivo de minería de datos y el criterio de éxito de E0 se mantienen sin cambios. Una de las
+cuatro preguntas se ajustó en su redacción, y el ajuste se documenta aquí.
+
+## Matriz de trazabilidad
+
+Las fuentes se identifican como en el [catálogo](fuentes.qmd): **A** IEEE-CIS Fraud Detection,
+**B** Banco de México (cuadro CF621), **C** ULB Credit Card Fraud y **D** lista de dominios de
+correo gratuitos. Las métricas y las dimensiones se describen en el
+[esquema estrella](estrella.qmd).
+
+::: {.column-page-right}
+
+| Pregunta | Tarea de minería | Métricas (hecho) | Dimensiones | Fuentes | Estado |
+| :--- | :--- | :--- | :--- | :--- | :--- |
+| **P1 (ajustada).** ¿Qué combinación de atributos de la transacción y del dispositivo separa mejor una operación fraudulenta de una legítima, y basta con ordenar por esa señal para que el 0.75 % mejor puntuado de cada día contenga más fraude que un orden aleatorio y que un orden por reglas simples? | Clasificación supervisada sobre clases desbalanceadas, usada como criterio de ordenamiento | `es_fraude` y el conteo de transacciones, en `hechos_transaccion` | `dim_producto`, `dim_tipo_tarjeta`, `dim_dispositivo`, `dim_dominio_correo`, `dim_fecha` | A, D | **Cubierta parcialmente** |
+| **P2 (E0).** ¿Qué fracción del monto defraudado queda contenida en el 0.75 % de transacciones peor evaluadas, y mejora esa fracción si el modelo pondera cada operación por su importe en lugar de tratarlas todas por igual? | Aprendizaje sensible al costo: el importe como peso del error | `monto_usd`, `monto_fraude_usd` y `es_fraude`, en `hechos_transaccion`. Como referencia de México: `num_autorizaciones`, `monto_autorizado_mdp`, `pct_contracargo_num` y `pct_contracargo_monto`, en `hechos_pagos_trimestre` | `dim_fecha`, `dim_tipo_tarjeta` | A y B. C como contraste, solo en staging | **Cubierta parcialmente** |
+| **P3 (E0).** ¿La ausencia de información de identidad del dispositivo constituye en sí misma una señal de riesgo, o es únicamente un hueco que conviene imputar? | Tratamiento de valores faltantes, verificando antes si la ausencia es informativa | `es_fraude`, `monto_usd` y `monto_fraude_usd`, en `hechos_transaccion` | `dim_dispositivo` | A | **Cubierta** |
+| **P4 (E0).** ¿Cuántas de las transacciones que hoy se rechazan automáticamente eran en realidad legítimas? | Ninguna: E0 la dejó fuera del alcance | Ninguna la responde. Como contexto: `pct_aceptacion_num` y `pct_aceptacion_monto`, en `hechos_pagos_trimestre` | Ninguna | Ninguna la responde. B da solo contexto | **No cubierta** |
+
+: {tbl-colwidths="[34,15,20,14,8,9]"}
+
+:::
+
+### Ajuste de la pregunta 1
+
+::: {.callout-note appearance="minimal"}
+**Texto de E0.** ¿Qué combinación de atributos de la transacción y del dispositivo separa mejor una
+operación fraudulenta de una legítima, y basta con ordenar por esa señal para que *las 300
+revisiones diarias contengan más fraude del que contienen hoy*?
+
+**Texto ajustado.** ¿Qué combinación de atributos de la transacción y del dispositivo separa mejor
+una operación fraudulenta de una legítima, y basta con ordenar por esa señal para que *el 0.75 %
+mejor puntuado de cada día contenga más fraude que un orden aleatorio y que un orden por reglas
+simples*?
+:::
+
+La fuente A no registra las alertas del motor de reglas ni la cola de revisión actual, de modo que
+lo que la cola contiene «hoy» no puede observarse. El ajuste sustituye esa comparación por otra
+que sí puede medirse:
+
+- Se puntúa todo el flujo de transacciones, no solo las alertas.
+- Las 300 revisiones se expresan como el 0.75 % de las transacciones de cada día, que es la misma
+  proporción que fijó E0: 300 de 40,000.
+- La cola por orden de llegada se representa con un orden aleatorio, y se añade como segunda
+  referencia un orden por reglas simples.
+
+El objetivo de minería de E0, ordenar por riesgo una cola de longitud fija, no cambia: cambia la
+línea base contra la que se compara.
+
+### Motivo de cada estado
+
+- **P1, cubierta parcialmente.** El almacén aporta los atributos y el instrumento de medición: las
+  vistas `p1_tasa_por_segmento` y `p2_tramo_diario`. Faltan el puntaje del modelo, que se obtendrá
+  en la etapa de modelado, y el resto de las columnas de la fuente A, que permanecen en staging y
+  se unirán por `transaccion_id`.
+- **P2, cubierta parcialmente.** La medición de la fracción del monto está diseñada en
+  `p2_tramo_diario`. Comparar un modelo que pondera por importe con uno que no lo hace corresponde
+  a la etapa de modelado.
+- **P3, cubierta.** `dim_dispositivo` separa la transacción sin registro de identidad de la que no
+  informa el tipo de dispositivo, y la vista `p3_identidad` compara sus tasas de fraude.
+- **P4, no cubierta.** Ninguna fuente registra las operaciones rechazadas ni su desenlace. Es la
+  misma condición que E0 declaró.
+
+## Revisión en el sentido inverso
+
+La matriz parte de las preguntas. Esta sección parte del diseño y comprueba que ningún elemento
+del esquema quede sin una pregunta que lo justifique.
+
+### De cada dimensión a su pregunta
+
+| Dimensión | Preguntas | Para qué se necesita | Vistas que la usan |
+| :--- | :--- | :--- | :--- |
+| `dim_fecha` | P1, P2 | El tramo del 0.75 % se toma por día; los trimestres de Banco de México | `p2_tramo_diario`, `p2_referencia_mexico` |
+| `dim_tipo_tarjeta` | P1, P2 | Atributo de la transacción; une la fuente A con la B | `p1_tasa_por_segmento`, `p2_referencia_mexico` |
+| `dim_producto` | P1 | Atributo de la transacción | `p1_tasa_por_segmento` |
+| `dim_dispositivo` | P1, P3 | Atributo del dispositivo; separa la ausencia de identidad | `p1_tasa_por_segmento`, `p3_identidad` |
+| `dim_dominio_correo` | P1 | Atributo de la transacción, con la marca de correo gratuito | `p1_tasa_por_segmento` |
+
+: {tbl-colwidths="[20,11,38,31]"}
+
+**No hay dimensiones huérfanas.** Las cinco responden P1, y tres responden además P2 o P3.
+
+### De cada métrica a su pregunta
+
+| Hecho | Columna | Preguntas | Papel |
+| :--- | :--- | :--- | :--- |
+| `hechos_transaccion` | `es_fraude` | P1, P2, P3 | Número y tasa de fraudes |
+| `hechos_transaccion` | `monto_usd` | P2, P3 | Importe; base de la tasa de fraude por monto |
+| `hechos_transaccion` | `monto_fraude_usd` | P2, P3 | Monto defraudado |
+| `hechos_transaccion` | `segundo_relativo` | P1, P2 | No es una medida. Conserva el tiempo original de la fuente: orden de llegada, hora del día y partición temporal |
+| `hechos_pagos_trimestre` | `num_autorizaciones` | P2 | Volumen, y peso para agregar los porcentajes |
+| `hechos_pagos_trimestre` | `monto_autorizado_mdp` | P2 | Volumen en dinero, peso, y base de la compra promedio |
+| `hechos_pagos_trimestre` | `pct_contracargo_num`, `pct_contracargo_monto` | P2 | Referencia de México: contracargos por número frente a por monto |
+| `hechos_pagos_trimestre` | `pct_aceptacion_num`, `pct_aceptacion_monto` | P4, como contexto | Tamaño del rechazo en México. Ninguna vista las usa todavía |
+
+: {tbl-colwidths="[23,27,13,37]"}
+
+Toda columna de los dos hechos queda ligada a una pregunta. Los porcentajes de aceptación son el
+vínculo más débil: no responden P4, solo dan la magnitud del fenómeno por el que P4 pregunta.
+
+## Coherencia con el criterio de éxito
+
+El [criterio de éxito de E0](../E0_comprension_negocio/criterio_exito.qmd) se apoya en cuatro
+medidas técnicas. La tabla indica cuáles puede medir el diseño.
+
+| Medida técnica de E0 | En el diseño de E1 | Estado |
+| :--- | :--- | :--- |
+| Aciertos en el tramo revisado (0.75 % del flujo) | `fraudes_en_tramo` y `transacciones_en_tramo`, en la vista `p2_tramo_diario` | Medible al poblar el almacén |
+| Monto cubierto por el tramo revisado | `fraccion_monto_en_tramo`, en la vista `p2_tramo_diario` | Medible al poblar el almacén |
+| Proporción de transacciones rechazadas (tope de 4.5 %) | Ninguna fuente registra rechazos. Solo existe la referencia nacional de aceptación | No medible |
+| Confirmaciones telefónicas por transacción | Ninguna fuente las registra | No medible |
+
+: {tbl-colwidths="[34,44,22]"}
+
+- **Las dos medidas medibles son las que evalúan el ordenamiento**, que es el objeto del proyecto.
+- **Las dos no medibles corresponden a condiciones que E0 fijó como límites**, no como objetivo. El
+  proyecto no puede verificarlas con datos, y así se declara.
+- **Los importes de la fuente A están en dólares y la meta de E0, en pesos.** No es un obstáculo:
+  lo que se mide es una fracción del monto defraudado, que no tiene unidad, y E0 establece que esa
+  fracción se proyecta sobre la línea base de 8.2 millones de pesos mensuales.
+
+## Limitaciones y ajustes
+
+| # | Limitación o ajuste | Origen | Efecto |
+| :-- | :--- | :--- | :--- |
+| 1 | P1 se compara contra un orden aleatorio y uno por reglas simples, no contra la cola actual | La fuente A no registra las alertas del motor | Cambia la línea base de comparación, no el objetivo |
+| 2 | El corte diario del 0.75 % es una forma de simular la evaluación | Planteamiento de E0 | En operación, el puntaje se asigna a cada transacción al llegar |
+| 3 | Las fechas de la fuente A son un supuesto, y pueden estar corridas un día | La fuente no publica su fecha de referencia | `dim_fecha` no incluye el día de la semana; el hecho conserva el tiempo original |
+| 4 | El esquema incluye cuatro atributos de la fuente A; el resto de sus columnas queda en staging | El esquema admite hasta cinco dimensiones | Se unirán por `transaccion_id` en la etapa de modelado |
+| 5 | Staging contiene una muestra de 14 días de la fuente A | Límite de carga de la consola de BigQuery | El conjunto completo se cargará por otra vía |
+| 6 | El DW está vacío y las vistas no devuelven filas | Alcance de esta entrega | No hay resultados que reportar |
+| 7 | La fuente A no es mexicana ni proviene de una institución de pagos | Riesgo 1 de E0 | La fuente B da la referencia nacional; el contraste queda pendiente |
+| 8 | La fuente C no entra al esquema | No tiene atributos con significado ni fechas | Permanece en staging como población de contraste |
+| 9 | La fuente B publica porcentajes ya calculados | Formato de la fuente | Se agregan ponderando; el de aceptación no puede recomponerse por año |
+| 10 | Los datos de la fuente A no pueden redistribuirse | Reglas de la competencia | Ningún archivo de datos en el repositorio; vistas previas con pocas filas |
+
+: {tbl-colwidths="[4,36,26,34]"}
+
+## No hubo pivote
+
+Esta entrega no incluye página de pivote ni una segunda versión de E0. Las indicaciones de la
+entrega reservan el pivote para los ajustes que cambian el objetivo de minería de datos o el
+criterio de éxito, y ninguno de los dos cambió:
+
+- **El grano se definió a partir de los datos**: una fila por transacción. Definir el grano desde
+  los datos no constituye un pivote.
+- **P1 se reformuló como pregunta ajustada**, con la línea que explica el cambio y su relación con
+  el objetivo de E0.
+- **P4 no se cubre**, igual que en E0. No es una pregunta que se haya perdido en esta entrega.
+- **El tema, el dominio y la fuente principal son los de E0.**
+
+## Compromisos de E0 que pasan a la entrega siguiente
+
+E0 situó tres tareas en una entrega de comprensión de los datos, a la que llamó E1. En el
+calendario del curso, E1 es la arquitectura del almacén. Esas tres tareas requieren explorar los
+datos, de modo que se realizarán en la entrega siguiente. Las páginas de E0 se conservan como se
+entregaron; el cambio de calendario se declara aquí.
+
+| Compromiso de E0 | Dónde consta | Avance en esta entrega | Pendiente |
+| :--- | :--- | :--- | :--- |
+| Contrastar la representatividad del conjunto de datos contra cifras públicas | [Supuesto 1 y riesgo 1](../E0_comprension_negocio/riesgos_supuestos.qmd) | Se localizó y se cargó la referencia: el cuadro CF621 de Banco de México, con contracargos por número y por monto y compra promedio, por trimestre desde 2015 | La comparación de montos y de frecuencia de fraude |
+| Fijar los umbrales de las medidas técnicas | [Criterio de éxito](../E0_comprension_negocio/criterio_exito.qmd) | Está diseñado el instrumento de medición: la vista `p2_tramo_diario` | Calcular la línea base sobre el conjunto de datos y fijar los valores |
+| Revisar la consistencia interna de los parámetros del caso | [Riesgo 8](../E0_comprension_negocio/riesgos_supuestos.qmd) | Ninguno | La revisión completa |
+
+: {tbl-colwidths="[25,17,36,22]"}
+
+## Revisión del registro de riesgos
+
+El [registro de riesgos de E0](../E0_comprension_negocio/riesgos_supuestos.qmd) establece que se
+revisará al cierre de cada entrega. Como esa página se conserva sin cambios, la revisión se
+registra aquí.
+
+| # | Riesgo de E0 | Situación al cierre de E1 |
+| :-- | :--- | :--- |
+| 1 | El conjunto de datos no es mexicano | Sigue abierto. El almacén ya incluye la referencia nacional para hacer el contraste |
+| 2 | Desbalance severo de clases | Confirmado en la fuente: 20,663 fraudes en 590,540 transacciones, el 3.5 % |
+| 3 | Fuga de información | Sigue vigente. El hecho conserva el tiempo original, necesario para la partición temporal |
+| 4 | Valores faltantes en la identidad del dispositivo | Confirmado en la fuente: el 75.6 % de las transacciones no tiene registro de identidad. El esquema lo representa como una categoría propia |
+| 5 | Sesgo contra segmentos por variables indirectas | Dos de esas variables son ahora dimensiones: el dominio de correo y el tipo de dispositivo. La vista `p1_tasa_por_segmento` permite medir por segmento, como prevé la mitigación |
+| 6 | La meta del 20 % podría no ser alcanzable | Sin cambio |
+| 7 | Adopción por el equipo de revisión | Sin cambio; fuera del alcance |
+| 8 | Parámetros asumidos poco plausibles | Sin cambio; su revisión pasa a la entrega siguiente |
+
+: {tbl-colwidths="[4,36,60]"}
+
+### Riesgos identificados en esta entrega
+
+| # | Clasificación | Riesgo | Mitigación |
+| :-- | :--- | :--- | :--- |
+| 9 | Datos | Las fechas de la fuente A dependen de un supuesto que puede estar corrido un día | No usar el día de la semana, conservar el tiempo original y mantener el supuesto en un solo lugar: `dim_fecha` |
+| 10 | Legal | Las reglas de la competencia prohíben redistribuir los datos de la fuente A | No incluir archivos de datos en el repositorio y limitar las vistas previas a pocas filas |
+| 11 | Datos | La lista de dominios de correo cambia con frecuencia, y un resultado podría no reproducirse | Cambio lento de tipo 2 en `dim_dominio_correo`, y versión de la lista registrada en el catálogo |
+
+: {tbl-colwidths="[4,13,41,42]"}
