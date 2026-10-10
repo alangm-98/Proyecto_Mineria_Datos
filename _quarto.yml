@@ -17,7 +17,7 @@ website:
       - href: index.qmd
         text: Inicio
     right:
-      - href: https://github.com/USUARIO/REPOSITORIO
+      - href: https://github.com/alangm-98/Proyecto_Mineria_Datos
         text: "Repositorio"
         icon: github
         aria-label: Repositorio en GitHub
@@ -46,11 +46,15 @@ website:
             contents:
               - href: entregas/E0_comprension_negocio/fuentes/expediente.qmd
                 text: "Expediente de fuentes"
+      - section: "E1 · Arquitectura del DW"
+        contents:
+          - href: entregas/E1_arquitectura_dw/fuentes.qmd
+            text: "1 · Fuentes e integración"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"
     right:
-      - href: https://github.com/USUARIO/REPOSITORIO
+      - href: https://github.com/alangm-98/Proyecto_Mineria_Datos
         text: "Repositorio"
         icon: github
 

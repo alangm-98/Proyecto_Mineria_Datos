@@ -1,0 +1,1617 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>1. Fuentes de datos e integración – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-97bc63ea392d9b08ece34d04c8d9f81c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text">Repositorio</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">E1 · Arquitectura del DW</a></li><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">1 · Fuentes e integración</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">E0 · Comprensión del negocio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/bitacora.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Bitácora</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/canvas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Canvas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/preguntas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Preguntas de investigación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/criterio_exito.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Criterio de éxito</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Supuestos y riesgos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Material de respaldo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expediente de fuentes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">E1 · Arquitectura del DW</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">1 · Fuentes e integración</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#proceso-de-búsqueda" id="toc-proceso-de-búsqueda" class="nav-link active" data-scroll-target="#proceso-de-búsqueda">Proceso de búsqueda</a>
+  <ul class="collapse">
+  <li><a href="#portales-revisados" id="toc-portales-revisados" class="nav-link" data-scroll-target="#portales-revisados">Portales revisados</a></li>
+  </ul></li>
+  <li><a href="#candidatas-evaluadas-y-criterios-de-selección" id="toc-candidatas-evaluadas-y-criterios-de-selección" class="nav-link" data-scroll-target="#candidatas-evaluadas-y-criterios-de-selección">Candidatas evaluadas y criterios de selección</a></li>
+  <li><a href="#catálogo-de-fuentes" id="toc-catálogo-de-fuentes" class="nav-link" data-scroll-target="#catálogo-de-fuentes">Catálogo de fuentes</a>
+  <ul class="collapse">
+  <li><a href="#a-ieee-cis-fraud-detection" id="toc-a-ieee-cis-fraud-detection" class="nav-link" data-scroll-target="#a-ieee-cis-fraud-detection">A · IEEE-CIS Fraud Detection</a></li>
+  <li><a href="#b-banco-de-méxico-cuadro-cf621" id="toc-b-banco-de-méxico-cuadro-cf621" class="nav-link" data-scroll-target="#b-banco-de-méxico-cuadro-cf621">B · Banco de México, cuadro CF621</a></li>
+  <li><a href="#c-ulb-credit-card-fraud" id="toc-c-ulb-credit-card-fraud" class="nav-link" data-scroll-target="#c-ulb-credit-card-fraud">C · ULB Credit Card Fraud</a></li>
+  <li><a href="#d-lista-de-dominios-de-correo-gratuitos" id="toc-d-lista-de-dominios-de-correo-gratuitos" class="nav-link" data-scroll-target="#d-lista-de-dominios-de-correo-gratuitos">D · Lista de dominios de correo gratuitos</a></li>
+  </ul></li>
+  <li><a href="#análisis-de-integración" id="toc-análisis-de-integración" class="nav-link" data-scroll-target="#análisis-de-integración">Análisis de integración</a>
+  <ul class="collapse">
+  <li><a href="#campos-de-unión" id="toc-campos-de-unión" class="nav-link" data-scroll-target="#campos-de-unión">Campos de unión</a></li>
+  <li><a href="#diferencias-de-granularidad" id="toc-diferencias-de-granularidad" class="nav-link" data-scroll-target="#diferencias-de-granularidad">Diferencias de granularidad</a></li>
+  <li><a href="#condiciones-de-formato-y-de-carga" id="toc-condiciones-de-formato-y-de-carga" class="nav-link" data-scroll-target="#condiciones-de-formato-y-de-carga">Condiciones de formato y de carga</a></li>
+  <li><a href="#incorporación-al-almacén" id="toc-incorporación-al-almacén" class="nav-link" data-scroll-target="#incorporación-al-almacén">Incorporación al almacén</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">E1 · Arquitectura del DW</a></li><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">1 · Fuentes e integración</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">1. Fuentes de datos e integración</h1>
+<p class="subtitle lead">Búsqueda, catálogo verificado y análisis de integración</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de octubre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<p>Esta página documenta las fuentes de datos del proyecto: cómo se buscaron, cuáles se evaluaron, cuáles forman el catálogo y cómo se integran en un solo almacén. De ellas dependen el grano de la tabla de hechos y las dimensiones del esquema que se describen en las páginas siguientes.</p>
+<p>El catálogo reúne <strong>cuatro fuentes de cuatro tipos distintos</strong>, seleccionadas entre diez candidatas. A lo largo de esta entrega, las cuatro <a href="../../entregas/E0_comprension_negocio/preguntas.html">preguntas de investigación de E0</a> se identifican como <strong>P1 a P4</strong>, en su orden original.</p>
+<section id="proceso-de-búsqueda" class="level2">
+<h2 class="anchored" data-anchor-id="proceso-de-búsqueda">Proceso de búsqueda</h2>
+<p>La búsqueda se realizó el <strong>9 de octubre de 2026</strong> y combinó tres vías, de modo que ninguna fuente dependiera de una sola herramienta.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 50%">
+<col style="width: 50%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Vía</th>
+<th style="text-align: left;">Papel en la búsqueda</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Claude</strong> (Anthropic), con búsqueda web</td>
+<td style="text-align: left;">Quince consultas dirigidas, de las que salieron las candidatas iniciales</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Gemini</strong> (Google), en modo Deep Research</td>
+<td style="text-align: left;">Búsqueda independiente con el mismo encargo, sin conocer las candidatas ya localizadas, para contrastar los resultados</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Revisión directa en portales</strong></td>
+<td style="text-align: left;">Apertura de cada candidata en su portal de origen</td>
+</tr>
+</tbody>
+</table>
+<p>Las dos herramientas coincidieron en los dos conjuntos de transacciones etiquetadas y en Banco de México como referencia oficial. Su salida se trató como una lista de propuestas, no como evidencia: <strong>una fuente solo entró al catálogo después de que el equipo la abriera</strong> y comprobara que la dirección existe, que el grano y la cobertura son los declarados y que la licencia permite el uso. Los prompts íntegros y los errores detectados en las salidas se documentan en la página de uso de herramientas de IA de esta entrega.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Consultas de búsqueda (texto exacto)">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Consultas de búsqueda (texto exacto)
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<ol type="1">
+<li><code>bigquery-public-data ml_datasets ulb_fraud_detection table credit card fraud</code></li>
+<li><code>IEEE-CIS Fraud Detection Kaggle competition rules data use "non-commercial" academic research Vesta dataset license</code></li>
+<li><code>Bank Account Fraud dataset NeurIPS 2022 Feedzai license CC BY-NC-ND tabular fraud dataset</code></li>
+<li><code>Banxico SIE comercio electrónico tarjetas contracargos número importe serie CF621 tasa de aceptación</code></li>
+<li><code>CNBV portafolio de información reclamaciones fraude comercio electrónico tarjeta base de datos descarga R27 "reclamaciones" datos abiertos</code></li>
+<li><code>CONDUSEF Buró de Entidades Financieras datos abiertos reclamaciones fraude base de datos descargar CSV datos.gob.mx</code></li>
+<li><code>disposable-email-domains GitHub list license CC0 disposable_email_blocklist.conf</code></li>
+<li><code>Google Play supported devices CSV download "supported_devices.csv" retail branding marketing name device model</code></li>
+<li><code>Federal Reserve Payments Study card-not-present fraud value number data tables download xlsx remote card fraud</code></li>
+<li><code>CNBV información estadística reclamaciones "comercio por internet" banca múltiple R27 consulta descarga portafolio de información tabla dinámica</code></li>
+<li><code>INEGI ENVIPE fraude bancario clonación de tarjeta microdatos víctimas monto pérdida datos abiertos</code></li>
+<li><code>ECB data portal card fraud statistics card-not-present fraud value volume by country payments statistics dataset download</code></li>
+<li><code>Kaggle PaySim synthetic financial datasets for fraud detection ealaxi paysim1 rows license CC BY-SA</code></li>
+<li><code>Banco de México aviso legal términos de uso información SIE "citar la fuente" reproducción de la información estadística</code></li>
+<li><code>"Credit Card Fraud Detection" mlg-ulb creditcardfraud Kaggle license "Database Contents License" DbCL Worldline ULB citation</code></li>
+</ol>
+</div>
+</div>
+</div>
+<section id="portales-revisados" class="level3">
+<h3 class="anchored" data-anchor-id="portales-revisados">Portales revisados</h3>
+<p>La tabla registra los portales consultados, incluidos los que no aportaron datos utilizables.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 30%">
+<col style="width: 44%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Portal</th>
+<th style="text-align: left;">Búsqueda</th>
+<th style="text-align: left;">Hallazgo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><a href="https://www.kaggle.com/competitions/ieee-fraud-detection">Kaggle</a></td>
+<td style="text-align: left;">Conjuntos de transacciones con etiqueta de fraude</td>
+<td style="text-align: left;">Fuente A; una candidata descartada</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=21&amp;accion=consultarCuadro&amp;idCuadro=CF621&amp;locale=es">Banco de México, SIE</a></td>
+<td style="text-align: left;">Cuadros de sistemas de pago</td>
+<td style="text-align: left;">Fuente B</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Datos públicos de BigQuery (<code>bigquery-public-data</code>)</td>
+<td style="text-align: left;">Tablas de fraude con tarjeta</td>
+<td style="text-align: left;">Fuente C</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="https://github.com/">GitHub</a></td>
+<td style="text-align: left;">Catálogos para enriquecer atributos: dominios de correo y rangos de tarjeta</td>
+<td style="text-align: left;">Fuente D; dos candidatas descartadas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="https://www.condusef.gob.mx/?p=estadisticas">CONDUSEF</a></td>
+<td style="text-align: left;">Estadísticas de comercio electrónico</td>
+<td style="text-align: left;">Reproduce las cifras de Banco de México</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="https://www.datos.gob.mx/dataset/?q=fraude">datos.gob.mx</a></td>
+<td style="text-align: left;">Término «fraude» y bases publicadas por CONDUSEF</td>
+<td style="text-align: left;">La búsqueda no devuelve bases de datos. CONDUSEF publica 29 bases; las revisadas tratan de cláusulas abusivas, unidades especializadas y calificaciones por producto, y no se localizó ninguna de transacciones ni de fraude</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><a href="https://portafolioinfo.cnbv.gob.mx/Temas/Reclamaciones/Paginas/default.aspx">CNBV, Portafolio de Información</a></td>
+<td style="text-align: left;">Reclamaciones por canal y monto</td>
+<td style="text-align: left;">La página abre, pero el visor de reportes falla con «Error de elemento web»</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><a href="https://support.google.com/googleplay/android-developer/answer/9859371?hl=en">Ayuda de Google Play</a></td>
+<td style="text-align: left;">Catálogo de modelos de dispositivos</td>
+<td style="text-align: left;">Solo se descarga desde una cuenta de desarrollador</td>
+</tr>
+</tbody>
+</table>
+</section>
+</section>
+<section id="candidatas-evaluadas-y-criterios-de-selección" class="level2">
+<h2 class="anchored" data-anchor-id="candidatas-evaluadas-y-criterios-de-selección">Candidatas evaluadas y criterios de selección</h2>
+<p>Se evaluaron diez candidatas. Para entrar al catálogo, una fuente debía cumplir cinco criterios, derivados de las preguntas de E0 y de las condiciones de esta entrega:</p>
+<ol type="1">
+<li>Relación directa con alguna pregunta de E0.</li>
+<li>Datos reales, no sintéticos.</li>
+<li>Acceso comprobable por el equipo y licencia que permita el uso académico.</li>
+<li>Posibilidad de integración: una llave o un atributo en común con otra fuente.</li>
+<li>Carga factible en staging: menos de 100 MB por archivo, o una tabla que ya esté en BigQuery.</li>
+</ol>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 24%">
+<col style="width: 20%">
+<col style="width: 13%">
+<col style="width: 39%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Candidata</th>
+<th style="text-align: left;">Tipo</th>
+<th style="text-align: left;">Decisión</th>
+<th style="text-align: left;">Motivo</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">IEEE-CIS Fraud Detection</td>
+<td style="text-align: left;">Archivos CSV de una competencia de Kaggle</td>
+<td style="text-align: left;"><strong>Catálogo (A)</strong></td>
+<td style="text-align: left;">Transacciones reales de comercio electrónico con etiqueta de fraude. Es la fuente del hecho principal</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Banco de México, cuadro CF621</td>
+<td style="text-align: left;">Base institucional con exportación</td>
+<td style="text-align: left;"><strong>Catálogo (B)</strong></td>
+<td style="text-align: left;">Referencia oficial de México, con contracargos por número y por monto</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">ULB Credit Card Fraud</td>
+<td style="text-align: left;">Tabla pública de BigQuery</td>
+<td style="text-align: left;"><strong>Catálogo (C)</strong></td>
+<td style="text-align: left;">Segunda población real con etiqueta de fraude, para contraste</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;"><code>free-email-domains</code></td>
+<td style="text-align: left;">Archivo en un repositorio abierto</td>
+<td style="text-align: left;"><strong>Catálogo (D)</strong></td>
+<td style="text-align: left;">Se une por llave con IEEE-CIS: 52 de sus 60 dominios de correo coinciden</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;"><a href="https://github.com/disposable-email-domains/disposable-email-domains"><code>disposable-email-domains</code></a></td>
+<td style="text-align: left;">Archivo en un repositorio abierto</td>
+<td style="text-align: left;">Descartada</td>
+<td style="text-align: left;">Lista de dominios de correo desechables. Ninguno de los 60 dominios de IEEE-CIS aparece en ella</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;"><a href="https://github.com/Techbuddie-Solutions/binlist-data"><code>binlist-data</code></a></td>
+<td style="text-align: left;">Archivo en un repositorio abierto</td>
+<td style="text-align: left;">Descartada</td>
+<td style="text-align: left;">Se une por los seis primeros dígitos de la tarjeta, e IEEE-CIS no los trae: <code>card1</code> es un valor enmascarado</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;"><a href="https://www.condusef.gob.mx/?p=estadisticas">Estadísticas de comercio electrónico de CONDUSEF</a></td>
+<td style="text-align: left;">Página institucional</td>
+<td style="text-align: left;">Descartada</td>
+<td style="text-align: left;">Cita como fuente al SIE de Banco de México. Se prefiere la fuente primaria</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;"><a href="https://www.kaggle.com/datasets/ealaxi/paysim1">PaySim</a></td>
+<td style="text-align: left;">Dataset de Kaggle</td>
+<td style="text-align: left;">Descartada</td>
+<td style="text-align: left;">Su descripción lo declara sintético, generado con un simulador</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;"><a href="https://support.google.com/googleplay/android-developer/answer/9859371?hl=en">Catálogo de dispositivos de Google Play</a></td>
+<td style="text-align: left;">Exportación de una consola</td>
+<td style="text-align: left;">Descartada</td>
+<td style="text-align: left;">Se habría unido con el modelo del dispositivo, pero exige una cuenta de desarrollador</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">10</td>
+<td style="text-align: left;"><a href="https://portafolioinfo.cnbv.gob.mx/Temas/Reclamaciones/Paginas/default.aspx">CNBV, reclamaciones</a></td>
+<td style="text-align: left;">Base institucional</td>
+<td style="text-align: left;">Descartada</td>
+<td style="text-align: left;">Inaccesible: el visor de reportes no carga</td>
+</tr>
+</tbody>
+</table>
+<p>Ninguna candidata permite responder P4: no se localizó una fuente pública con operaciones rechazadas y su desenlace, condición que E0 ya había declarado.</p>
+</section>
+<section id="catálogo-de-fuentes" class="level2">
+<h2 class="anchored" data-anchor-id="catálogo-de-fuentes">Catálogo de fuentes</h2>
+<p>Cada ficha registra los ocho campos del catálogo y dos evidencias de verificación: la página de origen y una vista previa de los datos. Las cuatro fuentes se verificaron el 9 de octubre de 2026.</p>
+<section id="a-ieee-cis-fraud-detection" class="level3">
+<h3 class="anchored" data-anchor-id="a-ieee-cis-fraud-detection">A · IEEE-CIS Fraud Detection</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Campo</th>
+<th style="text-align: left;">Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Nombre y dueño</strong></td>
+<td style="text-align: left;">IEEE-CIS Fraud Detection. Competencia de Kaggle patrocinada por la IEEE Computational Intelligence Society; los datos son de Vesta Corporation</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>URL y acceso</strong></td>
+<td style="text-align: left;"><a href="https://www.kaggle.com/competitions/ieee-fraud-detection/data" class="uri">https://www.kaggle.com/competitions/ieee-fraud-detection/data</a>. Descarga, o uso en un notebook de Kaggle, tras aceptar las reglas de la competencia</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Formato y tamaño</strong></td>
+<td style="text-align: left;">CSV. <code>train_transaction.csv</code>: 590,540 filas, 394 columnas, 683 MB. <code>train_identity.csv</code>: 144,233 filas, 41 columnas, 27 MB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Grano</strong></td>
+<td style="text-align: left;">Transacciones: una fila por transacción. Identidad: una fila por transacción que tiene registro de identidad</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Cobertura</strong></td>
+<td style="text-align: left;">182 días consecutivos. La fuente no publica las fechas reales ni el territorio. No se actualiza: la competencia corrió del 15 de julio al 3 de octubre de 2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Licencia y restricciones</strong></td>
+<td style="text-align: left;">Reglas de la competencia, sección 7. Permiten el uso no comercial, que incluye «academic research and education», y prohíben redistribuir los datos a quien no participa. Por eso el repositorio no contiene ningún archivo de datos y las vistas previas muestran pocas filas. La fuente entrega las variables enmascaradas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Llaves de integración</strong></td>
+<td style="text-align: left;"><code>TransactionID</code> entre sus dos tablas. <code>P_emaildomain</code> con la fuente D. <code>card6</code> (crédito o débito) con la fuente B. <code>TransactionDT</code> es un tiempo relativo en segundos, no una fecha</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Preguntas de E0</strong></td>
+<td style="text-align: left;">P1, P2, P3</td>
+</tr>
+</tbody>
+</table>
+<p>El conjunto contiene 20,663 transacciones fraudulentas, el 3.5 % del total. <code>TransactionID</code> es único en las dos tablas, y solo el 24.4 % de las transacciones tiene registro de identidad. Las cifras se obtuvieron sobre el conjunto completo, en un notebook de Kaggle.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Página de origen</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_a_origen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Pestaña Data de la competencia en Kaggle"><img src="img/fuente_a_origen.png" class="img-fluid figure-img" alt="Pestaña Data de la competencia en Kaggle"></a></p>
+<figcaption>Pestaña Data de la competencia en Kaggle</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_a_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Explorador de datos de Kaggle con train_transaction.csv"><img src="img/fuente_a_preview.png" class="img-fluid figure-img" alt="Explorador de datos de Kaggle con train_transaction.csv"></a></p>
+<figcaption>Explorador de datos de Kaggle con <code>train_transaction.csv</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="b-banco-de-méxico-cuadro-cf621" class="level3">
+<h3 class="anchored" data-anchor-id="b-banco-de-méxico-cuadro-cf621">B · Banco de México, cuadro CF621</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Campo</th>
+<th style="text-align: left;">Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Nombre y dueño</strong></td>
+<td style="text-align: left;">«Operaciones en TPV de Comercio Electrónico», cuadro CF621 del Sistema de Información Económica (SIE). Banco de México</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>URL y acceso</strong></td>
+<td style="text-align: left;"><a href="https://www.banxico.org.mx/SieInternet/consultarDirectorioInternetAction.do?sector=21&amp;accion=consultarCuadro&amp;idCuadro=CF621&amp;locale=es">Cuadro CF621 en el SIE</a>. Descarga sin registro, con «Exportar cuadro» o «Exportar series»</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Formato y tamaño</strong></td>
+<td style="text-align: left;">Excel o CSV. 45 trimestres por 24 series; unos pocos kilobytes</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Grano</strong></td>
+<td style="text-align: left;">Un valor por trimestre y serie. Cada serie combina un concepto (autorizaciones, aceptación, contracargos, devoluciones), un tipo de tarjeta (total, crédito, débito) y una unidad (número o monto)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Cobertura</strong></td>
+<td style="text-align: left;">Enero-marzo de 2015 a enero-marzo de 2026. México. Trimestral</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Licencia y restricciones</strong></td>
+<td style="text-align: left;"><a href="https://www.banxico.org.mx/footer-es/salvedad-politicas-uso-banco-.html">«Salvedad al uso de esta página»</a>: se autoriza reproducir o utilizar la información citando la fuente y la dirección del sitio. Son agregados nacionales, sin datos personales</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Llaves de integración</strong></td>
+<td style="text-align: left;">Tipo de tarjeta (crédito o débito), con <code>card6</code> de la fuente A. El periodo no se une con la fuente A, que no tiene fechas de calendario</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Preguntas de E0</strong></td>
+<td style="text-align: left;">P2, como referencia de México</td>
+</tr>
+</tbody>
+</table>
+<p>El cuadro define el contracargo como la operación que el tarjetahabiente reclama a su emisor por no reconocer el cargo o el monto de la compra, medida sobre los pagos autorizados. En enero-marzo de 2026, los contracargos representaron el 0.39 % del número de pagos autorizados y el 0.33 % de su monto.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-2-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-1" role="tab" aria-controls="tabset-2-1" aria-selected="true" href="">Página de origen y vista previa</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-2-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-2-2" role="tab" aria-controls="tabset-2-2" aria-selected="false" href="">Exportación</a></li></ul>
+<div class="tab-content">
+<div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_b_cuadro.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Cuadro CF621 en el SIE, con sus series y los tres últimos trimestres"><img src="img/fuente_b_cuadro.png" class="img-fluid figure-img" alt="Cuadro CF621 en el SIE, con sus series y los tres últimos trimestres"></a></p>
+<figcaption>Cuadro CF621 en el SIE, con sus series y los tres últimos trimestres</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_b_exportacion.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Opciones de «Exportar series»: periodo 2015 a 2026, niveles, vertical"><img src="img/fuente_b_exportacion.png" class="img-fluid figure-img" alt="Opciones de «Exportar series»: periodo 2015 a 2026, niveles, vertical"></a></p>
+<figcaption>Opciones de «Exportar series»: periodo 2015 a 2026, niveles, vertical</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="c-ulb-credit-card-fraud" class="level3">
+<h3 class="anchored" data-anchor-id="c-ulb-credit-card-fraud">C · ULB Credit Card Fraud</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Campo</th>
+<th style="text-align: left;">Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Nombre y dueño</strong></td>
+<td style="text-align: left;">Credit Card Fraud Detection. Conjunto reunido en una colaboración de investigación entre Worldline y el Machine Learning Group de la Université Libre de Bruxelles (ULB), según el <a href="https://codelabs.developers.google.com/codelabs/frauddetection-using-console?hl=es">codelab de Google</a> que usa esta tabla. Google lo publica en BigQuery dentro de su programa de datos públicos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>URL y acceso</strong></td>
+<td style="text-align: left;">Tabla <code>bigquery-public-data.ml_datasets.ulb_fraud_detection</code>, consultable desde cualquier proyecto de BigQuery</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Formato y tamaño</strong></td>
+<td style="text-align: left;">Tabla de BigQuery. 284,807 filas, 31 columnas, 67 MB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Grano</strong></td>
+<td style="text-align: left;">Una fila por transacción con tarjeta de crédito</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Cobertura</strong></td>
+<td style="text-align: left;">Dos días de septiembre de 2013; tarjetahabientes europeos. No se actualiza: la tabla no cambia desde marzo de 2019</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Licencia y restricciones</strong></td>
+<td style="text-align: left;">Open Database License 1.0 para la base y Database Contents License 1.0 para los contenidos, según los términos de la propia tabla. Pide citar a Dal Pozzolo, Caelen, Johnson y Bontempi (CIDM, IEEE, 2015). Variables transformadas con PCA, sin datos personales</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Llaves de integración</strong></td>
+<td style="text-align: left;">Ninguna. Comparte con la fuente A solo la forma: importe, etiqueta de fraude y tiempo relativo en segundos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Preguntas de E0</strong></td>
+<td style="text-align: left;">P2, como población de contraste</td>
+</tr>
+</tbody>
+</table>
+<p>Su proporción de fraude es de 0.17 % (492 de 284,807), muy por debajo del 3.5 % de la fuente A. Contar con dos poblaciones tan distintas permite razonar cómo cambia un resultado con la frecuencia del fraude. Su límite es que reúne compras con tarjeta en general, no solo de comercio electrónico.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-3-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-1" role="tab" aria-controls="tabset-3-1" aria-selected="true" href="">Página de origen</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-3-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-3-2" role="tab" aria-controls="tabset-3-2" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-3-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-3-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_c_origen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Detalles de la tabla pública en BigQuery, con su descripción y términos de uso"><img src="img/fuente_c_origen.png" class="img-fluid figure-img" alt="Detalles de la tabla pública en BigQuery, con su descripción y términos de uso"></a></p>
+<figcaption>Detalles de la tabla pública en BigQuery, con su descripción y términos de uso</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-3-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-3-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_c_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Vista previa de la tabla pública en BigQuery"><img src="img/fuente_c_preview.png" class="img-fluid figure-img" alt="Vista previa de la tabla pública en BigQuery"></a></p>
+<figcaption>Vista previa de la tabla pública en BigQuery</figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+<section id="d-lista-de-dominios-de-correo-gratuitos" class="level3">
+<h3 class="anchored" data-anchor-id="d-lista-de-dominios-de-correo-gratuitos">D · Lista de dominios de correo gratuitos</h3>
+<table class="caption-top table">
+<thead>
+<tr class="header">
+<th style="text-align: left;">Campo</th>
+<th style="text-align: left;">Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>Nombre y dueño</strong></td>
+<td style="text-align: left;"><code>free-email-domains</code>, repositorio público mantenido por Kikobeats en GitHub</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>URL y acceso</strong></td>
+<td style="text-align: left;"><a href="https://github.com/Kikobeats/free-email-domains" class="uri">https://github.com/Kikobeats/free-email-domains</a>. Descarga directa del archivo <code>domains.json</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Formato y tamaño</strong></td>
+<td style="text-align: left;">JSON: un arreglo con 14,324 dominios, en 14,326 líneas. 267 KB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Grano</strong></td>
+<td style="text-align: left;">Un elemento por dominio de correo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Cobertura</strong></td>
+<td style="text-align: left;">Global, sin periodo. Se actualiza con frecuencia: tiene 233 versiones publicadas, y la utilizada (1.13.0) se publicó el mismo día de la consulta</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Licencia y restricciones</strong></td>
+<td style="text-align: left;">MIT. Sin datos personales</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>Llaves de integración</strong></td>
+<td style="text-align: left;">El dominio, con <code>P_emaildomain</code> de la fuente A</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>Preguntas de E0</strong></td>
+<td style="text-align: left;">P1: agrega a cada dominio el atributo de proveedor gratuito</td>
+</tr>
+</tbody>
+</table>
+<p>El README del repositorio la describe como una lista de dominios de correo gratuitos y desechables.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-4-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-1" role="tab" aria-controls="tabset-4-1" aria-selected="true" href="">Página de origen</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-4-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-4-2" role="tab" aria-controls="tabset-4-2" aria-selected="false" href="">Vista previa</a></li></ul>
+<div class="tab-content">
+<div id="tabset-4-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-4-1-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_d_origen.png" class="lightbox" data-gallery="quarto-lightbox-gallery-7" title="Repositorio free-email-domains en GitHub"><img src="img/fuente_d_origen.png" class="img-fluid figure-img" alt="Repositorio free-email-domains en GitHub"></a></p>
+<figcaption>Repositorio <code>free-email-domains</code> en GitHub</figcaption>
+</figure>
+</div>
+</div>
+<div id="tabset-4-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-4-2-tab">
+<div class="quarto-figure quarto-figure-center">
+<figure class="figure">
+<p><a href="img/fuente_d_preview.png" class="lightbox" data-gallery="quarto-lightbox-gallery-8" title="Contenido del archivo domains.json"><img src="img/fuente_d_preview.png" class="img-fluid figure-img" alt="Contenido del archivo domains.json"></a></p>
+<figcaption>Contenido del archivo <code>domains.json</code></figcaption>
+</figure>
+</div>
+</div>
+</div>
+</div>
+</section>
+</section>
+<section id="análisis-de-integración" class="level2">
+<h2 class="anchored" data-anchor-id="análisis-de-integración">Análisis de integración</h2>
+<p>Las cuatro fuentes no comparten una llave única ni un mismo grano. Esta sección establece por qué campos pueden unirse, en qué difieren y qué condiciones deberá resolver la preparación de los datos. Conforme al alcance de esta entrega, los problemas se identifican y se documentan, sin resolverse todavía.</p>
+<section id="campos-de-unión" class="level3">
+<h3 class="anchored" data-anchor-id="campos-de-unión">Campos de unión</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 16%">
+<col style="width: 18%">
+<col style="width: 30%">
+<col style="width: 36%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Fuentes</th>
+<th style="text-align: left;">Campo de unión</th>
+<th style="text-align: left;">Resultado</th>
+<th style="text-align: left;">Problemas anticipados</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Las dos tablas de A</td>
+<td style="text-align: left;"><code>TransactionID</code></td>
+<td style="text-align: left;">Unión sin pérdidas: las 144,233 filas de identidad tienen transacción</td>
+<td style="text-align: left;">El 75.6 % de las transacciones no tiene identidad. La unión debe conservarlas: esa ausencia es el objeto de P3</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A y D</td>
+<td style="text-align: left;">Dominio de correo</td>
+<td style="text-align: left;">Coinciden 52 de los 60 dominios distintos de A, contando comprador y receptor</td>
+<td style="text-align: left;">Ocho no coinciden, entre ellos <code>gmail</code>, escrito sin terminación, y <code>anonymous.com</code>, un valor enmascarado. El 16.0 % de las transacciones no trae dominio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">A y B</td>
+<td style="text-align: left;">Tipo de tarjeta</td>
+<td style="text-align: left;">Es un atributo que puede conformarse; no hay llave fila a fila</td>
+<td style="text-align: left;"><code>card6</code> trae valores que Banco de México no reporta: <code>debit or credit</code> (30 filas), <code>charge card</code> (15) y vacíos (1,571)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">A y C</td>
+<td style="text-align: left;">Ninguno</td>
+<td style="text-align: left;">No se unen</td>
+<td style="text-align: left;">C no tiene atributos con significado: sus variables son componentes principales</td>
+</tr>
+</tbody>
+</table>
+<p>Los ocho dominios sin correspondencia son <code>anonymous.com</code>, <code>centurylink.net</code>, <code>gmail</code>, <code>prodigy.net.mx</code>, <code>sc.rr.com</code>, <code>scranton.edu</code>, <code>servicios-ta.com</code> y <code>suddenlink.net</code>.</p>
+</section>
+<section id="diferencias-de-granularidad" class="level3">
+<h3 class="anchored" data-anchor-id="diferencias-de-granularidad">Diferencias de granularidad</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 30%">
+<col style="width: 35%">
+<col style="width: 25%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Fuente</th>
+<th style="text-align: left;">Una fila es</th>
+<th style="text-align: left;">Periodo</th>
+<th style="text-align: left;">Unidad del importe</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Una transacción</td>
+<td style="text-align: left;">182 días, sin fecha de calendario</td>
+<td style="text-align: left;">Dólares</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Un trimestre y una serie</td>
+<td style="text-align: left;">2015 a 2026</td>
+<td style="text-align: left;">Millones de pesos</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">C</td>
+<td style="text-align: left;">Una transacción</td>
+<td style="text-align: left;">Dos días de 2013</td>
+<td style="text-align: left;">No declarada en la tabla</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">Un dominio</td>
+<td style="text-align: left;">Sin periodo</td>
+<td style="text-align: left;">No aplica</td>
+</tr>
+</tbody>
+</table>
+<p>Las fuentes A y B no pueden compartir una tabla: una registra operaciones individuales y la otra, totales trimestrales de un país. Reducir A al grano de B anularía el objetivo de E0, que es ordenar transacciones una por una. Por eso el diseño conserva los dos granos en tablas de hechos separadas, que comparten el tipo de tarjeta y la fecha.</p>
+</section>
+<section id="condiciones-de-formato-y-de-carga" class="level3">
+<h3 class="anchored" data-anchor-id="condiciones-de-formato-y-de-carga">Condiciones de formato y de carga</h3>
+<p>Además de las diferencias de llave y de grano, cada fuente tiene condiciones de formato que la preparación de los datos deberá resolver. Las que siguen se comprobaron al cargar las muestras en staging.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 5%">
+<col style="width: 9%">
+<col style="width: 46%">
+<col style="width: 40%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Fuente</th>
+<th style="text-align: left;">Condición observada</th>
+<th style="text-align: left;">Tratamiento previsto</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">Las primeras filas de sus dos archivos no se corresponden: al tomar las primeras 1,000 de cada uno, solo 296 transacciones tenían su fila de identidad</td>
+<td style="text-align: left;">Muestrear por ventana de tiempo, no por número de filas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">El archivo de transacciones (683 MB) supera el límite de carga de la consola de BigQuery</td>
+<td style="text-align: left;">Cargar el conjunto completo por otra vía</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">A</td>
+<td style="text-align: left;">La fuente no publica la fecha de referencia de <code>TransactionDT</code></td>
+<td style="text-align: left;">Trabajar con un supuesto declarado y conservar el valor original</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">La fecha se publica como día/mes/año. La detección automática de BigQuery la interpreta como mes/día/año sin marcar error: el 1 de octubre de 2015 se lee como 10 de enero</td>
+<td style="text-align: left;">Convertir la fecha indicando el formato</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">El archivo incluye 18 líneas de metadatos antes de los datos, y las columnas se nombran con identificadores de serie (<code>SF273475</code> a <code>SF273498</code>)</td>
+<td style="text-align: left;">Renombrar las columnas con el título de cada serie</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">6</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Formato ancho: una columna por serie. El almacén requiere una fila por trimestre y tipo de tarjeta</td>
+<td style="text-align: left;">Reorganizar las columnas en filas</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">7</td>
+<td style="text-align: left;">B</td>
+<td style="text-align: left;">Los porcentajes se publican ya calculados, y no pueden sumarse ni promediarse entre trimestres</td>
+<td style="text-align: left;">Agregarlos ponderando por el número o el monto de autorizaciones</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">8</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">Es un arreglo JSON, que la consola no carga como tabla</td>
+<td style="text-align: left;">Quitar corchetes, comillas y comas, y dejar un dominio por fila</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">9</td>
+<td style="text-align: left;">D</td>
+<td style="text-align: left;">La lista cambia con frecuencia: un dominio puede entrar o salir</td>
+<td style="text-align: left;">Conservar la versión de la lista con la que se obtuvo cada resultado</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="incorporación-al-almacén" class="level3">
+<h3 class="anchored" data-anchor-id="incorporación-al-almacén">Incorporación al almacén</h3>
+<p>El análisis anterior determina el papel de cada fuente en el diseño:</p>
+<ul>
+<li><strong>A</strong> aporta la tabla de hechos principal, con una fila por transacción.</li>
+<li><strong>B</strong> aporta una segunda tabla de hechos, con una fila por trimestre y tipo de tarjeta.</li>
+<li><strong>D</strong> se integra como un atributo de la dimensión de dominio de correo.</li>
+<li><strong>C</strong> permanece en staging como población de contraste. No trae producto, dispositivo, correo ni fecha, de modo que en el esquema casi todas sus dimensiones quedarían como «no aplica».</li>
+</ul>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="pagination-link" aria-label="Expediente de fuentes">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">Expediente de fuentes</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM</p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos">
+<p>Repositorio</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>
