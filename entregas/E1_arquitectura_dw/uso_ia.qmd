@@ -1,0 +1,225 @@
+---
+title: "5. Uso de herramientas de IA"
+subtitle: "Registro de empleo de modelos de lenguaje en esta entrega"
+date: last-modified
+---
+
+<style>
+  /* La hoja de estilos del sitio impide el salto de línea en la primera columna de las tablas,
+     pensando en columnas de numeración. En esta página la primera columna lleva texto largo. */
+  body main table td:first-child {
+    white-space: normal;
+  }
+</style>
+
+::: {.callout-important appearance="minimal" title="Declaración general"}
+El equipo **sí utilizó herramientas de IA** en esta entrega. Un modelo de
+lenguaje propuso las fuentes, colaboró en el diseño del almacén, el código SQL, debugging del mismo y propuestas de  redacción de las páginas.
+El equipo abrió y verificó cada fuente, tomó las decisiones de diseño, ejecutó todo el trabajo en
+BigQuery y en Kaggle, y revisó y corrigió las salidas. Una segunda herramienta, en modo de
+investigación profunda, se usó para contrastar la búsqueda de fuentes.
+:::
+
+## Resumen de usos
+
+| # | Herramienta y modelo | Tarea | Detalle |
+| :-- | :--- | :--- | :--- |
+| 1 | Claude (Anthropic), modelo Opus 5.5 | Planeación de la entrega y guía de uso de BigQuery y Kaggle | [Uso 1](#uso-1) |
+| 2 | Claude (Anthropic), modelo Opus 5.5, con búsqueda web | Búsqueda de fuentes de datos candidatas | [Uso 2](#uso-2) |
+| 3 | Gemini (Google), modelo 3.1 Pro, en modo Deep Research | Búsqueda independiente de fuentes, para contraste | [Uso 3](#uso-3) |
+| 4 | Claude (Anthropic), modelo Opus 5.5 | Análisis de integración, diseño del esquema estrella, código SQL y matriz de trazabilidad | [Uso 4](#uso-4) |
+| 5 | Claude (Anthropic), modelo Opus 5.5 | Ayuda en redacción de las páginas y revisión del sitio | [Uso 5](#uso-5) |
+
+: {tbl-colwidths="[4,34,46,16]"}
+
+Los usos de Claude ocurrieron en una sola conversación, el 8 y el 9 de octubre de 2026. El uso de
+Gemini fue el 9 de octubre de 2026. No se empleó ninguna otra herramienta de IA.
+
+Como en E0, los prompts de la conversación se registran como resumen fiel. El prompt de la
+búsqueda de contraste se reproduce íntegro.
+
+---
+
+## Uso 1 · Planeación de la entrega y guía de las plataformas {#uso-1}
+
+**Tarea.** Leer las indicaciones de la entrega y el trabajo de E0, proponer un plan por fases y
+guiar al equipo en el uso de BigQuery Kaggle, en la preparación de las dos plataformas.
+
+**Prompts empleados (resumen fiel).** El equipo entregó al modelo un documento interno de
+contexto con lo decidido en E0, el enlace del repositorio y las indicaciones de E0 y de E1.
+Después pidió identificar qué exige E1, cómo se relaciona con esos
+compromisos, qué decisiones había que tomar y un plan de implementación, con la instrucción de esperar la
+validación del equipo siempre.
+
+**Qué se hizo con la salida.** El equipo validó el plan y lo siguió fase por fase, cerrando cada
+una antes de abrir la siguiente. Creó el proyecto y los tres datasets, y aceptó las reglas de la
+competencia en Kaggle. Varias instrucciones sobre las pantallas de BigQuery, que el modelo dio de
+memoria, no coincidían con la consola; el equipo lo señaló con capturas y se corrigieron.
+
+---
+
+## Uso 2 · Búsqueda de fuentes de datos {#uso-2}
+
+**Tarea.** Localizar fuentes de datos reales y públicas para las preguntas de E0, y proponer
+cuáles evaluar.
+
+**Prompts empleados (resumen fiel).** El plan validado asignaba al modelo una búsqueda documentada
+de candidatas. El modelo lanzó quince consultas de búsqueda web, que se reproducen con su texto
+exacto en la página de [fuentes](fuentes.qmd#proceso-de-búsqueda). El equipo pidió después una
+lista ordenada, con enlaces exactos, de qué abrir en cada fuente, qué comprobar y qué evidencia
+guardar. En su salida, el modelo marcó qué datos había leído en una página y cuáles daba de
+memoria, para que el equipo comprobara primero los segundos.
+
+**Qué se hizo con la salida.** La salida se trató como una lista de propuestas. El equipo abrió
+cada fuente en su portal y comprobó la dirección, el grano, la cobertura y la licencia, con dos
+capturas por fuente.
+
+| Propuesta del modelo | Resultado de la verificación |
+| :--- | :--- |
+| IEEE-CIS Fraud Detection, cuadro CF621 de Banco de México, tabla pública de ULB en BigQuery y lista `free-email-domains` | Verificadas por el equipo. Forman el catálogo |
+| `disposable-email-domains`, estadísticas de CONDUSEF, PaySim y catálogo de dispositivos de Google Play | Abiertas por el equipo y descartadas, por los motivos que registra la página de fuentes |
+| Portafolio de Información de la CNBV | El modelo no pudo abrirlo. El equipo lo abrió y lo descartó: el visor de reportes no carga |
+| Bank Account Fraud (Feedzai), un informe de la Reserva Federal sobre fraude en pagos y la encuesta ENVIPE del INEGI | Descartadas por el propio modelo. El equipo no las abrió, y por eso no figuran entre las candidatas evaluadas |
+
+: {tbl-colwidths="[52,48]"}
+
+Los conteos de la fuente principal no provienen del modelo: el equipo los calculó en un notebook
+de Kaggle, con celdas que el modelo escribió y que solo imprimen totales.
+
+---
+
+## Uso 3 · Búsqueda de contraste con investigación profunda {#uso-3}
+
+**Tarea.** Repetir la búsqueda de fuentes con una herramienta distinta y en modo de investigación
+profunda, sin darle las candidatas ya localizadas, para comprobar si aparecía alguna fuente que la
+primera búsqueda no hubiera encontrado.
+
+::: {.callout-note collapse="true" title="Prompt íntegro de la búsqueda de contraste"}
+
+```
+Estoy haciendo un proyecto universitario de minería de datos sobre detección y priorización de
+fraude en transacciones con tarjeta en comercio electrónico, para una institución de pagos en
+México. Necesito fuentes de datos reales, públicas y descargables para diseñar un almacén de datos.
+Busca:
+
+1. Conjuntos de datos reales, no sintéticos, de transacciones etiquetadas como fraude o legítimas,
+   a nivel de transacción.
+2. Estadísticas oficiales de México sobre pagos con tarjeta en comercio electrónico, contracargos,
+   reclamaciones por fraude y montos (Banco de México, CNBV, CONDUSEF, INEGI, datos.gob.mx).
+3. Datasets públicos de BigQuery (bigquery-public-data) relacionados con fraude o pagos.
+4. Catálogos abiertos que puedan unirse por llave con atributos de una transacción, como dominio
+   de correo, tipo de dispositivo o tipo de tarjeta.
+
+Para cada fuente indica: nombre e institución responsable, URL exacta, forma de acceso, formato y
+tamaño aproximado, qué representa una fila, periodo y territorio que cubre, licencia o condiciones
+de uso, y por qué campos podría unirse con otras fuentes.
+
+Señala con claridad qué datos confirmaste abriendo la página y cuáles no pudiste confirmar. No
+incluyas fuentes cuya URL no hayas podido abrir.
+```
+
+:::
+
+El texto del prompt lo redactó Claude a petición del equipo, que lo envió a Gemini sin
+modificarlo.
+
+**Qué se hizo con la salida.** Gemini devolvió un informe extenso, que el equipo conserva y que no
+se publica. Coincidió con la primera búsqueda en lo esencial: los dos conjuntos de transacciones
+etiquetadas, Banco de México y CONDUSEF como referencias oficiales, y un catálogo de dominios de
+correo. No localizó el cuadro CF621 ni la copia de ULB en BigQuery. Propuso cinco candidatas
+nuevas, y **ninguna entró al catálogo**:
+
+| Propuesta de Gemini | Resultado |
+| :--- | :--- |
+| `binlist-data`, catálogo de rangos de tarjeta | Abierta por el equipo y descartada: se une por los seis primeros dígitos de la tarjeta, que IEEE-CIS no trae |
+| Una segunda lista de dominios de correo desechables | Descartada: en la prueba de unión que hizo Claude, solo coincide uno de los 60 dominios de IEEE-CIS |
+| Un comunicado de CONDUSEF de 2019 y un informe anual de Banco de México | Descartadas: son documentos, no tablas que puedan cargarse |
+| Tablas públicas de BigQuery sobre taxis de Chicago y sobre Bitcoin | Descartadas: no tienen relación con ninguna pregunta de E0 |
+
+: {tbl-colwidths="[45,55]"}
+
+El informe contenía además afirmaciones incorrectas, que se detallan en la sección de
+[errores detectados](#errores).
+
+---
+
+## Uso 4 · Diseño del almacén y código SQL {#uso-4}
+
+**Tarea.** Proponer el análisis de integración, el grano, el esquema estrella, el DDL, las
+consultas del DataMart y la matriz de trazabilidad.
+
+**Prompts empleados (resumen fiel).** En cada fase el equipo pidió al modelo una propuesta para
+revisión, con las decisiones abiertas, sus alternativas y una recomendación, y no avanzó hasta
+aprobarla. Pidió sucesivamente: la evidencia necesaria para definir el grano; la propuesta de
+integración, grano y dimensiones; una guía paso a paso para cargar las muestras en staging; la
+propuesta del esquema estrella y su DDL; la propuesta de las consultas del DataMart; y la
+propuesta de la matriz de trazabilidad. Para ejecutar el SQL pidió instrucciones de una sentencia
+por mensaje, con la explicación de cada parte.
+
+**Qué se hizo con la salida.**
+
+- **El equipo tomó las decisiones.** Entre ellas: el grano por transacción, la segunda tabla de
+  hechos para Banco de México, dejar ULB fuera del esquema, el supuesto sobre la fecha de
+  referencia y la omisión del día de la semana, el cambio lento de tipo 2 en la dimensión de
+  correo, guardar las consultas como vistas, no poblar el almacén en esta entrega y el texto
+  ajustado de la pregunta 1.
+- **El equipo ejecutó todo el SQL** en BigQuery, sentencia por sentencia, tras comprobar que el
+  validador del editor lo aceptaba, y tomó las capturas. El modelo no tuvo acceso al proyecto de
+  BigQuery.
+- **El equipo localizó la fuente del supuesto de fecha**: la discusión de la competencia que usa
+  el 1 de diciembre de 2017. El modelo recordaba otra fecha y otro enlace.
+- **El modelo probó la lógica de las consultas fuera de BigQuery**, sobre transacciones inventadas
+  y sobre el archivo público de Banco de México, y comparó los resultados con un cálculo
+  independiente. El equipo no repitió esas pruebas; conoce su resultado por el informe del modelo.
+
+---
+
+## Uso 5 · Redacción de las páginas y revisión del sitio {#uso-5}
+
+**Tarea.** Apoyar con la redacción de las las cinco páginas de esta entrega a
+partir de lo decidido.
+
+**Prompts empleados (resumen fiel).** El equipo propuso borradores, que revisó el modelo y propuso
+ajustes, que el equipó valoró y decidió si integraba o no en un proceso iterativo,
+una página a la vez, para publicar cada una al terminarla.
+
+**Qué se hizo con la salida.** El modelo redactó cada página y la compiló en su propio entorno
+antes de entregarla. El equipo la compiló en el suyo, la leyó completa, pidió cambios cuando los
+hubo y la publicó. Tras cada publicación, el modelo descargó el repositorio público y comprobó los
+archivos y los enlaces. El primer borrador de la página de fuentes se reescribió por completo.
+Ninguna página se publicó sin la lectura del equipo.
+
+---
+
+## Errores detectados en las salidas {#errores}
+
+Las dos herramientas produjeron afirmaciones incorrectas. Se registran porque muestran por qué
+ninguna salida se usó sin verificar.
+
+### En el informe de Gemini
+
+| Afirmación del informe | Lo comprobado |
+| :--- | :--- |
+| La licencia de IEEE-CIS es «abierta (Open-Source)» | Las reglas de la competencia solo permiten el uso no comercial, que incluye el académico |
+| Los archivos de IEEE-CIS «superan varios gigabytes» | Los dos archivos de entrenamiento pesan 683 MB y 27 MB |
+| La fuente de IEEE-CIS es un «espejo oficial» en otro portal | Es una copia de un tercero. La fuente original es Kaggle |
+| La fuente de ULB es un registro de Zenodo con licencia CC BY 4.0 | Es una copia subida por un tercero. La tabla pública de BigQuery declara otras licencias |
+| `card1` puede unirse con un catálogo de rangos de tarjeta | `card1` es un valor enmascarado; no hay llave |
+| Propone tablas de taxis y de Bitcoin como fuentes | No tratan de fraude ni de pagos con tarjeta |
+| Todo fue «verificado mediante acceso directo» | Varias cifras provienen de fuentes secundarias, como un artículo de blog y un notebook |
+
+: {tbl-colwidths="[48,52]"}
+
+### En las salidas de Claude
+
+| Error | Cómo se detectó | Corrección |
+| :--- | :--- | :--- |
+| Dio de memoria una fecha de referencia y un enlace que no eran los de la discusión de la competencia | El equipo abrió la discusión | Se usa la fecha que consta en ella, como supuesto declarado |
+| Indicó que BigQuery cargaría la fecha de Banco de México como texto; la detección automática la leyó como mes/día/año | En la vista previa de la tabla cargada | La tabla se volvió a cargar con esquema explícito, y el caso se documenta en la página de arquitectura |
+| Anticipó un patrón en el volumen diario de transacciones que los datos no mostraron | Al ejecutar el equipo el conteo por día | Se abandonó ese argumento y se omitió el día de la semana |
+| Generalizó, a partir de tres trimestres, una relación entre los contracargos por número y por monto que la serie completa no sostiene | Al revisar el propio modelo la serie completa | La afirmación se retiró |
+| Afirmó que la lista de dominios «se actualiza a diario», sin evidencia | Al redactar el propio modelo la página de fuentes | Se sustituyó por lo que muestra la captura, en la página, en el DDL y en BigQuery |
+| Incluyó en un hecho dos columnas que no respondían ninguna pregunta de E0 | Al revisar el propio modelo la matriz de trazabilidad en sentido inverso | El equipo volvió a crear la tabla sin ellas |
+
+: {tbl-colwidths="[40,26,34]"}
+

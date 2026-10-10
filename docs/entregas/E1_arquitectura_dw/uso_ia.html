@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>5. Uso de herramientas de IA – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../entregas/E1_arquitectura_dw/trazabilidad.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-97bc63ea392d9b08ece34d04c8d9f81c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text">Repositorio</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">E1 · Arquitectura del DW</a></li><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/uso_ia.html">5 · Uso de herramientas de IA</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">E0 · Comprensión del negocio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/bitacora.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Bitácora</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/canvas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Canvas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/preguntas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Preguntas de investigación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/criterio_exito.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Criterio de éxito</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Supuestos y riesgos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Material de respaldo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expediente de fuentes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">E1 · Arquitectura del DW</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Fuentes e integración</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/arquitectura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Arquitectura de tres capas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/estrella.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Esquema estrella</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Trazabilidad a E0</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/uso_ia.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">5 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen-de-usos" id="toc-resumen-de-usos" class="nav-link active" data-scroll-target="#resumen-de-usos">Resumen de usos</a></li>
+  <li><a href="#uso-1" id="toc-uso-1" class="nav-link" data-scroll-target="#uso-1">Uso 1 · Planeación de la entrega y guía de las plataformas</a></li>
+  <li><a href="#uso-2" id="toc-uso-2" class="nav-link" data-scroll-target="#uso-2">Uso 2 · Búsqueda de fuentes de datos</a></li>
+  <li><a href="#uso-3" id="toc-uso-3" class="nav-link" data-scroll-target="#uso-3">Uso 3 · Búsqueda de contraste con investigación profunda</a></li>
+  <li><a href="#uso-4" id="toc-uso-4" class="nav-link" data-scroll-target="#uso-4">Uso 4 · Diseño del almacén y código SQL</a></li>
+  <li><a href="#uso-5" id="toc-uso-5" class="nav-link" data-scroll-target="#uso-5">Uso 5 · Redacción de las páginas y revisión del sitio</a></li>
+  <li><a href="#errores" id="toc-errores" class="nav-link" data-scroll-target="#errores">Errores detectados en las salidas</a>
+  <ul class="collapse">
+  <li><a href="#en-el-informe-de-gemini" id="toc-en-el-informe-de-gemini" class="nav-link" data-scroll-target="#en-el-informe-de-gemini">En el informe de Gemini</a></li>
+  <li><a href="#en-las-salidas-de-claude" id="toc-en-las-salidas-de-claude" class="nav-link" data-scroll-target="#en-las-salidas-de-claude">En las salidas de Claude</a></li>
+  </ul></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/fuentes.html">E1 · Arquitectura del DW</a></li><li class="breadcrumb-item"><a href="../../entregas/E1_arquitectura_dw/uso_ia.html">5 · Uso de herramientas de IA</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">5. Uso de herramientas de IA</h1>
+<p class="subtitle lead">Registro de empleo de modelos de lenguaje en esta entrega</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">9 de octubre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  /* La hoja de estilos del sitio impide el salto de línea en la primera columna de las tablas,
+     pensando en columnas de numeración. En esta página la primera columna lleva texto largo. */
+  body main table td:first-child {
+    white-space: normal;
+  }
+</style>
+<div class="callout callout-style-simple callout-important no-icon callout-titled" title="Declaración general">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Declaración general
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El equipo <strong>sí utilizó herramientas de IA</strong> en esta entrega. Un modelo de lenguaje propuso las fuentes, colaboró en el diseño del almacén, el código SQL, debugging del mismo y propuestas de redacción de las páginas. El equipo abrió y verificó cada fuente, tomó las decisiones de diseño, ejecutó todo el trabajo en BigQuery y en Kaggle, y revisó y corrigió las salidas. Una segunda herramienta, en modo de investigación profunda, se usó para contrastar la búsqueda de fuentes.</p>
+</div>
+</div>
+<section id="resumen-de-usos" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-de-usos">Resumen de usos</h2>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 34%">
+<col style="width: 46%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Herramienta y modelo</th>
+<th style="text-align: left;">Tarea</th>
+<th style="text-align: left;">Detalle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Planeación de la entrega y guía de uso de BigQuery y Kaggle</td>
+<td style="text-align: left;"><a href="#uso-1">Uso 1</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5, con búsqueda web</td>
+<td style="text-align: left;">Búsqueda de fuentes de datos candidatas</td>
+<td style="text-align: left;"><a href="#uso-2">Uso 2</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Gemini (Google), modelo 3.1 Pro, en modo Deep Research</td>
+<td style="text-align: left;">Búsqueda independiente de fuentes, para contraste</td>
+<td style="text-align: left;"><a href="#uso-3">Uso 3</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Análisis de integración, diseño del esquema estrella, código SQL y matriz de trazabilidad</td>
+<td style="text-align: left;"><a href="#uso-4">Uso 4</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Ayuda en redacción de las páginas y revisión del sitio</td>
+<td style="text-align: left;"><a href="#uso-5">Uso 5</a></td>
+</tr>
+</tbody>
+</table>
+<p>Los usos de Claude ocurrieron en una sola conversación, el 8 y el 9 de octubre de 2026. El uso de Gemini fue el 9 de octubre de 2026. No se empleó ninguna otra herramienta de IA.</p>
+<p>Como en E0, los prompts de la conversación se registran como resumen fiel. El prompt de la búsqueda de contraste se reproduce íntegro.</p>
+<hr>
+</section>
+<section id="uso-1" class="level2">
+<h2 class="anchored" data-anchor-id="uso-1">Uso 1 · Planeación de la entrega y guía de las plataformas</h2>
+<p><strong>Tarea.</strong> Leer las indicaciones de la entrega y el trabajo de E0, proponer un plan por fases y guiar al equipo en el uso de BigQuery Kaggle, en la preparación de las dos plataformas.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo entregó al modelo un documento interno de contexto con lo decidido en E0, el enlace del repositorio y las indicaciones de E0 y de E1. Después pidió identificar qué exige E1, cómo se relaciona con esos compromisos, qué decisiones había que tomar y un plan de implementación, con la instrucción de esperar la validación del equipo siempre.</p>
+<p><strong>Qué se hizo con la salida.</strong> El equipo validó el plan y lo siguió fase por fase, cerrando cada una antes de abrir la siguiente. Creó el proyecto y los tres datasets, y aceptó las reglas de la competencia en Kaggle. Varias instrucciones sobre las pantallas de BigQuery, que el modelo dio de memoria, no coincidían con la consola; el equipo lo señaló con capturas y se corrigieron.</p>
+<hr>
+</section>
+<section id="uso-2" class="level2">
+<h2 class="anchored" data-anchor-id="uso-2">Uso 2 · Búsqueda de fuentes de datos</h2>
+<p><strong>Tarea.</strong> Localizar fuentes de datos reales y públicas para las preguntas de E0, y proponer cuáles evaluar.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El plan validado asignaba al modelo una búsqueda documentada de candidatas. El modelo lanzó quince consultas de búsqueda web, que se reproducen con su texto exacto en la página de <a href="../../entregas/E1_arquitectura_dw/fuentes.html#proceso-de-búsqueda">fuentes</a>. El equipo pidió después una lista ordenada, con enlaces exactos, de qué abrir en cada fuente, qué comprobar y qué evidencia guardar. En su salida, el modelo marcó qué datos había leído en una página y cuáles daba de memoria, para que el equipo comprobara primero los segundos.</p>
+<p><strong>Qué se hizo con la salida.</strong> La salida se trató como una lista de propuestas. El equipo abrió cada fuente en su portal y comprobó la dirección, el grano, la cobertura y la licencia, con dos capturas por fuente.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 52%">
+<col style="width: 48%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Propuesta del modelo</th>
+<th style="text-align: left;">Resultado de la verificación</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">IEEE-CIS Fraud Detection, cuadro CF621 de Banco de México, tabla pública de ULB en BigQuery y lista <code>free-email-domains</code></td>
+<td style="text-align: left;">Verificadas por el equipo. Forman el catálogo</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>disposable-email-domains</code>, estadísticas de CONDUSEF, PaySim y catálogo de dispositivos de Google Play</td>
+<td style="text-align: left;">Abiertas por el equipo y descartadas, por los motivos que registra la página de fuentes</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Portafolio de Información de la CNBV</td>
+<td style="text-align: left;">El modelo no pudo abrirlo. El equipo lo abrió y lo descartó: el visor de reportes no carga</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Bank Account Fraud (Feedzai), un informe de la Reserva Federal sobre fraude en pagos y la encuesta ENVIPE del INEGI</td>
+<td style="text-align: left;">Descartadas por el propio modelo. El equipo no las abrió, y por eso no figuran entre las candidatas evaluadas</td>
+</tr>
+</tbody>
+</table>
+<p>Los conteos de la fuente principal no provienen del modelo: el equipo los calculó en un notebook de Kaggle, con celdas que el modelo escribió y que solo imprimen totales.</p>
+<hr>
+</section>
+<section id="uso-3" class="level2">
+<h2 class="anchored" data-anchor-id="uso-3">Uso 3 · Búsqueda de contraste con investigación profunda</h2>
+<p><strong>Tarea.</strong> Repetir la búsqueda de fuentes con una herramienta distinta y en modo de investigación profunda, sin darle las candidatas ya localizadas, para comprobar si aparecía alguna fuente que la primera búsqueda no hubiera encontrado.</p>
+<div class="callout callout-style-default callout-note callout-titled" title="Prompt íntegro de la búsqueda de contraste">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Prompt íntegro de la búsqueda de contraste
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<pre><code>Estoy haciendo un proyecto universitario de minería de datos sobre detección y priorización de
+fraude en transacciones con tarjeta en comercio electrónico, para una institución de pagos en
+México. Necesito fuentes de datos reales, públicas y descargables para diseñar un almacén de datos.
+Busca:
+
+1. Conjuntos de datos reales, no sintéticos, de transacciones etiquetadas como fraude o legítimas,
+   a nivel de transacción.
+2. Estadísticas oficiales de México sobre pagos con tarjeta en comercio electrónico, contracargos,
+   reclamaciones por fraude y montos (Banco de México, CNBV, CONDUSEF, INEGI, datos.gob.mx).
+3. Datasets públicos de BigQuery (bigquery-public-data) relacionados con fraude o pagos.
+4. Catálogos abiertos que puedan unirse por llave con atributos de una transacción, como dominio
+   de correo, tipo de dispositivo o tipo de tarjeta.
+
+Para cada fuente indica: nombre e institución responsable, URL exacta, forma de acceso, formato y
+tamaño aproximado, qué representa una fila, periodo y territorio que cubre, licencia o condiciones
+de uso, y por qué campos podría unirse con otras fuentes.
+
+Señala con claridad qué datos confirmaste abriendo la página y cuáles no pudiste confirmar. No
+incluyas fuentes cuya URL no hayas podido abrir.</code></pre>
+</div>
+</div>
+</div>
+<p>El texto del prompt lo redactó Claude a petición del equipo, que lo envió a Gemini sin modificarlo.</p>
+<p><strong>Qué se hizo con la salida.</strong> Gemini devolvió un informe extenso, que el equipo conserva y que no se publica. Coincidió con la primera búsqueda en lo esencial: los dos conjuntos de transacciones etiquetadas, Banco de México y CONDUSEF como referencias oficiales, y un catálogo de dominios de correo. No localizó el cuadro CF621 ni la copia de ULB en BigQuery. Propuso cinco candidatas nuevas, y <strong>ninguna entró al catálogo</strong>:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 45%">
+<col style="width: 55%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Propuesta de Gemini</th>
+<th style="text-align: left;">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>binlist-data</code>, catálogo de rangos de tarjeta</td>
+<td style="text-align: left;">Abierta por el equipo y descartada: se une por los seis primeros dígitos de la tarjeta, que IEEE-CIS no trae</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Una segunda lista de dominios de correo desechables</td>
+<td style="text-align: left;">Descartada: en la prueba de unión que hizo Claude, solo coincide uno de los 60 dominios de IEEE-CIS</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Un comunicado de CONDUSEF de 2019 y un informe anual de Banco de México</td>
+<td style="text-align: left;">Descartadas: son documentos, no tablas que puedan cargarse</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tablas públicas de BigQuery sobre taxis de Chicago y sobre Bitcoin</td>
+<td style="text-align: left;">Descartadas: no tienen relación con ninguna pregunta de E0</td>
+</tr>
+</tbody>
+</table>
+<p>El informe contenía además afirmaciones incorrectas, que se detallan en la sección de <a href="#errores">errores detectados</a>.</p>
+<hr>
+</section>
+<section id="uso-4" class="level2">
+<h2 class="anchored" data-anchor-id="uso-4">Uso 4 · Diseño del almacén y código SQL</h2>
+<p><strong>Tarea.</strong> Proponer el análisis de integración, el grano, el esquema estrella, el DDL, las consultas del DataMart y la matriz de trazabilidad.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> En cada fase el equipo pidió al modelo una propuesta para revisión, con las decisiones abiertas, sus alternativas y una recomendación, y no avanzó hasta aprobarla. Pidió sucesivamente: la evidencia necesaria para definir el grano; la propuesta de integración, grano y dimensiones; una guía paso a paso para cargar las muestras en staging; la propuesta del esquema estrella y su DDL; la propuesta de las consultas del DataMart; y la propuesta de la matriz de trazabilidad. Para ejecutar el SQL pidió instrucciones de una sentencia por mensaje, con la explicación de cada parte.</p>
+<p><strong>Qué se hizo con la salida.</strong></p>
+<ul>
+<li><strong>El equipo tomó las decisiones.</strong> Entre ellas: el grano por transacción, la segunda tabla de hechos para Banco de México, dejar ULB fuera del esquema, el supuesto sobre la fecha de referencia y la omisión del día de la semana, el cambio lento de tipo 2 en la dimensión de correo, guardar las consultas como vistas, no poblar el almacén en esta entrega y el texto ajustado de la pregunta 1.</li>
+<li><strong>El equipo ejecutó todo el SQL</strong> en BigQuery, sentencia por sentencia, tras comprobar que el validador del editor lo aceptaba, y tomó las capturas. El modelo no tuvo acceso al proyecto de BigQuery.</li>
+<li><strong>El equipo localizó la fuente del supuesto de fecha</strong>: la discusión de la competencia que usa el 1 de diciembre de 2017. El modelo recordaba otra fecha y otro enlace.</li>
+<li><strong>El modelo probó la lógica de las consultas fuera de BigQuery</strong>, sobre transacciones inventadas y sobre el archivo público de Banco de México, y comparó los resultados con un cálculo independiente. El equipo no repitió esas pruebas; conoce su resultado por el informe del modelo.</li>
+</ul>
+<hr>
+</section>
+<section id="uso-5" class="level2">
+<h2 class="anchored" data-anchor-id="uso-5">Uso 5 · Redacción de las páginas y revisión del sitio</h2>
+<p><strong>Tarea.</strong> Apoyar con la redacción de las las cinco páginas de esta entrega a partir de lo decidido.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo propuso borradores, que revisó el modelo y propuso ajustes, que el equipó valoró y decidió si integraba o no en un proceso iterativo, una página a la vez, para publicar cada una al terminarla.</p>
+<p><strong>Qué se hizo con la salida.</strong> El modelo redactó cada página y la compiló en su propio entorno antes de entregarla. El equipo la compiló en el suyo, la leyó completa, pidió cambios cuando los hubo y la publicó. Tras cada publicación, el modelo descargó el repositorio público y comprobó los archivos y los enlaces. El primer borrador de la página de fuentes se reescribió por completo. Ninguna página se publicó sin la lectura del equipo.</p>
+<hr>
+</section>
+<section id="errores" class="level2">
+<h2 class="anchored" data-anchor-id="errores">Errores detectados en las salidas</h2>
+<p>Las dos herramientas produjeron afirmaciones incorrectas. Se registran porque muestran por qué ninguna salida se usó sin verificar.</p>
+<section id="en-el-informe-de-gemini" class="level3">
+<h3 class="anchored" data-anchor-id="en-el-informe-de-gemini">En el informe de Gemini</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 48%">
+<col style="width: 52%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Afirmación del informe</th>
+<th style="text-align: left;">Lo comprobado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">La licencia de IEEE-CIS es «abierta (Open-Source)»</td>
+<td style="text-align: left;">Las reglas de la competencia solo permiten el uso no comercial, que incluye el académico</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Los archivos de IEEE-CIS «superan varios gigabytes»</td>
+<td style="text-align: left;">Los dos archivos de entrenamiento pesan 683 MB y 27 MB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">La fuente de IEEE-CIS es un «espejo oficial» en otro portal</td>
+<td style="text-align: left;">Es una copia de un tercero. La fuente original es Kaggle</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">La fuente de ULB es un registro de Zenodo con licencia CC BY 4.0</td>
+<td style="text-align: left;">Es una copia subida por un tercero. La tabla pública de BigQuery declara otras licencias</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>card1</code> puede unirse con un catálogo de rangos de tarjeta</td>
+<td style="text-align: left;"><code>card1</code> es un valor enmascarado; no hay llave</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Propone tablas de taxis y de Bitcoin como fuentes</td>
+<td style="text-align: left;">No tratan de fraude ni de pagos con tarjeta</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Todo fue «verificado mediante acceso directo»</td>
+<td style="text-align: left;">Varias cifras provienen de fuentes secundarias, como un artículo de blog y un notebook</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="en-las-salidas-de-claude" class="level3">
+<h3 class="anchored" data-anchor-id="en-las-salidas-de-claude">En las salidas de Claude</h3>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 40%">
+<col style="width: 26%">
+<col style="width: 34%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Error</th>
+<th style="text-align: left;">Cómo se detectó</th>
+<th style="text-align: left;">Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Dio de memoria una fecha de referencia y un enlace que no eran los de la discusión de la competencia</td>
+<td style="text-align: left;">El equipo abrió la discusión</td>
+<td style="text-align: left;">Se usa la fecha que consta en ella, como supuesto declarado</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Indicó que BigQuery cargaría la fecha de Banco de México como texto; la detección automática la leyó como mes/día/año</td>
+<td style="text-align: left;">En la vista previa de la tabla cargada</td>
+<td style="text-align: left;">La tabla se volvió a cargar con esquema explícito, y el caso se documenta en la página de arquitectura</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Anticipó un patrón en el volumen diario de transacciones que los datos no mostraron</td>
+<td style="text-align: left;">Al ejecutar el equipo el conteo por día</td>
+<td style="text-align: left;">Se abandonó ese argumento y se omitió el día de la semana</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Generalizó, a partir de tres trimestres, una relación entre los contracargos por número y por monto que la serie completa no sostiene</td>
+<td style="text-align: left;">Al revisar el propio modelo la serie completa</td>
+<td style="text-align: left;">La afirmación se retiró</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Afirmó que la lista de dominios «se actualiza a diario», sin evidencia</td>
+<td style="text-align: left;">Al redactar el propio modelo la página de fuentes</td>
+<td style="text-align: left;">Se sustituyó por lo que muestra la captura, en la página, en el DDL y en BigQuery</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Incluyó en un hecho dos columnas que no respondían ninguna pregunta de E0</td>
+<td style="text-align: left;">Al revisar el propio modelo la matriz de trazabilidad en sentido inverso</td>
+<td style="text-align: left;">El equipo volvió a crear la tabla sin ellas</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html" class="pagination-link" aria-label="4 · Trazabilidad a E0">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">4 · Trazabilidad a E0</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM</p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos">
+<p>Repositorio</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

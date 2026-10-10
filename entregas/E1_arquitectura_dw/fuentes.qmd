@@ -29,8 +29,8 @@ Las dos herramientas coincidieron en los dos conjuntos de transacciones etiqueta
 México como referencia oficial. Su salida se trató como una lista de propuestas, no como
 evidencia: **una fuente solo entró al catálogo después de que el equipo la abriera** y comprobara
 que la dirección existe, que el grano y la cobertura son los declarados y que la licencia permite
-el uso. Los prompts íntegros y los errores detectados en las salidas se documentan en la página de
-uso de herramientas de IA de esta entrega.
+el uso. Los prompts y los errores detectados en las salidas se documentan en la página de
+[uso de herramientas de IA](uso_ia.qmd) de esta entrega.
 
 ::: {.callout-note collapse="true" title="Consultas de búsqueda (texto exacto)"}
 1. `bigquery-public-data ml_datasets ulb_fraud_detection table credit card fraud`
