@@ -4,9 +4,9 @@ Pipeline reproducible de la entrega E2 (EDA y preparación de los datos). Lleva 
 `lumen_staging` al esquema estrella de `lumen_dw`, pasando por una capa de preparación
 (`lumen_prep`), y deja ejecutables las vistas de `lumen_mart`.
 
-> **Estado: borrador de la fase 0.** Hoy el pipeline solo hace la verificación previa
-> (credenciales y staging). Los pasos se agregan fase por fase y este README se completa al final,
-> con el tiempo de ejecución medido.
+> **Estado: fase A1.** Están implementados la verificación previa y los pasos `ingesta` y
+> `calidad`. Los pasos `limpieza`, `reduccion`, `muestreo` y `carga` se agregan en las fases B y C,
+> y este README se completa al final, con el tiempo de ejecución medido.
 
 ## Datos reales y muestra
 
@@ -15,12 +15,16 @@ repositorio no contiene datos de IEEE-CIS: las reglas de la competencia prohíbe
 
 La carpeta `data/sample/` solo sirve para ver el esquema y probar el código. Contiene:
 
-| Archivo                          | Fuente                          | Contenido                                                                                                 |
-| :------------------------------- | :------------------------------ | :-------------------------------------------------------------------------------------------------------- |
-| `banxico_cf621_series.csv`       | B · Banco de México, CF621      | Cuadro completo, tal como se exportó del SIE el 9 de octubre de 2026 (ISO-8859-1, 18 líneas de metadatos) |
-| `free_email_domains_1.13.0.json` | D · `free-email-domains` 1.13.0 | Lista completa (licencia MIT)                                                                             |
-| (pendiente, fase A1)             | C · ULB                         | Muestra de filas (ODbL / DbCL)                                                                            |
-| (pendiente, fase A1)             | A · IEEE-CIS                    | **Datos sintéticos** con el mismo esquema, generados con semilla fija. No son transacciones reales        |
+| Archivo                                                                     | Fuente                          | Contenido                                                                                                       |
+| :-------------------------------------------------------------------------- | :------------------------------ | :-------------------------------------------------------------------------------------------------------------- |
+| `banxico_cf621_series.csv`                                                  | B · Banco de México, CF621      | Cuadro completo, tal como se exportó del SIE el 9 de octubre de 2026 (ISO-8859-1, 18 líneas de metadatos)       |
+| `free_email_domains_1.13.0.json`                                            | D · `free-email-domains` 1.13.0 | Lista completa (licencia MIT)                                                                                   |
+| `ulb_muestra.csv`                                                           | C · ULB                         | Muestra aleatoria simple de 1,000 filas con semilla fija (ODbL / DbCL)                                          |
+| `ieee_sintetico_train_transaction.csv`, `ieee_sintetico_train_identity.csv` | A · IEEE-CIS                    | **Datos sintéticos**: mismas columnas y tipos, valores inventados con semilla fija. No son transacciones reales |
+
+Los archivos de ULB y de IEEE-CIS sintético los genera `bootstrap/generar_muestras.py`
+(`--ulb` lee staging en BigQuery; `--sintetico` no necesita Google Cloud). Con la misma semilla y
+las versiones de `uv.lock` se obtienen los mismos archivos, byte por byte.
 
 Las licencias y la forma de citar cada fuente están en `data/sample/LICENCIAS.md`.
 
@@ -70,7 +74,16 @@ uv run python run_pipeline.py                    # pipeline completo
 ```
 
 Los parámetros (proyecto, datasets, tablas, supuestos, semilla, umbrales) están en `config.yaml`.
-Cada corrida deja un registro en `logs/` (no se sube al repositorio).
+Cada corrida deja un registro en `logs/` (no se sube al repositorio). Con `--desde` y `--hasta` se
+ejecuta solo un tramo, por ejemplo `--desde calidad --hasta calidad`.
+
+### Pasos
+
+| Paso                | Qué hace                                                                                                                                                    | Escribe                                                              | Duración y datos procesados (corrida del 7 nov 2026) |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------- | :--------------------------------------------------- |
+| Verificación previa | Credenciales, ubicación de staging y filas de cada tabla contra la fuente                                                                                   | Nada                                                                 | ~3 s; solo metadatos                                 |
+| `ingesta`           | Une y tipa A, B y D sin limpiar (SQL de `sql/01` a `sql/03`); valida filas, llaves y fechas                                                                 | `lumen_prep.analitico_crudo`, `banxico_trimestres`, `dominios_lista` | ~25 s; ~1.1 GB                                       |
+| `calidad`           | Diagnóstico sin corregir: faltantes, ceros, distintos y rango por columna; duplicados; valores de categóricas; dominios sin pareja; consistencia de Banxico | `lumen_prep.calidad_*` y `salidas/calidad_*.csv`                     | ~3 min; ~2.3 GB                                      |
 
 ## Proyecto propio: cargar staging desde cero
 
@@ -89,13 +102,16 @@ Para ejecutar el pipeline en otro proyecto de Google Cloud:
 4. Cargar staging. El esquema de cada tabla es explícito y está en `esquemas/`:
 
    ```bash
-   uv run python bootstrap/cargar_staging.py --tablas ieee ulb --simular   # revisar
-   uv run python bootstrap/cargar_staging.py --tablas ieee ulb
+   uv run python bootstrap/cargar_staging.py --tablas ieee ulb banxico dominios --simular   # revisar
+   uv run python bootstrap/cargar_staging.py --tablas ieee ulb banxico dominios
    ```
 
-   (Pendiente: carga de Banco de México y de la lista de dominios desde `data/sample/`.)
+   A (IEEE-CIS) se lee del bucket; C (ULB) se copia de la tabla pública de BigQuery; B (Banco de
+   México) y D (dominios) se cargan desde `data/sample/` con las mismas opciones que en E1. Se
+   comprobó que B y D quedan idénticas, fila por fila, a las tablas de staging de E1.
 
-El script no sobrescribe una tabla que ya existe, salvo con `--reemplazar`.
+El script no sobrescribe una tabla que ya existe, salvo con `--reemplazar`. Con `--dataset NOMBRE`
+carga en otro dataset, para probar sin tocar staging.
 
 ## Estructura
 
@@ -107,9 +123,10 @@ pipeline/
 ├── uv.lock                todas las dependencias, fijadas
 ├── requirements.txt       las mismas versiones, para pip
 ├── .python-version        3.13.18
-├── src/                   módulos del pipeline
-├── esquemas/              esquema explícito de las tablas de IEEE-CIS en staging
-├── bootstrap/             carga de staging (no forma parte del pipeline)
+├── src/                   módulos del pipeline: config, registro, bq, verificacion, ingesta, calidad
+├── esquemas/              esquema explícito de las tablas de staging (A, B y D)
+├── bootstrap/             carga de staging y generación de muestras (no forman parte del pipeline)
+├── salidas/               diagnóstico agregado que escribe el pipeline (conteos, sin filas de datos)
 └── data/sample/           muestra pequeña (ver «Datos reales y muestra»)
 ```
 

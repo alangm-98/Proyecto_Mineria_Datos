@@ -10,10 +10,14 @@ Protección de staging: si una tabla ya existe, el script no la toca, salvo
 que se indique --reemplazar. Así no se pueden sobrescribir por accidente las
 tablas cargadas en E1.
 
+Fuentes: A desde Cloud Storage (no se redistribuye); B y D desde los archivos
+de data/sample/, con las mismas opciones con que se cargaron en E1; C se copia
+de la tabla pública de BigQuery.
+
 Uso (desde pipeline/):
     uv run python bootstrap/cargar_staging.py --tablas ieee --simular
-    uv run python bootstrap/cargar_staging.py --tablas ieee
-    uv run python bootstrap/cargar_staging.py --tablas ieee ulb
+    uv run python bootstrap/cargar_staging.py --tablas ieee ulb banxico dominios
+    uv run python bootstrap/cargar_staging.py --tablas banxico dominios --dataset lumen_prueba
 """
 
 import argparse
@@ -106,14 +110,83 @@ def cargar_ulb(client, cfg, args):
         client.query(sql).result()
 
 
-CARGAS = {"ieee": cargar_ieee, "ulb": cargar_ulb}
-# banxico y dominios se agregan en la fase A1, con el esquema explícito usado en E1.
+def cargar_archivo_local(
+    client, cfg, clave, archivo, esquema, opciones, descripcion, args
+):
+    """Carga un archivo de data/sample/ con esquema explícito, como se hizo en E1."""
+    destino = tabla(cfg, "staging", cfg["staging"][clave])
+    ruta = RAIZ / cfg["bootstrap"][archivo]
+    if existe(client, destino) and not args.reemplazar:
+        print(f"[omitida] {destino} ya existe (usar --reemplazar para sobrescribir)")
+        return
+    campos = leer_esquema(cfg["bootstrap"][esquema])
+    print(
+        f"[carga] {ruta.relative_to(RAIZ)} -> {destino} ({len(campos)} columnas, esquema explícito)"
+    )
+    if args.simular:
+        return
+    job_config = bigquery.LoadJobConfig(
+        source_format=bigquery.SourceFormat.CSV,
+        schema=campos,
+        write_disposition=bigquery.WriteDisposition.WRITE_TRUNCATE,
+        **opciones,
+    )
+    with open(ruta, "rb") as f:
+        client.load_table_from_file(f, destino, job_config=job_config).result()
+    t = client.get_table(destino)
+    t.description = f"{descripcion} Cargado el {HOY} con pipeline/bootstrap/cargar_staging.py desde {ruta.relative_to(RAIZ)}."
+    client.update_table(t, ["description"])
+    print(f"  {t.num_rows:,} filas cargadas")
+
+
+def cargar_banxico(client, cfg, args):
+    # El CSV del SIE: 18 líneas de metadatos y la fila de encabezados (19 en total), en
+    # ISO-8859-1. La fecha se carga como texto: la detección automática invertía día y mes.
+    # La última línea del archivo está vacía; allow_jagged_rows la acepta como una fila con
+    # todas las columnas vacías, igual que la carga de E1 desde la consola (46 filas).
+    cargar_archivo_local(
+        client,
+        cfg,
+        "banxico",
+        "banxico_csv",
+        "esquema_banxico",
+        {"skip_leading_rows": 19, "encoding": "ISO-8859-1", "allow_jagged_rows": True},
+        "Fuente B: Banco de México, SIE, cuadro CF621, exportado el 9 de octubre de 2026. Fecha como texto.",
+        args,
+    )
+
+
+def cargar_dominios(client, cfg, args):
+    # Una fila por línea del JSON: delimitador de campo que no aparece en el archivo
+    # (tabulador) y sin carácter de comillas, para conservar la línea completa.
+    cargar_archivo_local(
+        client,
+        cfg,
+        "dominios",
+        "dominios_json",
+        "esquema_dominios",
+        {"field_delimiter": "\t", "quote_character": "", "skip_leading_rows": 0},
+        f"Fuente D: free-email-domains {cfg['fuentes']['dominios_version']}, domains.json. Copia cruda: una fila por línea del archivo.",
+        args,
+    )
+
+
+CARGAS = {
+    "ieee": cargar_ieee,
+    "ulb": cargar_ulb,
+    "banxico": cargar_banxico,
+    "dominios": cargar_dominios,
+}
 
 
 def main() -> None:
     ap = argparse.ArgumentParser(description="Carga de staging (bootstrap)")
     ap.add_argument("--tablas", nargs="+", choices=sorted(CARGAS), required=True)
     ap.add_argument("--config", default="config.yaml")
+    ap.add_argument(
+        "--dataset",
+        help="cargar en este dataset en lugar del de staging (por ejemplo, para probar)",
+    )
     ap.add_argument(
         "--reemplazar", action="store_true", help="sobrescribir tablas existentes"
     )
@@ -123,6 +196,8 @@ def main() -> None:
     args = ap.parse_args()
 
     cfg = cargar_config(args.config)
+    if args.dataset:
+        cfg["datasets"]["staging"] = args.dataset
     client = cliente(cfg)
 
     ds_id = f"{cfg['proyecto']['id']}.{cfg['datasets']['staging']}"

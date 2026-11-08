@@ -16,7 +16,9 @@ import sys
 import time
 
 from src.bq import cliente
+from src.calidad import calidad
 from src.config import cargar_config
+from src.ingesta import ingesta
 from src.registro import iniciar_registro
 from src.verificacion import verificar_entorno
 
@@ -30,7 +32,10 @@ PASOS = [
     ("muestreo", "B"),
     ("carga", "C"),
 ]
-IMPLEMENTADOS: dict = {}  # nombre del paso -> función(client, cfg, log)
+IMPLEMENTADOS: dict = {  # nombre del paso -> función(client, cfg, log)
+    "ingesta": ingesta,
+    "calidad": calidad,
+}
 
 
 def main() -> int:

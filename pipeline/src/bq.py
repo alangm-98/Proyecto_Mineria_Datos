@@ -28,9 +28,22 @@ def cliente(cfg: dict) -> bigquery.Client:
 
 
 def parametros_sql(cfg: dict) -> dict:
-    """Valores que pueden aparecer en los .sql como ${proyecto}, ${staging}, etc."""
-    p = {"proyecto": cfg["proyecto"]["id"], **cfg["datasets"]}
+    """Valores que pueden aparecer en los .sql como ${proyecto}, ${staging}, etc.
+
+    ${proyecto}, ${ubicacion}: proyecto y ubicación
+    ${staging}, ${prep}, ${dw}, ${mart}: nombres de los datasets
+    ${t_<clave>}: tablas de staging; ${p_<clave>}: tablas de lumen_prep
+    ${<clave>}: cada valor de las secciones `supuestos` y `fuentes`
+    """
+    p = {
+        "proyecto": cfg["proyecto"]["id"],
+        "ubicacion": cfg["proyecto"]["ubicacion"],
+        **cfg["datasets"],
+    }
     p.update({f"t_{k}": v for k, v in cfg["staging"].items()})
+    p.update({f"p_{k}": v for k, v in cfg.get("tablas_prep", {}).items()})
+    p.update({k: str(v) for k, v in cfg.get("supuestos", {}).items()})
+    p.update({k: str(v) for k, v in cfg.get("fuentes", {}).items()})
     return p
 
 

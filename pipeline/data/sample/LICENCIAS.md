@@ -1,7 +1,25 @@
 # Licencias de los archivos de esta carpeta
 
-Esta carpeta contiene copias completas de dos fuentes cuya licencia permite redistribuirlas. No
+Esta carpeta contiene copias completas de dos fuentes cuya licencia permite redistribuirlas (B y
+D), una muestra de una tercera (C) y un archivo sintético con el esquema de la cuarta (A). No
 contiene datos reales de IEEE-CIS (fuente A): sus reglas prohíben redistribuirlos.
+
+## IEEE-CIS sintético (`ieee_sintetico_train_transaction.csv`, `ieee_sintetico_train_identity.csv`)
+
+**No son datos de la fuente.** Tienen las mismas columnas y tipos que `train_transaction.csv` y
+`train_identity.csv` de la competencia IEEE-CIS Fraud Detection, pero todos los valores los
+genera `pipeline/bootstrap/generar_muestras.py --sintetico` con números aleatorios y semilla
+fija. Sirven para ver el esquema y probar código. Los datos reales se descargan de Kaggle
+aceptando las reglas de la competencia (ver `pipeline/README.md`).
+
+## ULB Credit Card Fraud (`ulb_muestra.csv`)
+
+Muestra aleatoria simple de 1,000 filas, con semilla fija, de la tabla pública
+`bigquery-public-data.ml_datasets.ulb_fraud_detection` (Machine Learning Group, Université Libre
+de Bruxelles, y Worldline). La genera `pipeline/bootstrap/generar_muestras.py --ulb`. Licencia:
+Open Database License 1.0 para la base y Database Contents License 1.0 para los contenidos; esta
+muestra se redistribuye bajo las mismas licencias. Se pide citar a Dal Pozzolo, Caelen, Johnson y
+Bontempi (CIDM, IEEE, 2015).
 
 ## Banco de México · cuadro CF621 (`banxico_cf621_series.csv`)
 

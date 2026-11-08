@@ -30,6 +30,16 @@ staging:
   ulb: ulb_fraud_detection
   dominios: free_email_domains
 
+# Tablas que el pipeline crea en la capa de preparación (datasets.prep).
+tablas_prep:
+  analitico_crudo: analitico_crudo # A unida al grano de E1, sin limpiar (entrada del EDA)
+  banxico_trimestres: banxico_trimestres # B tipada: un renglón por trimestre
+  dominios_lista: dominios_lista # D: un renglón por dominio
+  calidad_columnas: calidad_columnas # diagnóstico: faltantes, ceros, distintos y rango por columna
+  calidad_valores: calidad_valores # diagnóstico: frecuencia de cada valor en columnas de texto con pocas categorías
+  calidad_dominios: calidad_dominios # diagnóstico: dominios de correo de A frente a la lista D
+  calidad_resumen: calidad_resumen # diagnóstico: duplicados, consistencia de Banxico y otras pruebas
+
 # Conteos de la fuente completa, calculados por el equipo en Kaggle en E1.
 # La verificación previa del pipeline compara contra ellos.
 esperado:
@@ -44,6 +54,15 @@ bootstrap:
   ieee_identidad_csv: ieee/train_identity.csv
   esquema_transaccion: esquemas/ieee_train_transaction.json
   esquema_identidad: esquemas/ieee_train_identity.json
+  banxico_csv: data/sample/banxico_cf621_series.csv # tal como se exportó del SIE
+  esquema_banxico: esquemas/banxico_cf621_series.json
+  dominios_json: data/sample/free_email_domains_1.13.0.json
+  esquema_dominios: esquemas/free_email_domains.json
+
+# Datos de versión de las fuentes, que no salen de las tablas.
+fuentes:
+  dominios_version: "1.13.0" # free-email-domains, descargada y cargada el 9 de octubre de 2026
+  dominios_fecha_carga: "2026-10-09"
 
 supuestos:
   # Referencia de TransactionDT (supuesto de E1, discusión 102157 de Kaggle; la fuente no la confirma)
@@ -51,13 +70,29 @@ supuestos:
 
 semilla: 2026
 
+# Archivos de data/sample/ generados por bootstrap/generar_muestras.py (solo para ver el
+# esquema y probar código; el análisis usa los datos completos en BigQuery).
+muestra:
+  sintetico_transacciones: 1000 # IEEE-CIS sintético: valores inventados, no son transacciones reales
+  sintetico_pct_identidad: 0.25
+  sintetico_pct_fraude: 0.035
+  ulb_filas: 1000 # muestra aleatoria simple de la fuente C
+
 tramo_revisado: 0.0075 # 300 de 40,000: capacidad diaria como proporción del flujo (E0)
 
 # Pendiente (fase A2/B): partición temporal por día relativo.
 particion: {}
 
-# Pendiente (fase B): umbrales de χ², V de Cramér, correlación y PCA.
-umbrales: {}
+umbrales:
+  # Diagnóstico (fase A1): columnas de texto con a lo más este número de valores
+  # distintos se listan valor por valor en calidad_valores.
+  calidad_max_categorias: 20
+  # Pendiente (fase B): umbrales de χ², V de Cramér, correlación y PCA.
+
+# Resultados agregados que el pipeline escribe para citarlos en el sitio
+# (conteos por columna; nunca filas de datos). Sí se suben al repositorio.
+salidas:
+  carpeta: salidas # relativa a pipeline/
 
 registro:
   carpeta: logs # relativa a pipeline/; no se sube al repositorio

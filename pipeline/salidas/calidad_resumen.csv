@@ -1,0 +1,12 @@
+prueba,valor,detalle
+duplicados_por_llave,0,Filas con TransactionID repetido
+duplicados_exactos_sin_id,3,Filas idénticas a otra en todas las columnas salvo TransactionID
+duplicados_sin_id_ni_tiempo,479,"Filas idénticas a otra salvo TransactionID, TransactionDT y sus derivadas"
+P_emaildomain_dominios_sin_pareja,7,"Dominios distintos de P_emaildomain que no están en la lista D, de 59"
+P_emaildomain_filas_sin_pareja,38280,"Filas con P_emaildomain no nulo cuyo dominio no está en la lista D, de 496084"
+R_emaildomain_dominios_sin_pareja,8,"Dominios distintos de R_emaildomain que no están en la lista D, de 60"
+R_emaildomain_filas_sin_pareja,20974,"Filas con R_emaildomain no nulo cuyo dominio no está en la lista D, de 137291"
+banxico_total_num_distinto_de_suma,0,Trimestres con autorizaciones totales distintas de crédito + débito (máxima diferencia: 0)
+banxico_total_mdp_distinto_de_suma,10,Trimestres con monto total distinto de crédito + débito (máxima diferencia: 1 mdp)
+banxico_porcentajes_fuera_de_rango,0,"Trimestres con algún porcentaje fuera de [0, 100]"
+banxico_celdas_nulas,0,Celdas nulas en 45 trimestres × 25 columnas
