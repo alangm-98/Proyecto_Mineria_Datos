@@ -9,6 +9,8 @@
 __pycache__/
 pipeline/logs/
 pipeline/data/raw/
+# Extracto del EDA con datos reales de IEEE-CIS: no se redistribuye
+pipeline/eda/cache/
 *.zip
 
 # Credenciales: nunca en el repositorio

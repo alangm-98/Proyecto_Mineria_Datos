@@ -1,0 +1,30 @@
+variable,unidad,grupo,valor,unidades,unidades_en_cero,ceros_incluidos,total,gini,top1_pct,top10_pct
+TransactionAmt,transacción,global,todas,590540,0,True,7.97389e+07,0.552921,0.13867,0.45407
+TransactionAmt,transacción,clase,fraude,20663,0,True,3.08384e+06,0.586388,0.106624,0.450792
+TransactionAmt,transacción,clase,legítima,569877,0,True,7.66551e+07,0.551341,0.139925,0.453777
+TransactionAmt,transacción,periodo,1,134339,0,True,1.7233e+07,0.527899,0.1234,0.424049
+TransactionAmt,transacción,periodo,2,89399,0,True,1.19372e+07,0.558514,0.134439,0.458523
+TransactionAmt,transacción,periodo,3,92189,0,True,1.29092e+07,0.568589,0.148045,0.470184
+TransactionAmt,transacción,periodo,4,98615,0,True,1.37596e+07,0.556901,0.139525,0.457456
+TransactionAmt,transacción,periodo,5,83571,0,True,1.11734e+07,0.551917,0.141041,0.455139
+TransactionAmt,transacción,periodo,6,92427,0,True,1.27266e+07,0.560955,0.146729,0.467192
+TransactionAmt,transacción,ProductCD,C,68519,0,True,2.93757e+06,0.428642,0.057499,0.310532
+TransactionAmt,transacción,ProductCD,H,33024,0,True,2.41637e+06,0.381291,0.0574776,0.292916
+TransactionAmt,transacción,ProductCD,R,37699,0,True,6.34498e+06,0.35727,0.0619073,0.291404
+TransactionAmt,transacción,ProductCD,S,11628,0,True,700814,0.500479,0.104996,0.363848
+TransactionAmt,transacción,ProductCD,W,439670,0,True,6.73392e+07,0.552996,0.13702,0.458856
+transacciones por card1,valor de card1,global,todos,13553,0,True,590540,0.887661,0.529688,0.850086
+fraudes por card1,valor de card1,global,todos,13553,11813,True,20663,0.972808,0.672071,0.981368
+monto_fraude por card1,valor de card1,global,todos,13553,11813,True,3.08384e+06,0.973524,0.66007,0.991512
+transacciones por card1,valor de card1,periodo,1,8641,0,True,134339,0.836803,0.456487,0.79752
+fraudes por card1,valor de card1,periodo,1,8641,8084,True,3401,0.97859,0.669509,1
+transacciones por card1,valor de card1,periodo,2,6653,0,True,89399,0.819416,0.403864,0.773387
+fraudes por card1,valor de card1,periodo,2,6653,6018,True,3577,0.967595,0.585966,1
+transacciones por card1,valor de card1,periodo,3,6576,0,True,92189,0.822462,0.410081,0.778791
+fraudes por card1,valor de card1,periodo,3,6576,5945,True,3724,0.967889,0.588077,1
+transacciones por card1,valor de card1,periodo,4,6659,0,True,98615,0.825333,0.4101,0.781321
+fraudes por card1,valor de card1,periodo,4,6659,6050,True,3898,0.968114,0.573628,1
+transacciones por card1,valor de card1,periodo,5,6182,0,True,83571,0.816676,0.395604,0.768927
+fraudes por card1,valor de card1,periodo,5,6182,5657,True,2850,0.969463,0.582807,1
+transacciones por card1,valor de card1,periodo,6,6402,0,True,92427,0.824337,0.410724,0.7804
+fraudes por card1,valor de card1,periodo,6,6402,5845,True,3213,0.969039,0.568939,1

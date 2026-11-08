@@ -1,0 +1,1207 @@
+prop_unidades,prop_total,curva
+0,0,G1 importe: todas
+0.005,0.00017457,G1 importe: todas
+0.01,0.000472301,G1 importe: todas
+0.015,0.000843803,G1 importe: todas
+0.02,0.00127858,G1 importe: todas
+0.025,0.00178363,G1 importe: todas
+0.03,0.00233667,G1 importe: todas
+0.035,0.00290981,G1 importe: todas
+0.04,0.00352774,G1 importe: todas
+0.045,0.00422308,G1 importe: todas
+0.05,0.00496296,G1 importe: todas
+0.055,0.00572709,G1 importe: todas
+0.06,0.00652682,G1 importe: todas
+0.065,0.00738194,G1 importe: todas
+0.07,0.00827545,G1 importe: todas
+0.075,0.00919337,G1 importe: todas
+0.08,0.0101191,G1 importe: todas
+0.085,0.0110449,G1 importe: todas
+0.09,0.0119903,G1 importe: todas
+0.095,0.0129512,G1 importe: todas
+0.1,0.0139121,G1 importe: todas
+0.105,0.0148886,G1 importe: todas
+0.11,0.0158984,G1 importe: todas
+0.115,0.0169576,G1 importe: todas
+0.12,0.0180315,G1 importe: todas
+0.125,0.0191053,G1 importe: todas
+0.13,0.0201792,G1 importe: todas
+0.135,0.0212632,G1 importe: todas
+0.14,0.0223729,G1 importe: todas
+0.145,0.0234943,G1 importe: todas
+0.15,0.0246403,G1 importe: todas
+0.155,0.0257864,G1 importe: todas
+0.16,0.0269382,G1 importe: todas
+0.165,0.0281267,G1 importe: todas
+0.17,0.0293681,G1 importe: todas
+0.175,0.0306272,G1 importe: todas
+0.18,0.0318862,G1 importe: todas
+0.185,0.0331541,G1 importe: todas
+0.19,0.0344532,G1 importe: todas
+0.195,0.0357844,G1 importe: todas
+0.2,0.0371156,G1 importe: todas
+0.205,0.0384468,G1 importe: todas
+0.21,0.0398045,G1 importe: todas
+0.215,0.0412148,G1 importe: todas
+0.22,0.0426589,G1 importe: todas
+0.225,0.0441031,G1 importe: todas
+0.23,0.0455472,G1 importe: todas
+0.235,0.0470014,G1 importe: todas
+0.24,0.0484825,G1 importe: todas
+0.245,0.0500014,G1 importe: todas
+0.25,0.0515868,G1 importe: todas
+0.255,0.0532134,G1 importe: todas
+0.26,0.0548537,G1 importe: todas
+0.265,0.0565362,G1 importe: todas
+0.27,0.0582926,G1 importe: todas
+0.275,0.0600682,G1 importe: todas
+0.28,0.0618437,G1 importe: todas
+0.285,0.0636216,G1 importe: todas
+0.29,0.0654347,G1 importe: todas
+0.295,0.0672492,G1 importe: todas
+0.3,0.0690636,G1 importe: todas
+0.305,0.0708781,G1 importe: todas
+0.31,0.0726925,G1 importe: todas
+0.315,0.074507,G1 importe: todas
+0.32,0.0763499,G1 importe: todas
+0.325,0.0782014,G1 importe: todas
+0.33,0.0800528,G1 importe: todas
+0.335,0.0819043,G1 importe: todas
+0.34,0.0837558,G1 importe: todas
+0.345,0.0856073,G1 importe: todas
+0.35,0.0874893,G1 importe: todas
+0.355,0.089454,G1 importe: todas
+0.36,0.0914528,G1 importe: todas
+0.365,0.093464,G1 importe: todas
+0.37,0.0954933,G1 importe: todas
+0.375,0.0975807,G1 importe: todas
+0.38,0.0997179,G1 importe: todas
+0.385,0.101864,G1 importe: todas
+0.39,0.10401,G1 importe: todas
+0.395,0.106156,G1 importe: todas
+0.4,0.108301,G1 importe: todas
+0.405,0.110447,G1 importe: todas
+0.41,0.112593,G1 importe: todas
+0.415,0.114739,G1 importe: todas
+0.42,0.116906,G1 importe: todas
+0.425,0.11909,G1 importe: todas
+0.43,0.121274,G1 importe: todas
+0.435,0.123459,G1 importe: todas
+0.44,0.125644,G1 importe: todas
+0.445,0.127829,G1 importe: todas
+0.45,0.130013,G1 importe: todas
+0.455,0.132198,G1 importe: todas
+0.46,0.134383,G1 importe: todas
+0.465,0.136568,G1 importe: todas
+0.47,0.138752,G1 importe: todas
+0.475,0.140937,G1 importe: todas
+0.48,0.143151,G1 importe: todas
+0.485,0.145484,G1 importe: todas
+0.49,0.147943,G1 importe: todas
+0.495,0.150459,G1 importe: todas
+0.5,0.152983,G1 importe: todas
+0.505,0.155568,G1 importe: todas
+0.51,0.15828,G1 importe: todas
+0.515,0.161057,G1 importe: todas
+0.52,0.16385,G1 importe: todas
+0.525,0.166701,G1 importe: todas
+0.53,0.169552,G1 importe: todas
+0.535,0.172422,G1 importe: todas
+0.54,0.175343,G1 importe: todas
+0.545,0.178378,G1 importe: todas
+0.55,0.181452,G1 importe: todas
+0.555,0.184606,G1 importe: todas
+0.56,0.187839,G1 importe: todas
+0.565,0.191105,G1 importe: todas
+0.57,0.194481,G1 importe: todas
+0.575,0.197893,G1 importe: todas
+0.58,0.201439,G1 importe: todas
+0.585,0.205031,G1 importe: todas
+0.59,0.208676,G1 importe: todas
+0.595,0.212379,G1 importe: todas
+0.6,0.216082,G1 importe: todas
+0.605,0.219785,G1 importe: todas
+0.61,0.223487,G1 importe: todas
+0.615,0.22719,G1 importe: todas
+0.62,0.230893,G1 importe: todas
+0.625,0.234604,G1 importe: todas
+0.63,0.238438,G1 importe: todas
+0.635,0.242357,G1 importe: todas
+0.64,0.246346,G1 importe: todas
+0.645,0.250343,G1 importe: todas
+0.65,0.25434,G1 importe: todas
+0.655,0.258338,G1 importe: todas
+0.66,0.262335,G1 importe: todas
+0.665,0.266332,G1 importe: todas
+0.67,0.27033,G1 importe: todas
+0.675,0.274327,G1 importe: todas
+0.68,0.278336,G1 importe: todas
+0.685,0.282361,G1 importe: todas
+0.69,0.286397,G1 importe: todas
+0.695,0.290561,G1 importe: todas
+0.7,0.29486,G1 importe: todas
+0.705,0.299192,G1 importe: todas
+0.71,0.303525,G1 importe: todas
+0.715,0.307857,G1 importe: todas
+0.72,0.312189,G1 importe: todas
+0.725,0.316522,G1 importe: todas
+0.73,0.320854,G1 importe: todas
+0.735,0.325187,G1 importe: todas
+0.74,0.329519,G1 importe: todas
+0.745,0.333852,G1 importe: todas
+0.75,0.338315,G1 importe: todas
+0.755,0.342989,G1 importe: todas
+0.76,0.347862,G1 importe: todas
+0.765,0.352963,G1 importe: todas
+0.77,0.358225,G1 importe: todas
+0.775,0.363706,G1 importe: todas
+0.78,0.369261,G1 importe: todas
+0.785,0.374815,G1 importe: todas
+0.79,0.380385,G1 importe: todas
+0.795,0.386228,G1 importe: todas
+0.8,0.392151,G1 importe: todas
+0.805,0.398096,G1 importe: todas
+0.81,0.404258,G1 importe: todas
+0.815,0.41059,G1 importe: todas
+0.82,0.416923,G1 importe: todas
+0.825,0.423394,G1 importe: todas
+0.83,0.430464,G1 importe: todas
+0.835,0.43787,G1 importe: todas
+0.84,0.445276,G1 importe: todas
+0.845,0.452791,G1 importe: todas
+0.85,0.460556,G1 importe: todas
+0.855,0.468331,G1 importe: todas
+0.86,0.476166,G1 importe: todas
+0.865,0.484269,G1 importe: todas
+0.87,0.492637,G1 importe: todas
+0.875,0.501006,G1 importe: todas
+0.88,0.509375,G1 importe: todas
+0.885,0.517744,G1 importe: todas
+0.89,0.526767,G1 importe: todas
+0.895,0.536093,G1 importe: todas
+0.9,0.54593,G1 importe: todas
+0.905,0.556286,G1 importe: todas
+0.91,0.567176,G1 importe: todas
+0.915,0.578474,G1 importe: todas
+0.92,0.590033,G1 importe: todas
+0.925,0.601998,G1 importe: todas
+0.93,0.614403,G1 importe: todas
+0.935,0.626857,G1 importe: todas
+0.94,0.640398,G1 importe: todas
+0.945,0.655063,G1 importe: todas
+0.95,0.67081,G1 importe: todas
+0.955,0.687311,G1 importe: todas
+0.96,0.705122,G1 importe: todas
+0.965,0.724153,G1 importe: todas
+0.97,0.744618,G1 importe: todas
+0.975,0.766698,G1 importe: todas
+0.98,0.792562,G1 importe: todas
+0.985,0.823669,G1 importe: todas
+0.99,0.861325,G1 importe: todas
+0.995,0.911678,G1 importe: todas
+1,1,G1 importe: todas
+0,0,G1 importe: fraude
+0.005,0.000112739,G1 importe: fraude
+0.01,0.000311844,G1 importe: fraude
+0.015,0.000570427,G1 importe: fraude
+0.02,0.000854562,G1 importe: fraude
+0.025,0.00116076,G1 importe: fraude
+0.03,0.00149159,G1 importe: fraude
+0.035,0.00183986,G1 importe: fraude
+0.04,0.00221388,G1 importe: fraude
+0.045,0.00261687,G1 importe: fraude
+0.05,0.00304401,G1 importe: fraude
+0.055,0.00349723,G1 importe: fraude
+0.06,0.00397608,G1 importe: fraude
+0.065,0.0044724,G1 importe: fraude
+0.07,0.00497493,G1 importe: fraude
+0.075,0.00549257,G1 importe: fraude
+0.08,0.00602956,G1 importe: fraude
+0.085,0.00658315,G1 importe: fraude
+0.09,0.0071585,G1 importe: fraude
+0.095,0.00776314,G1 importe: fraude
+0.1,0.00838968,G1 importe: fraude
+0.105,0.00903356,G1 importe: fraude
+0.11,0.00969867,G1 importe: fraude
+0.115,0.0103802,G1 importe: fraude
+0.12,0.0110817,G1 importe: fraude
+0.125,0.0118129,G1 importe: fraude
+0.13,0.0125726,G1 importe: fraude
+0.135,0.0133467,G1 importe: fraude
+0.14,0.0141507,G1 importe: fraude
+0.145,0.0149769,G1 importe: fraude
+0.15,0.0158138,G1 importe: fraude
+0.155,0.0166544,G1 importe: fraude
+0.16,0.017514,G1 importe: fraude
+0.165,0.018391,G1 importe: fraude
+0.17,0.0192857,G1 importe: fraude
+0.175,0.0202003,G1 importe: fraude
+0.18,0.0211426,G1 importe: fraude
+0.185,0.0221067,G1 importe: fraude
+0.19,0.0230783,G1 importe: fraude
+0.195,0.0240498,G1 importe: fraude
+0.2,0.0250331,G1 importe: fraude
+0.205,0.0260363,G1 importe: fraude
+0.21,0.0270481,G1 importe: fraude
+0.215,0.0280844,G1 importe: fraude
+0.22,0.0291405,G1 importe: fraude
+0.225,0.0302168,G1 importe: fraude
+0.23,0.0313246,G1 importe: fraude
+0.235,0.0324497,G1 importe: fraude
+0.24,0.0335873,G1 importe: fraude
+0.245,0.0347288,G1 importe: fraude
+0.25,0.0358959,G1 importe: fraude
+0.255,0.0370829,G1 importe: fraude
+0.26,0.0382891,G1 importe: fraude
+0.265,0.0395298,G1 importe: fraude
+0.27,0.0408103,G1 importe: fraude
+0.275,0.042116,G1 importe: fraude
+0.28,0.0434226,G1 importe: fraude
+0.285,0.0447353,G1 importe: fraude
+0.29,0.0460725,G1 importe: fraude
+0.295,0.0474273,G1 importe: fraude
+0.3,0.0488127,G1 importe: fraude
+0.305,0.050252,G1 importe: fraude
+0.31,0.0517236,G1 importe: fraude
+0.315,0.053204,G1 importe: fraude
+0.32,0.0547089,G1 importe: fraude
+0.325,0.0562534,G1 importe: fraude
+0.33,0.0578269,G1 importe: fraude
+0.335,0.0594422,G1 importe: fraude
+0.34,0.0610836,G1 importe: fraude
+0.345,0.0627252,G1 importe: fraude
+0.35,0.0643668,G1 importe: fraude
+0.355,0.0660084,G1 importe: fraude
+0.36,0.0676554,G1 importe: fraude
+0.365,0.0693264,G1 importe: fraude
+0.37,0.0710015,G1 importe: fraude
+0.375,0.0726766,G1 importe: fraude
+0.38,0.0743533,G1 importe: fraude
+0.385,0.0760858,G1 importe: fraude
+0.39,0.077878,G1 importe: fraude
+0.395,0.0796871,G1 importe: fraude
+0.4,0.0815126,G1 importe: fraude
+0.405,0.0833709,G1 importe: fraude
+0.41,0.0852672,G1 importe: fraude
+0.415,0.0872089,G1 importe: fraude
+0.42,0.0891708,G1 importe: fraude
+0.425,0.0911474,G1 importe: fraude
+0.43,0.0931241,G1 importe: fraude
+0.435,0.0951007,G1 importe: fraude
+0.44,0.0970773,G1 importe: fraude
+0.445,0.0990539,G1 importe: fraude
+0.45,0.101031,G1 importe: fraude
+0.455,0.103027,G1 importe: fraude
+0.46,0.105058,G1 importe: fraude
+0.465,0.107159,G1 importe: fraude
+0.47,0.109328,G1 importe: fraude
+0.475,0.111553,G1 importe: fraude
+0.48,0.113804,G1 importe: fraude
+0.485,0.116106,G1 importe: fraude
+0.49,0.11847,G1 importe: fraude
+0.495,0.120906,G1 importe: fraude
+0.5,0.123407,G1 importe: fraude
+0.505,0.12593,G1 importe: fraude
+0.51,0.128506,G1 importe: fraude
+0.515,0.131085,G1 importe: fraude
+0.52,0.133668,G1 importe: fraude
+0.525,0.136268,G1 importe: fraude
+0.53,0.138911,G1 importe: fraude
+0.535,0.14163,G1 importe: fraude
+0.54,0.144413,G1 importe: fraude
+0.545,0.147272,G1 importe: fraude
+0.55,0.150181,G1 importe: fraude
+0.555,0.153107,G1 importe: fraude
+0.56,0.156088,G1 importe: fraude
+0.565,0.159156,G1 importe: fraude
+0.57,0.162244,G1 importe: fraude
+0.575,0.165462,G1 importe: fraude
+0.58,0.168712,G1 importe: fraude
+0.585,0.171985,G1 importe: fraude
+0.59,0.175335,G1 importe: fraude
+0.595,0.178685,G1 importe: fraude
+0.6,0.182035,G1 importe: fraude
+0.605,0.185385,G1 importe: fraude
+0.61,0.188736,G1 importe: fraude
+0.615,0.192154,G1 importe: fraude
+0.62,0.195704,G1 importe: fraude
+0.625,0.199309,G1 importe: fraude
+0.63,0.202926,G1 importe: fraude
+0.635,0.206551,G1 importe: fraude
+0.64,0.210216,G1 importe: fraude
+0.645,0.21402,G1 importe: fraude
+0.65,0.217939,G1 importe: fraude
+0.655,0.221859,G1 importe: fraude
+0.66,0.225779,G1 importe: fraude
+0.665,0.229699,G1 importe: fraude
+0.67,0.233618,G1 importe: fraude
+0.675,0.237538,G1 importe: fraude
+0.68,0.241459,G1 importe: fraude
+0.685,0.2455,G1 importe: fraude
+0.69,0.249744,G1 importe: fraude
+0.695,0.254191,G1 importe: fraude
+0.7,0.258854,G1 importe: fraude
+0.705,0.263578,G1 importe: fraude
+0.71,0.268418,G1 importe: fraude
+0.715,0.273431,G1 importe: fraude
+0.72,0.278456,G1 importe: fraude
+0.725,0.283481,G1 importe: fraude
+0.73,0.288507,G1 importe: fraude
+0.735,0.293532,G1 importe: fraude
+0.74,0.298563,G1 importe: fraude
+0.745,0.303793,G1 importe: fraude
+0.75,0.309166,G1 importe: fraude
+0.755,0.314649,G1 importe: fraude
+0.76,0.320378,G1 importe: fraude
+0.765,0.326107,G1 importe: fraude
+0.77,0.331873,G1 importe: fraude
+0.775,0.337862,G1 importe: fraude
+0.78,0.344309,G1 importe: fraude
+0.785,0.35101,G1 importe: fraude
+0.79,0.35771,G1 importe: fraude
+0.795,0.364411,G1 importe: fraude
+0.8,0.371114,G1 importe: fraude
+0.805,0.377961,G1 importe: fraude
+0.81,0.385017,G1 importe: fraude
+0.815,0.39241,G1 importe: fraude
+0.82,0.39998,G1 importe: fraude
+0.825,0.407551,G1 importe: fraude
+0.83,0.415123,G1 importe: fraude
+0.835,0.422716,G1 importe: fraude
+0.84,0.430953,G1 importe: fraude
+0.845,0.439328,G1 importe: fraude
+0.85,0.44787,G1 importe: fraude
+0.855,0.456971,G1 importe: fraude
+0.86,0.46635,G1 importe: fraude
+0.865,0.475991,G1 importe: fraude
+0.87,0.486042,G1 importe: fraude
+0.875,0.496092,G1 importe: fraude
+0.88,0.506143,G1 importe: fraude
+0.885,0.516364,G1 importe: fraude
+0.89,0.526869,G1 importe: fraude
+0.895,0.537952,G1 importe: fraude
+0.9,0.549176,G1 importe: fraude
+0.905,0.560522,G1 importe: fraude
+0.91,0.572636,G1 importe: fraude
+0.915,0.585681,G1 importe: fraude
+0.92,0.599209,G1 importe: fraude
+0.925,0.613794,G1 importe: fraude
+0.93,0.628702,G1 importe: fraude
+0.935,0.643634,G1 importe: fraude
+0.94,0.658748,G1 importe: fraude
+0.945,0.674933,G1 importe: fraude
+0.95,0.691684,G1 importe: fraude
+0.955,0.7094,G1 importe: fraude
+0.96,0.72796,G1 importe: fraude
+0.965,0.747513,G1 importe: fraude
+0.97,0.770296,G1 importe: fraude
+0.975,0.797397,G1 importe: fraude
+0.98,0.827505,G1 importe: fraude
+0.985,0.860195,G1 importe: fraude
+0.99,0.893496,G1 importe: fraude
+0.995,0.931043,G1 importe: fraude
+1,1,G1 importe: fraude
+0,0,G1 importe: legítima
+0.005,0.000178112,G1 importe: legítima
+0.01,0.000482544,G1 importe: legítima
+0.015,0.000862781,G1 importe: legítima
+0.02,0.00131224,G1 importe: legítima
+0.025,0.00183469,G1 importe: legítima
+0.03,0.00239227,G1 importe: legítima
+0.035,0.00297898,G1 importe: legítima
+0.04,0.00362583,G1 importe: legítima
+0.045,0.00435248,G1 importe: legítima
+0.05,0.00510063,G1 importe: legítima
+0.055,0.00588291,G1 importe: legítima
+0.06,0.00671225,G1 importe: legítima
+0.065,0.00759467,G1 importe: legítima
+0.07,0.00850334,G1 importe: legítima
+0.075,0.00943245,G1 importe: legítima
+0.08,0.0103617,G1 importe: legítima
+0.085,0.0112943,G1 importe: legítima
+0.09,0.0122577,G1 importe: legítima
+0.095,0.0132223,G1 importe: legítima
+0.1,0.0141884,G1 importe: legítima
+0.105,0.0151841,G1 importe: legítima
+0.11,0.0162204,G1 importe: legítima
+0.115,0.0172977,G1 importe: legítima
+0.12,0.0183756,G1 importe: legítima
+0.125,0.0194536,G1 importe: legítima
+0.13,0.0205321,G1 importe: legítima
+0.135,0.021636,G1 importe: legítima
+0.14,0.0227512,G1 importe: legítima
+0.145,0.0238936,G1 importe: legítima
+0.15,0.0250441,G1 importe: legítima
+0.155,0.0261946,G1 importe: legítima
+0.16,0.027366,G1 importe: legítima
+0.165,0.0285783,G1 importe: legítima
+0.17,0.02984,G1 importe: legítima
+0.175,0.0311038,G1 importe: legítima
+0.18,0.0323678,G1 importe: legítima
+0.185,0.0336555,G1 importe: legítima
+0.19,0.0349773,G1 importe: legítima
+0.195,0.0363136,G1 importe: legítima
+0.2,0.0376499,G1 importe: legítima
+0.205,0.0389906,G1 importe: legítima
+0.21,0.0403674,G1 importe: legítima
+0.215,0.0418093,G1 importe: legítima
+0.22,0.043259,G1 importe: legítima
+0.225,0.0447087,G1 importe: legítima
+0.23,0.0461583,G1 importe: legítima
+0.235,0.0476317,G1 importe: legítima
+0.24,0.0491242,G1 importe: legítima
+0.245,0.0506805,G1 importe: legítima
+0.25,0.0522902,G1 importe: legítima
+0.255,0.053926,G1 importe: legítima
+0.26,0.0555864,G1 importe: legítima
+0.265,0.0573054,G1 importe: legítima
+0.27,0.0590869,G1 importe: legítima
+0.275,0.0608692,G1 importe: legítima
+0.28,0.0626516,G1 importe: legítima
+0.285,0.0644494,G1 importe: legítima
+0.29,0.0662702,G1 importe: legítima
+0.295,0.0680916,G1 importe: legítima
+0.3,0.069913,G1 importe: legítima
+0.305,0.0717344,G1 importe: legítima
+0.31,0.0735558,G1 importe: legítima
+0.315,0.075381,G1 importe: legítima
+0.32,0.0772389,G1 importe: legítima
+0.325,0.0790975,G1 importe: legítima
+0.33,0.0809561,G1 importe: legítima
+0.335,0.0828147,G1 importe: legítima
+0.34,0.0846732,G1 importe: legítima
+0.345,0.0865318,G1 importe: legítima
+0.35,0.0884428,G1 importe: legítima
+0.355,0.0904287,G1 importe: legítima
+0.36,0.0924356,G1 importe: legítima
+0.365,0.0944591,G1 importe: legítima
+0.37,0.0965084,G1 importe: legítima
+0.375,0.0986143,G1 importe: legítima
+0.38,0.100768,G1 importe: legítima
+0.385,0.102922,G1 importe: legítima
+0.39,0.105076,G1 importe: legítima
+0.395,0.10723,G1 importe: legítima
+0.4,0.109384,G1 importe: legítima
+0.405,0.111538,G1 importe: legítima
+0.41,0.113692,G1 importe: legítima
+0.415,0.115847,G1 importe: legítima
+0.42,0.118022,G1 importe: legítima
+0.425,0.120214,G1 importe: legítima
+0.43,0.122407,G1 importe: legítima
+0.435,0.1246,G1 importe: legítima
+0.44,0.126793,G1 importe: legítima
+0.445,0.128986,G1 importe: legítima
+0.45,0.131179,G1 importe: legítima
+0.455,0.133372,G1 importe: legítima
+0.46,0.135566,G1 importe: legítima
+0.465,0.137759,G1 importe: legítima
+0.47,0.139952,G1 importe: legítima
+0.475,0.142145,G1 importe: legítima
+0.48,0.144358,G1 importe: legítima
+0.485,0.14668,G1 importe: legítima
+0.49,0.149134,G1 importe: legítima
+0.495,0.151659,G1 importe: legítima
+0.5,0.154189,G1 importe: legítima
+0.505,0.15677,G1 importe: legítima
+0.51,0.159481,G1 importe: legítima
+0.515,0.162269,G1 importe: legítima
+0.52,0.165064,G1 importe: legítima
+0.525,0.167926,G1 importe: legítima
+0.53,0.170788,G1 importe: legítima
+0.535,0.173666,G1 importe: legítima
+0.54,0.176593,G1 importe: legítima
+0.545,0.179633,G1 importe: legítima
+0.55,0.182717,G1 importe: legítima
+0.555,0.185873,G1 importe: legítima
+0.56,0.189118,G1 importe: legítima
+0.565,0.192394,G1 importe: legítima
+0.57,0.195779,G1 importe: legítima
+0.575,0.199201,G1 importe: legítima
+0.58,0.202756,G1 importe: legítima
+0.585,0.206361,G1 importe: legítima
+0.59,0.210017,G1 importe: legítima
+0.595,0.213734,G1 importe: legítima
+0.6,0.217451,G1 importe: legítima
+0.605,0.221168,G1 importe: legítima
+0.61,0.224886,G1 importe: legítima
+0.615,0.228603,G1 importe: legítima
+0.62,0.23232,G1 importe: legítima
+0.625,0.236039,G1 importe: legítima
+0.63,0.239878,G1 importe: legítima
+0.635,0.243801,G1 importe: legítima
+0.64,0.247801,G1 importe: legítima
+0.645,0.251814,G1 importe: legítima
+0.65,0.255827,G1 importe: legítima
+0.655,0.259839,G1 importe: legítima
+0.66,0.263852,G1 importe: legítima
+0.665,0.267865,G1 importe: legítima
+0.67,0.271877,G1 importe: legítima
+0.675,0.27589,G1 importe: legítima
+0.68,0.279908,G1 importe: legítima
+0.685,0.283942,G1 importe: legítima
+0.69,0.287992,G1 importe: legítima
+0.695,0.292114,G1 importe: legítima
+0.7,0.296377,G1 importe: legítima
+0.705,0.300726,G1 importe: legítima
+0.71,0.305075,G1 importe: legítima
+0.715,0.309424,G1 importe: legítima
+0.72,0.313773,G1 importe: legítima
+0.725,0.318123,G1 importe: legítima
+0.73,0.322472,G1 importe: legítima
+0.735,0.326821,G1 importe: legítima
+0.74,0.33117,G1 importe: legítima
+0.745,0.335519,G1 importe: legítima
+0.75,0.339889,G1 importe: legítima
+0.755,0.344505,G1 importe: legítima
+0.76,0.3493,G1 importe: legítima
+0.765,0.354295,G1 importe: legítima
+0.77,0.35952,G1 importe: legítima
+0.775,0.364912,G1 importe: legítima
+0.78,0.370488,G1 importe: legítima
+0.785,0.376063,G1 importe: legítima
+0.79,0.38164,G1 importe: legítima
+0.795,0.387389,G1 importe: legítima
+0.8,0.393335,G1 importe: legítima
+0.805,0.399287,G1 importe: legítima
+0.81,0.405338,G1 importe: legítima
+0.815,0.411685,G1 importe: legítima
+0.82,0.418041,G1 importe: legítima
+0.825,0.424419,G1 importe: legítima
+0.83,0.431279,G1 importe: legítima
+0.835,0.438669,G1 importe: legítima
+0.84,0.446103,G1 importe: legítima
+0.845,0.453581,G1 importe: legítima
+0.85,0.461333,G1 importe: legítima
+0.855,0.469137,G1 importe: legítima
+0.86,0.476962,G1 importe: legítima
+0.865,0.48496,G1 importe: legítima
+0.87,0.493319,G1 importe: legítima
+0.875,0.50172,G1 importe: legítima
+0.88,0.510121,G1 importe: legítima
+0.885,0.518521,G1 importe: legítima
+0.89,0.527252,G1 importe: legítima
+0.895,0.536545,G1 importe: legítima
+0.9,0.546224,G1 importe: legítima
+0.905,0.556508,G1 importe: legítima
+0.91,0.567205,G1 importe: legítima
+0.915,0.578455,G1 importe: legítima
+0.92,0.590046,G1 importe: legítima
+0.925,0.601884,G1 importe: legítima
+0.93,0.614318,G1 importe: legítima
+0.935,0.626771,G1 importe: legítima
+0.94,0.640047,G1 importe: legítima
+0.945,0.654578,G1 importe: legítima
+0.95,0.670135,G1 importe: legítima
+0.955,0.686647,G1 importe: legítima
+0.96,0.704315,G1 importe: legítima
+0.965,0.723327,G1 importe: legítima
+0.97,0.743795,G1 importe: legítima
+0.975,0.76573,G1 importe: legítima
+0.98,0.791407,G1 importe: legítima
+0.985,0.822274,G1 importe: legítima
+0.99,0.860079,G1 importe: legítima
+0.995,0.910985,G1 importe: legítima
+1,1,G1 importe: legítima
+0,0,G2 transacciones por card1
+0.005,0.000114751,G2 transacciones por card1
+0.01,0.000229502,G2 transacciones por card1
+0.015,0.000344253,G2 transacciones por card1
+0.02,0.000459004,G2 transacciones por card1
+0.025,0.000573755,G2 transacciones por card1
+0.03,0.000688505,G2 transacciones por card1
+0.035,0.000803256,G2 transacciones por card1
+0.04,0.000918007,G2 transacciones por card1
+0.045,0.00103276,G2 transacciones por card1
+0.05,0.00114751,G2 transacciones por card1
+0.055,0.00126226,G2 transacciones por card1
+0.06,0.00137701,G2 transacciones por card1
+0.065,0.00149176,G2 transacciones por card1
+0.07,0.00160651,G2 transacciones por card1
+0.075,0.00172126,G2 transacciones por card1
+0.08,0.00183601,G2 transacciones por card1
+0.085,0.00195077,G2 transacciones por card1
+0.09,0.00206552,G2 transacciones por card1
+0.095,0.00218027,G2 transacciones por card1
+0.1,0.00229502,G2 transacciones por card1
+0.105,0.00240977,G2 transacciones por card1
+0.11,0.00252452,G2 transacciones por card1
+0.115,0.00263927,G2 transacciones por card1
+0.12,0.00275402,G2 transacciones por card1
+0.125,0.00286877,G2 transacciones por card1
+0.13,0.00298352,G2 transacciones por card1
+0.135,0.00309827,G2 transacciones por card1
+0.14,0.00321303,G2 transacciones por card1
+0.145,0.00332778,G2 transacciones por card1
+0.15,0.00344253,G2 transacciones por card1
+0.155,0.00355728,G2 transacciones por card1
+0.16,0.00367203,G2 transacciones por card1
+0.165,0.00378678,G2 transacciones por card1
+0.17,0.00390153,G2 transacciones por card1
+0.175,0.00401628,G2 transacciones por card1
+0.18,0.00413103,G2 transacciones por card1
+0.185,0.00424578,G2 transacciones por card1
+0.19,0.00436053,G2 transacciones por card1
+0.195,0.00447529,G2 transacciones por card1
+0.2,0.00459004,G2 transacciones por card1
+0.205,0.00470479,G2 transacciones por card1
+0.21,0.00481954,G2 transacciones por card1
+0.215,0.00493429,G2 transacciones por card1
+0.22,0.00504904,G2 transacciones por card1
+0.225,0.00516379,G2 transacciones por card1
+0.23,0.00527854,G2 transacciones por card1
+0.235,0.00539329,G2 transacciones por card1
+0.24,0.00550804,G2 transacciones por card1
+0.245,0.00562279,G2 transacciones por card1
+0.25,0.00573755,G2 transacciones por card1
+0.255,0.00587264,G2 transacciones por card1
+0.26,0.00610214,G2 transacciones por card1
+0.265,0.00633165,G2 transacciones por card1
+0.27,0.00656115,G2 transacciones por card1
+0.275,0.00679065,G2 transacciones por card1
+0.28,0.00702015,G2 transacciones por card1
+0.285,0.00724965,G2 transacciones por card1
+0.29,0.00747915,G2 transacciones por card1
+0.295,0.00770866,G2 transacciones por card1
+0.3,0.00793816,G2 transacciones por card1
+0.305,0.00816766,G2 transacciones por card1
+0.31,0.00839716,G2 transacciones por card1
+0.315,0.00862666,G2 transacciones por card1
+0.32,0.00885617,G2 transacciones por card1
+0.325,0.00908567,G2 transacciones por card1
+0.33,0.00931517,G2 transacciones por card1
+0.335,0.00954467,G2 transacciones por card1
+0.34,0.00977417,G2 transacciones por card1
+0.345,0.0100037,G2 transacciones por card1
+0.35,0.0102332,G2 transacciones por card1
+0.355,0.0104627,G2 transacciones por card1
+0.36,0.0106922,G2 transacciones por card1
+0.365,0.0109217,G2 transacciones por card1
+0.37,0.0111512,G2 transacciones por card1
+0.375,0.0113807,G2 transacciones por card1
+0.38,0.0116375,G2 transacciones por card1
+0.385,0.0119818,G2 transacciones por card1
+0.39,0.012326,G2 transacciones por card1
+0.395,0.0126703,G2 transacciones por card1
+0.4,0.0130145,G2 transacciones por card1
+0.405,0.0133588,G2 transacciones por card1
+0.41,0.013703,G2 transacciones por card1
+0.415,0.0140473,G2 transacciones por card1
+0.42,0.0143915,G2 transacciones por card1
+0.425,0.0147358,G2 transacciones por card1
+0.43,0.01508,G2 transacciones por card1
+0.435,0.0154243,G2 transacciones por card1
+0.44,0.0157686,G2 transacciones por card1
+0.445,0.0161128,G2 transacciones por card1
+0.45,0.0164571,G2 transacciones por card1
+0.455,0.0168013,G2 transacciones por card1
+0.46,0.0171456,G2 transacciones por card1
+0.465,0.0175984,G2 transacciones por card1
+0.47,0.0180574,G2 transacciones por card1
+0.475,0.0185164,G2 transacciones por card1
+0.48,0.0189754,G2 transacciones por card1
+0.485,0.0194344,G2 transacciones por card1
+0.49,0.0198935,G2 transacciones por card1
+0.495,0.0203525,G2 transacciones por card1
+0.5,0.0208115,G2 transacciones por card1
+0.505,0.0212705,G2 transacciones por card1
+0.51,0.0217295,G2 transacciones por card1
+0.515,0.0221885,G2 transacciones por card1
+0.52,0.0226586,G2 transacciones por card1
+0.525,0.0232323,G2 transacciones por card1
+0.53,0.0238061,G2 transacciones por card1
+0.535,0.0243798,G2 transacciones por card1
+0.54,0.0249536,G2 transacciones por card1
+0.545,0.0255274,G2 transacciones por card1
+0.55,0.0261011,G2 transacciones por card1
+0.555,0.0266749,G2 transacciones por card1
+0.56,0.0272486,G2 transacciones por card1
+0.565,0.0278224,G2 transacciones por card1
+0.57,0.0285015,G2 transacciones por card1
+0.575,0.02919,G2 transacciones por card1
+0.58,0.0298785,G2 transacciones por card1
+0.585,0.030567,G2 transacciones por card1
+0.59,0.0312555,G2 transacciones por card1
+0.595,0.031944,G2 transacciones por card1
+0.6,0.0326325,G2 transacciones por card1
+0.605,0.0333575,G2 transacciones por card1
+0.61,0.0341608,G2 transacciones por card1
+0.615,0.034964,G2 transacciones por card1
+0.62,0.0357673,G2 transacciones por card1
+0.625,0.0365706,G2 transacciones por card1
+0.63,0.0373738,G2 transacciones por card1
+0.635,0.0381841,G2 transacciones por card1
+0.64,0.0391021,G2 transacciones por card1
+0.645,0.0400201,G2 transacciones por card1
+0.65,0.0409381,G2 transacciones por card1
+0.655,0.0418561,G2 transacciones por card1
+0.66,0.0427775,G2 transacciones por card1
+0.665,0.0438102,G2 transacciones por card1
+0.67,0.044843,G2 transacciones por card1
+0.675,0.0458758,G2 transacciones por card1
+0.68,0.0469085,G2 transacciones por card1
+0.685,0.0479901,G2 transacciones por card1
+0.69,0.0491376,G2 transacciones por card1
+0.695,0.0502851,G2 transacciones por card1
+0.7,0.0514326,G2 transacciones por card1
+0.705,0.0526544,G2 transacciones por card1
+0.71,0.0539166,G2 transacciones por card1
+0.715,0.0551789,G2 transacciones por card1
+0.72,0.0564719,G2 transacciones por card1
+0.725,0.0578489,G2 transacciones por card1
+0.73,0.0592259,G2 transacciones por card1
+0.735,0.0606325,G2 transacciones por card1
+0.74,0.0621243,G2 transacciones por card1
+0.745,0.063616,G2 transacciones por card1
+0.75,0.0651565,G2 transacciones por card1
+0.755,0.066763,G2 transacciones por card1
+0.76,0.0683695,G2 transacciones por card1
+0.765,0.0700811,G2 transacciones por card1
+0.77,0.0718023,G2 transacciones por card1
+0.775,0.0736177,G2 transacciones por card1
+0.78,0.0754537,G2 transacciones por card1
+0.785,0.0773729,G2 transacciones por card1
+0.79,0.0793251,G2 transacciones por card1
+0.795,0.0813906,G2 transacciones por card1
+0.8,0.0834975,G2 transacciones por card1
+0.805,0.0856777,G2 transacciones por card1
+0.81,0.0879595,G2 transacciones por card1
+0.815,0.0903014,G2 transacciones por card1
+0.82,0.0927475,G2 transacciones por card1
+0.825,0.0953046,G2 transacciones por card1
+0.83,0.0979439,G2 transacciones por card1
+0.835,0.100694,G2 transacciones por card1
+0.84,0.103556,G2 transacciones por card1
+0.845,0.10653,G2 transacciones por card1
+0.85,0.109617,G2 transacciones por card1
+0.855,0.112849,G2 transacciones por card1
+0.86,0.11622,G2 transacciones por card1
+0.865,0.119765,G2 transacciones por card1
+0.87,0.123471,G2 transacciones por card1
+0.875,0.127332,G2 transacciones por card1
+0.88,0.131382,G2 transacciones por card1
+0.885,0.135629,G2 transacciones por card1
+0.89,0.140121,G2 transacciones por card1
+0.895,0.144848,G2 transacciones por card1
+0.9,0.14989,G2 transacciones por card1
+0.905,0.155275,G2 transacciones por card1
+0.91,0.160966,G2 transacciones por card1
+0.915,0.167089,G2 transacciones por card1
+0.92,0.173642,G2 transacciones por card1
+0.925,0.180743,G2 transacciones por card1
+0.93,0.18843,G2 transacciones por card1
+0.935,0.196873,G2 transacciones por card1
+0.94,0.206084,G2 transacciones por card1
+0.945,0.216241,G2 transacciones por card1
+0.95,0.227809,G2 transacciones por card1
+0.955,0.240946,G2 transacciones por card1
+0.96,0.255891,G2 transacciones por card1
+0.965,0.27392,G2 transacciones por card1
+0.97,0.296231,G2 transacciones por card1
+0.975,0.32292,G2 transacciones por card1
+0.98,0.356958,G2 transacciones por card1
+0.985,0.401058,G2 transacciones por card1
+0.99,0.470939,G2 transacciones por card1
+0.995,0.59186,G2 transacciones por card1
+1,1,G2 transacciones por card1
+0,0,G2 fraudes por card1
+0.005,0,G2 fraudes por card1
+0.01,0,G2 fraudes por card1
+0.015,0,G2 fraudes por card1
+0.02,0,G2 fraudes por card1
+0.025,0,G2 fraudes por card1
+0.03,0,G2 fraudes por card1
+0.035,0,G2 fraudes por card1
+0.04,0,G2 fraudes por card1
+0.045,0,G2 fraudes por card1
+0.05,0,G2 fraudes por card1
+0.055,0,G2 fraudes por card1
+0.06,0,G2 fraudes por card1
+0.065,0,G2 fraudes por card1
+0.07,0,G2 fraudes por card1
+0.075,0,G2 fraudes por card1
+0.08,0,G2 fraudes por card1
+0.085,0,G2 fraudes por card1
+0.09,0,G2 fraudes por card1
+0.095,0,G2 fraudes por card1
+0.1,0,G2 fraudes por card1
+0.105,0,G2 fraudes por card1
+0.11,0,G2 fraudes por card1
+0.115,0,G2 fraudes por card1
+0.12,0,G2 fraudes por card1
+0.125,0,G2 fraudes por card1
+0.13,0,G2 fraudes por card1
+0.135,0,G2 fraudes por card1
+0.14,0,G2 fraudes por card1
+0.145,0,G2 fraudes por card1
+0.15,0,G2 fraudes por card1
+0.155,0,G2 fraudes por card1
+0.16,0,G2 fraudes por card1
+0.165,0,G2 fraudes por card1
+0.17,0,G2 fraudes por card1
+0.175,0,G2 fraudes por card1
+0.18,0,G2 fraudes por card1
+0.185,0,G2 fraudes por card1
+0.19,0,G2 fraudes por card1
+0.195,0,G2 fraudes por card1
+0.2,0,G2 fraudes por card1
+0.205,0,G2 fraudes por card1
+0.21,0,G2 fraudes por card1
+0.215,0,G2 fraudes por card1
+0.22,0,G2 fraudes por card1
+0.225,0,G2 fraudes por card1
+0.23,0,G2 fraudes por card1
+0.235,0,G2 fraudes por card1
+0.24,0,G2 fraudes por card1
+0.245,0,G2 fraudes por card1
+0.25,0,G2 fraudes por card1
+0.255,0,G2 fraudes por card1
+0.26,0,G2 fraudes por card1
+0.265,0,G2 fraudes por card1
+0.27,0,G2 fraudes por card1
+0.275,0,G2 fraudes por card1
+0.28,0,G2 fraudes por card1
+0.285,0,G2 fraudes por card1
+0.29,0,G2 fraudes por card1
+0.295,0,G2 fraudes por card1
+0.3,0,G2 fraudes por card1
+0.305,0,G2 fraudes por card1
+0.31,0,G2 fraudes por card1
+0.315,0,G2 fraudes por card1
+0.32,0,G2 fraudes por card1
+0.325,0,G2 fraudes por card1
+0.33,0,G2 fraudes por card1
+0.335,0,G2 fraudes por card1
+0.34,0,G2 fraudes por card1
+0.345,0,G2 fraudes por card1
+0.35,0,G2 fraudes por card1
+0.355,0,G2 fraudes por card1
+0.36,0,G2 fraudes por card1
+0.365,0,G2 fraudes por card1
+0.37,0,G2 fraudes por card1
+0.375,0,G2 fraudes por card1
+0.38,0,G2 fraudes por card1
+0.385,0,G2 fraudes por card1
+0.39,0,G2 fraudes por card1
+0.395,0,G2 fraudes por card1
+0.4,0,G2 fraudes por card1
+0.405,0,G2 fraudes por card1
+0.41,0,G2 fraudes por card1
+0.415,0,G2 fraudes por card1
+0.42,0,G2 fraudes por card1
+0.425,0,G2 fraudes por card1
+0.43,0,G2 fraudes por card1
+0.435,0,G2 fraudes por card1
+0.44,0,G2 fraudes por card1
+0.445,0,G2 fraudes por card1
+0.45,0,G2 fraudes por card1
+0.455,0,G2 fraudes por card1
+0.46,0,G2 fraudes por card1
+0.465,0,G2 fraudes por card1
+0.47,0,G2 fraudes por card1
+0.475,0,G2 fraudes por card1
+0.48,0,G2 fraudes por card1
+0.485,0,G2 fraudes por card1
+0.49,0,G2 fraudes por card1
+0.495,0,G2 fraudes por card1
+0.5,0,G2 fraudes por card1
+0.505,0,G2 fraudes por card1
+0.51,0,G2 fraudes por card1
+0.515,0,G2 fraudes por card1
+0.52,0,G2 fraudes por card1
+0.525,0,G2 fraudes por card1
+0.53,0,G2 fraudes por card1
+0.535,0,G2 fraudes por card1
+0.54,0,G2 fraudes por card1
+0.545,0,G2 fraudes por card1
+0.55,0,G2 fraudes por card1
+0.555,0,G2 fraudes por card1
+0.56,0,G2 fraudes por card1
+0.565,0,G2 fraudes por card1
+0.57,0,G2 fraudes por card1
+0.575,0,G2 fraudes por card1
+0.58,0,G2 fraudes por card1
+0.585,0,G2 fraudes por card1
+0.59,0,G2 fraudes por card1
+0.595,0,G2 fraudes por card1
+0.6,0,G2 fraudes por card1
+0.605,0,G2 fraudes por card1
+0.61,0,G2 fraudes por card1
+0.615,0,G2 fraudes por card1
+0.62,0,G2 fraudes por card1
+0.625,0,G2 fraudes por card1
+0.63,0,G2 fraudes por card1
+0.635,0,G2 fraudes por card1
+0.64,0,G2 fraudes por card1
+0.645,0,G2 fraudes por card1
+0.65,0,G2 fraudes por card1
+0.655,0,G2 fraudes por card1
+0.66,0,G2 fraudes por card1
+0.665,0,G2 fraudes por card1
+0.67,0,G2 fraudes por card1
+0.675,0,G2 fraudes por card1
+0.68,0,G2 fraudes por card1
+0.685,0,G2 fraudes por card1
+0.69,0,G2 fraudes por card1
+0.695,0,G2 fraudes por card1
+0.7,0,G2 fraudes por card1
+0.705,0,G2 fraudes por card1
+0.71,0,G2 fraudes por card1
+0.715,0,G2 fraudes por card1
+0.72,0,G2 fraudes por card1
+0.725,0,G2 fraudes por card1
+0.73,0,G2 fraudes por card1
+0.735,0,G2 fraudes por card1
+0.74,0,G2 fraudes por card1
+0.745,0,G2 fraudes por card1
+0.75,0,G2 fraudes por card1
+0.755,0,G2 fraudes por card1
+0.76,0,G2 fraudes por card1
+0.765,0,G2 fraudes por card1
+0.77,0,G2 fraudes por card1
+0.775,0,G2 fraudes por card1
+0.78,0,G2 fraudes por card1
+0.785,0,G2 fraudes por card1
+0.79,0,G2 fraudes por card1
+0.795,0,G2 fraudes por card1
+0.8,0,G2 fraudes por card1
+0.805,0,G2 fraudes por card1
+0.81,0,G2 fraudes por card1
+0.815,0,G2 fraudes por card1
+0.82,0,G2 fraudes por card1
+0.825,0,G2 fraudes por card1
+0.83,0,G2 fraudes por card1
+0.835,0,G2 fraudes por card1
+0.84,0,G2 fraudes por card1
+0.845,0,G2 fraudes por card1
+0.85,0,G2 fraudes por card1
+0.855,0,G2 fraudes por card1
+0.86,0,G2 fraudes por card1
+0.865,0,G2 fraudes por card1
+0.87,0,G2 fraudes por card1
+0.875,0.00222015,G2 fraudes por card1
+0.88,0.00549969,G2 fraudes por card1
+0.885,0.00877922,G2 fraudes por card1
+0.89,0.0120588,G2 fraudes por card1
+0.895,0.0153383,G2 fraudes por card1
+0.9,0.0186178,G2 fraudes por card1
+0.905,0.0218974,G2 fraudes por card1
+0.91,0.0251769,G2 fraudes por card1
+0.915,0.0284564,G2 fraudes por card1
+0.92,0.031736,G2 fraudes por card1
+0.925,0.036638,G2 fraudes por card1
+0.93,0.043197,G2 fraudes por card1
+0.935,0.0497561,G2 fraudes por card1
+0.94,0.0563152,G2 fraudes por card1
+0.945,0.0649835,G2 fraudes por card1
+0.95,0.0748221,G2 fraudes por card1
+0.955,0.0859246,G2 fraudes por card1
+0.96,0.0990427,G2 fraudes por card1
+0.965,0.115435,G2 fraudes por card1
+0.97,0.135356,G2 fraudes por card1
+0.975,0.161573,G2 fraudes por card1
+0.98,0.197513,G2 fraudes por card1
+0.985,0.250128,G2 fraudes por card1
+0.99,0.328589,G2 fraudes por card1
+0.995,0.464931,G2 fraudes por card1
+1,1,G2 fraudes por card1
+0,0,G2 monto_fraude por card1
+0.005,0,G2 monto_fraude por card1
+0.01,0,G2 monto_fraude por card1
+0.015,0,G2 monto_fraude por card1
+0.02,0,G2 monto_fraude por card1
+0.025,0,G2 monto_fraude por card1
+0.03,0,G2 monto_fraude por card1
+0.035,0,G2 monto_fraude por card1
+0.04,0,G2 monto_fraude por card1
+0.045,0,G2 monto_fraude por card1
+0.05,0,G2 monto_fraude por card1
+0.055,0,G2 monto_fraude por card1
+0.06,0,G2 monto_fraude por card1
+0.065,0,G2 monto_fraude por card1
+0.07,0,G2 monto_fraude por card1
+0.075,0,G2 monto_fraude por card1
+0.08,0,G2 monto_fraude por card1
+0.085,0,G2 monto_fraude por card1
+0.09,0,G2 monto_fraude por card1
+0.095,0,G2 monto_fraude por card1
+0.1,0,G2 monto_fraude por card1
+0.105,0,G2 monto_fraude por card1
+0.11,0,G2 monto_fraude por card1
+0.115,0,G2 monto_fraude por card1
+0.12,0,G2 monto_fraude por card1
+0.125,0,G2 monto_fraude por card1
+0.13,0,G2 monto_fraude por card1
+0.135,0,G2 monto_fraude por card1
+0.14,0,G2 monto_fraude por card1
+0.145,0,G2 monto_fraude por card1
+0.15,0,G2 monto_fraude por card1
+0.155,0,G2 monto_fraude por card1
+0.16,0,G2 monto_fraude por card1
+0.165,0,G2 monto_fraude por card1
+0.17,0,G2 monto_fraude por card1
+0.175,0,G2 monto_fraude por card1
+0.18,0,G2 monto_fraude por card1
+0.185,0,G2 monto_fraude por card1
+0.19,0,G2 monto_fraude por card1
+0.195,0,G2 monto_fraude por card1
+0.2,0,G2 monto_fraude por card1
+0.205,0,G2 monto_fraude por card1
+0.21,0,G2 monto_fraude por card1
+0.215,0,G2 monto_fraude por card1
+0.22,0,G2 monto_fraude por card1
+0.225,0,G2 monto_fraude por card1
+0.23,0,G2 monto_fraude por card1
+0.235,0,G2 monto_fraude por card1
+0.24,0,G2 monto_fraude por card1
+0.245,0,G2 monto_fraude por card1
+0.25,0,G2 monto_fraude por card1
+0.255,0,G2 monto_fraude por card1
+0.26,0,G2 monto_fraude por card1
+0.265,0,G2 monto_fraude por card1
+0.27,0,G2 monto_fraude por card1
+0.275,0,G2 monto_fraude por card1
+0.28,0,G2 monto_fraude por card1
+0.285,0,G2 monto_fraude por card1
+0.29,0,G2 monto_fraude por card1
+0.295,0,G2 monto_fraude por card1
+0.3,0,G2 monto_fraude por card1
+0.305,0,G2 monto_fraude por card1
+0.31,0,G2 monto_fraude por card1
+0.315,0,G2 monto_fraude por card1
+0.32,0,G2 monto_fraude por card1
+0.325,0,G2 monto_fraude por card1
+0.33,0,G2 monto_fraude por card1
+0.335,0,G2 monto_fraude por card1
+0.34,0,G2 monto_fraude por card1
+0.345,0,G2 monto_fraude por card1
+0.35,0,G2 monto_fraude por card1
+0.355,0,G2 monto_fraude por card1
+0.36,0,G2 monto_fraude por card1
+0.365,0,G2 monto_fraude por card1
+0.37,0,G2 monto_fraude por card1
+0.375,0,G2 monto_fraude por card1
+0.38,0,G2 monto_fraude por card1
+0.385,0,G2 monto_fraude por card1
+0.39,0,G2 monto_fraude por card1
+0.395,0,G2 monto_fraude por card1
+0.4,0,G2 monto_fraude por card1
+0.405,0,G2 monto_fraude por card1
+0.41,0,G2 monto_fraude por card1
+0.415,0,G2 monto_fraude por card1
+0.42,0,G2 monto_fraude por card1
+0.425,0,G2 monto_fraude por card1
+0.43,0,G2 monto_fraude por card1
+0.435,0,G2 monto_fraude por card1
+0.44,0,G2 monto_fraude por card1
+0.445,0,G2 monto_fraude por card1
+0.45,0,G2 monto_fraude por card1
+0.455,0,G2 monto_fraude por card1
+0.46,0,G2 monto_fraude por card1
+0.465,0,G2 monto_fraude por card1
+0.47,0,G2 monto_fraude por card1
+0.475,0,G2 monto_fraude por card1
+0.48,0,G2 monto_fraude por card1
+0.485,0,G2 monto_fraude por card1
+0.49,0,G2 monto_fraude por card1
+0.495,0,G2 monto_fraude por card1
+0.5,0,G2 monto_fraude por card1
+0.505,0,G2 monto_fraude por card1
+0.51,0,G2 monto_fraude por card1
+0.515,0,G2 monto_fraude por card1
+0.52,0,G2 monto_fraude por card1
+0.525,0,G2 monto_fraude por card1
+0.53,0,G2 monto_fraude por card1
+0.535,0,G2 monto_fraude por card1
+0.54,0,G2 monto_fraude por card1
+0.545,0,G2 monto_fraude por card1
+0.55,0,G2 monto_fraude por card1
+0.555,0,G2 monto_fraude por card1
+0.56,0,G2 monto_fraude por card1
+0.565,0,G2 monto_fraude por card1
+0.57,0,G2 monto_fraude por card1
+0.575,0,G2 monto_fraude por card1
+0.58,0,G2 monto_fraude por card1
+0.585,0,G2 monto_fraude por card1
+0.59,0,G2 monto_fraude por card1
+0.595,0,G2 monto_fraude por card1
+0.6,0,G2 monto_fraude por card1
+0.605,0,G2 monto_fraude por card1
+0.61,0,G2 monto_fraude por card1
+0.615,0,G2 monto_fraude por card1
+0.62,0,G2 monto_fraude por card1
+0.625,0,G2 monto_fraude por card1
+0.63,0,G2 monto_fraude por card1
+0.635,0,G2 monto_fraude por card1
+0.64,0,G2 monto_fraude por card1
+0.645,0,G2 monto_fraude por card1
+0.65,0,G2 monto_fraude por card1
+0.655,0,G2 monto_fraude por card1
+0.66,0,G2 monto_fraude por card1
+0.665,0,G2 monto_fraude por card1
+0.67,0,G2 monto_fraude por card1
+0.675,0,G2 monto_fraude por card1
+0.68,0,G2 monto_fraude por card1
+0.685,0,G2 monto_fraude por card1
+0.69,0,G2 monto_fraude por card1
+0.695,0,G2 monto_fraude por card1
+0.7,0,G2 monto_fraude por card1
+0.705,0,G2 monto_fraude por card1
+0.71,0,G2 monto_fraude por card1
+0.715,0,G2 monto_fraude por card1
+0.72,0,G2 monto_fraude por card1
+0.725,0,G2 monto_fraude por card1
+0.73,0,G2 monto_fraude por card1
+0.735,0,G2 monto_fraude por card1
+0.74,0,G2 monto_fraude por card1
+0.745,0,G2 monto_fraude por card1
+0.75,0,G2 monto_fraude por card1
+0.755,0,G2 monto_fraude por card1
+0.76,0,G2 monto_fraude por card1
+0.765,0,G2 monto_fraude por card1
+0.77,0,G2 monto_fraude por card1
+0.775,0,G2 monto_fraude por card1
+0.78,0,G2 monto_fraude por card1
+0.785,0,G2 monto_fraude por card1
+0.79,0,G2 monto_fraude por card1
+0.795,0,G2 monto_fraude por card1
+0.8,0,G2 monto_fraude por card1
+0.805,0,G2 monto_fraude por card1
+0.81,0,G2 monto_fraude por card1
+0.815,0,G2 monto_fraude por card1
+0.82,0,G2 monto_fraude por card1
+0.825,0,G2 monto_fraude por card1
+0.83,0,G2 monto_fraude por card1
+0.835,0,G2 monto_fraude por card1
+0.84,0,G2 monto_fraude por card1
+0.845,0,G2 monto_fraude por card1
+0.85,0,G2 monto_fraude por card1
+0.855,0,G2 monto_fraude por card1
+0.86,0,G2 monto_fraude por card1
+0.865,0,G2 monto_fraude por card1
+0.87,0,G2 monto_fraude por card1
+0.875,0.00020413,G2 monto_fraude por card1
+0.88,0.000970184,G2 monto_fraude por card1
+0.885,0.00215924,G2 monto_fraude por card1
+0.89,0.00384683,G2 monto_fraude por card1
+0.895,0.00602092,G2 monto_fraude por card1
+0.9,0.0084752,G2 monto_fraude por card1
+0.905,0.0116589,G2 monto_fraude por card1
+0.91,0.0150709,G2 monto_fraude por card1
+0.915,0.0192746,G2 monto_fraude por card1
+0.92,0.0239199,G2 monto_fraude por card1
+0.925,0.0293696,G2 monto_fraude por card1
+0.93,0.0357466,G2 monto_fraude por card1
+0.935,0.042486,G2 monto_fraude por card1
+0.94,0.0502438,G2 monto_fraude por card1
+0.945,0.0594969,G2 monto_fraude por card1
+0.95,0.0700228,G2 monto_fraude por card1
+0.955,0.0826755,G2 monto_fraude por card1
+0.96,0.0976446,G2 monto_fraude por card1
+0.965,0.116123,G2 monto_fraude por card1
+0.97,0.13898,G2 monto_fraude por card1
+0.975,0.168661,G2 monto_fraude por card1
+0.98,0.207506,G2 monto_fraude por card1
+0.985,0.260917,G2 monto_fraude por card1
+0.99,0.340609,G2 monto_fraude por card1
+0.995,0.47835,G2 monto_fraude por card1
+1,1,G2 monto_fraude por card1

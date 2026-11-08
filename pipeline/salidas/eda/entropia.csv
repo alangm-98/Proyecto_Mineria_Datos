@@ -1,0 +1,37 @@
+variable,grupo,valor,categorias_posibles,categorias_presentes,entropia_bits,entropia_norm_sobre_K
+ProductCD,global,todas,5,5,1.27506,0.54914
+ProductCD,clase,fraude,5,5,1.76485,0.760079
+ProductCD,clase,legítima,5,5,1.24193,0.534869
+ProductCD,periodo,1,5,5,1.79394,0.772607
+ProductCD,periodo,2,5,5,1.02475,0.441335
+ProductCD,periodo,3,5,5,1.0383,0.44717
+ProductCD,periodo,4,5,5,1.00295,0.431946
+ProductCD,periodo,5,5,5,0.992395,0.427401
+ProductCD,periodo,6,5,5,1.13344,0.488146
+card6,global,todas,5,5,0.841546,0.362434
+card6,clase,fraude,5,3,1.01703,0.438009
+card6,clase,legítima,5,5,0.828562,0.356842
+card6,periodo,1,5,5,0.934004,0.402254
+card6,periodo,2,5,4,0.799474,0.344315
+card6,periodo,3,5,5,0.836047,0.360066
+card6,periodo,4,5,5,0.745084,0.32089
+card6,periodo,5,5,4,0.748443,0.322337
+card6,periodo,6,5,3,0.848645,0.365491
+P_emaildomain (60 categorías),global,todas,60,60,2.88664,0.488691
+P_emaildomain (60 categorías),clase,fraude,60,43,2.58259,0.437216
+P_emaildomain (60 categorías),clase,legítima,60,60,2.89347,0.489846
+P_emaildomain (60 categorías),periodo,1,60,60,2.98888,0.505999
+P_emaildomain (60 categorías),periodo,2,60,60,2.86252,0.484606
+P_emaildomain (60 categorías),periodo,3,60,60,2.85943,0.484084
+P_emaildomain (60 categorías),periodo,4,60,60,2.8354,0.480016
+P_emaildomain (60 categorías),periodo,5,60,60,2.84509,0.481656
+P_emaildomain (60 categorías),periodo,6,60,60,2.84728,0.482027
+P_emaildomain (agrupada: < 1% -> Otros),global,todas,9,9,2.55738,0.806762
+P_emaildomain (agrupada: < 1% -> Otros),clase,fraude,9,9,2.34596,0.740069
+P_emaildomain (agrupada: < 1% -> Otros),clase,legítima,9,9,2.56277,0.808464
+P_emaildomain (agrupada: < 1% -> Otros),periodo,1,9,9,2.62521,0.828162
+P_emaildomain (agrupada: < 1% -> Otros),periodo,2,9,9,2.5452,0.802921
+P_emaildomain (agrupada: < 1% -> Otros),periodo,3,9,9,2.54091,0.801568
+P_emaildomain (agrupada: < 1% -> Otros),periodo,4,9,9,2.51503,0.793404
+P_emaildomain (agrupada: < 1% -> Otros),periodo,5,9,9,2.52946,0.797955
+P_emaildomain (agrupada: < 1% -> Otros),periodo,6,9,9,2.53359,0.799259

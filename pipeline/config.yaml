@@ -89,6 +89,40 @@ umbrales:
   calidad_max_categorias: 20
   # Pendiente (fase B): umbrales de χ², V de Cramér, correlación y PCA.
 
+# Análisis exploratorio (fase A2): eda/run_eda.py. No es un paso del pipeline.
+eda:
+  extracto: eda/cache/extracto.parquet # columnas del dataset analítico; contiene datos reales: NO se sube
+  columnas:
+    [
+      TransactionID,
+      isFraud,
+      TransactionDT,
+      dia_relativo,
+      hora,
+      TransactionAmt,
+      ProductCD,
+      card1,
+      card4,
+      card6,
+      P_emaildomain,
+      DeviceType,
+      tiene_identidad,
+      D1,
+      C1,
+    ]
+  periodo_dias: 30 # bloques de días relativos (1-30, 31-60, ...); el último absorbe el resto
+  periodos: 6
+  recorte_media: 0.10 # media recortada al 10 % (se quita el 10 % de cada extremo)
+  percentiles: [1, 5, 10, 25, 50, 75, 90, 95, 99]
+  min_filas_categoria: 1000 # figura de tasas: se omiten categorías con menos filas (tasa inestable)
+  umbral_otros: 0.01
+  # Escenarios de prevalencia para ajustar los aciertos del tramo (ilustrativos, no son la
+  # prevalencia de una institución): 1 % y 0.39 % (contracargos por número en comercio
+  # electrónico, Banxico CF621, ene-mar 2026; incluye contracargos que no son fraude).
+  prevalencias_escenario: [0.01, 0.0039] # entropía de P_emaildomain agrupada: dominios con menos del 1 % de las filas -> «Otros»
+  tablas: salidas/eda # relativa a pipeline/
+  figuras: ../entregas/E2_eda_preparacion/img/eda # relativa a pipeline/
+
 # Resultados agregados que el pipeline escribe para citarlos en el sitio
 # (conteos por columna; nunca filas de datos). Sí se suben al repositorio.
 salidas:

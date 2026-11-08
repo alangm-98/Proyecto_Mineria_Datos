@@ -1,0 +1,7 @@
+variable,filas,categorias,incluye_nulo,moda,prop_moda,entropia_bits,entropia_norm
+ProductCD,590540,5,False,W,0.744522,1.27506,0.54914
+card4,590540,5,True,visa,0.651551,1.11123,0.478581
+card6,590540,5,True,debit,0.744976,0.841546,0.362434
+DeviceType,590540,3,True,(nulo),0.761557,1.02327,0.64561
+P_emaildomain,590540,60,True,gmail.com,0.386688,2.88664,0.488691
+tiene_identidad,590540,2,False,False,0.755761,0.802019,0.802019

@@ -58,6 +58,10 @@ website:
             text: "4 · Trazabilidad a E0"
           - href: entregas/E1_arquitectura_dw/uso_ia.qmd
             text: "5 · Uso de herramientas de IA"
+      - section: "E2 · EDA y preparación de los datos"
+        contents:
+          - href: entregas/E2_eda_preparacion/eda.qmd
+            text: "1 · Análisis exploratorio"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"
