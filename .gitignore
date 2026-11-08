@@ -11,6 +11,8 @@ pipeline/logs/
 pipeline/data/raw/
 # Extracto del EDA con datos reales de IEEE-CIS: no se redistribuye
 pipeline/eda/cache/
+# Extracto de entrenamiento del paso reduccion: también trae datos reales
+pipeline/cache/
 *.zip
 
 # Credenciales: nunca en el repositorio

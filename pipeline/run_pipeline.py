@@ -15,31 +15,30 @@ import argparse
 import sys
 import time
 
+from src.antes_despues import antes_despues
 from src.bq import cliente
 from src.calidad import calidad
 from src.config import cargar_config
 from src.ingesta import ingesta
+from src.limpieza import limpieza
+from src.reduccion import reduccion
 from src.registro import iniciar_registro
 from src.verificacion import verificar_entorno
 
-# Orden de los pasos. Cada uno se implementa en la fase indicada del plan;
-# mientras tanto el pipeline lo omite y lo deja en el registro.
-PASOS = [
-    ("ingesta", "A1"),
-    ("calidad", "A1"),
-    ("limpieza", "B"),
-    ("reduccion", "B"),
-    ("muestreo", "B"),
-    ("carga", "C"),
-]
+# Orden de los pasos. Un paso que todavía no está implementado se omite y
+# queda anotado en el registro.
+PASOS = ["ingesta", "calidad", "limpieza", "reduccion", "antes_despues", "carga"]
 IMPLEMENTADOS: dict = {  # nombre del paso -> función(client, cfg, log)
     "ingesta": ingesta,
     "calidad": calidad,
+    "limpieza": limpieza,
+    "reduccion": reduccion,
+    "antes_despues": antes_despues,
 }
 
 
 def main() -> int:
-    nombres = [p for p, _ in PASOS]
+    nombres = PASOS
     ap = argparse.ArgumentParser(description="Pipeline de E2: staging -> DW")
     ap.add_argument("--config", default="config.yaml")
     ap.add_argument("--desde", choices=nombres, default=nombres[0])
@@ -60,10 +59,10 @@ def main() -> int:
 
         i, j = nombres.index(args.desde), nombres.index(args.hasta)
         assert i <= j, "--desde debe ir antes que --hasta"
-        for nombre, fase in PASOS[i : j + 1]:
+        for nombre in PASOS[i : j + 1]:
             log.info("== Paso: %s ==", nombre)
             if nombre not in IMPLEMENTADOS:
-                log.warning("  pendiente: se implementa en la fase %s del plan", fase)
+                log.warning("  pendiente: el paso aún no está implementado")
                 continue
             t0 = time.time()
             IMPLEMENTADOS[nombre](client, cfg, log)

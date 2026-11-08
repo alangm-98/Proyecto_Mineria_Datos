@@ -1,0 +1,44 @@
+orden,grupo,medida,antes,despues,diferencia,se_espera
+1,Variable objetivo,Transacciones,590540.0,590540.0,0.0,igual
+2,Variable objetivo,Fraudes,20663.0,20663.0,0.0,igual
+3,Variable objetivo,Tasa de fraude (%),3.499000914417313,3.499000914417313,0.0,igual
+4,Importe,Monto total (USD),79738948.73491529,79738948.73489915,-1.6137957572937012e-05,igual
+5,Importe,Monto defraudado (USD),3083844.8599999812,3083844.8599999673,-1.3969838619232178e-08,igual
+6,Importe,Media (USD),135.02717637247508,135.0271763724732,-1.8758328224066645e-12,igual
+7,Importe,Mediana (USD),68.769,68.769,0.0,igual
+8,Importe,Desviación estándar (USD),239.16252201373462,239.1625220137333,-1.3073986337985843e-12,igual
+9,Importe,"Gini, todas las transacciones",0.5529213703760407,0.5529213703760407,0.0,igual
+10,Importe,"Gini, solo fraudes",0.5863876935368468,0.5863876935368468,0.0,igual
+11,Partición,"Transacciones, entrenamiento",414542.0,414542.0,0.0,igual
+12,Partición,"Tasa de fraude (%), entrenamiento",3.5219591742211476,3.5219591742211462,-1.3322676295501878e-15,igual
+13,Partición,"Transacciones, validacion",83571.0,83571.0,0.0,igual
+14,Partición,"Tasa de fraude (%), validacion",3.410273898840524,3.4102738988404915,-3.241851231905457e-14,igual
+15,Partición,"Transacciones, prueba",92427.0,92427.0,0.0,igual
+16,Partición,"Tasa de fraude (%), prueba",3.4762569379077597,3.4762569379077424,-1.7319479184152442e-14,igual
+17,Tasa de fraude por categoría (%),ProductCD = C,11.68726922459463,11.687269224594665,3.552713678800501e-14,igual
+18,Tasa de fraude por categoría (%),ProductCD = H,4.766230620155039,4.7662306201550315,-7.105427357601002e-15,igual
+19,Tasa de fraude por categoría (%),ProductCD = R,3.7825937027507486,3.782593702750732,-1.6431300764452317e-14,igual
+20,Tasa de fraude por categoría (%),ProductCD = S,5.899552803577574,5.899552803577576,1.7763568394002505e-15,igual
+21,Tasa de fraude por categoría (%),ProductCD = W,2.0399390451929773,2.0399390451929835,6.217248937900877e-15,igual
+22,Tasa de fraude por categoría (%),card6 = NULL,2.4824952259707196,2.482495225970719,-4.440892098500626e-16,igual
+23,Tasa de fraude por categoría (%),card6 = charge card,0.0,0.0,0.0,igual
+24,Tasa de fraude por categoría (%),card6 = credit,6.678479857167787,6.678479857167817,3.019806626980426e-14,igual
+25,Tasa de fraude por categoría (%),card6 = debit,2.426250971727829,2.426250971727862,3.3306690738754696e-14,igual
+26,Tasa de fraude por categoría (%),card6 = debit or credit,0.0,0.0,0.0,igual
+27,Tasa de fraude por categoría (%),Registro de identidad = sin identidad,2.093850197285719,2.0938501972857266,7.549516567451064e-15,igual
+28,Tasa de fraude por categoría (%),Registro de identidad = con identidad,7.8470252993420555,7.847025299342013,-4.263256414560601e-14,igual
+29,Correo del comprador,Dominios distintos,59.0,58.0,-1.0,cambia
+30,Correo del comprador,Entropía (bits),2.681331595736985,2.6710423550113003,-0.010289240725684934,cambia
+31,Correo del comprador,Transacciones con gmail.com,228355.0,228851.0,496.0,cambia
+32,Correo del comprador,"Tasa de fraude (%), gmail.com",4.354185369271532,4.349554950601034,-0.00463041867049796,cambia
+33,Dimensión,Columnas,438.0,271.0,-167.0,cambia
+34,Dimensión,Columnas de la familia V,339.0,185.0,-154.0,cambia
+35,Dimensión,Columnas de la familia id,38.0,29.0,-9.0,cambia
+36,Dimensión,Columnas de la familia otras,13.0,17.0,4.0,cambia
+37,Dimensión,Columnas de la familia C,14.0,12.0,-2.0,cambia
+38,Dimensión,Columnas de la familia D,15.0,10.0,-5.0,cambia
+39,Dimensión,Columnas de la familia M,9.0,9.0,0.0,cambia
+40,Dimensión,Columnas de la familia card,6.0,5.0,-1.0,cambia
+41,Dimensión,Columnas de la familia addr,2.0,2.0,0.0,cambia
+42,Dimensión,Columnas de la familia dist,2.0,2.0,0.0,cambia
+43,Dimensión,Celdas nulas,115523073.0,70483100.0,-45039973.0,cambia

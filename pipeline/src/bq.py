@@ -47,15 +47,19 @@ def parametros_sql(cfg: dict) -> dict:
     return p
 
 
-def leer_sql(ruta: str | Path, cfg: dict) -> str:
+def leer_sql(ruta: str | Path, cfg: dict, extra: dict | None = None) -> str:
     """Lee un .sql de la carpeta sql/ de la raíz del repositorio y sustituye ${...}.
 
-    Falla si queda algún ${...} sin valor en la configuración.
+    `extra`: fragmentos de SQL generados por código a partir del esquema y de
+    la configuración (por ejemplo, listas de 438 columnas). Falla si queda
+    algún ${...} sin valor.
     """
     ruta = Path(ruta)
     if not ruta.is_absolute():
         ruta = RAIZ.parent / "sql" / ruta
-    return Template(ruta.read_text(encoding="utf-8")).substitute(parametros_sql(cfg))
+    return Template(ruta.read_text(encoding="utf-8")).substitute(
+        {**parametros_sql(cfg), **(extra or {})}
+    )
 
 
 def ejecutar(client: bigquery.Client, sql: str, log=None) -> bigquery.table.RowIterator:

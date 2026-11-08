@@ -11,7 +11,7 @@
 -- Lo mínimo para leerla: extraer el texto entre comillas. Las dos líneas
 -- de corchetes no tienen dominio y quedan fuera; el paso verifica que sean
 -- exactamente esas dos. No se cambia ningún dominio (ni mayúsculas ni
--- espacios): normalizar es una decisión de la fase B.
+-- espacios): la normalización la hace el paso «limpieza».
 --
 -- Nota: en las expresiones regulares, el signo de pesos de fin de línea va
 -- doble porque el pipeline usa ese signo para sus parámetros; la plantilla

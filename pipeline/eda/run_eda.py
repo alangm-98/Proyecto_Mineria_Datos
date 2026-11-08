@@ -1,4 +1,4 @@
-"""Pagos Lumen · E2 · Análisis exploratorio (fase A2).
+"""Pagos Lumen · E2 · Análisis exploratorio.
 
 No es un paso del pipeline: lee lumen_prep.analitico_crudo (que crea el paso
 «ingesta») y escribe tablas agregadas en salidas/eda/ y figuras en
@@ -33,7 +33,7 @@ PASOS = [
     "figuras",
     "mexico",
     "tramo",
-]  # se agregan en los siguientes pasos de la fase A2
+]
 
 
 def main() -> int:

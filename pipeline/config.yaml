@@ -6,8 +6,7 @@
 # valores escritos a mano. Para ejecutar en otro proyecto de Google Cloud
 # basta con cambiar `proyecto.id` (ver README, sección «Proyecto propio»).
 #
-# Los parámetros que todavía no se fijan se marcan como «pendiente» con
-# la fase del plan en que se deciden.
+# Los parámetros que todavía no se fijan se marcan como «pendiente».
 # =====================================================================
 
 proyecto:
@@ -39,6 +38,11 @@ tablas_prep:
   calidad_valores: calidad_valores # diagnóstico: frecuencia de cada valor en columnas de texto con pocas categorías
   calidad_dominios: calidad_dominios # diagnóstico: dominios de correo de A frente a la lista D
   calidad_resumen: calidad_resumen # diagnóstico: duplicados, consistencia de Banxico y otras pruebas
+  analitico_limpio: analitico_limpio # A tras la limpieza: mismas filas, tipos corregidos y marcas
+  registro_limpieza: registro_limpieza # qué problema, cuántas filas o celdas, qué decisión y por qué
+  reduccion_decision: reduccion_decision # una fila por columna: medidas, decisión y regla
+  analitico_reducido: analitico_reducido # vista: columnas de analitico_limpio que se conservan
+  antes_despues: antes_despues # medidas clave antes y después de preparar
 
 # Conteos de la fuente completa, calculados por el equipo en Kaggle en E1.
 # La verificación previa del pipeline compara contra ellos.
@@ -80,16 +84,80 @@ muestra:
 
 tramo_revisado: 0.0075 # 300 de 40,000: capacidad diaria como proporción del flujo (E0)
 
-# Pendiente (fase A2/B): partición temporal por día relativo.
-particion: {}
+# Partición temporal por día relativo: bloques contiguos que cubren los días 1 a 182. Todo lo que aprende parámetros de los datos
+# (límites de atípicos, imputación, estandarización, PCA, selección por χ²) se ajusta
+# solo con «entrenamiento». La partición definitiva la decide el modelado (E3).
+particion:
+  entrenamiento: [1, 120]
+  validacion: [121, 150]
+  prueba: [151, 182]
+
+# Limpieza: sql/04_limpieza_analitico.sql y src/limpieza.py.
+limpieza:
+  # Columnas con valores T/F que pasan a BOOL (el NULL se conserva). M4 no está: trae M0, M1, M2.
+  columnas_tf: [M1, M2, M3, M5, M6, M7, M8, M9, id_35, id_36, id_37, id_38]
+  # Dominios de correo: minúsculas y sin espacios; después, esta tabla de equivalencias.
+  columnas_correo: [P_emaildomain, R_emaildomain]
+  equivalencias_dominio:
+    gmail: gmail.com # 496 filas en P y 95 en R sin «.com» (calidad_dominios.csv)
+  dominio_anonimizado: anonymous.com # se conserva como dominio propio; solo se registra
+  # Atípicos del importe: regla del IQR sobre ln(TransactionAmt), con cuartiles de entrenamiento.
+  # Solo marca (columna importe_atipico); el importe no se acota ni se elimina.
+  iqr_k: 1.5
 
 umbrales:
-  # Diagnóstico (fase A1): columnas de texto con a lo más este número de valores
+  # Diagnóstico (paso calidad): columnas de texto con a lo más este número de valores
   # distintos se listan valor por valor en calidad_valores.
   calidad_max_categorias: 20
-  # Pendiente (fase B): umbrales de χ², V de Cramér, correlación y PCA.
 
-# Análisis exploratorio (fase A2): eda/run_eda.py. No es un paso del pipeline.
+# Reducción: src/reduccion.py. Todo se calcula con la partición de entrenamiento completa.
+reduccion:
+  cache: cache # extracto local de entrenamiento; contiene datos reales: NO se sube
+  # Se conservan siempre: llaves, variable objetivo, campos que usa el DW y columnas de la limpieza
+  protegidas:
+    [
+      TransactionID,
+      isFraud,
+      TransactionDT,
+      dia_relativo,
+      fecha,
+      hora,
+      TransactionAmt,
+      log_importe,
+      ProductCD,
+      card6,
+      P_emaildomain,
+      DeviceType,
+      tiene_identidad,
+      particion,
+      posible_duplicado,
+      importe_atipico,
+    ]
+  max_faltantes: 0.95 # en las filas donde la columna aplica
+  max_valor_dominante: 0.999 # un mismo valor, contando el NULL
+  grupos_numericas: 10 # cuantiles de entrenamiento para el χ²
+  umbral_otros: 0.01 # categorías más raras se juntan en «Otros»
+  min_esperada: 5 # frecuencia esperada mínima por celda del χ²
+  alfa: 0.05 # se divide entre el número de pruebas (Bonferroni)
+  min_v_cramer: 0.02
+  max_spearman: 0.95 # |ρ| a partir del cual dos columnas son redundantes
+  min_filas_correlacion: 1000 # filas comunes mínimas para calcular ρ
+  pca_columnas: "V\\d+" # expresión regular del bloque para el PCA
+  pca_varianza: 0.90
+  figuras: ../entregas/E2_eda_preparacion/img/prep
+  tabla_md: ../entregas/E2_eda_preparacion/_tabla_decision.md # tabla de decisión completa para la página
+
+# Umbrales técnicos de E2 para el tramo diario.
+# Se miden en validación y prueba en E3. Cumplirlos es condición necesaria, no
+# suficiente, para la meta de negocio de E0 (reducir 20 % la pérdida).
+medidas_tecnicas:
+  monto_cubierto_piso: 0.0758 # regla «mayor importe» en el EDA (tramo_resumen.csv)
+  monto_cubierto_meta: 0.20
+  aciertos_sobre_azar_piso: 1.0 # y además mayor que la regla «mayor importe» (0.85)
+  aciertos_sobre_azar_regla: 0.85
+  aciertos_sobre_azar_meta: 2.0 # provisional
+
+# Análisis exploratorio: eda/run_eda.py. No es un paso del pipeline.
 eda:
   extracto: eda/cache/extracto.parquet # columnas del dataset analítico; contiene datos reales: NO se sube
   columnas:

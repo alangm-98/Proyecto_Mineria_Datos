@@ -2,7 +2,7 @@
 
 No forma parte del pipeline: el pipeline empieza en staging y nunca la
 modifica. Este script sirve para dos cosas:
-  1. Cargar la fuente A completa en el proyecto del equipo (fase 0 de E2).
+  1. Cargar la fuente A completa en el proyecto del equipo.
   2. Que una persona ajena al equipo reproduzca staging en su propio
      proyecto y después ejecute el pipeline (ver README).
 

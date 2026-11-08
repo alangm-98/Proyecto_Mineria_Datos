@@ -1,6 +1,6 @@
 """Paso «calidad»: diagnóstico de la capa de preparación, sin corregir nada.
 
-Mide lo que la fase B tendrá que decidir (PDF de E2, «Calidad de los datos y
+Mide lo que la limpieza tendrá que decidir (PDF de E2, «Calidad de los datos y
 tratamiento del ruido»: primero se diagnostica, después se decide):
 
   1. Por columna del dataset analítico: faltantes (en total y entre las
@@ -8,7 +8,7 @@ tratamiento del ruido»: primero se diagnostica, después se decide):
      Los valores distintos son exactos en columnas de texto, lógicas y de
      fecha, donde el número de categorías decide el tratamiento, y
      aproximados (APPROX_COUNT_DISTINCT) en las numéricas: 400 conteos exactos
-     en una sola consulta tardaban demasiado (corrida cancelada del 7 nov 2026).
+     en una sola consulta tardan más de 5 minutos.
   2. Duplicados: registros idénticos salvo el identificador, y salvo el
      identificador y el tiempo.
   3. Frecuencia de cada valor en las columnas de texto con pocas categorías.
