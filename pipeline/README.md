@@ -43,10 +43,15 @@ mismas versiones, para quien prefiera `pip`.
 
 ## Instalación
 
+Desde un clon limpio del repositorio:
+
 ```bash
-cd pipeline
+git clone https://github.com/alangm-98/Proyecto_Mineria_Datos.git
+cd Proyecto_Mineria_Datos/pipeline
 uv sync --frozen        # crea .venv con Python 3.13.18 y las versiones exactas de uv.lock
 ```
+
+Todos los comandos de este README se ejecutan desde la carpeta `pipeline/`.
 
 ## Autenticación
 
@@ -58,6 +63,11 @@ el repositorio.
 gcloud auth application-default login
 gcloud auth application-default set-quota-project pagos-lumen-dw
 ```
+
+El primer comando abre el navegador. En la pantalla de consentimiento basta con aceptar el
+permiso de Google Cloud; los demás que ofrezca (por ejemplo, Cloud SQL) no hacen falta. Las
+credenciales quedan en `~/.config/gcloud/`, fuera del repositorio. Para retirarlas al terminar:
+`gcloud auth application-default revoke`.
 
 ### Permisos necesarios en el proyecto
 
