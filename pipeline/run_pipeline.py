@@ -18,22 +18,37 @@ import time
 from src.antes_despues import antes_despues
 from src.bq import cliente
 from src.calidad import calidad
+from src.carga import carga
 from src.config import cargar_config
+from src.datamart import datamart
 from src.ingesta import ingesta
 from src.limpieza import limpieza
+from src.muestreo import muestreo
 from src.reduccion import reduccion
 from src.registro import iniciar_registro
 from src.verificacion import verificar_entorno
 
 # Orden de los pasos. Un paso que todavía no está implementado se omite y
 # queda anotado en el registro.
-PASOS = ["ingesta", "calidad", "limpieza", "reduccion", "antes_despues", "carga"]
+PASOS = [
+    "ingesta",
+    "calidad",
+    "limpieza",
+    "reduccion",
+    "muestreo",
+    "antes_despues",
+    "carga",
+    "datamart",
+]
 IMPLEMENTADOS: dict = {  # nombre del paso -> función(client, cfg, log)
     "ingesta": ingesta,
     "calidad": calidad,
     "limpieza": limpieza,
     "reduccion": reduccion,
+    "muestreo": muestreo,
     "antes_despues": antes_despues,
+    "carga": carga,
+    "datamart": datamart,
 }
 
 

@@ -1,0 +1,36 @@
+orden,tabla,validacion,esperado,obtenido,correcto
+1,dim_fecha,días sin huecos (filas = días del rango),4108,4108,True
+2,dim_fecha,llave única,4108,4108,True
+3,dim_fecha,rango,2015-01-01 a 2026-03-31,2015-01-01 a 2026-03-31,True
+4,dim_fecha,días de IEEE-CIS con fecha asignada,182,182,True
+5,dim_tipo_tarjeta,llave única,5,5,True
+6,dim_tipo_tarjeta,miembro 0 presente,1,1,True
+7,dim_producto,llave única,6,6,True
+8,dim_producto,miembro 0 presente,1,1,True
+9,dim_dispositivo,llave única,4,4,True
+10,dim_dispositivo,miembro 0 presente,1,1,True
+11,dim_dominio_correo,llave única,59,59,True
+12,dim_dominio_correo,miembro 0 presente,1,1,True
+13,dim_dominio_correo,una versión vigente por dominio,58,58,True
+14,dim_dominio_correo,versiones cerradas con fechas coherentes,0,0,True
+15,dim_dominio_correo,versión vigente clasificada con la lista actual (si falla: la lista cambió sin cambiar fuentes.dominios_fecha_carga),0,0,True
+16,hechos_transaccion,filas = analitico_limpio,590540,590540,True
+17,hechos_transaccion,grano único (una fila por transaccion_id),590540,590540,True
+18,hechos_transaccion,fraudes = analitico_limpio,20663,20663,True
+19,hechos_transaccion,monto (USD) = analitico_limpio,79738948.73,79738948.73,True
+20,hechos_transaccion,monto defraudado (USD) = analitico_limpio,3083844.86,3083844.86,True
+21,hechos_transaccion,monto_fraude_usd = monto_usd × es_fraude,0,0,True
+22,hechos_transaccion,sin llaves huérfanas en fecha_key,0,0,True
+23,hechos_transaccion,sin llaves huérfanas en tipo_tarjeta_key,0,0,True
+24,hechos_transaccion,sin llaves huérfanas en producto_key,0,0,True
+25,hechos_transaccion,sin llaves huérfanas en dispositivo_key,0,0,True
+26,hechos_transaccion,sin llaves huérfanas en dominio_correo_key,0,0,True
+27,hechos_transaccion,transacciones por tipo_tarjeta_key = E1 (estrella.qmd),"{0: 1571, 1: 439938, 2: 148986, 3: 30, 4: 15}","{0: 1571, 1: 439938, 2: 148986, 3: 30, 4: 15}",True
+28,hechos_transaccion,transacciones por dispositivo_key = E1 (estrella.qmd),"{0: 446307, 1: 85165, 2: 55645, 3: 3423}","{0: 446307, 1: 85165, 2: 55645, 3: 3423}",True
+29,hechos_pagos_trimestre,filas = trimestres × 2 (crédito y débito),90,90,True
+30,hechos_pagos_trimestre,grano único (trimestre y tipo de tarjeta),90,90,True
+31,hechos_pagos_trimestre,autorizaciones = banxico_trimestres,7715354463,7715354463,True
+32,hechos_pagos_trimestre,monto autorizado (mdp) = banxico_trimestres,5463528,5463528,True
+33,hechos_pagos_trimestre,porcentajes entre 0 y 100,0,0,True
+34,hechos_pagos_trimestre,sin llaves huérfanas en fecha_key,0,0,True
+35,hechos_pagos_trimestre,sin llaves huérfanas en tipo_tarjeta_key,0,0,True

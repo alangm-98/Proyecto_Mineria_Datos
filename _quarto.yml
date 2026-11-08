@@ -64,6 +64,8 @@ website:
             text: "1 · Análisis exploratorio"
           - href: entregas/E2_eda_preparacion/preparacion.qmd
             text: "2 · Preparación de los datos"
+          - href: entregas/E2_eda_preparacion/pipeline.qmd
+            text: "3 · Pipeline y DW poblado"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"

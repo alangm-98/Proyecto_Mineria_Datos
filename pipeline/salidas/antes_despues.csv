@@ -28,7 +28,7 @@ orden,grupo,medida,antes,despues,diferencia,se_espera
 27,Tasa de fraude por categoría (%),Registro de identidad = sin identidad,2.093850197285719,2.0938501972857266,7.549516567451064e-15,igual
 28,Tasa de fraude por categoría (%),Registro de identidad = con identidad,7.8470252993420555,7.847025299342013,-4.263256414560601e-14,igual
 29,Correo del comprador,Dominios distintos,59.0,58.0,-1.0,cambia
-30,Correo del comprador,Entropía (bits),2.681331595736985,2.6710423550113003,-0.010289240725684934,cambia
+30,Correo del comprador,Entropía (bits),2.681331595736985,2.6710423550113007,-0.01028924072568449,cambia
 31,Correo del comprador,Transacciones con gmail.com,228355.0,228851.0,496.0,cambia
 32,Correo del comprador,"Tasa de fraude (%), gmail.com",4.354185369271532,4.349554950601034,-0.00463041867049796,cambia
 33,Dimensión,Columnas,438.0,271.0,-167.0,cambia

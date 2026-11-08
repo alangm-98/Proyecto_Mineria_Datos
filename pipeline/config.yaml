@@ -43,6 +43,8 @@ tablas_prep:
   reduccion_decision: reduccion_decision # una fila por columna: medidas, decisión y regla
   analitico_reducido: analitico_reducido # vista: columnas de analitico_limpio que se conservan
   antes_despues: antes_despues # medidas clave antes y después de preparar
+  muestreo_decision: muestreo_decision # criterios del muestreo, medidas y decisión
+  carga_validaciones: carga_validaciones # validaciones de la carga del DW: esperado, obtenido y resultado
 
 # Conteos de la fuente completa, calculados por el equipo en Kaggle en E1.
 # La verificación previa del pipeline compara contra ellos.
@@ -146,6 +148,26 @@ reduccion:
   pca_varianza: 0.90
   figuras: ../entregas/E2_eda_preparacion/img/prep
   tabla_md: ../entregas/E2_eda_preparacion/_tabla_decision.md # tabla de decisión completa para la página
+
+# Muestreo: src/muestreo.py evalúa los criterios del PDF de E2 y registra la decisión.
+muestreo:
+  aplicar: false # el pipeline no implementa muestreo; si un criterio lo justifica, el paso falla
+  max_gb_tabla: 50 # volumen de analitico_limpio a partir del cual convendría muestrear
+  max_pct_duplicados: 0.05 # proporción de filas con posible duplicado que justificaría reducir registros
+
+# Carga del DW (src/carga.py) y DataMart (src/datamart.py). El diseño es el de E1.
+dw:
+  fecha_inicio: "2015-01-01" # dim_fecha: primer trimestre de Banxico (E1)
+  fecha_fin: "2026-03-31" # dim_fecha: último trimestre de Banxico (E1)
+  # Transacciones por miembro publicadas en estrella.qmd de E1; la carga debe reproducirlas
+  esperado_tipo_tarjeta: { 0: 1571, 1: 439938, 2: 148986, 3: 30, 4: 15 }
+  esperado_dispositivo: { 0: 446307, 1: 85165, 2: 55645, 3: 3423 }
+  # Prueba de la historia (SCD tipo 2) de dim_dominio_correo en un dataset temporal
+  prueba_scd2:
+    dataset: lumen_prueba_scd2
+    fecha_lista_nueva: "2026-11-08"
+    quitar_de_lista: [gmail.com] # pasa de gratuito a no gratuito en la lista simulada
+    agregar_a_lista: [anonymous.com] # pasa de no gratuito a gratuito
 
 # Umbrales técnicos de E2 para el tramo diario.
 # Se miden en validación y prueba en E3. Cumplirlos es condición necesaria, no

@@ -1,0 +1,4 @@
+criterio,medida,umbral,justifica_muestrear,decision
+Volumen,"590,540 filas; 1.13 GB",más de 50 GB,False,no muestrear
+Clase desbalanceada,3.50 % de fraude,"se trata en el modelado, solo con entrenamiento",False,no muestrear
+Redundancia entre registros,0.15 % de filas con posible duplicado,más de 5 %,False,no muestrear

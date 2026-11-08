@@ -1,0 +1,1540 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>3. Pipeline y DW poblado – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../entregas/E2_eda_preparacion/preparacion.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-97bc63ea392d9b08ece34d04c8d9f81c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+<script src="../../site_libs/quarto-diagram/mermaid.min.js"></script>
+<script src="../../site_libs/quarto-diagram/mermaid-init.js"></script>
+<link href="../../site_libs/quarto-diagram/mermaid.css" rel="stylesheet">
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text">Repositorio</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/eda.html">E2 · EDA y preparación de los datos</a></li><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/pipeline.html">3 · Pipeline y DW poblado</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">E0 · Comprensión del negocio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/bitacora.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Bitácora</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/canvas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Canvas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/preguntas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Preguntas de investigación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/criterio_exito.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Criterio de éxito</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Supuestos y riesgos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Material de respaldo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expediente de fuentes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">E1 · Arquitectura del DW</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Fuentes e integración</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/arquitectura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Arquitectura de tres capas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/estrella.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Esquema estrella</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Trazabilidad a E0</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">E2 · EDA y preparación de los datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Análisis exploratorio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Preparación de los datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/pipeline.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">3 · Pipeline y DW poblado</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#arquitectura" id="toc-arquitectura" class="nav-link active" data-scroll-target="#arquitectura">Arquitectura</a>
+  <ul class="collapse">
+  <li><a href="#requisitos-del-pdf" id="toc-requisitos-del-pdf" class="nav-link" data-scroll-target="#requisitos-del-pdf">Requisitos del PDF</a></li>
+  </ul></li>
+  <li><a href="#carga-del-esquema-estrella" id="toc-carga-del-esquema-estrella" class="nav-link" data-scroll-target="#carga-del-esquema-estrella">Carga del esquema estrella</a></li>
+  <li><a href="#evidencia-de-consistencia" id="toc-evidencia-de-consistencia" class="nav-link" data-scroll-target="#evidencia-de-consistencia">Evidencia de consistencia</a>
+  <ul class="collapse">
+  <li><a href="#idempotencia" id="toc-idempotencia" class="nav-link" data-scroll-target="#idempotencia">Idempotencia</a></li>
+  <li><a href="#historia-de-los-dominios-scd-tipo-2" id="toc-historia-de-los-dominios-scd-tipo-2" class="nav-link" data-scroll-target="#historia-de-los-dominios-scd-tipo-2">Historia de los dominios (SCD tipo 2)</a></li>
+  </ul></li>
+  <li><a href="#datamart" id="toc-datamart" class="nav-link" data-scroll-target="#datamart">DataMart</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/eda.html">E2 · EDA y preparación de los datos</a></li><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/pipeline.html">3 · Pipeline y DW poblado</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">3. Pipeline y DW poblado</h1>
+<p class="subtitle lead">Arquitectura del pipeline, carga del esquema estrella, evidencia de consistencia y DataMart</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  /* Tablas con texto largo en la primera columna (anula la regla global) */
+  body main table td:first-child { white-space: normal; }
+</style>
+<p>Esta página describe el <a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/tree/main/pipeline">pipeline</a> que lleva los datos de staging al DW de E1 y muestra el resultado: el esquema estrella poblado con las 590,540 transacciones, la evidencia de que la carga es consistente y las consultas del DataMart ejecutadas. El diseño del DW es el de <a href="../../entregas/E1_arquitectura_dw/estrella.html">E1</a> y no cambió.</p>
+<div class="callout callout-style-simple callout-tip no-icon">
+<div class="callout-body d-flex">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-body-container">
+<p><strong>En una frase:</strong> un solo comando lleva staging al DW en ocho pasos con 35 validaciones de la carga; correrlo dos veces da el mismo resultado, la historia de los dominios funciona, y las cuatro consultas del DataMart reproducen desde el DW las cifras del EDA.</p>
+</div>
+</div>
+</div>
+<section id="arquitectura" class="level2">
+<h2 class="anchored" data-anchor-id="arquitectura">Arquitectura</h2>
+<div class="cell" data-layout-align="default">
+<div class="cell-output-display">
+<div>
+<p></p><figure class="figure"><p></p>
+<div>
+<pre class="mermaid mermaid-js">flowchart TB
+  S[("lumen_staging · datos crudos, solo lectura")]
+  subgraph prep["lumen_prep · preparación"]
+    direction LR
+    I["ingesta"] --&gt; C["calidad"] --&gt; L["limpieza"] --&gt; R["reduccion"] --&gt; M["muestreo"] --&gt; A["antes_despues"]
+  end
+  subgraph dw["lumen_dw"]
+    K["carga · esquema estrella de E1"]
+  end
+  subgraph mart["lumen_mart"]
+    D["datamart · vistas de E1"]
+  end
+  S --&gt; prep --&gt; dw --&gt; mart
+  style prep fill:#f4f8fd,stroke:#2a78d6
+  style dw fill:#f4f8fd,stroke:#2a78d6
+  style mart fill:#f4f8fd,stroke:#2a78d6
+</pre>
+</div>
+<p></p></figure><p></p>
+</div>
+</div>
+</div>
+<p>Staging nunca se modifica: el pipeline solo lee de ahí. Cada paso escribe en su capa con <code>CREATE OR REPLACE</code> o vaciando y volviendo a llenar, así que correrlo dos veces da el mismo resultado.</p>
+<div id="tbl-pasos" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,56,26]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pasos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;1: Pasos del pipeline; una corrida completa tarda unos 9 minutos y procesa unos 10 GB
+</figcaption>
+<div aria-describedby="tbl-pasos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 18%">
+<col style="width: 56%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Paso</th>
+<th style="text-align: left;">Qué hace</th>
+<th style="text-align: left;">Duración y datos procesados</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Verificación previa</td>
+<td style="text-align: left;">Credenciales, ubicación y filas de staging</td>
+<td style="text-align: left;">~3 s; solo metadatos</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>ingesta</code></td>
+<td style="text-align: left;">Une y tipa las fuentes sin limpiar: <code>analitico_crudo</code>, Banxico y dominios</td>
+<td style="text-align: left;">~25 s; 1.1 GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>calidad</code></td>
+<td style="text-align: left;">Diagnóstico sin corregir (faltantes, duplicados, rangos, categorías)</td>
+<td style="text-align: left;">~3 min; 2.3 GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>limpieza</code></td>
+<td style="text-align: left;"><code>analitico_limpio</code> y registro de limpieza (<a href="../../entregas/E2_eda_preparacion/preparacion.html#limpieza">página 2</a>)</td>
+<td style="text-align: left;">~1.5 min; 3.6 GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>reduccion</code></td>
+<td style="text-align: left;">Tabla de decisión y vista <code>analitico_reducido</code> (<a href="../../entregas/E2_eda_preparacion/preparacion.html#reduccion">página 2</a>)</td>
+<td style="text-align: left;">~2.5 min; 1.1 GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>muestreo</code></td>
+<td style="text-align: left;">Mide los criterios del muestreo y registra la decisión</td>
+<td style="text-align: left;">~5 s; 5 MB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>antes_despues</code></td>
+<td style="text-align: left;">Comprueba que la preparación conserva el fenómeno (<a href="../../entregas/E2_eda_preparacion/preparacion.html#antes-despues">página 2</a>)</td>
+<td style="text-align: left;">~20 s; 1.9 GB</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>carga</code></td>
+<td style="text-align: left;">Pobla el esquema estrella y lo valida</td>
+<td style="text-align: left;">~65 s; 0.1 GB</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>datamart</code></td>
+<td style="text-align: left;">Ejecuta las vistas de E1 y cruza sus resultados con el DW y el EDA</td>
+<td style="text-align: left;">~15 s; 0.1 GB</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Cómo ejecutarlo">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Cómo ejecutarlo
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-1" class="callout-1-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<p>Desde la carpeta <code>pipeline/</code>, con Python fijado por <code>uv</code> y credenciales de aplicación por defecto (instrucciones completas en el README del pipeline):</p>
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode bash code-with-copy"><code class="sourceCode bash"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> sync <span class="at">--frozen</span>                                   <span class="co"># entorno con las versiones de uv.lock</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python run_pipeline.py <span class="at">--solo-verificar</span>     <span class="co"># credenciales y staging</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python run_pipeline.py                      <span class="co"># los ocho pasos</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="ex">uv</span> run python run_pipeline.py <span class="at">--desde</span> carga        <span class="co"># solo un tramo</span></span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+<p>Para otro proyecto de Google Cloud basta cambiar <code>proyecto.id</code> en <code>config.yaml</code>: el paso <code>carga</code> crea las tablas y vistas de E1 si no existen.</p>
+</div>
+</div>
+</div>
+<section id="requisitos-del-pdf" class="level3">
+<h3 class="anchored" data-anchor-id="requisitos-del-pdf">Requisitos del PDF</h3>
+<div id="tbl-requisitos" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[30,70]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-requisitos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;2: Requisitos del pipeline reproducible
+</figcaption>
+<div aria-describedby="tbl-requisitos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 30%">
+<col style="width: 70%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Requisito</th>
+<th style="text-align: left;">Cómo se cumple</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Un solo punto de entrada, pasos separados y nombrados</td>
+<td style="text-align: left;"><code>run_pipeline.py</code>, con los pasos <code>ingesta</code>, <code>calidad</code>, <code>limpieza</code>, <code>reduccion</code>, <code>muestreo</code> y <code>carga</code>, más <code>antes_despues</code> y <code>datamart</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Sin pasos manuales; idempotente</td>
+<td style="text-align: left;">Todo es SQL o Python ejecutado por el pipeline. Demostrado con dos corridas (<a href="#tbl-idempotencia" class="quarto-xref">Tabla&nbsp;5</a>)</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Semilla, versiones y parámetros</td>
+<td style="text-align: left;">Semilla en <code>config.yaml</code>; Python 3.13.18 y librerías fijadas en <code>uv.lock</code> y <code>requirements.txt</code>; umbrales, datasets y tablas en <code>config.yaml</code>; rutas relativas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Registro por paso</td>
+<td style="text-align: left;">Archivo en <code>logs/</code> con filas de entrada y salida, bytes procesados y duración; registro de limpieza en <code>lumen_prep</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Validaciones automáticas</td>
+<td style="text-align: left;">Llaves no nulas, grano único, rangos y totales en cada paso; si una falla, el pipeline se detiene</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Credenciales y datos</td>
+<td style="text-align: left;">Credenciales de aplicación por defecto, fuera del repositorio; los datos de IEEE-CIS viven solo en BigQuery</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prueba externa</td>
+<td style="text-align: left;">Pendiente: la hace un integrante que no escribió el pipeline, desde un clon limpio</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+</section>
+<section id="carga-del-esquema-estrella" class="level2">
+<h2 class="anchored" data-anchor-id="carga-del-esquema-estrella">Carga del esquema estrella</h2>
+<p>El paso <code>carga</code> ejecuta cuatro archivos SQL en orden:</p>
+<ol type="1">
+<li><strong><code>06_ddl_dw.sql</code></strong> crea las tablas de E1 solo si no existen, con el mismo DDL. En el proyecto del equipo ya existían desde E1, así que no se modificaron. El paso compara además el esquema de cada tabla con el DDL y falla si no coincide.</li>
+<li><strong><code>07_carga_dimensiones.sql</code></strong> vacía y llena las dimensiones de tipo 1 con los catálogos de E1.</li>
+<li><strong><code>08_scd2_dominio.sql</code></strong> actualiza <code>dim_dominio_correo</code> conservando su historia (abajo).</li>
+<li><strong><code>09_carga_hechos.sql</code></strong> vacía y llena los dos hechos desde <code>analitico_limpio</code> y <code>banxico_trimestres</code>.</li>
+</ol>
+<p>Las llaves de los hechos se buscan en las dimensiones, con el dato ausente emparejado con el miembro 0. Si un valor de la fuente no tuviera miembro en su dimensión, la llave quedaría vacía y BigQuery rechazaría la carga: nada se asigna a «Desconocido» en silencio.</p>
+<div id="tbl-dw" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[26,12,62]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-dw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;3: Tablas del DW después de la carga
+</figcaption>
+<div aria-describedby="tbl-dw-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 12%">
+<col style="width: 62%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Tabla</th>
+<th style="text-align: right;">Filas</th>
+<th style="text-align: left;">Contenido</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><code>hechos_transaccion</code></td>
+<td style="text-align: right;">590,540</td>
+<td style="text-align: left;">Una fila por transacción; 20,663 fraudes; 79,738,948.73 USD</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>hechos_pagos_trimestre</code></td>
+<td style="text-align: right;">90</td>
+<td style="text-align: left;">45 trimestres de Banxico (2015 a 2026) × crédito y débito</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dim_fecha</code></td>
+<td style="text-align: right;">4,108</td>
+<td style="text-align: left;">Del 1 de enero de 2015 al 31 de marzo de 2026; 182 días con <code>dia_relativo_ieee</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>dim_tipo_tarjeta</code></td>
+<td style="text-align: right;">5</td>
+<td style="text-align: left;">Miembro 0 más débito, crédito, débito o crédito y tarjeta de cargo</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dim_producto</code></td>
+<td style="text-align: right;">6</td>
+<td style="text-align: left;">Miembro 0 más C, H, R, S y W</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>dim_dispositivo</code></td>
+<td style="text-align: right;">4</td>
+<td style="text-align: left;">Sin registro de identidad (0), escritorio, móvil y tipo no informado</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><code>dim_dominio_correo</code></td>
+<td style="text-align: right;">59</td>
+<td style="text-align: left;">Miembro 0 más 58 dominios, ya normalizados en la limpieza</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="evidencia-de-consistencia" class="level2">
+<h2 class="anchored" data-anchor-id="evidencia-de-consistencia">Evidencia de consistencia</h2>
+<p>El paso <code>carga</code> hace 35 validaciones y las guarda en <code>lumen_prep.carga_validaciones</code> y en <a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/blob/main/pipeline/salidas/carga_validaciones.csv"><code>carga_validaciones.csv</code></a>. Las 35 pasaron.</p>
+<div id="tbl-validaciones" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[28,72]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-validaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;4: Validaciones de la carga (resumen de las 35)
+</figcaption>
+<div aria-describedby="tbl-validaciones-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 28%">
+<col style="width: 72%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Qué se valida</th>
+<th style="text-align: left;">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Grano único</td>
+<td style="text-align: left;">590,540 <code>transaccion_id</code> distintos en 590,540 filas; 90 pares trimestre y tarjeta en 90 filas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Llaves huérfanas</td>
+<td style="text-align: left;">0 en las cinco llaves de <code>hechos_transaccion</code> y en las dos de <code>hechos_pagos_trimestre</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Totales contra la tabla limpia</td>
+<td style="text-align: left;">Mismas filas, mismos 20,663 fraudes, mismo monto y mismo monto defraudado (3,083,844.86 USD)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Totales contra Banxico</td>
+<td style="text-align: left;">7,715,354,463 autorizaciones y 5,463,528 mdp, iguales a <code>banxico_trimestres</code></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Transacciones por miembro, contra E1</td>
+<td style="text-align: left;">Tipo de tarjeta 1,571 / 439,938 / 148,986 / 30 / 15 y dispositivo 446,307 / 85,165 / 55,645 / 3,423: <strong>idénticos</strong> a los que publicó <code>estrella.qmd</code></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Dimensiones</td>
+<td style="text-align: left;">Llaves únicas, miembro 0 presente, <code>dim_fecha</code> sin huecos, una versión vigente por dominio</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Rangos</td>
+<td style="text-align: left;">Porcentajes de Banxico entre 0 y 100; <code>monto_fraude_usd</code> = <code>monto_usd</code> × <code>es_fraude</code> en todas las filas</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>La consulta de <a href="#fig-consistencia" class="quarto-xref">Figura&nbsp;1</a>, escrita aparte del pipeline, confirma en la consola de BigQuery el grano único y la ausencia de llaves huérfanas en las siete tablas.</p>
+<div id="fig-consistencia" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-consistencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_dw_consistencia.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figura&nbsp;1: Filas, grano distinto y llaves huérfanas de las siete tablas"><img src="img/e2_dw_consistencia.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-consistencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Filas, grano distinto y llaves huérfanas de las siete tablas
+</figcaption>
+</figure>
+</div>
+<div id="fig-hechos" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-hechos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_dw_hechos_detalles.png" class="lightbox" data-gallery="quarto-lightbox-gallery-2" title="Figura&nbsp;2: Filas de hechos_transaccion en la consola"><img src="img/e2_dw_hechos_detalles.png" class="img-fluid figure-img" style="width:70.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-hechos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;2: Filas de <code>hechos_transaccion</code> en la consola
+</figcaption>
+</figure>
+</div>
+<section id="idempotencia" class="level3">
+<h3 class="anchored" data-anchor-id="idempotencia">Idempotencia</h3>
+<div id="tbl-idempotencia" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[34,36,30]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-idempotencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;5: Dos corridas seguidas de <code>carga</code> y <code>datamart</code>
+</figcaption>
+<div aria-describedby="tbl-idempotencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 36%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Medida</th>
+<th style="text-align: left;">Primera corrida</th>
+<th style="text-align: left;">Segunda corrida</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Versiones nuevas en <code>dim_dominio_correo</code></td>
+<td style="text-align: left;">59</td>
+<td style="text-align: left;"><strong>0</strong> (siguen 59)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Filas de las siete tablas</td>
+<td style="text-align: left;">4,108 / 5 / 6 / 4 / 59 / 590,540 / 90</td>
+<td style="text-align: left;">Iguales</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Validaciones de la carga</td>
+<td style="text-align: left;">35 correctas</td>
+<td style="text-align: left;">35 correctas</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Resultados del DataMart</td>
+<td style="text-align: left;">374 / 183 / 37 / 7 filas</td>
+<td style="text-align: left;">Iguales</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+</section>
+<section id="historia-de-los-dominios-scd-tipo-2" class="level3">
+<h3 class="anchored" data-anchor-id="historia-de-los-dominios-scd-tipo-2">Historia de los dominios (SCD tipo 2)</h3>
+<p>E1 definió <code>dim_dominio_correo</code> con historia porque la lista de correo gratuito cambia con frecuencia: cada cambio debe crear una versión nueva sin borrar la anterior. La carga no vacía esta dimensión. Cierra la versión vigente de un dominio cuya clasificación cambió y le crea otra.</p>
+<p>Para probarlo sin tocar el DW, <code>pruebas/prueba_scd2.py</code> crea un dataset temporal con el esquema de E1, aplica la lista real dos veces y después una lista simulada del 8 de noviembre de 2026 en la que <code>gmail.com</code> deja de ser gratuito y <code>anonymous.com</code> pasa a serlo. Al terminar borra el dataset.</p>
+<div id="tbl-scd2" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[10,26,14,18,18,14]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-scd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;6: Versiones de los dominios cambiados en la prueba (<a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/blob/main/pipeline/salidas/prueba_scd2.csv"><code>prueba_scd2.csv</code></a>)
+</figcaption>
+<div aria-describedby="tbl-scd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 10%">
+<col style="width: 26%">
+<col style="width: 14%">
+<col style="width: 18%">
+<col style="width: 18%">
+<col style="width: 14%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: right;">Llave</th>
+<th style="text-align: left;">Dominio</th>
+<th style="text-align: left;">Gratuito</th>
+<th style="text-align: left;">Válido desde</th>
+<th style="text-align: left;">Válido hasta</th>
+<th style="text-align: left;">Vigente</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: right;">2</td>
+<td style="text-align: left;"><code>anonymous.com</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">2026-10-09</td>
+<td style="text-align: left;">2026-11-07</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">59</td>
+<td style="text-align: left;"><code>anonymous.com</code></td>
+<td style="text-align: left;">Sí</td>
+<td style="text-align: left;">2026-11-08</td>
+<td style="text-align: left;">9999-12-31</td>
+<td style="text-align: left;">Sí</td>
+</tr>
+<tr class="odd">
+<td style="text-align: right;">16</td>
+<td style="text-align: left;"><code>gmail.com</code></td>
+<td style="text-align: left;">Sí</td>
+<td style="text-align: left;">2026-10-09</td>
+<td style="text-align: left;">2026-11-07</td>
+<td style="text-align: left;">No</td>
+</tr>
+<tr class="even">
+<td style="text-align: right;">60</td>
+<td style="text-align: left;"><code>gmail.com</code></td>
+<td style="text-align: left;">No</td>
+<td style="text-align: left;">2026-11-08</td>
+<td style="text-align: left;">9999-12-31</td>
+<td style="text-align: left;">Sí</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>Cada corrida repetida con la misma lista no creó versiones, y la lista simulada creó exactamente dos, una por dominio cambiado. La versión anterior queda cerrada el día previo y conserva su llave, así que un resultado calculado con la lista vieja se puede reproducir.</p>
+</section>
+</section>
+<section id="datamart" class="level2">
+<h2 class="anchored" data-anchor-id="datamart">DataMart</h2>
+<p>Las cuatro vistas de E1 se ejecutaron sobre el DW poblado. El paso <code>datamart</code> guarda sus resultados completos en <code>pipeline/salidas/mart_*.csv</code> y comprueba que reproducen las cifras del EDA.</p>
+<div class="tabset-margin-container"></div><div class="panel-tabset">
+<ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">P1 · Segmentos</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">P2 · Tramo diario</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">P2 · México</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">P3 · Identidad</a></li></ul>
+<div class="tab-content">
+<div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
+<p><strong><code>p1_tasa_por_segmento</code> (GROUP BY CUBE).</strong> Calcula la tasa de fraude de las 374 combinaciones de producto, tipo de tarjeta, dispositivo y correo gratuito, con sus subtotales.</p>
+<div id="fig-mart-p1" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mart-p1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_mart_p1.png" class="lightbox" data-gallery="quarto-lightbox-gallery-3" title="Figura&nbsp;3: Los 10 segmentos de al menos 1,000 transacciones con mayor tasa relativa"><img src="img/e2_mart_p1.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mart-p1-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;3: Los 10 segmentos de al menos 1,000 transacciones con mayor tasa relativa
+</figcaption>
+</figure>
+</div>
+<p><strong>Lectura.</strong> El segmento con más fraude es el producto C con tarjeta de crédito en móvil: 20.70 %, <strong>5.92 veces</strong> la tasa global, en 10,366 transacciones. Los diez primeros tienen el producto C, la tarjeta de crédito o ambos. En el otro extremo, W con débito y correo no gratuito tiene 1.03 % (0.29 veces). El correo gratuito separa menos: 3.71 % frente a 2.29 % del no gratuito. El filtro de 1,000 transacciones importa: 188 de las 374 combinaciones son más chicas, y sus tasas son inestables (16 transacciones con 6 fraudes dan 37.5 %). Esta vista es la línea base descriptiva de P1; un modelo la reemplazará.</p>
+</div>
+<div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
+<p><strong><code>p2_tramo_diario</code> (funciones de ventana y ROLLUP).</strong> Ordena cada día por la regla simple (mayor importe primero), marca el 0.75 % superior y mide cuánto fraude contiene. La fila sin fecha es el total.</p>
+<div id="fig-mart-p2-tramo" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mart-p2-tramo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_mart_p2_tramo.png" class="lightbox" data-gallery="quarto-lightbox-gallery-4" title="Figura&nbsp;4: Total del periodo y primeros días"><img src="img/e2_mart_p2_tramo.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mart-p2-tramo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;4: Total del periodo y primeros días
+</figcaption>
+</figure>
+</div>
+<p><strong>Lectura.</strong> En el periodo, el tramo tiene 4,517 transacciones (0.76 %), contiene 134 fraudes y <strong>7.58 % del monto defraudado</strong>, frente a 0.76 % que cubriría un orden al azar: unas 10 veces más dinero, pero no más aciertos (2.97 % de fraude en el tramo contra 3.50 % global). Además es muy irregular: en 103 de los 182 días el tramo no contiene ningún fraude. Son las mismas cifras que las <a href="../../entregas/E2_eda_preparacion/eda.html#líneas-base-del-tramo-revisado">líneas base del EDA</a>, calculadas ahora desde el DW. Cuando exista el modelo, solo cambia el orden de la ventana.</p>
+</div>
+<div id="tabset-1-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-3-tab">
+<p><strong><code>p2_referencia_mexico</code> (ROLLUP).</strong> Autorizaciones, compra promedio y contracargos del comercio electrónico en México por año y tipo de tarjeta. Los porcentajes se ponderan por número o por monto, no se promedian.</p>
+<div id="fig-mart-p2-mexico" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mart-p2-mexico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_mart_p2_mexico.png" class="lightbox" data-gallery="quarto-lightbox-gallery-5" title="Figura&nbsp;5: Años del periodo de IEEE-CIS, años recientes y total"><img src="img/e2_mart_p2_mexico.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mart-p2-mexico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;5: Años del periodo de IEEE-CIS, años recientes y total
+</figcaption>
+</figure>
+</div>
+<p><strong>Lectura.</strong> En 2017 y 2018, los años de IEEE-CIS, los contracargos fueron 0.46 % y 0.34 % por número, y 0.84 % y 0.93 % por monto. En el primer trimestre de 2026, 0.39 % y 0.33 %, con una compra promedio de 730 pesos (1,220 con crédito, 524 con débito). Es la referencia contra la que el <a href="../../entregas/E2_eda_preparacion/eda.html#mexico">EDA</a> midió la brecha: el fraude de IEEE-CIS (3.50 %) es del orden de diez veces los contracargos de México, y las definiciones no son iguales.</p>
+</div>
+<div id="tabset-1-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-4-tab">
+<p><strong><code>p3_identidad</code> (ROLLUP).</strong> Tasa de fraude por número y por monto, con y sin registro de identidad, y por tipo de dispositivo.</p>
+<div id="fig-mart-p3" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-mart-p3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_mart_p3.png" class="lightbox" data-gallery="quarto-lightbox-gallery-6" title="Figura&nbsp;6: Las siete filas de la vista"><img src="img/e2_mart_p3.png" class="img-fluid figure-img"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-mart-p3-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;6: Las siete filas de la vista
+</figcaption>
+</figure>
+</div>
+<p><strong>Lectura.</strong> Con registro de identidad la tasa es <strong>7.85 %</strong> y sin él <strong>2.09 %</strong> (3.75 veces); por monto, 8.34 % frente a 3.07 %. Dentro de las que tienen identidad, el móvil es el más riesgoso: 10.17 % por número y 14.13 % por monto. Ojo con la causa: el producto W nunca trae identidad, así que parte de la diferencia es del producto (<a href="../../entregas/E2_eda_preparacion/eda.html#cruces">cruces del EDA</a>).</p>
+</div>
+</div>
+</div>
+<p>Las cuatro consultas responden con los datos cargados. P4 sigue sin consulta, como se declaró en E1: ninguna fuente trae las operaciones rechazadas ni su desenlace.</p>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../entregas/E2_eda_preparacion/preparacion.html" class="pagination-link" aria-label="2 · Preparación de los datos">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">2 · Preparación de los datos</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM</p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos">
+<p>Repositorio</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

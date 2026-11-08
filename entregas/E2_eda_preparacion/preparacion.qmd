@@ -255,7 +255,8 @@ registros, y ninguna razón aplica a la preparación:
 - **Redundancia.** Solo 910 filas (0.15 %) tienen un posible duplicado.
 
 Por eso el dataset y el DW conservan las 590,540 transacciones y ninguna cifra de E2 sale de una
-muestra.
+muestra. El paso `muestreo` del pipeline mide estos criterios en cada corrida (1.13 GB, 3.50 % de
+fraude, 0.15 % de posibles duplicados) y registra la decisión en `lumen_prep.muestreo_decision`.
 
 ## Verificación: antes y después {#antes-despues}
 

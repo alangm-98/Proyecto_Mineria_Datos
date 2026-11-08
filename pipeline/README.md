@@ -4,14 +4,11 @@ Pipeline reproducible de la entrega E2 (EDA y preparación de los datos). Lleva 
 `lumen_staging` al esquema estrella de `lumen_dw`, pasando por una capa de preparación
 (`lumen_prep`), y deja ejecutables las vistas de `lumen_mart`.
 
-> **Estado:** están implementados la verificación previa y los pasos `ingesta`, `calidad`,
-> `limpieza`, `reduccion` y `antes_despues`. El paso `carga` todavía no; el pipeline lo omite y lo
-> anota en el registro. Este README se completa con el tiempo de ejecución medido de todos los pasos.
->
-> **Sin muestreo.** El pipeline trabaja con las 590,540 transacciones completas: el volumen cabe
-> en la capacidad de cómputo y en la cuota gratuita de BigQuery, y solo 910 filas (0.15 %) tienen
-> un posible duplicado. Balancear las clases (3.50 % de fraude) es una decisión del modelado y se
-> haría solo dentro de la partición de entrenamiento.
+> **Sin muestreo.** El pipeline trabaja con las 590,540 transacciones completas. El paso
+> `muestreo` evalúa los criterios (volumen, clase desbalanceada, registros redundantes) y registra
+> la decisión: el volumen cabe en la capacidad de cómputo y en la cuota gratuita de BigQuery, y
+> solo 910 filas (0.15 %) tienen un posible duplicado. Balancear las clases (3.50 % de fraude) es
+> una decisión del modelado y se haría solo dentro de la partición de entrenamiento.
 
 ## Datos reales y muestra
 
@@ -84,14 +81,24 @@ ejecuta solo un tramo, por ejemplo `--desde calidad --hasta calidad`.
 
 ### Pasos
 
-| Paso                | Qué hace                                                                                                                                                                           | Escribe                                                                                                   | Duración y datos procesados (corridas del 7 y 8 nov 2026)                    |
-| :------------------ | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
-| Verificación previa | Credenciales, ubicación de staging y filas de cada tabla contra la fuente                                                                                                          | Nada                                                                                                      | ~3 s; solo metadatos                                                         |
-| `ingesta`           | Une y tipa A, B y D sin limpiar (SQL de `sql/01` a `sql/03`); valida filas, llaves y fechas                                                                                        | `lumen_prep.analitico_crudo`, `banxico_trimestres`, `dominios_lista`                                      | ~25 s; ~1.1 GB                                                               |
-| `calidad`           | Diagnóstico sin corregir: faltantes, ceros, distintos y rango por columna; duplicados; valores de categóricas; dominios sin pareja; consistencia de Banxico                        | `lumen_prep.calidad_*` y `salidas/calidad_*.csv`                                                          | ~3 min; ~2.3 GB                                                              |
-| `limpieza`          | Mismas filas: correo normalizado, T/F a BOOL, marcas de posibles duplicados y de importes atípicos, `log_importe` y partición temporal; registro de cada tratamiento con su conteo | `lumen_prep.analitico_limpio`, `registro_limpieza` y su CSV                                               | ~1.5 min; ~3.6 GB                                                            |
-| `reduccion`         | Con la partición de entrenamiento: faltantes, valor dominante, χ² con V de Cramér, Spearman y PCA del bloque V; una decisión por columna                                           | `lumen_prep.reduccion_decision`, vista `analitico_reducido`, `salidas/reduccion_*.csv`, figuras f12 y f13 | ~2.5 min; ~1.1 GB la primera vez (después usa el extracto local de `cache/`) |
-| `antes_despues`     | Mismas medidas clave sobre `analitico_crudo` y `analitico_reducido`; falla si cambia alguna que debía quedar igual                                                                 | `lumen_prep.antes_despues`, su CSV y figuras f14 y f15                                                    | ~20 s; ~1.9 GB                                                               |
+| Paso                | Qué hace                                                                                                                                                                                                                                                                                        | Escribe                                                                                                   | Duración y datos procesados (corridas del 7 y 8 nov 2026)                    |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
+| Verificación previa | Credenciales, ubicación de staging y filas de cada tabla contra la fuente                                                                                                                                                                                                                       | Nada                                                                                                      | ~3 s; solo metadatos                                                         |
+| `ingesta`           | Une y tipa A, B y D sin limpiar (SQL de `sql/01` a `sql/03`); valida filas, llaves y fechas                                                                                                                                                                                                     | `lumen_prep.analitico_crudo`, `banxico_trimestres`, `dominios_lista`                                      | ~25 s; ~1.1 GB                                                               |
+| `calidad`           | Diagnóstico sin corregir: faltantes, ceros, distintos y rango por columna; duplicados; valores de categóricas; dominios sin pareja; consistencia de Banxico                                                                                                                                     | `lumen_prep.calidad_*` y `salidas/calidad_*.csv`                                                          | ~3 min; ~2.3 GB                                                              |
+| `limpieza`          | Mismas filas: correo normalizado, T/F a BOOL, marcas de posibles duplicados y de importes atípicos, `log_importe` y partición temporal; registro de cada tratamiento con su conteo                                                                                                              | `lumen_prep.analitico_limpio`, `registro_limpieza` y su CSV                                               | ~1.5 min; ~3.6 GB                                                            |
+| `reduccion`         | Con la partición de entrenamiento: faltantes, valor dominante, χ² con V de Cramér, Spearman y PCA del bloque V; una decisión por columna                                                                                                                                                        | `lumen_prep.reduccion_decision`, vista `analitico_reducido`, `salidas/reduccion_*.csv`, figuras f12 y f13 | ~2.5 min; ~1.1 GB la primera vez (después usa el extracto local de `cache/`) |
+| `muestreo`          | Mide los tres criterios del muestreo sobre `analitico_limpio` y registra la decisión; falla si un criterio lo justificara                                                                                                                                                                       | `lumen_prep.muestreo_decision` y su CSV                                                                   | ~5 s; ~5 MB                                                                  |
+| `antes_despues`     | Mismas medidas clave sobre `analitico_crudo` y `analitico_reducido`; falla si cambia alguna que debía quedar igual                                                                                                                                                                              | `lumen_prep.antes_despues`, su CSV y figuras f14 y f15                                                    | ~20 s; ~1.9 GB                                                               |
+| `carga`             | Crea el esquema estrella de E1 si no existe (`sql/06`) y comprueba que sea idéntico; llena las dimensiones de tipo 1 (`sql/07`), actualiza `dim_dominio_correo` con historia SCD 2 (`sql/08`) y llena los hechos (`sql/09`); 35 validaciones (grano, llaves huérfanas, totales, miembros de E1) | Las 7 tablas de `lumen_dw`; `lumen_prep.carga_validaciones` y su CSV                                      | ~65 s; ~0.1 GB                                                               |
+| `datamart`          | Crea las vistas de E1 si no existen (`sql/10`), las consulta y cruza sus totales con el DW y el EDA                                                                                                                                                                                             | `salidas/mart_*.csv`                                                                                      | ~15 s; ~0.1 GB                                                               |
+
+**Tiempo aproximado de una corrida completa:** unos 9 minutos y 10 GB procesados en BigQuery
+(suma de las corridas por paso; dentro de la cuota gratuita de 1 TB al mes). Las corridas
+siguientes son más rápidas porque la reducción reutiliza su extracto local.
+
+La historia de `dim_dominio_correo` se prueba aparte, en un dataset temporal que se borra al
+terminar: `uv run python pruebas/prueba_scd2.py` (escribe `salidas/prueba_scd2.csv`).
 
 ## Proyecto propio: cargar staging desde cero
 
@@ -131,9 +138,11 @@ pipeline/
 ├── uv.lock                todas las dependencias, fijadas
 ├── requirements.txt       las mismas versiones, para pip
 ├── .python-version        3.13.18
-├── src/                   módulos del pipeline: config, registro, bq, verificacion, ingesta, calidad
+├── src/                   módulos del pipeline: un archivo por paso, más config, registro, bq y verificacion
 ├── esquemas/              esquema explícito de las tablas de staging (A, B y D)
 ├── bootstrap/             carga de staging y generación de muestras (no forman parte del pipeline)
+├── pruebas/               prueba de la historia SCD 2 de dim_dominio_correo (no forma parte del pipeline)
+├── eda/                   análisis exploratorio (no forma parte del pipeline)
 ├── salidas/               diagnóstico agregado que escribe el pipeline (conteos, sin filas de datos)
 └── data/sample/           muestra pequeña (ver «Datos reales y muestra»)
 ```

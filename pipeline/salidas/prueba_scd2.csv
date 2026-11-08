@@ -1,0 +1,5 @@
+dominio_correo_key,dominio,es_gratuito,valido_desde,valido_hasta,es_actual
+2,anonymous.com,False,2026-10-09,2026-11-07,False
+59,anonymous.com,True,2026-11-08,9999-12-31,True
+16,gmail.com,True,2026-10-09,2026-11-07,False
+60,gmail.com,False,2026-11-08,9999-12-31,True
