@@ -3,3 +3,16 @@
 
 /.quarto/
 **/*.quarto_ipynb
+
+# E2 - pipeline
+.venv/
+__pycache__/
+pipeline/logs/
+pipeline/data/raw/
+*.zip
+
+# Credenciales: nunca en el repositorio
+application_default_credentials.json
+*-key.json
+*credentials*.json
+service-account*.json

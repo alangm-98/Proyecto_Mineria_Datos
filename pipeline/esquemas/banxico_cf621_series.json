@@ -1,0 +1,127 @@
+[
+ {
+  "name": "Fecha",
+  "type": "STRING",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273475",
+  "type": "INTEGER",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273476",
+  "type": "INTEGER",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273477",
+  "type": "INTEGER",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273478",
+  "type": "INTEGER",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273479",
+  "type": "INTEGER",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273480",
+  "type": "INTEGER",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273481",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273482",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273483",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273484",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273485",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273486",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273487",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273488",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273489",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273490",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273491",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273492",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273493",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273494",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273495",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273496",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273497",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ },
+ {
+  "name": "SF273498",
+  "type": "FLOAT",
+  "mode": "NULLABLE"
+ }
+]

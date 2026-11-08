@@ -1,0 +1,63 @@
+# =====================================================================
+# Pagos Lumen · E2 · Configuración del pipeline
+#
+# Todos los parámetros del pipeline viven aquí: nombres de proyecto,
+# datasets y tablas, supuestos, semilla y umbrales. El código no tiene
+# valores escritos a mano. Para ejecutar en otro proyecto de Google Cloud
+# basta con cambiar `proyecto.id` (ver README, sección «Proyecto propio»).
+#
+# Los parámetros que todavía no se fijan se marcan como «pendiente» con
+# la fase del plan en que se deciden.
+# =====================================================================
+
+proyecto:
+  id: pagos-lumen-dw
+  ubicacion: US # los cuatro datasets deben estar en la misma ubicación
+
+datasets:
+  staging: lumen_staging # datos crudos; el pipeline solo lee de aquí
+  prep: lumen_prep # capa de preparación: dataset analítico y tablas intermedias
+  dw: lumen_dw # esquema estrella de E1
+  mart: lumen_mart # vistas del DataMart de E1
+
+# Tablas de staging que usa el pipeline. Las de 14 días cargadas en E1
+# (ieee_train_transaction, ieee_train_identity) se conservan como evidencia
+# de esa entrega y el pipeline no las usa.
+staging:
+  ieee_transaccion: ieee_train_transaction_completa
+  ieee_identidad: ieee_train_identity_completa
+  banxico: banxico_cf621_series
+  ulb: ulb_fraud_detection
+  dominios: free_email_domains
+
+# Conteos de la fuente completa, calculados por el equipo en Kaggle en E1.
+# La verificación previa del pipeline compara contra ellos.
+esperado:
+  ieee_transaccion_filas: 590540
+  ieee_identidad_filas: 144233
+  ieee_fraudes: 20663
+
+# Solo para cargar staging en un proyecto propio (bootstrap/cargar_staging.py).
+bootstrap:
+  bucket: gs://pagos-lumen-dw-datos # cambiar si se usa otro proyecto
+  ieee_transaccion_csv: ieee/train_transaction.csv
+  ieee_identidad_csv: ieee/train_identity.csv
+  esquema_transaccion: esquemas/ieee_train_transaction.json
+  esquema_identidad: esquemas/ieee_train_identity.json
+
+supuestos:
+  # Referencia de TransactionDT (supuesto de E1, discusión 102157 de Kaggle; la fuente no la confirma)
+  fecha_referencia_ieee: "2017-12-01"
+
+semilla: 2026
+
+tramo_revisado: 0.0075 # 300 de 40,000: capacidad diaria como proporción del flujo (E0)
+
+# Pendiente (fase A2/B): partición temporal por día relativo.
+particion: {}
+
+# Pendiente (fase B): umbrales de χ², V de Cramér, correlación y PCA.
+umbrales: {}
+
+registro:
+  carpeta: logs # relativa a pipeline/; no se sube al repositorio

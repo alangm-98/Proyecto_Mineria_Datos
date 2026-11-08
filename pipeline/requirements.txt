@@ -1,0 +1,136 @@
+# Generado con: uv export --frozen --no-hashes --no-emit-project
+# Python 3.13.18. Se recomienda uv sync --frozen (ver README); este archivo es para quien prefiera pip.
+certifi==2026.10.23
+    # via requests
+cffi==2.1.1 ; platform_python_implementation != 'PyPy'
+    # via cryptography
+charset-normalizer==3.5.2
+    # via requests
+cloudpickle==3.1.2
+    # via joblib
+contourpy==1.4.0
+    # via matplotlib
+cryptography==50.0.2
+    # via google-auth
+cycler==0.12.1
+    # via matplotlib
+db-dtypes==1.9.0
+    # via pagos-lumen-pipeline
+fonttools==4.68.0
+    # via matplotlib
+google-api-core==2.44.0
+    # via
+    #   google-cloud-bigquery
+    #   google-cloud-bigquery-storage
+    #   google-cloud-core
+google-auth==2.62.1
+    # via
+    #   google-api-core
+    #   google-cloud-bigquery
+    #   google-cloud-bigquery-storage
+    #   google-cloud-core
+google-cloud-bigquery==3.47.0
+    # via pagos-lumen-pipeline
+google-cloud-bigquery-storage==2.43.0
+    # via pagos-lumen-pipeline
+google-cloud-core==2.8.0
+    # via google-cloud-bigquery
+google-crc32c==1.9.0
+    # via google-resumable-media
+google-resumable-media==2.11.0
+    # via google-cloud-bigquery
+googleapis-common-protos==1.76.0
+    # via
+    #   google-api-core
+    #   grpcio-status
+grpcio==1.85.1
+    # via
+    #   google-api-core
+    #   google-cloud-bigquery-storage
+    #   grpcio-status
+grpcio-status==1.85.1
+    # via google-api-core
+idna==3.20
+    # via requests
+joblib==1.6.0
+    # via scikit-learn
+kiwisolver==1.5.1
+    # via matplotlib
+matplotlib==3.11.2
+    # via pagos-lumen-pipeline
+narwhals==2.28.0
+    # via scikit-learn
+numpy==2.5.4
+    # via
+    #   contourpy
+    #   db-dtypes
+    #   matplotlib
+    #   pagos-lumen-pipeline
+    #   pandas
+    #   scikit-learn
+    #   scipy
+opentelemetry-api==1.45.2
+    # via google-api-core
+packaging==26.3
+    # via
+    #   db-dtypes
+    #   google-cloud-bigquery
+    #   matplotlib
+pandas==3.1.1
+    # via
+    #   db-dtypes
+    #   pagos-lumen-pipeline
+pillow==13.0.0
+    # via matplotlib
+proto-plus==1.29.0
+    # via
+    #   google-api-core
+    #   google-cloud-bigquery-storage
+protobuf==7.36.2
+    # via
+    #   google-api-core
+    #   google-cloud-bigquery-storage
+    #   googleapis-common-protos
+    #   grpcio-status
+    #   proto-plus
+pyarrow==26.0.1
+    # via
+    #   db-dtypes
+    #   pagos-lumen-pipeline
+pyasn1==0.6.5
+    # via pyasn1-modules
+pyasn1-modules==0.4.2
+    # via google-auth
+pycparser==3.12 ; implementation_name != 'PyPy' and platform_python_implementation != 'PyPy'
+    # via cffi
+pyparsing==3.3.3
+    # via matplotlib
+python-dateutil==2.9.0.post0
+    # via
+    #   google-cloud-bigquery
+    #   matplotlib
+    #   pandas
+pyyaml==6.0.3
+    # via pagos-lumen-pipeline
+requests==2.34.2
+    # via
+    #   google-api-core
+    #   google-cloud-bigquery
+scikit-learn==1.9.1
+    # via pagos-lumen-pipeline
+scipy==1.18.1
+    # via
+    #   pagos-lumen-pipeline
+    #   scikit-learn
+six==1.17.0
+    # via python-dateutil
+threadpoolctl==3.8.0
+    # via scikit-learn
+typing-extensions==4.16.0
+    # via
+    #   grpcio
+    #   opentelemetry-api
+tzdata==2026.6 ; sys_platform == 'emscripten' or sys_platform == 'win32'
+    # via pandas
+urllib3==2.8.0
+    # via requests

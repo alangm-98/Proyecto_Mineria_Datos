@@ -1,0 +1,2 @@
+# Las copias de las fuentes se guardan byte a byte, sin convertir fines de línea ni codificación
+pipeline/data/sample/* -text

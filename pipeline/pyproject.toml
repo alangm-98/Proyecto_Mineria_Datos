@@ -1,0 +1,20 @@
+[project]
+name = "pagos-lumen-pipeline"
+version = "0.1.0"
+description = "Pipeline de E2: de lumen_staging al DW poblado (Pagos Lumen, Almacenes y Minería de Datos, UNAM)"
+requires-python = "==3.13.18"
+dependencies = [
+  "google-cloud-bigquery==3.47.0",
+  "google-cloud-bigquery-storage==2.43.0",
+  "db-dtypes==1.9.0",
+  "pyarrow==26.0.1",
+  "pandas==3.1.1",
+  "numpy==2.5.4",
+  "scipy==1.18.1",
+  "scikit-learn==1.9.1",
+  "matplotlib==3.11.2",
+  "pyyaml==6.0.3",
+]
+
+[tool.uv]
+package = false
