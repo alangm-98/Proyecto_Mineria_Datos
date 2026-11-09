@@ -18,8 +18,9 @@ cambió.
 
 ::: {.callout-tip appearance="minimal"}
 **En una frase:** un solo comando lleva staging al DW en ocho pasos con 35 validaciones de la
-carga; correrlo dos veces da el mismo resultado, la historia de los dominios funciona, y las
-cuatro consultas del DataMart reproducen desde el DW las cifras del EDA.
+carga; correrlo dos veces da el mismo resultado, otra integrante lo reprodujo desde un clon limpio
+con resultados idénticos, y las cuatro consultas del DataMart reproducen desde el DW las cifras
+del EDA.
 :::
 
 ## Arquitectura
@@ -53,13 +54,13 @@ resultado.
 | `ingesta` | Une y tipa las fuentes sin limpiar: `analitico_crudo`, Banxico y dominios | ~25 s; 1.1 GB |
 | `calidad` | Diagnóstico sin corregir (faltantes, duplicados, rangos, categorías) | ~3 min; 2.3 GB |
 | `limpieza` | `analitico_limpio` y registro de limpieza ([página 2](preparacion.qmd#limpieza)) | ~1.5 min; 3.6 GB |
-| `reduccion` | Tabla de decisión y vista `analitico_reducido` ([página 2](preparacion.qmd#reduccion)) | ~2.5 min; 1.1 GB |
+| `reduccion` | Tabla de decisión y vista `analitico_reducido` ([página 2](preparacion.qmd#reduccion)) | 2.5 a 13 min según la máquina; 1.1 GB |
 | `muestreo` | Mide los criterios del muestreo y registra la decisión | ~5 s; 5 MB |
 | `antes_despues` | Comprueba que la preparación conserva el fenómeno ([página 2](preparacion.qmd#antes-despues)) | ~20 s; 1.9 GB |
 | `carga` | Pobla el esquema estrella y lo valida | ~65 s; 0.1 GB |
 | `datamart` | Ejecuta las vistas de E1 y cruza sus resultados con el DW y el EDA | ~15 s; 0.1 GB |
 
-: Pasos del pipeline; una corrida completa tarda unos 9 minutos y procesa unos 10 GB {#tbl-pasos tbl-colwidths="[18,56,26]"}
+: Pasos del pipeline; una corrida completa tarda de 10 a 20 minutos según la máquina y procesa unos 10 GB {#tbl-pasos tbl-colwidths="[18,56,26]"}
 
 ::: {.callout-note collapse="true" title="Cómo ejecutarlo"}
 Desde la carpeta `pipeline/`, con Python fijado por `uv` y credenciales de aplicación por defecto
@@ -86,7 +87,7 @@ Para otro proyecto de Google Cloud basta cambiar `proyecto.id` en `config.yaml`:
 | Registro por paso | Archivo en `logs/` con filas de entrada y salida, bytes procesados y duración; registro de limpieza en `lumen_prep` |
 | Validaciones automáticas | Llaves no nulas, grano único, rangos y totales en cada paso; si una falla, el pipeline se detiene |
 | Credenciales y datos | Credenciales de aplicación por defecto, fuera del repositorio; los datos de IEEE-CIS viven solo en BigQuery |
-| Prueba externa | Pendiente: la hace un integrante que no escribió el pipeline, desde un clon limpio |
+| Prueba externa | Hecha por una integrante que no escribió el pipeline, desde un clon limpio y con su cuenta: resultados idénticos ([abajo](#prueba-externa)) |
 
 : Requisitos del pipeline reproducible {#tbl-requisitos tbl-colwidths="[30,70]"}
 
@@ -142,6 +143,33 @@ grano único y la ausencia de llaves huérfanas en las siete tablas.
 ![Filas, grano distinto y llaves huérfanas de las siete tablas](img/e2_dw_consistencia.png){#fig-consistencia}
 
 ![Filas de `hechos_transaccion` en la consola](img/e2_dw_hechos_detalles.png){#fig-hechos width="70%"}
+
+### Prueba externa {#prueba-externa}
+
+**Melanie Valeria Rangel Salcedo**, que no escribió el pipeline, lo ejecutó el 8 de noviembre de
+2026 en su laptop, desde un clon limpio del commit `78533eb`, con su propia cuenta de Google y
+siguiendo solo el README del pipeline.
+
+| Qué se comprobó | Resultado |
+| :--- | :--- |
+| Entorno | Arch Linux; `uv` 0.13.7; Python 3.13.18 instalado por `uv`; Google Cloud SDK 592.0.0 |
+| Pipeline completo, ocho pasos | Terminó en 1,193 s con las mismas cifras en todos los pasos: 25 tratamientos de limpieza, 271 columnas conservadas, 53 componentes, 35 validaciones de la carga y los mismos resultados del DataMart |
+| Prueba de SCD 2 | Mismas versiones, llaves y fechas que en @tbl-scd2 |
+| `git status` al terminar | Ningún cambio en código, configuración ni páginas. Solo dos CSV con diferencias en el decimal 15 (redondeo de punto flotante) y cuatro PNG con otra compresión; comparados píxel por píxel, las figuras son iguales |
+
+: Resultado de la prueba externa {#tbl-prueba-externa tbl-colwidths="[26,74]"}
+
+La prueba encontró dos huecos del README, que ya están corregidos:
+
+1. **Versión de `uv`.** Con `uv` 0.12.15, `uv sync --frozen` falló porque esa versión no conoce
+   Python 3.13.18. El README pide ahora `uv` 0.13.6 o posterior, y `pyproject.toml` lo exige con un
+   mensaje claro.
+2. **Un permiso faltante.** Los pasos que descargan resultados usan la API de lectura de BigQuery,
+   que pide el rol BigQuery Read Session User. El README lo agrega a su tabla de permisos.
+
+El tiempo fue cerca del doble que en la máquina donde se desarrolló el pipeline: las consultas en BigQuery
+tardaron lo mismo, pero el cálculo local de `reduccion` (χ² y Spearman) tomó 13 minutos en lugar
+de 2.5.
 
 ### Idempotencia
 

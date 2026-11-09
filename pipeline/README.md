@@ -32,9 +32,11 @@ Las licencias y la forma de citar cada fuente están en `data/sample/LICENCIAS.m
 
 ## Requisitos
 
-- [`uv`](https://docs.astral.sh/uv/) (en Arch Linux: `sudo pacman -S uv`). `uv` instala por su
-  cuenta la versión exacta de Python del proyecto (**3.13.18**, fijada en `.python-version`), sin
-  depender del Python del sistema.
+- [`uv`](https://docs.astral.sh/uv/) **0.13.6 o posterior** (en Arch Linux: `sudo pacman -Syu uv`).
+  `uv` instala por su cuenta la versión exacta de Python del proyecto (**3.13.18**, fijada en
+  `.python-version`), sin depender del Python del sistema. Las versiones anteriores de `uv` no
+  conocen Python 3.13.18 y fallan con `No interpreter found for Python 3.13.18`; `pyproject.toml`
+  exige la versión mínima.
 - Google Cloud CLI (`gcloud`), para autenticarse (en Arch Linux, paquete `google-cloud-cli` de AUR).
 - Acceso a un proyecto de Google Cloud con BigQuery.
 
@@ -64,19 +66,21 @@ gcloud auth application-default login
 gcloud auth application-default set-quota-project pagos-lumen-dw
 ```
 
-El primer comando abre el navegador. En la pantalla de consentimiento basta con aceptar el
+El primer comando abre el navegador; inicien sesión con **la misma cuenta de Google que tiene los
+roles** de la tabla siguiente. En la pantalla de consentimiento basta con aceptar el
 permiso de Google Cloud; los demás que ofrezca (por ejemplo, Cloud SQL) no hacen falta. Las
 credenciales quedan en `~/.config/gcloud/`, fuera del repositorio. Para retirarlas al terminar:
 `gcloud auth application-default revoke`.
 
 ### Permisos necesarios en el proyecto
 
-| Rol                                                                | Para qué                                                                                     |
-| :----------------------------------------------------------------- | :------------------------------------------------------------------------------------------- |
-| BigQuery Job User (`roles/bigquery.jobUser`)                       | Ejecutar consultas                                                                           |
-| BigQuery Data Editor (`roles/bigquery.dataEditor`)                 | Leer staging y crear o reemplazar tablas y vistas en `lumen_prep`, `lumen_dw` y `lumen_mart` |
-| Service Usage Consumer (`roles/serviceusage.serviceUsageConsumer`) | Usar el proyecto como proyecto de cuota de las credenciales ADC                              |
-| Storage Object Viewer (`roles/storage.objectViewer`)               | Solo para cargar staging desde Cloud Storage (bootstrap)                                     |
+| Rol                                                                | Para qué                                                                                              |
+| :----------------------------------------------------------------- | :---------------------------------------------------------------------------------------------------- |
+| BigQuery Job User (`roles/bigquery.jobUser`)                       | Ejecutar consultas                                                                                    |
+| BigQuery Data Editor (`roles/bigquery.dataEditor`)                 | Leer staging y crear o reemplazar tablas y vistas en `lumen_prep`, `lumen_dw` y `lumen_mart`          |
+| Service Usage Consumer (`roles/serviceusage.serviceUsageConsumer`) | Usar el proyecto como proyecto de cuota de las credenciales ADC                                       |
+| BigQuery Read Session User (`roles/bigquery.readSessionUser`)      | Descargar resultados con la API de lectura de BigQuery (la usan `calidad`, `reduccion` y otros pasos) |
+| Storage Object Viewer (`roles/storage.objectViewer`)               | Solo para cargar staging desde Cloud Storage (bootstrap)                                              |
 
 ## Ejecución
 
@@ -91,21 +95,23 @@ ejecuta solo un tramo, por ejemplo `--desde calidad --hasta calidad`.
 
 ### Pasos
 
-| Paso                | Qué hace                                                                                                                                                                                                                                                                                        | Escribe                                                                                                   | Duración y datos procesados (corridas del 7 y 8 nov 2026)                    |
-| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | :--------------------------------------------------------------------------- |
-| Verificación previa | Credenciales, ubicación de staging y filas de cada tabla contra la fuente                                                                                                                                                                                                                       | Nada                                                                                                      | ~3 s; solo metadatos                                                         |
-| `ingesta`           | Une y tipa A, B y D sin limpiar (SQL de `sql/01` a `sql/03`); valida filas, llaves y fechas                                                                                                                                                                                                     | `lumen_prep.analitico_crudo`, `banxico_trimestres`, `dominios_lista`                                      | ~25 s; ~1.1 GB                                                               |
-| `calidad`           | Diagnóstico sin corregir: faltantes, ceros, distintos y rango por columna; duplicados; valores de categóricas; dominios sin pareja; consistencia de Banxico                                                                                                                                     | `lumen_prep.calidad_*` y `salidas/calidad_*.csv`                                                          | ~3 min; ~2.3 GB                                                              |
-| `limpieza`          | Mismas filas: correo normalizado, T/F a BOOL, marcas de posibles duplicados y de importes atípicos, `log_importe` y partición temporal; registro de cada tratamiento con su conteo                                                                                                              | `lumen_prep.analitico_limpio`, `registro_limpieza` y su CSV                                               | ~1.5 min; ~3.6 GB                                                            |
-| `reduccion`         | Con la partición de entrenamiento: faltantes, valor dominante, χ² con V de Cramér, Spearman y PCA del bloque V; una decisión por columna                                                                                                                                                        | `lumen_prep.reduccion_decision`, vista `analitico_reducido`, `salidas/reduccion_*.csv`, figuras f12 y f13 | ~2.5 min; ~1.1 GB la primera vez (después usa el extracto local de `cache/`) |
-| `muestreo`          | Mide los tres criterios del muestreo sobre `analitico_limpio` y registra la decisión; falla si un criterio lo justificara                                                                                                                                                                       | `lumen_prep.muestreo_decision` y su CSV                                                                   | ~5 s; ~5 MB                                                                  |
-| `antes_despues`     | Mismas medidas clave sobre `analitico_crudo` y `analitico_reducido`; falla si cambia alguna que debía quedar igual                                                                                                                                                                              | `lumen_prep.antes_despues`, su CSV y figuras f14 y f15                                                    | ~20 s; ~1.9 GB                                                               |
-| `carga`             | Crea el esquema estrella de E1 si no existe (`sql/06`) y comprueba que sea idéntico; llena las dimensiones de tipo 1 (`sql/07`), actualiza `dim_dominio_correo` con historia SCD 2 (`sql/08`) y llena los hechos (`sql/09`); 35 validaciones (grano, llaves huérfanas, totales, miembros de E1) | Las 7 tablas de `lumen_dw`; `lumen_prep.carga_validaciones` y su CSV                                      | ~65 s; ~0.1 GB                                                               |
-| `datamart`          | Crea las vistas de E1 si no existen (`sql/10`), las consulta y cruza sus totales con el DW y el EDA                                                                                                                                                                                             | `salidas/mart_*.csv`                                                                                      | ~15 s; ~0.1 GB                                                               |
+| Paso                | Qué hace                                                                                                                                                                                                                                                                                        | Escribe                                                                                                   | Duración y datos procesados (corridas del 7 y 8 nov 2026)                                                                  |
+| :------------------ | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------- |
+| Verificación previa | Credenciales, ubicación de staging y filas de cada tabla contra la fuente                                                                                                                                                                                                                       | Nada                                                                                                      | ~3 s; solo metadatos                                                                                                       |
+| `ingesta`           | Une y tipa A, B y D sin limpiar (SQL de `sql/01` a `sql/03`); valida filas, llaves y fechas                                                                                                                                                                                                     | `lumen_prep.analitico_crudo`, `banxico_trimestres`, `dominios_lista`                                      | ~25 s; ~1.1 GB                                                                                                             |
+| `calidad`           | Diagnóstico sin corregir: faltantes, ceros, distintos y rango por columna; duplicados; valores de categóricas; dominios sin pareja; consistencia de Banxico                                                                                                                                     | `lumen_prep.calidad_*` y `salidas/calidad_*.csv`                                                          | ~3 min; ~2.3 GB                                                                                                            |
+| `limpieza`          | Mismas filas: correo normalizado, T/F a BOOL, marcas de posibles duplicados y de importes atípicos, `log_importe` y partición temporal; registro de cada tratamiento con su conteo                                                                                                              | `lumen_prep.analitico_limpio`, `registro_limpieza` y su CSV                                               | ~1.5 min; ~3.6 GB                                                                                                          |
+| `reduccion`         | Con la partición de entrenamiento: faltantes, valor dominante, χ² con V de Cramér, Spearman y PCA del bloque V; una decisión por columna                                                                                                                                                        | `lumen_prep.reduccion_decision`, vista `analitico_reducido`, `salidas/reduccion_*.csv`, figuras f12 y f13 | de 2.5 a 13 min según la máquina (el cálculo es local); ~1.1 GB la primera vez (después usa el extracto local de `cache/`) |
+| `muestreo`          | Mide los tres criterios del muestreo sobre `analitico_limpio` y registra la decisión; falla si un criterio lo justificara                                                                                                                                                                       | `lumen_prep.muestreo_decision` y su CSV                                                                   | ~5 s; ~5 MB                                                                                                                |
+| `antes_despues`     | Mismas medidas clave sobre `analitico_crudo` y `analitico_reducido`; falla si cambia alguna que debía quedar igual                                                                                                                                                                              | `lumen_prep.antes_despues`, su CSV y figuras f14 y f15                                                    | ~20 s; ~1.9 GB                                                                                                             |
+| `carga`             | Crea el esquema estrella de E1 si no existe (`sql/06`) y comprueba que sea idéntico; llena las dimensiones de tipo 1 (`sql/07`), actualiza `dim_dominio_correo` con historia SCD 2 (`sql/08`) y llena los hechos (`sql/09`); 35 validaciones (grano, llaves huérfanas, totales, miembros de E1) | Las 7 tablas de `lumen_dw`; `lumen_prep.carga_validaciones` y su CSV                                      | ~65 s; ~0.1 GB                                                                                                             |
+| `datamart`          | Crea las vistas de E1 si no existen (`sql/10`), las consulta y cruza sus totales con el DW y el EDA                                                                                                                                                                                             | `salidas/mart_*.csv`                                                                                      | ~15 s; ~0.1 GB                                                                                                             |
 
-**Tiempo aproximado de una corrida completa:** unos 9 minutos y 10 GB procesados en BigQuery
-(suma de las corridas por paso; dentro de la cuota gratuita de 1 TB al mes). Las corridas
-siguientes son más rápidas porque la reducción reutiliza su extracto local.
+**Tiempo aproximado de una corrida completa:** de 10 a 20 minutos según la máquina, y unos 10 GB
+procesados en BigQuery (dentro de la cuota gratuita de 1 TB al mes). La prueba externa, en una
+laptop con Arch Linux, tardó 1,193 s; casi toda la diferencia entre máquinas está en el cálculo
+local de `reduccion`. Las corridas siguientes son más rápidas porque la reducción reutiliza su
+extracto local.
 
 La historia de `dim_dominio_correo` se prueba aparte, en un dataset temporal que se borra al
 terminar: `uv run python pruebas/prueba_scd2.py` (escribe `salidas/prueba_scd2.csv`).

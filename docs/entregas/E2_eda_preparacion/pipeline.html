@@ -496,6 +496,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#carga-del-esquema-estrella" id="toc-carga-del-esquema-estrella" class="nav-link" data-scroll-target="#carga-del-esquema-estrella">Carga del esquema estrella</a></li>
   <li><a href="#evidencia-de-consistencia" id="toc-evidencia-de-consistencia" class="nav-link" data-scroll-target="#evidencia-de-consistencia">Evidencia de consistencia</a>
   <ul class="collapse">
+  <li><a href="#prueba-externa" id="toc-prueba-externa" class="nav-link" data-scroll-target="#prueba-externa">Prueba externa</a></li>
   <li><a href="#idempotencia" id="toc-idempotencia" class="nav-link" data-scroll-target="#idempotencia">Idempotencia</a></li>
   <li><a href="#historia-de-los-dominios-scd-tipo-2" id="toc-historia-de-los-dominios-scd-tipo-2" class="nav-link" data-scroll-target="#historia-de-los-dominios-scd-tipo-2">Historia de los dominios (SCD tipo 2)</a></li>
   </ul></li>
@@ -544,7 +545,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>En una frase:</strong> un solo comando lleva staging al DW en ocho pasos con 35 validaciones de la carga; correrlo dos veces da el mismo resultado, la historia de los dominios funciona, y las cuatro consultas del DataMart reproducen desde el DW las cifras del EDA.</p>
+<p><strong>En una frase:</strong> un solo comando lleva staging al DW en ocho pasos con 35 validaciones de la carga; correrlo dos veces da el mismo resultado, otra integrante lo reprodujo desde un clon limpio con resultados idénticos, y las cuatro consultas del DataMart reproducen desde el DW las cifras del EDA.</p>
 </div>
 </div>
 </div>
@@ -581,7 +582,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <div id="tbl-pasos" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,56,26]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-pasos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;1: Pasos del pipeline; una corrida completa tarda unos 9 minutos y procesa unos 10 GB
+Tabla&nbsp;1: Pasos del pipeline; una corrida completa tarda de 10 a 20 minutos según la máquina y procesa unos 10 GB
 </figcaption>
 <div aria-describedby="tbl-pasos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -621,7 +622,7 @@ Tabla&nbsp;1: Pasos del pipeline; una corrida completa tarda unos 9 minutos y pr
 <tr class="odd">
 <td style="text-align: left;"><code>reduccion</code></td>
 <td style="text-align: left;">Tabla de decisión y vista <code>analitico_reducido</code> (<a href="../../entregas/E2_eda_preparacion/preparacion.html#reduccion">página 2</a>)</td>
-<td style="text-align: left;">~2.5 min; 1.1 GB</td>
+<td style="text-align: left;">2.5 a 13 min según la máquina; 1.1 GB</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>muestreo</code></td>
@@ -695,7 +696,7 @@ Tabla&nbsp;2: Requisitos del pipeline reproducible
 </tr>
 <tr class="even">
 <td style="text-align: left;">Sin pasos manuales; idempotente</td>
-<td style="text-align: left;">Todo es SQL o Python ejecutado por el pipeline. Demostrado con dos corridas (<a href="#tbl-idempotencia" class="quarto-xref">Tabla&nbsp;5</a>)</td>
+<td style="text-align: left;">Todo es SQL o Python ejecutado por el pipeline. Demostrado con dos corridas (<a href="#tbl-idempotencia" class="quarto-xref">Tabla&nbsp;6</a>)</td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Semilla, versiones y parámetros</td>
@@ -715,7 +716,7 @@ Tabla&nbsp;2: Requisitos del pipeline reproducible
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Prueba externa</td>
-<td style="text-align: left;">Pendiente: la hace un integrante que no escribió el pipeline, desde un clon limpio</td>
+<td style="text-align: left;">Hecha por una integrante que no escribió el pipeline, desde un clon limpio y con su cuenta: resultados idénticos (<a href="#prueba-externa">abajo</a>)</td>
 </tr>
 </tbody>
 </table>
@@ -870,12 +871,61 @@ Figura&nbsp;2: Filas de <code>hechos_transaccion</code> en la consola
 </figcaption>
 </figure>
 </div>
+<section id="prueba-externa" class="level3">
+<h3 class="anchored" data-anchor-id="prueba-externa">Prueba externa</h3>
+<p><strong>Melanie Valeria Rangel Salcedo</strong>, que no escribió el pipeline, lo ejecutó el 8 de noviembre de 2026 en su laptop, desde un clon limpio del commit <code>78533eb</code>, con su propia cuenta de Google y siguiendo solo el README del pipeline.</p>
+<div id="tbl-prueba-externa" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[26,74]">
+<figure class="quarto-float quarto-float-tbl figure">
+<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-prueba-externa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Tabla&nbsp;5: Resultado de la prueba externa
+</figcaption>
+<div aria-describedby="tbl-prueba-externa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<table class="caption-top table">
+<colgroup>
+<col style="width: 26%">
+<col style="width: 74%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Qué se comprobó</th>
+<th style="text-align: left;">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Entorno</td>
+<td style="text-align: left;">Arch Linux; <code>uv</code> 0.13.7; Python 3.13.18 instalado por <code>uv</code>; Google Cloud SDK 592.0.0</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Pipeline completo, ocho pasos</td>
+<td style="text-align: left;">Terminó en 1,193 s con las mismas cifras en todos los pasos: 25 tratamientos de limpieza, 271 columnas conservadas, 53 componentes, 35 validaciones de la carga y los mismos resultados del DataMart</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Prueba de SCD 2</td>
+<td style="text-align: left;">Mismas versiones, llaves y fechas que en <a href="#tbl-scd2" class="quarto-xref">Tabla&nbsp;7</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>git status</code> al terminar</td>
+<td style="text-align: left;">Ningún cambio en código, configuración ni páginas. Solo dos CSV con diferencias en el decimal 15 (redondeo de punto flotante) y cuatro PNG con otra compresión; comparados píxel por píxel, las figuras son iguales</td>
+</tr>
+</tbody>
+</table>
+</div>
+</figure>
+</div>
+<p>La prueba encontró dos huecos del README, que ya están corregidos:</p>
+<ol type="1">
+<li><strong>Versión de <code>uv</code>.</strong> Con <code>uv</code> 0.12.15, <code>uv sync --frozen</code> falló porque esa versión no conoce Python 3.13.18. El README pide ahora <code>uv</code> 0.13.6 o posterior, y <code>pyproject.toml</code> lo exige con un mensaje claro.</li>
+<li><strong>Un permiso faltante.</strong> Los pasos que descargan resultados usan la API de lectura de BigQuery, que pide el rol BigQuery Read Session User. El README lo agrega a su tabla de permisos.</li>
+</ol>
+<p>El tiempo fue cerca del doble que en la máquina donde se desarrolló el pipeline: las consultas en BigQuery tardaron lo mismo, pero el cálculo local de <code>reduccion</code> (χ² y Spearman) tomó 13 minutos en lugar de 2.5.</p>
+</section>
 <section id="idempotencia" class="level3">
 <h3 class="anchored" data-anchor-id="idempotencia">Idempotencia</h3>
 <div id="tbl-idempotencia" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[34,36,30]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-idempotencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;5: Dos corridas seguidas de <code>carga</code> y <code>datamart</code>
+Tabla&nbsp;6: Dos corridas seguidas de <code>carga</code> y <code>datamart</code>
 </figcaption>
 <div aria-describedby="tbl-idempotencia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -925,7 +975,7 @@ Tabla&nbsp;5: Dos corridas seguidas de <code>carga</code> y <code>datamart</code
 <div id="tbl-scd2" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[10,26,14,18,18,14]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-scd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;6: Versiones de los dominios cambiados en la prueba (<a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/blob/main/pipeline/salidas/prueba_scd2.csv"><code>prueba_scd2.csv</code></a>)
+Tabla&nbsp;7: Versiones de los dominios cambiados en la prueba (<a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/blob/main/pipeline/salidas/prueba_scd2.csv"><code>prueba_scd2.csv</code></a>)
 </figcaption>
 <div aria-describedby="tbl-scd2-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
