@@ -23,7 +23,52 @@ puede atender) sino **decidir qué revisar**. Este proyecto construye un ordenam
 para que las 300 revisiones diarias sean las que más pérdida evitan, sin aumentar los bloqueos a
 clientes legítimos ni la carga del equipo.
 
-## Entrega actual: E1 · Arquitectura del DW
+## Entrega actual: E2 · EDA y preparación de los datos
+
+Esta fase explora las 590,540 transacciones completas, prepara los datos sin eliminar ni imputar
+filas y construye un pipeline reproducible que puebla el esquema estrella de E1 en BigQuery. Todo
+lo que se aprende de los datos se calcula solo con la partición de entrenamiento, para no filtrar
+información de validación ni de prueba.
+
+```{=html}
+<div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 14px; margin: 1.5rem 0;">
+
+  <a class="tarjeta" href="entregas/E2_eda_preparacion/eda.html" style="display: block; text-decoration: none; background: rgba(0, 123, 255, 0.05); border: 1px solid rgba(0, 123, 255, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 1</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Análisis exploratorio</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Estadística descriptiva, concentración con Gini, heterogeneidad con entropía, cruces por producto, periodo e identidad, y seis hallazgos.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E2_eda_preparacion/preparacion.html" style="display: block; text-decoration: none; background: rgba(255, 193, 7, 0.05); border: 1px solid rgba(255, 193, 7, 0.45); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 2</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Preparación de los datos</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Limpieza sin eliminar ni imputar filas, reducción de 438 a 271 columnas, decisión de muestreo y verificación antes y después.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E2_eda_preparacion/pipeline.html" style="display: block; text-decoration: none; background: rgba(106, 27, 154, 0.05); border: 1px solid rgba(106, 27, 154, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 3</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Pipeline y DW poblado</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Pipeline reproducible en BigQuery, esquema estrella cargado con SCD 2, 35 validaciones, prueba externa y consultas del DataMart.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E2_eda_preparacion/decisiones.html" style="display: block; text-decoration: none; background: rgba(220, 53, 69, 0.05); border: 1px solid rgba(220, 53, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 4</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Decisiones sobre los datos</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Las siete decisiones explicadas para el stakeholder, sin tecnicismos: qué se hizo, por qué y qué riesgos quedan.</div>
+  </a>
+
+  <a class="tarjeta" href="entregas/E2_eda_preparacion/trazabilidad.html" style="display: block; text-decoration: none; background: rgba(40, 167, 69, 0.05); border: 1px solid rgba(40, 167, 69, 0.35); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Entregable 5</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Trazabilidad a E0</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Matriz de E1 extendida con hallazgos, decisiones y estado de cada pregunta, y revisión del registro de riesgos.</div>
+  </a>
+
+</div>
+```
+
+## Entregas anteriores
+
+### E1 · Arquitectura del DW
 
 Esta fase busca y verifica las fuentes de datos, diseña el almacén en tres capas y modela un
 esquema estrella, demostrando que cada dimensión y cada métrica responde a una pregunta de E0. La
@@ -66,7 +111,7 @@ válidas.
 </div>
 ```
 
-## Entrega anterior: E0 · Comprensión del negocio
+### E0 · Comprensión del negocio
 
 Esta fase levanta el problema con el stakeholder y lo traduce en un objetivo de minería de datos y
 un criterio de éxito verificable, antes de escribir una sola línea de código.
@@ -127,8 +172,8 @@ anteriores.
 | # | Fase CRISP-DM | Estado |
 | :-- | :--- | :--- |
 | 1 | Comprensión del negocio | Cubierta en la entrega E0 |
-| 2 | Comprensión de los datos | **En curso: entrega E1**, fuentes y arquitectura del almacén |
-| 3 | Preparación de los datos | Pendiente |
+| 2 | Comprensión de los datos | Cubierta en las entregas E1 (fuentes y arquitectura del almacén) y E2 (análisis exploratorio) |
+| 3 | Preparación de los datos | Cubierta en la entrega E2: limpieza, reducción y DW poblado |
 | 4 | Modelado | Pendiente |
 | 5 | Evaluación | Pendiente |
 | 6 | Despliegue | Integrada en el reporte y la presentación final |
