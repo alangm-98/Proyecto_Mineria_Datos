@@ -1,0 +1,234 @@
+---
+title: "4. Decisiones sobre los datos"
+subtitle: "Qué hicimos con los datos antes de construir un modelo, y por qué, en lenguaje no técnico"
+date: last-modified
+---
+
+<style>
+  .cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.2rem 0 1.6rem; }
+  .cifra { border: 1px solid var(--bs-border-color); border-radius: 10px; padding: 0.9rem 1rem; text-align: left; }
+  .cifra p { margin: 0; text-align: left; hyphens: none; }
+  .cifra .valor { display: block; font-size: 1.6rem; font-weight: 700; color: #2a78d6; line-height: 1.15; white-space: nowrap; }
+  .cifra .texto { display: block; font-size: 0.86rem; margin-top: 0.35rem; opacity: 0.85; line-height: 1.35; }
+  .decision .callout-title-container { font-size: 1.05rem; }
+  .partes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.6rem 1.2rem; }
+  .partes p { margin: 0; text-align: left; hyphens: none; }
+  .etiqueta { display: block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #2a78d6; margin-bottom: 0.15rem; }
+  body main table td:first-child { white-space: normal; }
+</style>
+
+Antes de buscar patrones de fraude con un modelo, hay que preparar los datos: revisar qué
+traen, corregir lo que está mal escrito y decidir qué información conservar. Esta página explica
+esas decisiones para quien no trabaja con datos. Los detalles técnicos están en las páginas de
+[análisis exploratorio](eda.qmd), [preparación](preparacion.qmd) y [pipeline](pipeline.qmd).
+
+::: {.cifras}
+::: {.cifra}
+[590,540]{.valor}
+[compras analizadas, todas las disponibles]{.texto}
+:::
+::: {.cifra}
+[0]{.valor}
+[compras eliminadas]{.texto}
+:::
+::: {.cifra}
+[438 → 271]{.valor}
+[datos por compra que se conservan]{.texto}
+:::
+::: {.cifra}
+[28 de 28]{.valor}
+[medidas clave iguales antes y después]{.texto}
+:::
+:::
+
+**En resumen:** usamos todas las compras, no borramos ninguna ni inventamos datos que faltaban,
+corregimos solo lo que estaba mal escrito y quitamos la información vacía o repetida. Al final
+comprobamos que el fraude se ve exactamente igual que antes de preparar los datos.
+
+## Las siete decisiones
+
+::: {.callout-note .decision appearance="simple" icon="false" title="1 · Usar todas las compras, sin tomar muestras"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} El conjunto de datos tiene 590,540 compras en línea de seis meses,
+con 20,663 fraudes (3.5 %).
+
+[Qué hicimos]{.etiqueta} Trabajamos con todas. Ninguna cifra de este proyecto sale de una
+muestra.
+
+[Por qué así]{.etiqueta} Una muestra solo se justifica si los datos no caben en las herramientas
+o si hay muchos registros repetidos. Aquí todo se procesa en minutos y solo el 0.15 % de las
+compras se parece a otra.
+
+[Qué cambia]{.etiqueta} Nada se pierde. Como el fraude es poco frecuente, el modelado podría
+equilibrar las clases más adelante, pero solo con los datos de entrenamiento (decisión 2).
+:::
+:::
+
+::: {.callout-note .decision appearance="simple" icon="false" title="2 · Aprender del pasado y evaluar con el futuro"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} Los datos cubren 182 días seguidos. La tasa de fraude del primer
+mes (2.5 %) es distinta a la de los siguientes (3.4 % a 4.0 %), porque cambió la mezcla de
+productos.
+
+[Qué hicimos]{.etiqueta} Separamos los días en tres bloques: del 1 al 120 para aprender, del 121
+al 150 para ajustar y del 151 al 182 para evaluar. Todo cálculo que «aprende» de los datos usa
+solo el primer bloque.
+
+[Por qué así]{.etiqueta} Así funcionaría en la operación: el modelo se entrena con lo que ya
+pasó y se usa con compras nuevas. Mezclar días al azar dejaría que el modelo «viera el futuro» y
+prometiera más de lo que puede dar.
+
+[Qué cambia]{.etiqueta} La evaluación será realista. Los tres bloques tienen una tasa de fraude
+parecida (3.52 %, 3.41 % y 3.48 %), así que ninguno queda en desventaja.
+:::
+:::
+
+::: {.callout-note .decision appearance="simple" icon="false" title="3 · No rellenar los datos que faltan"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} El 75.6 % de las compras no trae datos del dispositivo o de la
+identidad del comprador. Que falten **dice algo**: sin esos datos, el fraude es de 2.09 %; con
+ellos, de 7.85 %.
+
+[Qué hicimos]{.etiqueta} Dejamos los huecos como huecos. No rellenamos ningún valor faltante.
+
+[Por qué así]{.etiqueta} Rellenar con un valor típico haría que las compras sin datos parecieran
+tener datos, y se perdería la diferencia de 2.09 % contra 7.85 %, que es una de las señales más
+claras del proyecto.
+
+[Qué cambia]{.etiqueta} La pregunta sobre los datos de identidad (P3) se puede responder. Si un
+método del modelado no acepta huecos, se tratarán ahí, con reglas aprendidas solo del pasado.
+:::
+:::
+
+::: {.callout-note .decision appearance="simple" icon="false" title="4 · No recortar los montos extremos"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} Las compras más grandes (más de 620 dólares) son solo el 2.6 % del
+total, pero concentran el **25.6 % del dinero defraudado**. Las muy pequeñas (menos de 8.65
+dólares) tienen 7.7 % de fraude, el doble del promedio.
+
+[Qué hicimos]{.etiqueta} Conservamos todos los montos tal como vienen y solo marcamos cuáles son
+inusualmente grandes o pequeños.
+
+[Por qué así]{.etiqueta} Recortar los montos grandes, algo común en análisis de datos, borraría
+una cuarta parte del dinero que se pierde, que es justo lo que el proyecto quiere reducir.
+
+[Qué cambia]{.etiqueta} La medición del dinero que podría recuperarse (P2) queda intacta. Riesgo:
+unas pocas compras grandes pesan mucho, así que los resultados pueden variar de un día a otro.
+:::
+:::
+
+::: {.callout-note .decision appearance="simple" icon="false" title="5 · Corregir solo lo que estaba mal escrito"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} Algunos datos estaban escritos de dos formas: 496 compras traían
+`gmail` en lugar de `gmail.com`. Había también 910 compras casi idénticas a otra y 45 valores de
+tiempo negativos.
+
+[Qué hicimos]{.etiqueta} Unificamos la escritura del correo y dejamos todo lo demás. Las compras
+parecidas se conservan con una marca; los valores negativos, también.
+
+[Por qué así]{.etiqueta} Cada compra tiene su propio número y puede ser real (un cobro repetido,
+o un intento de fraude). Borrar sin una razón comprobada es perder información.
+
+[Qué cambia]{.etiqueta} El almacén guarda el correo ya corregido, no como venía; es el único
+cambio respecto al diseño del almacén. Todo lo corregido quedó registrado con su conteo.
+:::
+:::
+
+::: {.callout-note .decision appearance="simple" icon="false" title="6 · Pasar de 438 a 271 datos por compra"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} De los 438 datos por compra, 9 estaban casi vacíos, 4 casi no
+cambiaban, 7 no tenían relación con el fraude y 151 repetían lo que ya decía otro. Un dato
+«enmascarado» por el proveedor resultó ser simplemente la hora del día.
+
+[Qué hicimos]{.etiqueta} Conservamos 271. Los de negocio (producto, tipo de tarjeta, dispositivo,
+correo, monto y fecha) se conservaron siempre. Además resumimos un bloque de 185 datos
+enmascarados en 53 componentes, por si el modelado los prefiere.
+
+[Por qué así]{.etiqueta} Menos datos repetidos hacen el modelo más simple y más fácil de
+explicar, sin perder información. Cada dato descartado tiene su regla y su número en la
+[tabla de decisión](preparacion.qmd#tabla-de-decisión-por-variable).
+
+[Qué cambia]{.etiqueta} Se pierde, por ejemplo, la marca de la tarjeta: su relación con el
+fraude es real pero muy débil. Riesgo bajo: los datos descartados siguen guardados y se pueden
+recuperar.
+:::
+:::
+
+::: {.callout-note .decision appearance="simple" icon="false" title="7 · Comprobar que nada se distorsionó"}
+::: {.partes}
+[Qué encontramos]{.etiqueta} Después de preparar los datos, volvimos a calcular 28 medidas
+clave: la tasa de fraude total, por producto, por tipo de tarjeta y con o sin datos de identidad,
+y qué tan concentrado está el dinero defraudado.
+
+[Qué hicimos]{.etiqueta} Las comparamos con las del dato original. Las 28 son idénticas. Una
+integrante que no escribió el proceso lo repitió desde cero en su computadora y obtuvo los mismos
+resultados.
+
+[Por qué así]{.etiqueta} Preparar datos puede cambiar sin querer lo que se quiere estudiar. Esta
+comprobación lo descarta con números.
+
+[Qué cambia]{.etiqueta} Todo lo que el análisis encontró sigue siendo cierto con los datos
+preparados, que ya están cargados en el almacén diseñado en la entrega anterior.
+:::
+:::
+
+## Qué significa para las preguntas del proyecto
+
+| Pregunta del proyecto | Dónde estamos |
+| :--- | :--- |
+| **P1** · ¿Un orden por riesgo pone más fraude en las revisiones de cada día que el azar o que reglas simples? | Hay señales claras: producto, tipo de tarjeta, dispositivo y correo. Ordenar solo por monto atrapa incluso menos fraude que el azar: **hace falta un modelo** (siguiente entrega) |
+| **P2** · ¿Cuánto dinero defraudado cabría en las 300 revisiones diarias? | Medible. Sin modelo, revisar las compras más caras de cada día cubriría el 7.6 % del dinero defraudado; la meta es 20 % |
+| **P3** · ¿Importa que falten los datos de identidad? | **Respondida:** sí; las compras sin esos datos tienen menos fraude (2.09 % contra 7.85 %) |
+| **P4** · ¿Qué pasa con las compras que el sistema rechaza automáticamente? | **Sin datos:** ninguna fuente registra las compras rechazadas; sigue fuera del alcance |
+
+: Estado de las preguntas después de preparar los datos {tbl-colwidths="[42,58]"}
+
+## Riesgos que quedan
+
+::: {.callout-warning appearance="simple" title="El fraude del conjunto de datos es mucho mayor que el de México"}
+En los datos, el 3.5 % de las compras es fraude. En México, los contracargos del comercio
+electrónico son del orden de 0.4 % (Banco de México, 2026). Por eso los resultados se trasladan al
+caso como **proporciones**, nunca como pesos.
+:::
+
+::: {.callout-warning appearance="simple" title="Ordenar por monto queda lejos de la meta"}
+Revisar cada día las compras más caras cubriría el 7.6 % del dinero defraudado. Si esa proporción
+se mantuviera en el caso, serían unos 0.6 de los 8.2 millones mensuales, frente a la meta de 1.6.
+Es una **proyección condicionada** a que el fraude del caso se reparta por montos como en los
+datos; el modelo tendrá que superarla.
+:::
+
+::: {.callout-warning appearance="simple" title="Las fechas son un supuesto"}
+El conjunto de datos no dice en qué fechas ocurrieron las compras. Supusimos que empiezan el 2 de
+diciembre de 2017. Afecta solo a comparaciones por fecha de calendario, no al conteo de días.
+:::
+
+## Glosario
+
+Almacén de datos
+:   Base de datos organizada para responder preguntas de negocio de forma rápida y consistente.
+
+Componente principal
+:   Un resumen que combina varios datos parecidos en uno solo, conservando la mayor parte de su
+    información.
+
+Correlación
+:   Qué tanto se mueven juntos dos datos. Si dos datos están casi perfectamente correlacionados,
+    uno repite al otro.
+
+Dato faltante e imputación
+:   Un dato faltante es un hueco en el registro. Imputar es rellenarlo con un valor estimado, cosa
+    que aquí decidimos no hacer.
+
+Entrenamiento y evaluación
+:   Los datos con los que un modelo aprende y los datos, distintos y posteriores, con los que se
+    mide qué tan bien funciona.
+
+Muestreo
+:   Usar solo una parte de los datos. Aquí no hizo falta.
+
+Valor atípico
+:   Un valor muy alejado de los demás, como una compra mucho más cara que las típicas.
+
+Variable o dato por compra
+:   Cada característica registrada de una compra: monto, producto, tipo de tarjeta, hora, etc.

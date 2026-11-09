@@ -1,0 +1,1225 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>4. Decisiones sobre los datos – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../entregas/E2_eda_preparacion/trazabilidad.html" rel="next">
+<link href="../../entregas/E2_eda_preparacion/pipeline.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-97bc63ea392d9b08ece34d04c8d9f81c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text">Repositorio</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/eda.html">E2 · EDA y preparación de los datos</a></li><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/decisiones.html">4 · Decisiones sobre los datos</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">E0 · Comprensión del negocio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/bitacora.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Bitácora</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/canvas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Canvas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/preguntas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Preguntas de investigación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/criterio_exito.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Criterio de éxito</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Supuestos y riesgos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Material de respaldo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expediente de fuentes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">E1 · Arquitectura del DW</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Fuentes e integración</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/arquitectura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Arquitectura de tres capas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/estrella.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Esquema estrella</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Trazabilidad a E0</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">E2 · EDA y preparación de los datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Análisis exploratorio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Preparación de los datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Pipeline y DW poblado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/decisiones.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">4 · Decisiones sobre los datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Trazabilidad a E0</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#las-siete-decisiones" id="toc-las-siete-decisiones" class="nav-link active" data-scroll-target="#las-siete-decisiones">Las siete decisiones</a></li>
+  <li><a href="#qué-significa-para-las-preguntas-del-proyecto" id="toc-qué-significa-para-las-preguntas-del-proyecto" class="nav-link" data-scroll-target="#qué-significa-para-las-preguntas-del-proyecto">Qué significa para las preguntas del proyecto</a></li>
+  <li><a href="#riesgos-que-quedan" id="toc-riesgos-que-quedan" class="nav-link" data-scroll-target="#riesgos-que-quedan">Riesgos que quedan</a></li>
+  <li><a href="#glosario" id="toc-glosario" class="nav-link" data-scroll-target="#glosario">Glosario</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/eda.html">E2 · EDA y preparación de los datos</a></li><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/decisiones.html">4 · Decisiones sobre los datos</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">4. Decisiones sobre los datos</h1>
+<p class="subtitle lead">Qué hicimos con los datos antes de construir un modelo, y por qué, en lenguaje no técnico</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">8 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  .cifras { display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 0.8rem; margin: 1.2rem 0 1.6rem; }
+  .cifra { border: 1px solid var(--bs-border-color); border-radius: 10px; padding: 0.9rem 1rem; text-align: left; }
+  .cifra p { margin: 0; text-align: left; hyphens: none; }
+  .cifra .valor { display: block; font-size: 1.6rem; font-weight: 700; color: #2a78d6; line-height: 1.15; white-space: nowrap; }
+  .cifra .texto { display: block; font-size: 0.86rem; margin-top: 0.35rem; opacity: 0.85; line-height: 1.35; }
+  .decision .callout-title-container { font-size: 1.05rem; }
+  .partes { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 0.6rem 1.2rem; }
+  .partes p { margin: 0; text-align: left; hyphens: none; }
+  .etiqueta { display: block; font-size: 0.74rem; font-weight: 700; letter-spacing: 0.04em; text-transform: uppercase; color: #2a78d6; margin-bottom: 0.15rem; }
+  body main table td:first-child { white-space: normal; }
+</style>
+<p>Antes de buscar patrones de fraude con un modelo, hay que preparar los datos: revisar qué traen, corregir lo que está mal escrito y decidir qué información conservar. Esta página explica esas decisiones para quien no trabaja con datos. Los detalles técnicos están en las páginas de <a href="../../entregas/E2_eda_preparacion/eda.html">análisis exploratorio</a>, <a href="../../entregas/E2_eda_preparacion/preparacion.html">preparación</a> y <a href="../../entregas/E2_eda_preparacion/pipeline.html">pipeline</a>.</p>
+<div class="cifras">
+<div class="cifra">
+<p><span class="valor">590,540</span> <span class="texto">compras analizadas, todas las disponibles</span></p>
+</div>
+<div class="cifra">
+<p><span class="valor">0</span> <span class="texto">compras eliminadas</span></p>
+</div>
+<div class="cifra">
+<p><span class="valor">438 → 271</span> <span class="texto">datos por compra que se conservan</span></p>
+</div>
+<div class="cifra">
+<p><span class="valor">28 de 28</span> <span class="texto">medidas clave iguales antes y después</span></p>
+</div>
+</div>
+<p><strong>En resumen:</strong> usamos todas las compras, no borramos ninguna ni inventamos datos que faltaban, corregimos solo lo que estaba mal escrito y quitamos la información vacía o repetida. Al final comprobamos que el fraude se ve exactamente igual que antes de preparar los datos.</p>
+<section id="las-siete-decisiones" class="level2">
+<h2 class="anchored" data-anchor-id="las-siete-decisiones">Las siete decisiones</h2>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="1 · Usar todas las compras, sin tomar muestras">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>1 · Usar todas las compras, sin tomar muestras
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> El conjunto de datos tiene 590,540 compras en línea de seis meses, con 20,663 fraudes (3.5&nbsp;%).</p>
+<p><span class="etiqueta">Qué hicimos</span> Trabajamos con todas. Ninguna cifra de este proyecto sale de una muestra.</p>
+<p><span class="etiqueta">Por qué así</span> Una muestra solo se justifica si los datos no caben en las herramientas o si hay muchos registros repetidos. Aquí todo se procesa en minutos y solo el 0.15&nbsp;% de las compras se parece a otra.</p>
+<p><span class="etiqueta">Qué cambia</span> Nada se pierde. Como el fraude es poco frecuente, el modelado podría equilibrar las clases más adelante, pero solo con los datos de entrenamiento (decisión 2).</p>
+</div>
+</div>
+</div>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="2 · Aprender del pasado y evaluar con el futuro">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>2 · Aprender del pasado y evaluar con el futuro
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> Los datos cubren 182 días seguidos. La tasa de fraude del primer mes (2.5&nbsp;%) es distinta a la de los siguientes (3.4&nbsp;% a 4.0&nbsp;%), porque cambió la mezcla de productos.</p>
+<p><span class="etiqueta">Qué hicimos</span> Separamos los días en tres bloques: del 1 al 120 para aprender, del 121 al 150 para ajustar y del 151 al 182 para evaluar. Todo cálculo que «aprende» de los datos usa solo el primer bloque.</p>
+<p><span class="etiqueta">Por qué así</span> Así funcionaría en la operación: el modelo se entrena con lo que ya pasó y se usa con compras nuevas. Mezclar días al azar dejaría que el modelo «viera el futuro» y prometiera más de lo que puede dar.</p>
+<p><span class="etiqueta">Qué cambia</span> La evaluación será realista. Los tres bloques tienen una tasa de fraude parecida (3.52&nbsp;%, 3.41&nbsp;% y 3.48&nbsp;%), así que ninguno queda en desventaja.</p>
+</div>
+</div>
+</div>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="3 · No rellenar los datos que faltan">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>3 · No rellenar los datos que faltan
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> El 75.6&nbsp;% de las compras no trae datos del dispositivo o de la identidad del comprador. Que falten <strong>dice algo</strong>: sin esos datos, el fraude es de 2.09&nbsp;%; con ellos, de 7.85&nbsp;%.</p>
+<p><span class="etiqueta">Qué hicimos</span> Dejamos los huecos como huecos. No rellenamos ningún valor faltante.</p>
+<p><span class="etiqueta">Por qué así</span> Rellenar con un valor típico haría que las compras sin datos parecieran tener datos, y se perdería la diferencia de 2.09&nbsp;% contra 7.85&nbsp;%, que es una de las señales más claras del proyecto.</p>
+<p><span class="etiqueta">Qué cambia</span> La pregunta sobre los datos de identidad (P3) se puede responder. Si un método del modelado no acepta huecos, se tratarán ahí, con reglas aprendidas solo del pasado.</p>
+</div>
+</div>
+</div>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="4 · No recortar los montos extremos">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>4 · No recortar los montos extremos
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> Las compras más grandes (más de 620 dólares) son solo el 2.6&nbsp;% del total, pero concentran el <strong>25.6&nbsp;% del dinero defraudado</strong>. Las muy pequeñas (menos de 8.65 dólares) tienen 7.7&nbsp;% de fraude, el doble del promedio.</p>
+<p><span class="etiqueta">Qué hicimos</span> Conservamos todos los montos tal como vienen y solo marcamos cuáles son inusualmente grandes o pequeños.</p>
+<p><span class="etiqueta">Por qué así</span> Recortar los montos grandes, algo común en análisis de datos, borraría una cuarta parte del dinero que se pierde, que es justo lo que el proyecto quiere reducir.</p>
+<p><span class="etiqueta">Qué cambia</span> La medición del dinero que podría recuperarse (P2) queda intacta. Riesgo: unas pocas compras grandes pesan mucho, así que los resultados pueden variar de un día a otro.</p>
+</div>
+</div>
+</div>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="5 · Corregir solo lo que estaba mal escrito">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>5 · Corregir solo lo que estaba mal escrito
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> Algunos datos estaban escritos de dos formas: 496 compras traían <code>gmail</code> en lugar de <code>gmail.com</code>. Había también 910 compras casi idénticas a otra y 45 valores de tiempo negativos.</p>
+<p><span class="etiqueta">Qué hicimos</span> Unificamos la escritura del correo y dejamos todo lo demás. Las compras parecidas se conservan con una marca; los valores negativos, también.</p>
+<p><span class="etiqueta">Por qué así</span> Cada compra tiene su propio número y puede ser real (un cobro repetido, o un intento de fraude). Borrar sin una razón comprobada es perder información.</p>
+<p><span class="etiqueta">Qué cambia</span> El almacén guarda el correo ya corregido, no como venía; es el único cambio respecto al diseño del almacén. Todo lo corregido quedó registrado con su conteo.</p>
+</div>
+</div>
+</div>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="6 · Pasar de 438 a 271 datos por compra">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>6 · Pasar de 438 a 271 datos por compra
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> De los 438 datos por compra, 9 estaban casi vacíos, 4 casi no cambiaban, 7 no tenían relación con el fraude y 151 repetían lo que ya decía otro. Un dato «enmascarado» por el proveedor resultó ser simplemente la hora del día.</p>
+<p><span class="etiqueta">Qué hicimos</span> Conservamos 271. Los de negocio (producto, tipo de tarjeta, dispositivo, correo, monto y fecha) se conservaron siempre. Además resumimos un bloque de 185 datos enmascarados en 53 componentes, por si el modelado los prefiere.</p>
+<p><span class="etiqueta">Por qué así</span> Menos datos repetidos hacen el modelo más simple y más fácil de explicar, sin perder información. Cada dato descartado tiene su regla y su número en la <a href="../../entregas/E2_eda_preparacion/preparacion.html#tabla-de-decisión-por-variable">tabla de decisión</a>.</p>
+<p><span class="etiqueta">Qué cambia</span> Se pierde, por ejemplo, la marca de la tarjeta: su relación con el fraude es real pero muy débil. Riesgo bajo: los datos descartados siguen guardados y se pueden recuperar.</p>
+</div>
+</div>
+</div>
+<div class="decision callout callout-style-simple callout-note no-icon callout-titled" title="7 · Comprobar que nada se distorsionó">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>7 · Comprobar que nada se distorsionó
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<div class="partes">
+<p><span class="etiqueta">Qué encontramos</span> Después de preparar los datos, volvimos a calcular 28 medidas clave: la tasa de fraude total, por producto, por tipo de tarjeta y con o sin datos de identidad, y qué tan concentrado está el dinero defraudado.</p>
+<p><span class="etiqueta">Qué hicimos</span> Las comparamos con las del dato original. Las 28 son idénticas. Una integrante que no escribió el proceso lo repitió desde cero en su computadora y obtuvo los mismos resultados.</p>
+<p><span class="etiqueta">Por qué así</span> Preparar datos puede cambiar sin querer lo que se quiere estudiar. Esta comprobación lo descarta con números.</p>
+<p><span class="etiqueta">Qué cambia</span> Todo lo que el análisis encontró sigue siendo cierto con los datos preparados, que ya están cargados en el almacén diseñado en la entrega anterior.</p>
+</div>
+</div>
+</div>
+</section>
+<section id="qué-significa-para-las-preguntas-del-proyecto" class="level2">
+<h2 class="anchored" data-anchor-id="qué-significa-para-las-preguntas-del-proyecto">Qué significa para las preguntas del proyecto</h2>
+<table class="caption-top table">
+<caption>Estado de las preguntas después de preparar los datos</caption>
+<colgroup>
+<col style="width: 42%">
+<col style="width: 57%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Pregunta del proyecto</th>
+<th style="text-align: left;">Dónde estamos</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;"><strong>P1</strong> · ¿Un orden por riesgo pone más fraude en las revisiones de cada día que el azar o que reglas simples?</td>
+<td style="text-align: left;">Hay señales claras: producto, tipo de tarjeta, dispositivo y correo. Ordenar solo por monto atrapa incluso menos fraude que el azar: <strong>hace falta un modelo</strong> (siguiente entrega)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>P2</strong> · ¿Cuánto dinero defraudado cabría en las 300 revisiones diarias?</td>
+<td style="text-align: left;">Medible. Sin modelo, revisar las compras más caras de cada día cubriría el 7.6&nbsp;% del dinero defraudado; la meta es 20&nbsp;%</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;"><strong>P3</strong> · ¿Importa que falten los datos de identidad?</td>
+<td style="text-align: left;"><strong>Respondida:</strong> sí; las compras sin esos datos tienen menos fraude (2.09&nbsp;% contra 7.85&nbsp;%)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><strong>P4</strong> · ¿Qué pasa con las compras que el sistema rechaza automáticamente?</td>
+<td style="text-align: left;"><strong>Sin datos:</strong> ninguna fuente registra las compras rechazadas; sigue fuera del alcance</td>
+</tr>
+</tbody>
+</table>
+</section>
+<section id="riesgos-que-quedan" class="level2">
+<h2 class="anchored" data-anchor-id="riesgos-que-quedan">Riesgos que quedan</h2>
+<div class="callout callout-style-simple callout-warning callout-titled" title="El fraude del conjunto de datos es mucho mayor que el de México">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>El fraude del conjunto de datos es mucho mayor que el de México
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>En los datos, el 3.5&nbsp;% de las compras es fraude. En México, los contracargos del comercio electrónico son del orden de 0.4&nbsp;% (Banco de México, 2026). Por eso los resultados se trasladan al caso como <strong>proporciones</strong>, nunca como pesos.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning callout-titled" title="Ordenar por monto queda lejos de la meta">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Ordenar por monto queda lejos de la meta
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>Revisar cada día las compras más caras cubriría el 7.6&nbsp;% del dinero defraudado. Si esa proporción se mantuviera en el caso, serían unos 0.6 de los 8.2 millones mensuales, frente a la meta de 1.6. Es una <strong>proyección condicionada</strong> a que el fraude del caso se reparta por montos como en los datos; el modelo tendrá que superarla.</p>
+</div>
+</div>
+<div class="callout callout-style-simple callout-warning callout-titled" title="Las fechas son un supuesto">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Advertencia</span>Las fechas son un supuesto
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El conjunto de datos no dice en qué fechas ocurrieron las compras. Supusimos que empiezan el 2 de diciembre de 2017. Afecta solo a comparaciones por fecha de calendario, no al conteo de días.</p>
+</div>
+</div>
+</section>
+<section id="glosario" class="level2">
+<h2 class="anchored" data-anchor-id="glosario">Glosario</h2>
+<dl>
+<dt>Almacén de datos</dt>
+<dd>
+Base de datos organizada para responder preguntas de negocio de forma rápida y consistente.
+</dd>
+<dt>Componente principal</dt>
+<dd>
+Un resumen que combina varios datos parecidos en uno solo, conservando la mayor parte de su información.
+</dd>
+<dt>Correlación</dt>
+<dd>
+Qué tanto se mueven juntos dos datos. Si dos datos están casi perfectamente correlacionados, uno repite al otro.
+</dd>
+<dt>Dato faltante e imputación</dt>
+<dd>
+Un dato faltante es un hueco en el registro. Imputar es rellenarlo con un valor estimado, cosa que aquí decidimos no hacer.
+</dd>
+<dt>Entrenamiento y evaluación</dt>
+<dd>
+Los datos con los que un modelo aprende y los datos, distintos y posteriores, con los que se mide qué tan bien funciona.
+</dd>
+<dt>Muestreo</dt>
+<dd>
+Usar solo una parte de los datos. Aquí no hizo falta.
+</dd>
+<dt>Valor atípico</dt>
+<dd>
+Un valor muy alejado de los demás, como una compra mucho más cara que las típicas.
+</dd>
+<dt>Variable o dato por compra</dt>
+<dd>
+Cada característica registrada de una compra: monto, producto, tipo de tarjeta, hora, etc.
+</dd>
+</dl>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../entregas/E2_eda_preparacion/pipeline.html" class="pagination-link" aria-label="3 · Pipeline y DW poblado">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">3 · Pipeline y DW poblado</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+      <a href="../../entregas/E2_eda_preparacion/trazabilidad.html" class="pagination-link" aria-label="5 · Trazabilidad a E0">
+        <span class="nav-page-text">5 · Trazabilidad a E0</span> <i class="bi bi-arrow-right-short"></i>
+      </a>
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM</p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos">
+<p>Repositorio</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

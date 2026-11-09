@@ -1,0 +1,140 @@
+---
+title: "5. Trazabilidad a E0"
+subtitle: "La matriz de E1 extendida con los hallazgos del EDA, las decisiones de preparación y el estado de cada pregunta"
+date: last-modified
+---
+
+<style>
+  /* Tablas con texto largo en la primera columna (anula la regla global) */
+  body main table td:first-child { white-space: normal; }
+</style>
+
+Esta página extiende la [trazabilidad de E1](../E1_arquitectura_dw/trazabilidad.qmd) con lo que
+aprendimos en E2. La revisión sigue en los dos sentidos: de cada
+[pregunta de E0](../E0_comprension_negocio/preguntas.qmd) a la evidencia que la respalda, y de cada
+variable conservada a la pregunta que justifica conservarla. Al final se revisan los compromisos
+que E0 y E1 dejaron para esta entrega y el registro de riesgos.
+
+::: {.callout-tip appearance="minimal"}
+**En una frase:** P3 queda respondida con datos, P1 y P2 tienen ya su señal y su instrumento de
+medición pero necesitan el modelo, P4 sigue sin datos; ninguna de las 271 variables conservadas
+queda huérfana, y no hizo falta ajustar el diseño de E1 ni pivotar.
+:::
+
+## Matriz extendida
+
+Hallazgos H1 a H6 del [análisis exploratorio](eda.qmd#hallazgos); decisiones de la
+[preparación](preparacion.qmd).
+
+::: {.column-page-right}
+
+| Pregunta | Variables y métricas | Hallazgo del EDA | Decisión de preparación | Estado actualizado |
+| :--- | :--- | :--- | :--- | :--- |
+| **P1 (ajustada).** ¿Qué combinación de atributos separa mejor el fraude, y basta ordenar por esa señal para que el 0.75 % mejor puntuado de cada día contenga más fraude que un orden aleatorio y que reglas simples? | `es_fraude` por producto, tipo de tarjeta, dispositivo y correo (`p1_tasa_por_segmento`); las 271 variables de `analitico_reducido` | Hay señal: producto C 11.69 % contra W 2.04 %, crédito 6.68 % contra débito 2.43 %, segmento de C con crédito en móvil 5.92 veces la tasa global. El fraude por valor de `card1` está más concentrado que la actividad (H6). La regla «mayor importe» acierta menos que el azar: 2.97 % contra 3.50 % (H4) | Reducción con prueba de relevancia (V de Cramér ≥ 0.02 y Bonferroni) ajustada solo con entrenamiento; partición temporal 1 a 120, 121 a 150 y 151 a 182 | **Cubierta parcialmente.** La señal y el instrumento existen; falta el puntaje del modelo (E3) |
+| **P2 (E0).** ¿Qué fracción del monto defraudado queda en el 0.75 % peor evaluado, y mejora si el modelo pondera por importe? | `monto_usd`, `monto_fraude_usd` (`p2_tramo_diario`); referencia de México en `hechos_pagos_trimestre` | El monto defraudado está más concentrado que el total (Gini 0.586 contra 0.553, H1). La regla simple cubre 7.58 % del monto defraudado contra 0.76 % al azar; en 103 de 182 días el tramo no contiene fraude | No se acotan montos (los altos son el 25.6 % del monto defraudado); los atípicos solo se marcan | **Cubierta parcialmente.** La medición funciona y tiene línea base; comparar un modelo ponderado contra uno sin ponderar es de E3 |
+| **P3 (E0).** ¿La ausencia de identidad del dispositivo es una señal de riesgo o un hueco que conviene imputar? | `es_fraude`, `monto_fraude_usd` por `dim_dispositivo` (`p3_identidad`) | La ausencia es informativa y estructural: 7.85 % de fraude con identidad contra 2.09 % sin ella; el producto W nunca trae identidad (H2) | No se imputa: el NULL se conserva y el DW separa «sin registro» de «tipo no informado» | **Cubierta.** Respondida en lo descriptivo; la ausencia es señal, no un hueco que rellenar |
+| **P4 (E0).** ¿Cuántas transacciones rechazadas automáticamente eran legítimas? | Ninguna la responde; como contexto, aceptación en `hechos_pagos_trimestre` | Ninguna fuente registra rechazos ni su desenlace | Ninguna | **No cubierta**, igual que en E0 y E1 |
+
+: Matriz de trazabilidad al cierre de E2 {#tbl-matriz tbl-colwidths="[24,18,24,18,16]"}
+
+:::
+
+## Revisión inversa: ninguna variable huérfana
+
+La [reducción](preparacion.qmd#reduccion) conservó 271 de las 442 columnas de la tabla limpia.
+**Toda columna conservada que no está protegida pasó la prueba de relevancia contra el fraude**
+(V de Cramér ≥ 0.02 con p < 0.05 / 440): aporta señal a P1, y por eso se conserva. Las 16 columnas
+protegidas son las que usa el DW o las que creó la limpieza, y el DW está ligado a sus preguntas
+desde E1.
+
+| Familia | Conservadas | V de Cramér (mínimo · mediana · máximo) | Preguntas | Por qué se conservan |
+| :--- | ---: | :--- | :--- | :--- |
+| V (enmascaradas de Vesta) | 185 de 339 | 0.021 · 0.111 · 0.344 | P1 | Las de mayor relación con el fraude (`V258`, `V257`, `V201`); el 89 % de la señal de `V258` está en sus valores, no en que falte |
+| id (identidad) | 29 de 38 | 0.029 · 0.136 · 0.168 | P1, P3 | Atributos del dispositivo; su ausencia es la señal de P3 |
+| C (conteos) | 12 de 14 | 0.081 · 0.111 · 0.261 | P1 | Conteos asociados a la tarjeta; `C7` y `C12` entre las más altas |
+| D (intervalos de tiempo) | 10 de 15 | 0.087 · 0.120 · 0.189 | P1 | Se quitaron las repetidas (`D9` era la hora del día) |
+| M (coincidencias) | 9 de 9 | 0.025 · 0.076 · 0.145 | P1 | Todas pasan la prueba |
+| card, addr, dist | 9 de 10 | 0.043 · 0.100 · 0.158 | P1; `card6` también P2 | `card6` es el tipo de tarjeta del DW y une con Banxico; `card4` (marca) se descartó por V = 0.019 |
+| Otras | 17 de 17 | | P1, P2, P3 | 15 protegidas (llave, objetivo, producto, correo, dispositivo, identidad, tiempo, importe y las 4 de la limpieza) más `R_emaildomain` y `DeviceInfo`, que pasan la prueba |
+| **Total** | **271 de 442** | | | |
+
+: Variables conservadas por familia ([tabla de decisión completa](preparacion.qmd#tabla-de-decisión-por-variable)) {#tbl-inversa tbl-colwidths="[18,11,20,11,40]"}
+
+En el DW no cambió nada respecto a E1: sus cinco dimensiones y las columnas de sus dos hechos
+siguen ligadas a P1, P2 y P3, y ahora las [cuatro vistas del DataMart](pipeline.qmd#datamart)
+devuelven resultados.
+
+## Compromisos que pasaban a E2
+
+E0 y E1 dejaron estas tareas para la entrega de comprensión y preparación de los datos.
+
+| Compromiso | Origen | Estado al cierre de E2 |
+| :--- | :--- | :--- |
+| Contrastar la representatividad contra cifras de México | E0, supuesto 1 y riesgo 1 | **Hecho en frecuencia:** en el periodo del dataset, el fraude de IEEE-CIS es 9 veces los contracargos de México por número y 4.5 veces por monto ([brecha con México](eda.qmd#mexico)). **Parcial en montos:** no hay distribución pública de montos en México; solo la compra promedio |
+| Fijar los umbrales de las medidas técnicas | E0, criterio de éxito | **Hecho** ([líneas base](eda.qmd#líneas-base-del-tramo-revisado)): monto cubierto con piso de 7.58 % (la regla simple) y meta de 20 %; aciertos por encima del azar y de la regla (0.85 veces el azar), con meta provisional de 2 veces. Viven en `config.yaml` |
+| Revisar la consistencia de los parámetros del caso | E0, riesgo 8 | **Hecho**, ver [abajo](#riesgo-8) |
+| Cargar la fuente A completa | E1, limitación 5 (muestra de 14 días) | **Resuelto:** 590,540 transacciones y 144,233 registros de identidad en staging |
+| Poblar el DW | E1, limitación 6 | **Resuelto:** siete tablas pobladas, 35 validaciones y prueba externa ([pipeline](pipeline.qmd)) |
+| Unir las columnas de A que quedaban en staging | E1, limitación 4 | **Resuelto:** están en `analitico_limpio` y, las conservadas, en `analitico_reducido`, unidas por `TransactionID` |
+
+: Compromisos de E0 y E1 {#tbl-compromisos tbl-colwidths="[26,20,54]"}
+
+### Revisión de los parámetros del caso (riesgo 8) {#riesgo-8}
+
+Comparamos los parámetros asumidos del caso con la referencia de Banco de México
+(cuadro CF621, enero a marzo de 2026) y con los rangos de industria que E0 citó.
+
+| Parámetro del caso | Valor | Referencia | Lectura |
+| :--- | :--- | :--- | :--- |
+| Tasa de contracargo propia | 0.9 % | 0.39 % por número en el comercio electrónico de México | El caso queda 2.3 veces arriba del promedio nacional |
+| Pérdida por fraude | 0.8 % del valor | 0.33 % por monto en México; 0.6 % a 3.9 % según la madurez del programa (E0) | Arriba del promedio nacional y dentro del rango de la industria |
+| Ticket promedio | $850 | Compra promedio de $730 en México | 16 % arriba; plausible |
+| Rechazos indebidos | 3 % de las legítimas | Ninguna fuente lo mide | Sin verificar: implicaría que 2 de cada 3 bloqueos automáticos son erróneos |
+
+: Parámetros del caso frente a las referencias {#tbl-riesgo8 tbl-colwidths="[22,14,34,30]"}
+
+**Conclusión:** los parámetros son consistentes entre sí (1.2 millones de transacciones por $850
+dan $1,020 millones al mes, y el 0.8 % son los $8.2 millones de pérdida) y plausibles frente a las
+referencias: describen una institución con más fraude que el promedio nacional pero dentro de lo
+que reporta la industria. **No se ajusta ningún parámetro.** El riesgo 8 sigue abierto solo por el
+3 % de rechazos indebidos, que ningún dato puede verificar porque es justo lo que pregunta P4; se
+propone un análisis de sensibilidad en la evaluación final.
+
+## Revisión del registro de riesgos
+
+E0 se comprometió a revisar el registro al cierre de cada entrega. Como sus páginas se conservan
+sin cambios, la revisión se registra aquí.
+
+| # | Riesgo | Situación al cierre de E2 |
+| :-- | :--- | :--- |
+| 1 | El conjunto de datos no es mexicano | **Medido (H5):** la brecha es de 9 veces por número y 4.5 por monto. Sigue abierto; se mitiga trasladando resultados como proporciones y nunca como pesos |
+| 2 | Desbalance de clases | Confirmado (3.50 %). No se muestrea en E2; balancear clases, si hace falta, será en E3 y solo con entrenamiento |
+| 3 | Fuga de información | **Mitigado por diseño:** partición temporal; todo parámetro aprendido (atípicos, χ², Spearman, PCA) se ajusta solo con entrenamiento |
+| 4 | Faltantes en la identidad | **Resuelto como pregunta:** la ausencia es informativa (P3) y se conserva sin imputar |
+| 5 | Sesgo contra segmentos por variables indirectas | Abierto. Correo y dispositivo separan el fraude (P1); E3 debe medir el desempeño por segmento, como prevé la mitigación |
+| 6 | La meta del 20 % podría no ser alcanzable | Abierto, ahora con línea base: ordenar por monto cubre 7.58 %. El modelo tendrá que casi triplicarlo |
+| 7 | Adopción por el equipo de revisión | Sin cambio; fuera del alcance |
+| 8 | Parámetros poco plausibles | **Revisado** ([arriba](#riesgo-8)): sin ajustes; abierto solo por los rechazos indebidos |
+| 9 | Fechas basadas en un supuesto | Sin cambio; el supuesto vive solo en `dim_fecha` y en `config.yaml` |
+| 10 | No redistribuir los datos de la fuente A | **Cumplido:** el repositorio solo tiene datos sintéticos de IEEE-CIS y agregados; los extractos locales están fuera de git |
+| 11 | La lista de dominios cambia | **Mitigado:** historia de tipo 2 implementada y probada con una lista simulada ([prueba](pipeline.qmd#historia-de-los-dominios-scd-tipo-2)) |
+
+: Riesgos de E0 (1 a 8) y de E1 (9 a 11) {#tbl-riesgos tbl-colwidths="[4,30,66]"}
+
+### Riesgos identificados en esta entrega
+
+| # | Clasificación | Riesgo | Mitigación |
+| :-- | :--- | :--- | :--- |
+| 12 | Datos | **Cambio de régimen (H3):** el primer mes tiene otra mezcla de productos y menos fraude (2.53 % contra 3.4 % a 4.0 % después); un modelo podría aprender patrones que ya no se repiten | La partición temporal lo expone en validación y prueba; E3 debe revisar el desempeño por periodo |
+| 13 | Analítico | **Volatilidad diaria:** en 103 de los 182 días el tramo no contiene ningún fraude, y pocas compras grandes pesan mucho en el monto | Reportar las medidas sobre todo el periodo de evaluación y su dispersión diaria, no un solo día |
+
+: Riesgos nuevos de E2 {#tbl-riesgos-nuevos tbl-colwidths="[4,13,43,40]"}
+
+## No hubo ajustes a E1 ni pivote
+
+El grano, las cinco dimensiones y las cuatro fuentes funcionaron como se diseñaron: la carga
+reproduce exactamente los conteos que publicó E1 y pasa sus 35 validaciones. Por eso no hay
+página de ajustes ni versión E1 v2. La única diferencia es menor: `dim_dominio_correo.dominio`
+guarda el valor ya normalizado (las 496 transacciones con `gmail` quedan como `gmail.com`), no el
+valor original que menciona la descripción de la columna en E1. El objetivo de minería de datos
+y el criterio de éxito de E0 no cambiaron.

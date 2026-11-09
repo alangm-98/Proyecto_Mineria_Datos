@@ -66,6 +66,10 @@ website:
             text: "2 · Preparación de los datos"
           - href: entregas/E2_eda_preparacion/pipeline.qmd
             text: "3 · Pipeline y DW poblado"
+          - href: entregas/E2_eda_preparacion/decisiones.qmd
+            text: "4 · Decisiones sobre los datos"
+          - href: entregas/E2_eda_preparacion/trazabilidad.qmd
+            text: "5 · Trazabilidad a E0"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"
