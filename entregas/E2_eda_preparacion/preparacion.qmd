@@ -107,7 +107,7 @@ con cada tratamiento y lo valida (mismas filas y llaves, mismos faltantes column
 
 **No se imputa ni se borra.** En las columnas de identidad la ausencia es estructural: las
 446,307 transacciones sin registro de identidad no pueden tener esos valores, y esa ausencia es
-información (7.85 % de fraude con identidad, 2.09 % sin ella; H3 del EDA). Llenarlas con una
+información (7.85 % de fraude con identidad, 2.09 % sin ella; H2 del EDA). Llenarlas con una
 mediana las haría parecer transacciones con identidad. Además, una mediana calculada con todos
 los días sería fuga. Si un método de E3 necesita imputar, se ajusta con entrenamiento (como ya se
 hace para el PCA).
@@ -271,9 +271,9 @@ debía.
 | `TransactionAmt` | Media / mediana (USD) | 135.03 / 68.77 | 135.03 / 68.77 |
 | `TransactionAmt` | Monto defraudado (USD) | 3,083,844.86 | 3,083,844.86 |
 | `TransactionAmt` | Gini: todas / fraudes (H1) | 0.553 / 0.586 | 0.553 / 0.586 |
-| `ProductCD` | Tasa de fraude C / W (H2) | 11.69 % / 2.04 % | 11.69 % / 2.04 % |
+| `ProductCD` | Tasa de fraude C / W | 11.69 % / 2.04 % | 11.69 % / 2.04 % |
 | `card6` | Tasa de fraude crédito / débito | 6.68 % / 2.43 % | 6.68 % / 2.43 % |
-| `tiene_identidad` | Tasa con / sin identidad (H3) | 7.85 % / 2.09 % | 7.85 % / 2.09 % |
+| `tiene_identidad` | Tasa con / sin identidad (H2) | 7.85 % / 2.09 % | 7.85 % / 2.09 % |
 | `P_emaildomain` | Dominios distintos / entropía (bits) | 59 / 2.681 | 58 / 2.671 |
 | `P_emaildomain` | Transacciones con `gmail.com` | 228,355 | 228,851 |
 | Dataset | Columnas / celdas nulas | 438 / 115.5 M (44.7 %) | 271 / 70.5 M (44.0 %) |

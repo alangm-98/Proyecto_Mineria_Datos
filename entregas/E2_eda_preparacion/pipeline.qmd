@@ -238,8 +238,10 @@ total.
 **7.58 % del monto defraudado**, frente a 0.76 % que cubriría un orden al azar: unas 10 veces más
 dinero, pero no más aciertos (2.97 % de fraude en el tramo contra 3.50 % global). Además es muy
 irregular: en 103 de los 182 días el tramo no contiene ningún fraude. Son las mismas cifras que las
-[líneas base del EDA](eda.qmd#líneas-base-del-tramo-revisado), calculadas ahora desde el DW. Cuando
-exista el modelo, solo cambia el orden de la ventana.
+[líneas base del EDA](eda.qmd#líneas-base-del-tramo-revisado), calculadas ahora desde el DW. La
+referencia al azar difiere por redondeo: el EDA la da como 0.77 % porque pondera cada día por su
+monto defraudado, y la vista usa la fracción global del tramo (4,517 ÷ 590,540). Cuando exista el
+modelo, solo cambia el orden de la ventana.
 
 ## P2 · México
 
@@ -252,8 +254,9 @@ monto, no se promedian.
 **Lectura.** En 2017 y 2018, los años de IEEE-CIS, los contracargos fueron 0.46 % y 0.34 % por
 número, y 0.84 % y 0.93 % por monto. En el primer trimestre de 2026, 0.39 % y 0.33 %, con una compra
 promedio de 730 pesos (1,220 con crédito, 524 con débito). Es la referencia contra la que el
-[EDA](eda.qmd#mexico) midió la brecha: el fraude de IEEE-CIS (3.50 %) es del orden de diez veces
-los contracargos de México, y las definiciones no son iguales.
+[EDA](eda.qmd#mexico) midió la brecha: el fraude de IEEE-CIS (3.50 %) es 9 veces
+los contracargos de México por número en los mismos trimestres, y las definiciones no son
+iguales.
 
 ## P3 · Identidad
 

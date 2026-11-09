@@ -234,7 +234,7 @@ def limpieza(client, cfg: dict, log) -> None:
         "celdas",
         "Conservar NULL",
         f"Las {sin_ident:,} transacciones sin registro de identidad no pueden tener esos valores; "
-        "la ausencia es informativa (H3: 7.85 % de fraude con identidad, 2.09 % sin ella)",
+        "la ausencia es informativa (7.85 % de fraude con identidad, 2.09 % sin ella)",
     )
     anotar(
         "Faltantes",

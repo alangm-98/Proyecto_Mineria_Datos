@@ -2,7 +2,7 @@ orden,problema,variable,afectadas,unidad,fraudes,decision,justificacion
 1,Partición temporal,particion = entrenamiento,414542,filas,14600,Días 1 a 120,Bloques contiguos de días; los parámetros que se aprenden de los datos se ajustan solo con entrenamiento
 2,Partición temporal,particion = validacion,83571,filas,2850,Días 121 a 150,Bloques contiguos de días; los parámetros que se aprenden de los datos se ajustan solo con entrenamiento
 3,Partición temporal,particion = prueba,92427,filas,3213,Días 151 a 182,Bloques contiguos de días; los parámetros que se aprenden de los datos se ajustan solo con entrenamiento
-4,Faltantes estructurales,40 columnas de identidad,17852280,celdas,,Conservar NULL,"Las 446,307 transacciones sin registro de identidad no pueden tener esos valores; la ausencia es informativa (H3: 7.85 % de fraude con identidad, 2.09 % sin ella)"
+4,Faltantes estructurales,40 columnas de identidad,17852280,celdas,,Conservar NULL,"Las 446,307 transacciones sin registro de identidad no pueden tener esos valores; la ausencia es informativa (7.85 % de fraude con identidad, 2.09 % sin ella)"
 5,Faltantes,resto de las celdas nulas,97670793,celdas,,Conservar NULL; sin imputar en la tabla limpia,"Imputar con un valor global mezclaría días de prueba (fuga) y borraría patrones de ausencia por bloques; si un método lo necesita, se ajusta en «reduccion» con entrenamiento"
 6,Duplicados por llave,TransactionID,0,filas,,Ninguna acción,La llave es única (validación automática)
 7,Posibles duplicados,todas salvo TransactionID,6,filas,0,Conservar y marcar posible_duplicado = 'exacto',Cada fila tiene su propio TransactionID y el grano es la transacción; un cobro repetido puede ser legítimo o un intento de fraude. Se marcan todas las filas del grupo

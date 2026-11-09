@@ -854,7 +854,7 @@ Tabla&nbsp;4: Registro de limpieza (resumen de <code>registro_limpieza</code>)
 <ul class="nav nav-tabs" role="tablist"><li class="nav-item" role="presentation"><a class="nav-link active" id="tabset-1-1-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-1" role="tab" aria-controls="tabset-1-1" aria-selected="true" href="">Faltantes</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-2-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-2" role="tab" aria-controls="tabset-1-2" aria-selected="false" href="">Atípicos</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-3-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-3" role="tab" aria-controls="tabset-1-3" aria-selected="false" href="">Duplicados y negativos</a></li><li class="nav-item" role="presentation"><a class="nav-link" id="tabset-1-4-tab" data-bs-toggle="tab" data-bs-target="#tabset-1-4" role="tab" aria-controls="tabset-1-4" aria-selected="false" href="">Categorías y tipos</a></li></ul>
 <div class="tab-content">
 <div id="tabset-1-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-1-1-tab">
-<p><strong>No se imputa ni se borra.</strong> En las columnas de identidad la ausencia es estructural: las 446,307 transacciones sin registro de identidad no pueden tener esos valores, y esa ausencia es información (7.85 % de fraude con identidad, 2.09 % sin ella; H3 del EDA). Llenarlas con una mediana las haría parecer transacciones con identidad. Además, una mediana calculada con todos los días sería fuga. Si un método de E3 necesita imputar, se ajusta con entrenamiento (como ya se hace para el PCA).</p>
+<p><strong>No se imputa ni se borra.</strong> En las columnas de identidad la ausencia es estructural: las 446,307 transacciones sin registro de identidad no pueden tener esos valores, y esa ausencia es información (7.85 % de fraude con identidad, 2.09 % sin ella; H2 del EDA). Llenarlas con una mediana las haría parecer transacciones con identidad. Además, una mediana calculada con todos los días sería fuga. Si un método de E3 necesita imputar, se ajusta con entrenamiento (como ya se hace para el PCA).</p>
 </div>
 <div id="tabset-1-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-1-2-tab">
 <p><strong>Se marcan y no se acotan.</strong> La regla del IQR aplicada al importe en dólares daría un límite de 125 + 1.5 × 81.68 = 247.5 USD y marcaría más del 10 % de las transacciones (el percentil 90 es 275.29 USD): no son atípicos, es la cola de una distribución con asimetría 14.4. Por eso la regla se aplica a ln(importe), con cuartiles de entrenamiento, y marca 3.5 % de las filas.</p>
@@ -1177,7 +1177,7 @@ Tabla&nbsp;7: Medidas clave antes y después (selección de las 43 de <code>ante
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>ProductCD</code></td>
-<td style="text-align: left;">Tasa de fraude C / W (H2)</td>
+<td style="text-align: left;">Tasa de fraude C / W</td>
 <td style="text-align: right;">11.69 % / 2.04 %</td>
 <td style="text-align: right;">11.69 % / 2.04 %</td>
 </tr>
@@ -1189,7 +1189,7 @@ Tabla&nbsp;7: Medidas clave antes y después (selección de las 43 de <code>ante
 </tr>
 <tr class="even">
 <td style="text-align: left;"><code>tiene_identidad</code></td>
-<td style="text-align: left;">Tasa con / sin identidad (H3)</td>
+<td style="text-align: left;">Tasa con / sin identidad (H2)</td>
 <td style="text-align: right;">7.85 % / 2.09 %</td>
 <td style="text-align: right;">7.85 % / 2.09 %</td>
 </tr>
