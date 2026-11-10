@@ -17,7 +17,7 @@ DataMart ejecutadas. El diseño del DW es el de [E1](../E1_arquitectura_dw/estre
 cambió.
 
 ::: {.callout-tip appearance="minimal"}
-**En una frase:** un solo comando lleva staging al DW en ocho pasos con 35 validaciones de la
+**Resumen:** un solo comando lleva staging al DW en ocho pasos con 35 validaciones de la
 carga; correrlo dos veces da el mismo resultado, otra integrante lo reprodujo desde un clon limpio
 con resultados idénticos, y las cuatro consultas del DataMart reproducen desde el DW las cifras
 del EDA.

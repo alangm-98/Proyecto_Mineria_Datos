@@ -492,7 +492,7 @@ ul.task-list li input[type="checkbox"] {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">8 de noviembre de 2026</p>
+      <p class="date">10 de noviembre de 2026</p>
     </div>
   </div>
   
@@ -508,20 +508,20 @@ ul.task-list li input[type="checkbox"] {
   /* Tablas con texto largo en la primera columna (anula la regla global) */
   body main table td:first-child { white-space: normal; }
 </style>
-<p>Esta página extiende la <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html">trazabilidad de E1</a> con lo que aprendimos en E2. La revisión sigue en los dos sentidos: de cada <a href="../../entregas/E0_comprension_negocio/preguntas.html">pregunta de E0</a> a la evidencia que la respalda, y de cada variable conservada a la pregunta que justifica conservarla. Al final se revisan los compromisos que E0 y E1 dejaron para esta entrega y el registro de riesgos.</p>
+<p>Esta página extiende la <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html">trazabilidad de E1</a> con lo aprendido en E2. La revisión va en los dos sentidos: de cada <a href="../../entregas/E0_comprension_negocio/preguntas.html">pregunta de E0</a> a la evidencia que la respalda, y de cada variable conservada a la pregunta que justifica conservarla. Al final se revisan los compromisos que E0 y E1 dejaron para esta entrega y el registro de riesgos.</p>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>En una frase:</strong> P3 queda respondida con datos, P1 y P2 tienen ya su señal y su instrumento de medición pero necesitan el modelo, P4 sigue sin datos; ninguna de las 271 variables conservadas queda huérfana, y no hizo falta ajustar el diseño de E1 ni pivotar.</p>
+<p><strong>Resumen:</strong> P3 queda respondida con datos; P1 y P2 ya tienen su señal y su instrumento de medición, pero necesitan el modelo; P4 sigue sin datos. Ninguna de las 271 variables conservadas queda huérfana, y no hizo falta ajustar el diseño de E1 ni pivotar.</p>
 </div>
 </div>
 </div>
 <section id="matriz-extendida" class="level2 page-columns page-full">
 <h2 class="anchored" data-anchor-id="matriz-extendida">Matriz extendida</h2>
-<p>Hallazgos H1 a H6 del <a href="../../entregas/E2_eda_preparacion/eda.html#hallazgos">análisis exploratorio</a>; decisiones de la <a href="../../entregas/E2_eda_preparacion/preparacion.html">preparación</a>.</p>
+<p>Los hallazgos (H1 a H6) vienen del <a href="../../entregas/E2_eda_preparacion/eda.html#hallazgos">análisis exploratorio</a> y las decisiones, de la <a href="../../entregas/E2_eda_preparacion/preparacion.html">preparación</a>.</p>
 <div class="column-page-right">
 <div id="tbl-matriz" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[24,18,24,18,16]">
 <figure class="quarto-float quarto-float-tbl figure">
@@ -584,7 +584,7 @@ Tabla&nbsp;1: Matriz de trazabilidad al cierre de E2
 </section>
 <section id="revisión-inversa-ninguna-variable-huérfana" class="level2">
 <h2 class="anchored" data-anchor-id="revisión-inversa-ninguna-variable-huérfana">Revisión inversa: ninguna variable huérfana</h2>
-<p>La <a href="../../entregas/E2_eda_preparacion/preparacion.html#reduccion">reducción</a> conservó 271 de las 442 columnas de la tabla limpia. <strong>Toda columna conservada que no está protegida pasó la prueba de relevancia contra el fraude</strong> (V de Cramér ≥ 0.02 con p &lt; 0.05 / 440): aporta señal a P1, y por eso se conserva. Las 16 columnas protegidas son las que usa el DW o las que creó la limpieza, y el DW está ligado a sus preguntas desde E1.</p>
+<p>La <a href="../../entregas/E2_eda_preparacion/preparacion.html#reduccion">reducción</a> conservó 271 de las 442 columnas de la tabla limpia. <strong>Toda columna conservada que no está protegida pasó la prueba de relevancia contra el fraude</strong> (V de Cramér ≥ 0.02 con p &lt; 0.05 / 440), así que aporta señal a P1. Las 16 columnas protegidas son las que usa el DW o las que creó la limpieza, y el DW está ligado a sus preguntas desde E1.</p>
 <div id="tbl-inversa" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[18,11,20,11,40]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-inversa-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -784,7 +784,8 @@ Tabla&nbsp;4: Parámetros del caso frente a las referencias
 </div>
 </figure>
 </div>
-<p><strong>Conclusión:</strong> los parámetros son consistentes entre sí (1.2 millones de transacciones por $850 dan $1,020 millones al mes, y el 0.8 % son los $8.2 millones de pérdida) y plausibles frente a las referencias: describen una institución con más fraude que el promedio nacional pero dentro de lo que reporta la industria. <strong>No se ajusta ningún parámetro.</strong> El riesgo 8 sigue abierto solo por el 3 % de rechazos indebidos, que ningún dato puede verificar porque es justo lo que pregunta P4; se propone un análisis de sensibilidad en la evaluación final.</p>
+<p><strong>Conclusión:</strong> los parámetros son consistentes entre sí (1.2 millones de transacciones por $850 dan $1,020 millones al mes, y el 0.8 % son los $8.2 millones de pérdida) y plausibles frente a las referencias. Describen una institución con más fraude que el promedio nacional, pero dentro de lo que reporta la industria. <strong>No se ajusta ningún parámetro.</strong></p>
+<p>El riesgo 8 sigue abierto solo por el 3 % de rechazos indebidos. Ningún dato puede verificarlo, porque es justo lo que pregunta P4; se propone un análisis de sensibilidad en la evaluación final.</p>
 </section>
 </section>
 <section id="revisión-del-registro-de-riesgos" class="level2">
@@ -915,7 +916,8 @@ Tabla&nbsp;6: Riesgos nuevos de E2
 </section>
 <section id="no-hubo-ajustes-a-e1-ni-pivote" class="level2">
 <h2 class="anchored" data-anchor-id="no-hubo-ajustes-a-e1-ni-pivote">No hubo ajustes a E1 ni pivote</h2>
-<p>El grano, las cinco dimensiones y las cuatro fuentes funcionaron como se diseñaron: la carga reproduce exactamente los conteos que publicó E1 y pasa sus 35 validaciones. Por eso no hay página de ajustes ni versión E1 v2. La única diferencia es menor: <code>dim_dominio_correo.dominio</code> guarda el valor ya normalizado (las 496 transacciones con <code>gmail</code> quedan como <code>gmail.com</code>), no el valor original que menciona la descripción de la columna en E1. El objetivo de minería de datos y el criterio de éxito de E0 no cambiaron.</p>
+<p>El grano, las cinco dimensiones y las cuatro fuentes funcionaron como se diseñaron: la carga reproduce exactamente los conteos que publicó E1 y pasa sus 35 validaciones. Por eso no hay página de ajustes ni versión E1 v2.</p>
+<p>La única diferencia es menor: <code>dim_dominio_correo.dominio</code> guarda el valor ya normalizado (las 496 transacciones con <code>gmail</code> quedan como <code>gmail.com</code>), no el valor original que menciona la descripción de la columna en E1. El objetivo de minería de datos y el criterio de éxito de E0 no cambiaron.</p>
 
 
 </section>

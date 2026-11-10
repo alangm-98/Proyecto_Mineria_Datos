@@ -11,13 +11,13 @@ lightbox: true
 </style>
 
 Esta página documenta cómo el [dataset analítico del EDA](eda.qmd) se convierte en el dataset
-listo para modelar: qué se corrigió, qué variables se conservan y por qué, y la comprobación de
-que el fenómeno de fraude sigue intacto. Responde a la Parte B del PDF de E2. Todo lo hace el
+listo para modelar: qué se corrigió, qué variables se conservan y por qué, y cómo se comprobó que
+el fenómeno de fraude sigue intacto. Todo lo hace el
 [pipeline](https://github.com/alangm-98/Proyecto_Mineria_Datos/tree/main/pipeline) con las
 **590,540 transacciones completas**.
 
 ::: {.callout-tip appearance="minimal"}
-**En una frase:** no se eliminó ni se imputó ninguna fila, la reducción pasó de 438 a 271
+**Resumen:** no se eliminó ni se imputó ninguna fila, la reducción pasó de 438 a 271
 columnas con reglas declaradas y ajustadas solo con la partición de entrenamiento, no hizo falta
 muestrear, y las 28 medidas que sostienen los hallazgos del EDA quedaron idénticas.
 :::
@@ -50,8 +50,8 @@ procesados en BigQuery.
 
 ## Partición temporal y fuga de información {#particion}
 
-La tarea de E3 es supervisada (predecir `isFraud`), así que todo lo que **aprende parámetros de
-los datos** se ajusta solo con la partición de entrenamiento. Si los límites de un atípico o la
+La tarea de E3 es supervisada (predecir `isFraud`), así que todo lo que se **aprende de los
+datos** se ajusta solo con la partición de entrenamiento. Si los límites de un atípico o la
 mediana para imputar se calcularan con los 182 días, los días de prueba influirían en el
 entrenamiento y la evaluación de E3 sería optimista.
 
@@ -128,19 +128,19 @@ se aplica a ln(importe), con cuartiles de entrenamiento, y marca 3.5 % de las fi
 
 **Posibles duplicados.** No hay dos filas con el mismo `TransactionID`. Hay 6 filas idénticas a
 otra salvo el identificador y 904 idénticas salvo el identificador y el tiempo. Se conservan
-porque el grano es la transacción y un cobro repetido puede ser legítimo o un intento de fraude;
-quedan marcadas en `posible_duplicado` (6 fraudes entre las 904, 0.66 %).
+porque el grano es la transacción, y un cobro repetido puede ser legítimo o un intento de fraude.
+Quedan marcadas en `posible_duplicado` (6 fraudes entre las 904, 0.66 %).
 
-**Negativos en las columnas D.** Vesta solo describe las D como intervalos de tiempo y no
-declara error un negativo; son 45 celdas y ninguna es fraude. Sin una fuente que lo justifique no
-se corrigen (supuesto: referencias de tiempo distintas).
+**Negativos en las columnas D.** Vesta solo dice que las D son intervalos de tiempo, sin indicar
+que un negativo sea un error. Son 45 celdas y ninguna es fraude. Sin una fuente que lo justifique
+no se corrigen (supuesto: referencias de tiempo distintas).
 
 ## Categorías y tipos
 
 **Correo.** Los dominios pasan a minúsculas y sin espacios, y una tabla de equivalencias en
-`config.yaml` une `gmail` con `gmail.com`. No había mayúsculas ni espacios: solo cambiaron las
-filas de `gmail`. `anonymous.com` parece una etiqueta de anonimización de Vesta; se conserva como
-dominio propio. Los demás dominios fuera de la lista de correo gratuito son proveedores de
+`config.yaml` une `gmail` con `gmail.com`. Como no había mayúsculas ni espacios, solo cambiaron
+las filas de `gmail`. `anonymous.com` parece una etiqueta de anonimización de Vesta y se conserva
+como dominio propio. Los demás dominios fuera de la lista de correo gratuito son proveedores de
 internet o institucionales.
 
 **Tipos.** Las columnas con valores `T`/`F` pasan a lógicas; `M4` sigue como texto porque trae
@@ -157,7 +157,7 @@ partición y las marcas contra el registro.
 
 ## Reducción de dimensionalidad {#reduccion}
 
-Las tres técnicas se aplican con la partición de entrenamiento completa y cada variable recibe
+Las tres técnicas se aplican con la partición de entrenamiento completa, y cada variable recibe
 una decisión. Primero se protegen 16 columnas que nunca se descartan: llaves, variable objetivo,
 los campos que usa el DW (`TransactionDT`, `TransactionAmt`, `ProductCD`, `card6`,
 `P_emaildomain`, `DeviceType`, `tiene_identidad` y el tiempo derivado) y las columnas de la
@@ -200,7 +200,7 @@ y se descarta. Solo `V41` falla además por p (0.089).
 
 ![V de Cramér de cada variable con el fraude, por familia](img/prep/f12_v_cramer.png){#fig-vcramer}
 
-@fig-vcramer muestra que la señal se reparte en todas las familias y que las V llegan más alto
+La @fig-vcramer muestra que la señal se reparte en todas las familias y que las V llegan más alto
 (`V258`, V = 0.344) que cualquier campo de negocio (`ProductCD`, 0.161).
 
 ## Correlación
@@ -210,7 +210,7 @@ las filas donde las dos columnas existen, entre las 387 numéricas que llegan a 
 507 pares con \|ρ\| ≥ 0.95. Se recorren las columnas de mayor a menor V y se descarta una si es
 redundante con otra ya conservada.
 
-El método se validó solo: encontró que **`D9` es la hora del día** (ρ = 1.000 con `hora`, que
+El filtro detectó por sí solo que **`D9` es la hora del día** (ρ = 1.000 con `hora`, que
 derivamos de `TransactionDT`), y pares casi idénticos como `D4` con `D12` (1.000), `D5` con `D7`
 (0.999), `D2` con `D1` (0.981) y `C10` con `C8` (0.971). Correlación no implica causalidad: aquí
 solo indica información repetida.
@@ -224,11 +224,13 @@ de entrenamiento.
 ![Varianza explicada acumulada del PCA del bloque V](img/prep/f13_pca_varianza.png){#fig-pca}
 
 Hacen falta **53 componentes para el 90 %** de la varianza (31 para el 80 %), y la primera
-explica solo 10.7 %: tras quitar las redundancias, el bloque tiene muchas dimensiones medianas, no
-unas pocas dominantes. **Decisión: ambas.** La vista conserva las columnas originales, que son
-interpretables y miden su relación con el fraude una por una; los pesos, medianas y
-desviaciones de las 53 componentes quedan en `pipeline/salidas/reduccion_pca_cargas.csv` para que
-E3 compare las dos representaciones.
+explica solo 10.7 %. Tras quitar las redundancias, el bloque tiene muchas dimensiones medianas, no
+unas pocas dominantes.
+
+**Decisión: conservar ambas representaciones.** La vista guarda las columnas originales, que son
+interpretables y miden su relación con el fraude una por una. Los pesos, medianas y desviaciones
+de las 53 componentes quedan en `pipeline/salidas/reduccion_pca_cargas.csv` para que E3 compare
+las dos.
 :::
 
 ::: {.callout-note appearance="minimal" title="Una hipótesis que los datos rechazaron"}
@@ -243,15 +245,15 @@ faltantes.
 
 ## Muestreo
 
-**No se muestrea.** El PDF lo justifica solo por volumen, por desbalance o por redundancia entre
-registros, y ninguna razón aplica a la preparación:
+**No se muestrea.** Muestrear solo se justifica por volumen, por desbalance o por redundancia
+entre registros, y ninguna de las tres aplica a la preparación:
 
 - **Volumen.** La limpieza procesa unos 3.6 GB por corrida y la reducción 1.1 GB, frente a
   1 TB gratuito al mes de BigQuery; la partición de entrenamiento ocupa unos 1.5 GB en memoria y
   la reducción tarda 2 minutos.
-- **Desbalance.** El fraude es el 3.50 %. Balancear clases es una técnica del modelado: si E3 la
-  usa, será solo dentro de la partición de entrenamiento y después de separar validación y
-  prueba; hacerlo antes filtraría información.
+- **Desbalance.** El fraude es el 3.50 %. Balancear clases es una técnica del modelado. Si E3 la
+  usa, será solo dentro de la partición de entrenamiento, después de separar validación y prueba;
+  hacerlo antes filtraría información.
 - **Redundancia.** Solo 910 filas (0.15 %) tienen un posible duplicado.
 
 Por eso el dataset y el DW conservan las 590,540 transacciones y ninguna cifra de E2 sale de una
@@ -286,10 +288,13 @@ debía.
 
 **Conclusión: la preparación conservó el fenómeno que E0 quiere estudiar.** Las 28 medidas que
 debían quedar igual son idénticas, incluidas las tasas por partición y por categoría
-(@fig-tasas-ad) y la concentración del monto. Solo cambiaron, a propósito, el correo (496
-transacciones de `gmail` pasan a `gmail.com`, un dominio menos) y la dimensión: de 438 a 271
-columnas, sobre todo en el bloque V, de 339 a 185 (@fig-columnas-ad). Ningún hallazgo del EDA
-desaparece.
+(@fig-tasas-ad) y la concentración del monto. Solo cambiaron, a propósito, dos cosas:
+
+- **El correo:** 496 transacciones de `gmail` pasan a `gmail.com`, así que hay un dominio menos.
+- **La dimensión:** de 438 a 271 columnas, sobre todo en el bloque V, de 339 a 185
+  (@fig-columnas-ad).
+
+Ningún hallazgo del EDA desaparece.
 
 ## Tabla de decisión por variable
 
