@@ -10,39 +10,36 @@ lightbox: true
   body main table td:first-child { white-space: normal; }
 </style>
 
-Esta página caracteriza el conjunto de datos del proyecto antes de limpiarlo y documenta los
-hallazgos que guían la preparación. Responde a la Parte A del PDF de E2 y retoma las
+Esta página caracteriza el conjunto de datos del proyecto antes de limpiarlo y documenta los hallazgos
+para la preparación. Retoma las
 [preguntas de investigación de E0](../E0_comprension_negocio/preguntas.qmd) (P1 a P4) y el
 [esquema de E1](../E1_arquitectura_dw/estrella.qmd).
 
 ::: {.callout-tip appearance="minimal"}
-**En una frase:** el fraude de IEEE-CIS se concentra en pocos productos, tarjetas e importes,
+**Resumen:** el fraude de IEEE-CIS se concentra en pocos productos, tarjetas e importes,
 la ausencia de identidad es estructural y va con menos fraude, el primer mes es un régimen
 distinto, y ordenar por importe no da más aciertos que el azar aunque cubre diez veces más
 dinero.
 :::
 
-## Datos de partida
+## Datos iniciales
 
 El análisis se hace sobre `lumen_prep.analitico_crudo`, que crea el paso `ingesta` del
 [pipeline](https://github.com/alangm-98/Proyecto_Mineria_Datos/tree/main/pipeline): las dos
-tablas de la fuente A unidas por `TransactionID` al grano de E1, **sin limpiar**. Solo se
+tablas de la fuente A unidas por `TransactionID` al grano de E1, sin limpiar. Se
 agregaron cuatro columnas para leer el tiempo y la unión.
 
 | Característica | Valor |
 | :--- | :--- |
-| Grano | Una fila por transacción con tarjeta en comercio electrónico (E1) |
+| Grano | Una fila por transacción con tarjeta en e-commerce (E1) |
 | Filas | 590,540 (20,663 fraudes) |
 | Columnas | 438: 394 de transacciones, 40 de identidad y 4 derivadas (`tiene_identidad`, `dia_relativo`, `fecha`, `hora`) |
-| Fuente | A, IEEE-CIS (Vesta). La fuente B (Banxico) entra en la [brecha con México](#mexico) |
-| Periodo | 182 días consecutivos; del 2 de diciembre de 2017 al 1 de junio de 2018 con el supuesto de fecha de E1 |
+| Fuente | IEEE-CIS (Vesta). Banxico entra en la [brecha con México](#mexico) |
+| Periodo | 182 días consecutivos; del 2 de diciembre de 2017 al 1 de junio de 2018 (supuesto de fecha de E1) |
 | Territorio | No publicado; Vesta es una empresa de Estados Unidos y los importes están en dólares |
 
-: Características del conjunto analítico {#tbl-datos tbl-colwidths="[22,78]"}
-
-Para comparar en el tiempo se usan **seis periodos de 30 días relativos** (el último de 32).
-No dependen del supuesto de fecha, que puede estar corrido un día (riesgo 9), y son los mismos
-bloques de la partición temporal.
+Para comparar en el tiempo se usan seis periodos de 30 días relativos (el último de 32), que son
+los mismos bloques de la partición temporal.
 
 ::: {.callout-note collapse="true" title="Cómo reproducir las cifras y figuras de esta página"}
 Desde la carpeta `pipeline/` del repositorio, con las credenciales configuradas (ver su README):
@@ -70,13 +67,9 @@ El **3.50 %** de las transacciones es fraude, y el **3.87 %** del monto. La tasa
 | 5 (121 a 150) | 2,786 | 3.41 % | 4.14 % |
 | 6 (151 a 182) | 2,888 | 3.48 % | 3.83 % |
 
-: Volumen y tasa de fraude por periodo {#tbl-periodos tbl-colwidths="[28,24,24,24]"}
-
 ![Transacciones y tasa de fraude por día](img/eda/f05_serie_diaria.png){#fig-serie}
 
-La @fig-serie muestra que el primer periodo tiene 50 % más volumen y menos fraude que los
-demás. Los días 18 a 25 son los de mayor volumen (hasta 6,852) e incluyen las tasas más bajas
-de toda la serie (1.25 % y 1.10 % en los días 24 y 25). La [sección de cruces](#cruces)
+La @fig-serie muestra que el primer periodo tiene 50 % más volumen y menos fraude que los demás. Los días 18 a 25 son los de mayor volumen (hasta 6,852) e incluyen las tasas más bajas (1.25 % y 1.10 % en los días 24 y 25). La [sección de cruces](#cruces)
 explica de dónde viene esta diferencia.
 
 ## Estadística descriptiva
@@ -102,7 +95,6 @@ explica de dónde viene esta diferencia.
 | **Media ÷ mediana** | **1.96** | **1.99** | **1.96** |
 | **Desviación estándar ÷ IQR** | **2.93** | **1.84** | **3.15** |
 
-: Importe por transacción (USD) {#tbl-importe}
 
 - **Sesgo:** la media es casi el doble de la mediana y la asimetría es 14.4. La distribución
   tiene una cola larga a la derecha.
@@ -117,8 +109,7 @@ explica de dónde viene esta diferencia.
 ![Distribución del importe por clase](img/eda/f01_importe_histograma.png){#fig-importe}
 
 La @fig-importe usa intervalos logarítmicos porque el importe abarca cuatro órdenes de
-magnitud, y compara proporciones porque las clases tienen tamaños muy distintos. Los picos en
-importes redondos (el más alto, cerca de 100 dólares) son precios comunes, no errores de datos.
+magnitud, y compara proporciones porque las clases tienen tamaños muy distintos.
 
 ### Importe por grupo
 
@@ -176,15 +167,15 @@ el dato ausente y hotmail) reúnen el 79 % de las transacciones, y seis llegan a
 
 ## Concentración: Gini y curva de Lorenz
 
-El coeficiente de Gini se calcula con la fórmula del PDF (en el código se usa una equivalente
-sobre los valores ordenados, y se comprueba en cada corrida que den lo mismo).
+El coeficiente de Gini se calcula con la fórmula del PDF; el código usa una equivalente sobre los
+valores ordenados y comprueba en cada corrida que las dos den lo mismo.
 
 ::: {.callout-note appearance="minimal" title="Unidad y ceros, declarados"}
 **G1:** importe; la unidad es la transacción, sin ceros (mínimo 0.25 USD).
 **G2:** fraudes y monto defraudado por valor de `card1`, un atributo enmascarado de la tarjeta
-(no una tarjeta individual); se incluyen los 11,813 valores sin fraude, porque excluirlos
-ocultaría la concentración. Se usan conteos y montos, no tasas: con pocas transacciones por
-valor, la tasa es inestable.
+(no una tarjeta individual); se incluyen los 11,813 valores sin fraude,
+porque excluirlos ocultaría la concentración. Se usan conteos y montos, no tasas: con pocas
+transacciones por valor, la tasa es inestable.
 :::
 
 | Variable | Grupo | Gini | El 1 % superior reúne | El 10 % superior reúne |
@@ -222,7 +213,7 @@ con menos del 1 % de las transacciones pasan a «Otros» (quedan 9 categorías).
 | `ProductCD` | 5 | **0.760** | 0.535 | El fraude se reparte entre productos; las legítimas se concentran en W |
 | `card6` | 5 | 0.438 | 0.357 | El crédito pesa más entre los fraudes |
 | `P_emaildomain` | 60 | 0.437 | 0.490 | El fraude se concentra en menos dominios (aparece en 43 de 60) |
-| `P_emaildomain`, agrupada | 9 | 0.740 | 0.808 | Misma dirección: no depende del criterio de agrupación |
+| `P_emaildomain`, agrupada | 9 | 0.740 | 0.808 | Misma dirección |
 
 : Entropía normalizada por clase {#tbl-entropia tbl-colwidths="[20,6,10,12,52]"}
 
@@ -282,7 +273,7 @@ periodo y con la identidad (@fig-mezcla).
 - **El periodo 1 es otro régimen.** W mantiene su tasa en los seis periodos, pero H y R tienen
   en el primero unas 20 mil transacciones cada uno con muy poco fraude, y después caen a unas
   2 a 3 mil con tasas de 5 a 14 %. Esto explica el menor fraude y la mayor entropía del primer
-  periodo. Vesta no publica el significado de los códigos de producto.
+  periodo.
 - **La ausencia de identidad es estructural.** W nunca trae registro de identidad y es el
   98.5 % de las transacciones sin él. La comparación global (2.09 % sin identidad frente a
   7.85 % con ella) mezcla producto e identidad. Dentro de C, el único producto con suficientes
@@ -313,7 +304,7 @@ cuenta; Banxico cuenta todos los contracargos, sean o no por fraude, sobre las o
 autorizadas. El ticket en niveles no se compara (dólares de otra población frente a pesos).
 :::
 
-**Se transfiere el método, no las cifras.** Los niveles no coinciden, así que no se puede
+Los niveles no coinciden, así que no se puede
 prometer en México la precisión medida en IEEE-CIS; el patrón relativo de riesgo por tipo de
 tarjeta sí se parece (@fig-mexico). Dos datos más: en 2026 la razón crédito ÷ débito de Banxico
 bajó a 1.19, así que el patrón de 2017-2018 no está garantizado hoy; y la compra promedio de

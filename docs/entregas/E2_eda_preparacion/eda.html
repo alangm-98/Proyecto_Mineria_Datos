@@ -528,7 +528,7 @@ window.Quarto = {
     <h2 id="toc-title">En esta página</h2>
    
   <ul>
-  <li><a href="#datos-de-partida" id="toc-datos-de-partida" class="nav-link active" data-scroll-target="#datos-de-partida">Datos de partida</a></li>
+  <li><a href="#datos-iniciales" id="toc-datos-iniciales" class="nav-link active" data-scroll-target="#datos-iniciales">Datos iniciales</a></li>
   <li><a href="#la-variable-objetivo-en-el-tiempo" id="toc-la-variable-objetivo-en-el-tiempo" class="nav-link" data-scroll-target="#la-variable-objetivo-en-el-tiempo">La variable objetivo en el tiempo</a></li>
   <li><a href="#estadística-descriptiva" id="toc-estadística-descriptiva" class="nav-link" data-scroll-target="#estadística-descriptiva">Estadística descriptiva</a>
   <ul class="collapse">
@@ -566,7 +566,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Fecha de publicación</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">8 de noviembre de 2026</p>
+      <p class="date">9 de noviembre de 2026</p>
     </div>
   </div>
   
@@ -582,31 +582,21 @@ window.Quarto = {
   /* Tablas con texto largo en la primera columna (anula la regla global) */
   body main table td:first-child { white-space: normal; }
 </style>
-<p>Esta página caracteriza el conjunto de datos del proyecto antes de limpiarlo y documenta los hallazgos que guían la preparación. Responde a la Parte A del PDF de E2 y retoma las <a href="../../entregas/E0_comprension_negocio/preguntas.html">preguntas de investigación de E0</a> (P1 a P4) y el <a href="../../entregas/E1_arquitectura_dw/estrella.html">esquema de E1</a>.</p>
+<p>Esta página caracteriza el conjunto de datos del proyecto antes de limpiarlo y documenta los hallazgos para la preparación. Retoma las <a href="../../entregas/E0_comprension_negocio/preguntas.html">preguntas de investigación de E0</a> (P1 a P4) y el <a href="../../entregas/E1_arquitectura_dw/estrella.html">esquema de E1</a>.</p>
 <div class="callout callout-style-simple callout-tip no-icon">
 <div class="callout-body d-flex">
 <div class="callout-icon-container">
 <i class="callout-icon no-icon"></i>
 </div>
 <div class="callout-body-container">
-<p><strong>En una frase:</strong> el fraude de IEEE-CIS se concentra en pocos productos, tarjetas e importes, la ausencia de identidad es estructural y va con menos fraude, el primer mes es un régimen distinto, y ordenar por importe no da más aciertos que el azar aunque cubre diez veces más dinero.</p>
+<p><strong>Resumen:</strong> el fraude de IEEE-CIS se concentra en pocos productos, tarjetas e importes, la ausencia de identidad es estructural y va con menos fraude, el primer mes es un régimen distinto, y ordenar por importe no da más aciertos que el azar aunque cubre diez veces más dinero.</p>
 </div>
 </div>
 </div>
-<section id="datos-de-partida" class="level2">
-<h2 class="anchored" data-anchor-id="datos-de-partida">Datos de partida</h2>
-<p>El análisis se hace sobre <code>lumen_prep.analitico_crudo</code>, que crea el paso <code>ingesta</code> del <a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/tree/main/pipeline">pipeline</a>: las dos tablas de la fuente A unidas por <code>TransactionID</code> al grano de E1, <strong>sin limpiar</strong>. Solo se agregaron cuatro columnas para leer el tiempo y la unión.</p>
-<div id="tbl-datos" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,78]">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;1: Características del conjunto analítico
-</figcaption>
-<div aria-describedby="tbl-datos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<section id="datos-iniciales" class="level2">
+<h2 class="anchored" data-anchor-id="datos-iniciales">Datos iniciales</h2>
+<p>El análisis se hace sobre <code>lumen_prep.analitico_crudo</code>, que crea el paso <code>ingesta</code> del <a href="https://github.com/alangm-98/Proyecto_Mineria_Datos/tree/main/pipeline">pipeline</a>: las dos tablas de la fuente A unidas por <code>TransactionID</code> al grano de E1, sin limpiar. Se agregaron cuatro columnas para leer el tiempo y la unión.</p>
 <table class="caption-top table">
-<colgroup>
-<col style="width: 22%">
-<col style="width: 78%">
-</colgroup>
 <thead>
 <tr class="header">
 <th style="text-align: left;">Característica</th>
@@ -616,7 +606,7 @@ Tabla&nbsp;1: Características del conjunto analítico
 <tbody>
 <tr class="odd">
 <td style="text-align: left;">Grano</td>
-<td style="text-align: left;">Una fila por transacción con tarjeta en comercio electrónico (E1)</td>
+<td style="text-align: left;">Una fila por transacción con tarjeta en e-commerce (E1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Filas</td>
@@ -628,11 +618,11 @@ Tabla&nbsp;1: Características del conjunto analítico
 </tr>
 <tr class="even">
 <td style="text-align: left;">Fuente</td>
-<td style="text-align: left;">A, IEEE-CIS (Vesta). La fuente B (Banxico) entra en la <a href="#mexico">brecha con México</a></td>
+<td style="text-align: left;">IEEE-CIS (Vesta). Banxico entra en la <a href="#mexico">brecha con México</a></td>
 </tr>
 <tr class="odd">
 <td style="text-align: left;">Periodo</td>
-<td style="text-align: left;">182 días consecutivos; del 2 de diciembre de 2017 al 1 de junio de 2018 con el supuesto de fecha de E1</td>
+<td style="text-align: left;">182 días consecutivos; del 2 de diciembre de 2017 al 1 de junio de 2018 (supuesto de fecha de E1)</td>
 </tr>
 <tr class="even">
 <td style="text-align: left;">Territorio</td>
@@ -640,10 +630,7 @@ Tabla&nbsp;1: Características del conjunto analítico
 </tr>
 </tbody>
 </table>
-</div>
-</figure>
-</div>
-<p>Para comparar en el tiempo se usan <strong>seis periodos de 30 días relativos</strong> (el último de 32). No dependen del supuesto de fecha, que puede estar corrido un día (riesgo 9), y son los mismos bloques de la partición temporal.</p>
+<p>Para comparar en el tiempo se usan seis periodos de 30 días relativos (el último de 32), que son los mismos bloques de la partición temporal.</p>
 <div class="callout callout-style-default callout-note callout-titled" title="Cómo reproducir las cifras y figuras de esta página">
 <div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-1-contents" aria-controls="callout-1" aria-expanded="false" aria-label="Toggle callout">
 <div class="callout-icon-container">
@@ -667,18 +654,12 @@ Tabla&nbsp;1: Características del conjunto analítico
 <section id="la-variable-objetivo-en-el-tiempo" class="level2">
 <h2 class="anchored" data-anchor-id="la-variable-objetivo-en-el-tiempo">La variable objetivo en el tiempo</h2>
 <p>El <strong>3.50 %</strong> de las transacciones es fraude, y el <strong>3.87 %</strong> del monto. La tasa no es estable:</p>
-<div id="tbl-periodos" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[28,24,24,24]">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-periodos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;2: Volumen y tasa de fraude por periodo
-</figcaption>
-<div aria-describedby="tbl-periodos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
-<col style="width: 28%">
-<col style="width: 24%">
-<col style="width: 24%">
-<col style="width: 24%">
+<col style="width: 30%">
+<col style="width: 23%">
+<col style="width: 23%">
+<col style="width: 23%">
 </colgroup>
 <thead>
 <tr class="header">
@@ -727,9 +708,6 @@ Tabla&nbsp;2: Volumen y tasa de fraude por periodo
 </tr>
 </tbody>
 </table>
-</div>
-</figure>
-</div>
 <div id="fig-serie" class="quarto-float quarto-figure quarto-figure-center anchored">
 <figure class="quarto-float quarto-float-fig figure">
 <div aria-describedby="fig-serie-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
@@ -740,18 +718,12 @@ Figura&nbsp;1: Transacciones y tasa de fraude por día
 </figcaption>
 </figure>
 </div>
-<p>La <a href="#fig-serie" class="quarto-xref">Figura&nbsp;1</a> muestra que el primer periodo tiene 50 % más volumen y menos fraude que los demás. Los días 18 a 25 son los de mayor volumen (hasta 6,852) e incluyen las tasas más bajas de toda la serie (1.25 % y 1.10 % en los días 24 y 25). La <a href="#cruces">sección de cruces</a> explica de dónde viene esta diferencia.</p>
+<p>La <a href="#fig-serie" class="quarto-xref">Figura&nbsp;1</a> muestra que el primer periodo tiene 50 % más volumen y menos fraude que los demás. Los días 18 a 25 son los de mayor volumen (hasta 6,852) e incluyen las tasas más bajas (1.25 % y 1.10 % en los días 24 y 25). La <a href="#cruces">sección de cruces</a> explica de dónde viene esta diferencia.</p>
 </section>
 <section id="estadística-descriptiva" class="level2">
 <h2 class="anchored" data-anchor-id="estadística-descriptiva">Estadística descriptiva</h2>
 <section id="importe-localización-y-variabilidad" class="level3">
 <h3 class="anchored" data-anchor-id="importe-localización-y-variabilidad">Importe: localización y variabilidad</h3>
-<div id="tbl-importe" class="quarto-float quarto-figure quarto-figure-center anchored">
-<figure class="quarto-float quarto-float-tbl figure">
-<figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-importe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;3: Importe por transacción (USD)
-</figcaption>
-<div aria-describedby="tbl-importe-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
 <colgroup>
 <col style="width: 30%">
@@ -866,9 +838,6 @@ Tabla&nbsp;3: Importe por transacción (USD)
 </tr>
 </tbody>
 </table>
-</div>
-</figure>
-</div>
 <ul>
 <li><strong>Sesgo:</strong> la media es casi el doble de la mediana y la asimetría es 14.4. La distribución tiene una cola larga a la derecha.</li>
 <li><strong>Atípicos:</strong> la desviación estándar es casi tres veces el IQR (en una normal sería 0.74 veces) y el exceso de curtosis es 1,124. Hay valores extremos legítimos: el máximo (31,937) está 29 veces por encima del percentil 99. Por eso el importe se describe con <strong>mediana, IQR y MAD</strong>, y los gráficos usan escala logarítmica.</li>
@@ -884,14 +853,14 @@ Figura&nbsp;2: Distribución del importe por clase
 </figcaption>
 </figure>
 </div>
-<p>La <a href="#fig-importe" class="quarto-xref">Figura&nbsp;2</a> usa intervalos logarítmicos porque el importe abarca cuatro órdenes de magnitud, y compara proporciones porque las clases tienen tamaños muy distintos. Los picos en importes redondos (el más alto, cerca de 100 dólares) son precios comunes, no errores de datos.</p>
+<p>La <a href="#fig-importe" class="quarto-xref">Figura&nbsp;2</a> usa intervalos logarítmicos porque el importe abarca cuatro órdenes de magnitud, y compara proporciones porque las clases tienen tamaños muy distintos.</p>
 </section>
 <section id="importe-por-grupo" class="level3">
 <h3 class="anchored" data-anchor-id="importe-por-grupo">Importe por grupo</h3>
 <div id="tbl-producto" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,21,21,21,21]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-producto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;4: Importe y tasa de fraude por producto, ordenados por mediana
+Tabla&nbsp;1: Importe y tasa de fraude por producto, ordenados por mediana
 </figcaption>
 <div aria-describedby="tbl-producto-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -962,14 +931,14 @@ Figura&nbsp;3: Importe por producto, ordenado por mediana
 </figcaption>
 </figure>
 </div>
-<p>La <a href="#fig-producto" class="quarto-xref">Figura&nbsp;3</a> y la <a href="#tbl-producto" class="quarto-xref">Tabla&nbsp;4</a> muestran que <strong>el producto con más fraude (C) es el de importes más bajos</strong>. Por tipo de tarjeta, el crédito tiene mayor mediana (100 frente a 59) y mayor tasa (6.68 % frente a 2.43 %). Las transacciones con identidad tienen menor mediana (50 frente a 77.95). Entre periodos la mediana va de 59.95 a 75 y el máximo extremo está en el periodo 3.</p>
+<p>La <a href="#fig-producto" class="quarto-xref">Figura&nbsp;3</a> y la <a href="#tbl-producto" class="quarto-xref">Tabla&nbsp;1</a> muestran que <strong>el producto con más fraude (C) es el de importes más bajos</strong>. Por tipo de tarjeta, el crédito tiene mayor mediana (100 frente a 59) y mayor tasa (6.68 % frente a 2.43 %). Las transacciones con identidad tienen menor mediana (50 frente a 77.95). Entre periodos la mediana va de 59.95 a 75 y el máximo extremo está en el periodo 3.</p>
 </section>
 <section id="otras-variables-numéricas" class="level3">
 <h3 class="anchored" data-anchor-id="otras-variables-numéricas">Otras variables numéricas</h3>
 <div id="tbl-otras" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[30,22,48]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-otras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;5: Otras numéricas por clase
+Tabla&nbsp;2: Otras numéricas por clase
 </figcaption>
 <div aria-describedby="tbl-otras-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1012,7 +981,7 @@ Tabla&nbsp;5: Otras numéricas por clase
 <div id="tbl-categoricas" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[16,11,19,13,41]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-categoricas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;6: Variables categóricas; el dato ausente cuenta como una categoría más
+Tabla&nbsp;3: Variables categóricas; el dato ausente cuenta como una categoría más
 </figcaption>
 <div aria-describedby="tbl-categoricas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1106,7 +1075,7 @@ Figura&nbsp;5: Pareto del dominio de correo del comprador
 </section>
 <section id="concentración-gini-y-curva-de-lorenz" class="level2">
 <h2 class="anchored" data-anchor-id="concentración-gini-y-curva-de-lorenz">Concentración: Gini y curva de Lorenz</h2>
-<p>El coeficiente de Gini se calcula con la fórmula del PDF (en el código se usa una equivalente sobre los valores ordenados, y se comprueba en cada corrida que den lo mismo).</p>
+<p>El coeficiente de Gini se calcula con la fórmula del PDF; el código usa una equivalente sobre los valores ordenados y comprueba en cada corrida que las dos den lo mismo.</p>
 <div class="callout callout-style-simple callout-note no-icon callout-titled" title="Unidad y ceros, declarados">
 <div class="callout-header d-flex align-content-center">
 <div class="callout-icon-container">
@@ -1123,7 +1092,7 @@ Figura&nbsp;5: Pareto del dominio de correo del comprador
 <div id="tbl-gini" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[24,22,16,19,19]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-gini-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;7: Coeficiente de Gini y participación del top-k
+Tabla&nbsp;4: Coeficiente de Gini y participación del top-k
 </figcaption>
 <div aria-describedby="tbl-gini-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1233,7 +1202,7 @@ Figura&nbsp;6: Curvas de Lorenz de G1 y G2
 <div id="tbl-entropia" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[20,6,10,12,52]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-entropia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;8: Entropía normalizada por clase
+Tabla&nbsp;5: Entropía normalizada por clase
 </figcaption>
 <div aria-describedby="tbl-entropia-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1280,7 +1249,7 @@ Tabla&nbsp;8: Entropía normalizada por clase
 <td style="text-align: right;">9</td>
 <td style="text-align: right;">0.740</td>
 <td style="text-align: right;">0.808</td>
-<td style="text-align: left;">Misma dirección: no depende del criterio de agrupación</td>
+<td style="text-align: left;">Misma dirección</td>
 </tr>
 </tbody>
 </table>
@@ -1305,7 +1274,7 @@ Figura&nbsp;7: Entropía por clase y de ProductCD por periodo
 <div id="tbl-calidad" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[22,78]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-calidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;9: Diagnóstico de calidad
+Tabla&nbsp;6: Diagnóstico de calidad
 </figcaption>
 <div aria-describedby="tbl-calidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1380,7 +1349,7 @@ Figura&nbsp;9: Mezcla de productos por periodo y por registro de identidad
 <div id="tbl-cruce-periodo" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[14,40,46]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cruce-periodo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;10: Producto por periodo
+Tabla&nbsp;7: Producto por periodo
 </figcaption>
 <div aria-describedby="tbl-cruce-periodo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1427,7 +1396,7 @@ Tabla&nbsp;10: Producto por periodo
 <div id="tbl-cruce-identidad" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[14,43,43]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-cruce-identidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;11: Identidad por producto
+Tabla&nbsp;8: Identidad por producto
 </figcaption>
 <div aria-describedby="tbl-cruce-identidad-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1468,7 +1437,7 @@ Tabla&nbsp;11: Identidad por producto
 </div>
 </div>
 <ul>
-<li><strong>El periodo 1 es otro régimen.</strong> W mantiene su tasa en los seis periodos, pero H y R tienen en el primero unas 20 mil transacciones cada uno con muy poco fraude, y después caen a unas 2 a 3 mil con tasas de 5 a 14 %. Esto explica el menor fraude y la mayor entropía del primer periodo. Vesta no publica el significado de los códigos de producto.</li>
+<li><strong>El periodo 1 es otro régimen.</strong> W mantiene su tasa en los seis periodos, pero H y R tienen en el primero unas 20 mil transacciones cada uno con muy poco fraude, y después caen a unas 2 a 3 mil con tasas de 5 a 14 %. Esto explica el menor fraude y la mayor entropía del primer periodo.</li>
 <li><strong>La ausencia de identidad es estructural.</strong> W nunca trae registro de identidad y es el 98.5 % de las transacciones sin él. La comparación global (2.09 % sin identidad frente a 7.85 % con ella) mezcla producto e identidad. Dentro de C, el único producto con suficientes casos de ambos tipos, la ausencia de identidad <strong>sigue yendo con menos fraude</strong>.</li>
 </ul>
 </section>
@@ -1478,7 +1447,7 @@ Tabla&nbsp;11: Identidad por producto
 <div id="tbl-mexico" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[38,14,14,34]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-mexico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;12: IEEE-CIS frente a Banxico en el mismo periodo
+Tabla&nbsp;9: IEEE-CIS frente a Banxico en el mismo periodo
 </figcaption>
 <div aria-describedby="tbl-mexico-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1561,7 +1530,7 @@ Figura&nbsp;10: IEEE-CIS frente a México
 <p>IEEE-CIS marca como fraude el contracargo y las transacciones posteriores ligadas a la misma cuenta; Banxico cuenta todos los contracargos, sean o no por fraude, sobre las operaciones autorizadas. El ticket en niveles no se compara (dólares de otra población frente a pesos).</p>
 </div>
 </div>
-<p><strong>Se transfiere el método, no las cifras.</strong> Los niveles no coinciden, así que no se puede prometer en México la precisión medida en IEEE-CIS; el patrón relativo de riesgo por tipo de tarjeta sí se parece (<a href="#fig-mexico" class="quarto-xref">Figura&nbsp;10</a>). Dos datos más: en 2026 la razón crédito ÷ débito de Banxico bajó a 1.19, así que el patrón de 2017-2018 no está garantizado hoy; y la compra promedio de Banxico en ene-mar 2026 es de <strong>730 pesos</strong>, 16 % por debajo del ticket de 850 que supone el caso.</p>
+<p>Los niveles no coinciden, así que no se puede prometer en México la precisión medida en IEEE-CIS; el patrón relativo de riesgo por tipo de tarjeta sí se parece (<a href="#fig-mexico" class="quarto-xref">Figura&nbsp;10</a>). Dos datos más: en 2026 la razón crédito ÷ débito de Banxico bajó a 1.19, así que el patrón de 2017-2018 no está garantizado hoy; y la compra promedio de Banxico en ene-mar 2026 es de <strong>730 pesos</strong>, 16 % por debajo del ticket de 850 que supone el caso.</p>
 </section>
 <section id="líneas-base-del-tramo-revisado" class="level2">
 <h2 class="anchored" data-anchor-id="líneas-base-del-tramo-revisado">Líneas base del tramo revisado</h2>
@@ -1569,7 +1538,7 @@ Figura&nbsp;10: IEEE-CIS frente a México
 <div id="tbl-tramo" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[50,25,25]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-tramo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;13: Líneas base del tramo diario
+Tabla&nbsp;10: Líneas base del tramo diario
 </figcaption>
 <div aria-describedby="tbl-tramo-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1626,7 +1595,7 @@ Figura&nbsp;11: Aciertos y monto cubierto por día
 <div id="tbl-umbrales" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[28,36,36]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-umbrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;14: Umbrales de las medidas técnicas, evaluados en la partición de prueba
+Tabla&nbsp;11: Umbrales de las medidas técnicas, evaluados en la partición de prueba
 </figcaption>
 <div aria-describedby="tbl-umbrales-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1674,7 +1643,7 @@ Tabla&nbsp;14: Umbrales de las medidas técnicas, evaluados en la partición de 
 <div id="tbl-hallazgos" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[6,62,14,18]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-hallazgos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;15: Resumen de hallazgos
+Tabla&nbsp;12: Resumen de hallazgos
 </figcaption>
 <div aria-describedby="tbl-hallazgos-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
@@ -1740,7 +1709,7 @@ Tabla&nbsp;15: Resumen de hallazgos
 <div id="tabset-2-1" class="tab-pane active" role="tabpanel" aria-labelledby="tabset-2-1-tab">
 <p><strong>El 10 % de los fraudes de mayor importe concentra el 45.1 % del monto defraudado (Gini 0.586).</strong></p>
 <ul>
-<li><strong>Evidencia:</strong> <a href="#tbl-gini" class="quarto-xref">Tabla&nbsp;7</a>, <a href="#fig-lorenz" class="quarto-xref">Figura&nbsp;6</a>.</li>
+<li><strong>Evidencia:</strong> <a href="#tbl-gini" class="quarto-xref">Tabla&nbsp;4</a>, <a href="#fig-lorenz" class="quarto-xref">Figura&nbsp;6</a>.</li>
 <li><strong>Vínculo con E0:</strong> refuerza P2. Ponderar por importe puede cubrir mucho más dinero que contar fraudes; la concentración es estable entre periodos.</li>
 <li><strong>Consecuencia:</strong> conservar el importe sin acotar sus valores extremos (son el fenómeno que P2 quiere capturar) y evaluar siempre el monto cubierto junto con los aciertos.</li>
 </ul>
@@ -1748,7 +1717,7 @@ Tabla&nbsp;15: Resumen de hallazgos
 <div id="tabset-2-2" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-2-tab">
 <p><strong>Sin identidad, la tasa es 2.09 %; con identidad, 7.85 %. Dentro de C: 5.82 % frente a 12.28 %.</strong></p>
 <ul>
-<li><strong>Evidencia:</strong> <a href="#tbl-cruce-identidad" class="quarto-xref">Tabla&nbsp;11</a>, <a href="#fig-mezcla" class="quarto-xref">Figura&nbsp;9</a>, <a href="#fig-tasas" class="quarto-xref">Figura&nbsp;4</a>. Verificado en Kaggle con código independiente.</li>
+<li><strong>Evidencia:</strong> <a href="#tbl-cruce-identidad" class="quarto-xref">Tabla&nbsp;8</a>, <a href="#fig-mezcla" class="quarto-xref">Figura&nbsp;9</a>, <a href="#fig-tasas" class="quarto-xref">Figura&nbsp;4</a>. Verificado en Kaggle con código independiente.</li>
 <li><strong>Vínculo con E0:</strong> responde P3 en sentido contrario a lo que suponía E0. La ausencia de identidad no es un hueco al azar: W nunca trae identidad, y dentro de C la ausencia va con menos fraude.</li>
 <li><strong>Consecuencia:</strong> no imputar los campos de identidad como si faltaran al azar. Conservar la ausencia como categoría propia (el miembro 0 de <code>dim_dispositivo</code>) y analizar identidad junto con producto.</li>
 </ul>
@@ -1756,7 +1725,7 @@ Tabla&nbsp;15: Resumen de hallazgos
 <div id="tabset-2-3" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-3-tab">
 <p><strong>En el periodo 1, H y R suman unas 41 mil transacciones con tasas de 1.8 % y 1.0 %; después caen a unas 2,300 (H) y 3,300 (R) por periodo, con tasas de 4.5 a 14.4 %.</strong></p>
 <ul>
-<li><strong>Evidencia:</strong> <a href="#tbl-cruce-periodo" class="quarto-xref">Tabla&nbsp;10</a>, <a href="#fig-serie" class="quarto-xref">Figura&nbsp;1</a>, <a href="#fig-entropia" class="quarto-xref">Figura&nbsp;7</a>.</li>
+<li><strong>Evidencia:</strong> <a href="#tbl-cruce-periodo" class="quarto-xref">Tabla&nbsp;7</a>, <a href="#fig-serie" class="quarto-xref">Figura&nbsp;1</a>, <a href="#fig-entropia" class="quarto-xref">Figura&nbsp;7</a>.</li>
 <li><strong>Vínculo con E0:</strong> afecta el requisito de partición temporal de E0. Un modelo entrenado con el primer mes aprendería un comportamiento de H y R que no se repite.</li>
 <li><strong>Consecuencia:</strong> partición temporal en bloques (entrenamiento días 1 a 120, validación 121 a 150, prueba 151 a 182), con el periodo 1 documentado dentro del entrenamiento; vigilar el desempeño por producto.</li>
 </ul>
@@ -1764,23 +1733,23 @@ Tabla&nbsp;15: Resumen de hallazgos
 <div id="tabset-2-4" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-4-tab">
 <p><strong>Aciertos en el tramo: 2.97 % con la regla y 3.50 % al azar; monto cubierto: 7.58 % frente a 0.77 %.</strong></p>
 <ul>
-<li><strong>Evidencia:</strong> <a href="#tbl-tramo" class="quarto-xref">Tabla&nbsp;13</a>, <a href="#fig-tramo" class="quarto-xref">Figura&nbsp;11</a>, <a href="#fig-producto" class="quarto-xref">Figura&nbsp;3</a>.</li>
+<li><strong>Evidencia:</strong> <a href="#tbl-tramo" class="quarto-xref">Tabla&nbsp;10</a>, <a href="#fig-tramo" class="quarto-xref">Figura&nbsp;11</a>, <a href="#fig-producto" class="quarto-xref">Figura&nbsp;3</a>.</li>
 <li><strong>Vínculo con E0:</strong> P1 y P2. Una regla simple no basta, y aciertos y monto cubierto pueden ir en direcciones opuestas (el producto C tiene la tasa más alta y los importes más bajos). Es la razón por la que E0 exige medir los dos sobre el mismo tramo.</li>
-<li><strong>Consecuencia:</strong> umbrales fijados (<a href="#tbl-umbrales" class="quarto-xref">Tabla&nbsp;14</a>). El modelo de E3 debe superar a las dos líneas base en las dos medidas.</li>
+<li><strong>Consecuencia:</strong> umbrales fijados (<a href="#tbl-umbrales" class="quarto-xref">Tabla&nbsp;11</a>). El modelo de E3 debe superar a las dos líneas base en las dos medidas.</li>
 </ul>
 </div>
 <div id="tabset-2-5" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-5-tab">
 <p><strong>Fraude de IEEE-CIS: 3.50 % por número y 3.87 % por monto; contracargos de Banxico en el mismo periodo: 0.39 % y 0.85 %.</strong></p>
 <ul>
-<li><strong>Evidencia:</strong> <a href="#tbl-mexico" class="quarto-xref">Tabla&nbsp;12</a>, <a href="#fig-mexico" class="quarto-xref">Figura&nbsp;10</a>.</li>
+<li><strong>Evidencia:</strong> <a href="#tbl-mexico" class="quarto-xref">Tabla&nbsp;9</a>, <a href="#fig-mexico" class="quarto-xref">Figura&nbsp;10</a>.</li>
 <li><strong>Vínculo con E0:</strong> cumple el compromiso del supuesto 1 y el riesgo 1. Los niveles no se transfieren; el patrón relativo por tipo de tarjeta sí.</li>
-<li><strong>Consecuencia:</strong> reportar los aciertos también con prevalencia ajustada y expresar las metas en medidas que no dependen de la prevalencia (<a href="#tbl-umbrales" class="quarto-xref">Tabla&nbsp;14</a>).</li>
+<li><strong>Consecuencia:</strong> reportar los aciertos también con prevalencia ajustada y expresar las metas en medidas que no dependen de la prevalencia (<a href="#tbl-umbrales" class="quarto-xref">Tabla&nbsp;11</a>).</li>
 </ul>
 </div>
 <div id="tabset-2-6" class="tab-pane" role="tabpanel" aria-labelledby="tabset-2-6-tab">
 <p><strong>Gini de 0.973 en fraudes por valor de <code>card1</code>, frente a 0.888 en transacciones; el 87 % de los valores no tiene fraude.</strong></p>
 <ul>
-<li><strong>Evidencia:</strong> <a href="#tbl-gini" class="quarto-xref">Tabla&nbsp;7</a>, <a href="#fig-lorenz" class="quarto-xref">Figura&nbsp;6</a>.</li>
+<li><strong>Evidencia:</strong> <a href="#tbl-gini" class="quarto-xref">Tabla&nbsp;4</a>, <a href="#fig-lorenz" class="quarto-xref">Figura&nbsp;6</a>.</li>
 <li><strong>Vínculo con E0:</strong> P1 (señal útil) y riesgo 3 (fuga de información).</li>
 <li><strong>Consecuencia:</strong> cualquier codificación de <code>card1</code> que use la etiqueta se calcula solo con la partición de entrenamiento.</li>
 </ul>
@@ -1793,7 +1762,7 @@ Tabla&nbsp;15: Resumen de hallazgos
 <div id="tbl-preguntas" class="quarto-float quarto-figure quarto-figure-center anchored" data-tbl-colwidths="[30,70]">
 <figure class="quarto-float quarto-float-tbl figure">
 <figcaption class="quarto-float-caption-top quarto-float-caption quarto-float-tbl" id="tbl-preguntas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
-Tabla&nbsp;16: Estado de las preguntas tras el EDA
+Tabla&nbsp;13: Estado de las preguntas tras el EDA
 </figcaption>
 <div aria-describedby="tbl-preguntas-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
 <table class="caption-top table">
