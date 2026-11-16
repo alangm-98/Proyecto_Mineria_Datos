@@ -51,7 +51,7 @@ uv run python eda/run_eda.py                    # tablas en salidas/eda/ y figur
 
 Las tablas agregadas están en `pipeline/salidas/eda/`. Cuatro cifras clave se reprodujeron
 con código independiente sobre los archivos originales de Kaggle, con resultado idéntico; el código y
-la comparación se documentan en la página de uso de IA de E2.
+la comparación se documentan en la página de [uso de IA](uso_ia.qmd#kaggle).
 :::
 
 ## La variable objetivo en el tiempo

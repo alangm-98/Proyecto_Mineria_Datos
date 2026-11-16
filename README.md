@@ -108,6 +108,7 @@ validación ni de prueba.
 | Arquitectura del pipeline, DW poblado y DataMart             | `entregas/E2_eda_preparacion/pipeline.qmd`     |
 | Decisiones sobre los datos, para el stakeholder              | `entregas/E2_eda_preparacion/decisiones.qmd`   |
 | Matriz de trazabilidad extendida a E0                        | `entregas/E2_eda_preparacion/trazabilidad.qmd` |
+| Uso de herramientas de IA                                    | `entregas/E2_eda_preparacion/uso_ia.qmd`       |
 | Figuras y capturas                                           | `entregas/E2_eda_preparacion/img/`             |
 | Pipeline (instalación, autenticación y ejecución)            | `pipeline/README.md`                           |
 | SQL de ingesta, limpieza, carga del DW y vistas del DataMart | `sql/`                                         |
@@ -173,6 +174,7 @@ del repositorio.
 │       ├── pipeline.qmd
 │       ├── decisiones.qmd
 │       ├── trazabilidad.qmd
+│       ├── uso_ia.qmd
 │       ├── _tabla_decision.md       Tabla generada por el pipeline
 │       └── img/                     Figuras y capturas
 ├── pipeline/

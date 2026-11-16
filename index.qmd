@@ -63,6 +63,12 @@ información de validación ni de prueba.
     <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Matriz de E1 extendida con hallazgos, decisiones y estado de cada pregunta, y revisión del registro de riesgos.</div>
   </a>
 
+  <a class="tarjeta" href="entregas/E2_eda_preparacion/uso_ia.html" style="display: block; text-decoration: none; background: rgba(0, 0, 0, 0.05); border: 1px solid rgba(0, 0, 0, 0.2); border-radius: 8px; padding: 16px; color: inherit;">
+    <div style="font-size: 0.75em; font-weight: bold; text-transform: uppercase; letter-spacing: 0.05em; opacity: 0.6;">Documentación</div>
+    <div style="font-size: 1.05em; font-weight: 600; margin: 4px 0 6px 0;">Uso de herramientas de IA</div>
+    <div style="font-size: 0.85em; line-height: 1.45; opacity: 0.85;">Los usos con impacto, las interpretaciones contrastadas con datos, la verificación en Kaggle y los errores detectados.</div>
+  </a>
+
 </div>
 ```
 

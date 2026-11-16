@@ -1,0 +1,1370 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" lang="es" xml:lang="es"><head>
+
+<meta charset="utf-8">
+<meta name="generator" content="quarto-1.10.18">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+
+
+<title>6. Uso de herramientas de IA – Proyecto Minería de Datos</title>
+<style>
+/* Default styles provided by pandoc.
+** See https://pandoc.org/MANUAL.html#variables-for-html for config info.
+*/
+span.smallcaps{font-variant: small-caps;}
+div.columns{display: flex; gap: 1.5em;}
+div.column{flex: auto;}
+@media screen {
+div.columns{gap: min(4vw, 1.5em);}
+div.column{overflow-x: auto;}
+}
+div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+ul.task-list{list-style: none;}
+ul.task-list li input[type="checkbox"] {
+  width: 0.8em;
+  margin: 0 0.8em 0.2em -1em; /* quarto-specific, see https://github.com/quarto-dev/quarto-cli/issues/4556 */ 
+  vertical-align: middle;
+}
+/* CSS for syntax highlighting */
+html { -webkit-text-size-adjust: 100%; }
+pre > code.sourceCode { white-space: pre; position: relative; }
+pre > code.sourceCode > span { display: inline-block; line-height: 1.25; }
+pre > code.sourceCode > span:empty { height: 1.2em; }
+.sourceCode { overflow: visible; }
+code.sourceCode > span { color: inherit; text-decoration: inherit; }
+div.sourceCode { margin: 1em 0; }
+pre.sourceCode { margin: 0; }
+@media screen {
+div.sourceCode { overflow: auto; }
+}
+@media print {
+pre > code.sourceCode { white-space: pre-wrap; }
+pre > code.sourceCode > span { text-indent: -5em; padding-left: 5em; }
+}
+pre.numberSource code
+  { counter-reset: source-line 0; }
+pre.numberSource code > span
+  { position: relative; left: -4em; counter-increment: source-line; }
+pre.numberSource code > span > a:first-child::before
+  { content: counter(source-line);
+    position: relative; left: -1em; text-align: right; vertical-align: baseline;
+    border: none; display: inline-block;
+    -webkit-touch-callout: none; -webkit-user-select: none;
+    -khtml-user-select: none; -moz-user-select: none;
+    -ms-user-select: none; user-select: none;
+    padding: 0 4px; width: 4em;
+  }
+pre.numberSource { margin-left: 3em;  padding-left: 4px; }
+div.sourceCode
+  {   }
+@media screen {
+pre > code.sourceCode > span > a:first-child::before { text-decoration: underline; }
+}
+</style>
+
+
+<script src="../../site_libs/quarto-nav/quarto-nav.js"></script>
+<script src="../../site_libs/quarto-nav/headroom.min.js"></script>
+<script src="../../site_libs/clipboard/clipboard.min.js"></script>
+<script src="../../site_libs/quarto-search/autocomplete.umd.js"></script>
+<script src="../../site_libs/quarto-search/fuse.min.js"></script>
+<script src="../../site_libs/quarto-search/quarto-search.js"></script>
+<meta name="quarto:offset" content="../../">
+<link href="../../entregas/E2_eda_preparacion/trazabilidad.html" rel="prev">
+<script src="../../site_libs/quarto-html/quarto.js" type="module"></script>
+<script src="../../site_libs/quarto-html/tabsets/tabsets.js" type="module"></script>
+<script src="../../site_libs/quarto-html/popper.min.js"></script>
+<script src="../../site_libs/quarto-html/tippy.umd.min.js"></script>
+<script src="../../site_libs/quarto-html/anchor.min.js"></script>
+<link href="../../site_libs/quarto-html/tippy.css" rel="stylesheet">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-dark-b85bc7c33db8c58e0ec93c3465666fed.css" rel="stylesheet" class="quarto-color-scheme quarto-color-alternate" id="quarto-text-highlighting-styles">
+<link href="../../site_libs/quarto-html/quarto-syntax-highlighting-64a204ab8560d761af7679ceaba22944.css" rel="stylesheet" class="quarto-color-scheme-extra" id="quarto-text-highlighting-styles">
+<script src="../../site_libs/bootstrap/bootstrap.min.js"></script>
+<link href="../../site_libs/bootstrap/bootstrap-icons.css" rel="stylesheet">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme" id="quarto-bootstrap" data-mode="light">
+<link href="../../site_libs/bootstrap/bootstrap-dark-97bc63ea392d9b08ece34d04c8d9f81c.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme quarto-color-alternate" id="quarto-bootstrap" data-mode="dark">
+<link href="../../site_libs/bootstrap/bootstrap-0bd7f3cda9db14ba1ad33793376f0511.min.css" rel="stylesheet" append-hash="true" class="quarto-color-scheme-extra" id="quarto-bootstrap" data-mode="light">
+<script src="../../site_libs/quarto-contrib/glightbox/glightbox.min.js"></script>
+<link href="../../site_libs/quarto-contrib/glightbox/glightbox.min.css" rel="stylesheet">
+<link href="../../site_libs/quarto-contrib/glightbox/lightbox.css" rel="stylesheet">
+<script id="quarto-search-options" type="application/json">{
+  "location": "navbar",
+  "copy-button": false,
+  "collapse-after": 3,
+  "panel-placement": "end",
+  "type": "overlay",
+  "limit": 50,
+  "keyboard-shortcut": [
+    "f",
+    "/",
+    "s"
+  ],
+  "show-item-context": false,
+  "language": {
+    "search-no-results-text": "No se han encontrado resultados",
+    "search-matching-documents-text": "documentos encontrados",
+    "search-copy-link-title": "Copiar el enlace en la búsqueda",
+    "search-hide-matches-text": "Ocultar resultados adicionales",
+    "search-more-match-text": "resultado adicional en este documento",
+    "search-more-matches-text": "resultados adicionales en este documento",
+    "search-clear-button-title": "Borrar",
+    "search-text-placeholder": "",
+    "search-detached-cancel-button-title": "Cancelar",
+    "search-submit-button-title": "Enviar",
+    "search-label": "Buscar"
+  }
+}</script>
+<style>html{ scroll-behavior: smooth; }</style>
+
+
+<link rel="stylesheet" href="../../styles.css">
+</head>
+
+<body class="nav-sidebar floating nav-fixed quarto-light"><script id="quarto-html-before-body" type="application/javascript">
+    const toggleBodyColorMode = (bsSheetEl) => {
+      const mode = bsSheetEl.getAttribute("data-mode");
+      const bodyEl = window.document.querySelector("body");
+      if (mode === "dark") {
+        bodyEl.classList.add("quarto-dark");
+        bodyEl.classList.remove("quarto-light");
+      } else {
+        bodyEl.classList.add("quarto-light");
+        bodyEl.classList.remove("quarto-dark");
+      }
+    }
+    const toggleBodyColorPrimary = () => {
+      const bsSheetEl = window.document.querySelector("link#quarto-bootstrap:not([rel=disabled-stylesheet])");
+      if (bsSheetEl) {
+        toggleBodyColorMode(bsSheetEl);
+      }
+    }
+    const setColorSchemeToggle = (alternate) => {
+      const toggles = window.document.querySelectorAll('.quarto-color-scheme-toggle');
+      for (let i=0; i < toggles.length; i++) {
+        const toggle = toggles[i];
+        if (toggle) {
+          if (alternate) {
+            toggle.classList.add("alternate");
+          } else {
+            toggle.classList.remove("alternate");
+          }
+        }
+      }
+    };
+    const toggleColorMode = (alternate) => {
+      // Switch the stylesheets
+      const primaryStylesheets = window.document.querySelectorAll('link.quarto-color-scheme:not(.quarto-color-alternate)');
+      const alternateStylesheets = window.document.querySelectorAll('link.quarto-color-scheme.quarto-color-alternate');
+      manageTransitions('#quarto-margin-sidebar .nav-link', false);
+      if (alternate) {
+        // note: dark is layered on light, we don't disable primary!
+        enableStylesheet(alternateStylesheets);
+        for (const sheetNode of alternateStylesheets) {
+          if (sheetNode.id === "quarto-bootstrap") {
+            toggleBodyColorMode(sheetNode);
+          }
+        }
+      } else {
+        disableStylesheet(alternateStylesheets);
+        enableStylesheet(primaryStylesheets)
+        toggleBodyColorPrimary();
+      }
+      manageTransitions('#quarto-margin-sidebar .nav-link', true);
+      // Switch the toggles
+      setColorSchemeToggle(alternate)
+      // Hack to workaround the fact that safari doesn't
+      // properly recolor the scrollbar when toggling (#1455)
+      if (navigator.userAgent.indexOf('Safari') > 0 && navigator.userAgent.indexOf('Chrome') == -1) {
+        manageTransitions("body", false);
+        window.scrollTo(0, 1);
+        setTimeout(() => {
+          window.scrollTo(0, 0);
+          manageTransitions("body", true);
+        }, 40);
+      }
+    }
+    const disableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        stylesheet.rel = 'disabled-stylesheet';
+      }
+    }
+    const enableStylesheet = (stylesheets) => {
+      for (let i=0; i < stylesheets.length; i++) {
+        const stylesheet = stylesheets[i];
+        if(stylesheet.rel !== 'stylesheet') { // for Chrome, which will still FOUC without this check
+          stylesheet.rel = 'stylesheet';
+        }
+      }
+    }
+    const manageTransitions = (selector, allowTransitions) => {
+      const els = window.document.querySelectorAll(selector);
+      for (let i=0; i < els.length; i++) {
+        const el = els[i];
+        if (allowTransitions) {
+          el.classList.remove('notransition');
+        } else {
+          el.classList.add('notransition');
+        }
+      }
+    }
+    const isFileUrl = () => {
+      return window.location.protocol === 'file:';
+    }
+    const hasAlternateSentinel = () => {
+      let styleSentinel = getColorSchemeSentinel();
+      if (styleSentinel !== null) {
+        return styleSentinel === "alternate";
+      } else {
+        return false;
+      }
+    }
+    const setStyleSentinel = (alternate) => {
+      const value = alternate ? "alternate" : "default";
+      if (!isFileUrl()) {
+        window.localStorage.setItem("quarto-color-scheme", value);
+      } else {
+        localAlternateSentinel = value;
+      }
+    }
+    const getColorSchemeSentinel = () => {
+      if (!isFileUrl()) {
+        const storageValue = window.localStorage.getItem("quarto-color-scheme");
+        return storageValue != null ? storageValue : localAlternateSentinel;
+      } else {
+        return localAlternateSentinel;
+      }
+    }
+    const toggleGiscusIfUsed = (isAlternate, darkModeDefault) => {
+      const baseTheme = document.querySelector('#giscus-base-theme')?.value ?? 'light';
+      const alternateTheme = document.querySelector('#giscus-alt-theme')?.value ?? 'dark';
+      let newTheme = '';
+      if(authorPrefersDark) {
+        newTheme = isAlternate ? baseTheme : alternateTheme;
+      } else {
+        newTheme = isAlternate ? alternateTheme : baseTheme;
+      }
+      const changeGiscusTheme = () => {
+        // From: https://github.com/giscus/giscus/issues/336
+        const sendMessage = (message) => {
+          const iframe = document.querySelector('iframe.giscus-frame');
+          if (!iframe) return;
+          iframe.contentWindow.postMessage({ giscus: message }, 'https://giscus.app');
+        }
+        sendMessage({
+          setConfig: {
+            theme: newTheme
+          }
+        });
+      }
+      const isGiscussLoaded = window.document.querySelector('iframe.giscus-frame') !== null;
+      if (isGiscussLoaded) {
+        changeGiscusTheme();
+      }
+    };
+    const authorPrefersDark = false;
+    const darkModeDefault = authorPrefersDark;
+      document.querySelector('link#quarto-text-highlighting-styles.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+      document.querySelector('link#quarto-bootstrap.quarto-color-scheme-extra').rel = 'disabled-stylesheet';
+    let localAlternateSentinel = darkModeDefault ? 'alternate' : 'default';
+    // Dark / light mode switch
+    window.quartoToggleColorScheme = () => {
+      // Read the current dark / light value
+      let toAlternate = !hasAlternateSentinel();
+      toggleColorMode(toAlternate);
+      setStyleSentinel(toAlternate);
+      toggleGiscusIfUsed(toAlternate, darkModeDefault);
+      window.dispatchEvent(new Event('resize'));
+    };
+    // Switch to dark mode if need be
+    if (hasAlternateSentinel()) {
+      toggleColorMode(true);
+    } else {
+      toggleColorMode(false);
+    }
+  </script>
+
+<div id="quarto-search-results"></div>
+  <header id="quarto-header" class="headroom fixed-top">
+    <nav class="navbar navbar-expand-lg " data-bs-theme="dark">
+      <div class="navbar-container container-fluid">
+      <div class="navbar-brand-container mx-auto">
+    <a class="navbar-brand" href="../../index.html">
+    <span class="navbar-title">Proyecto Minería de Datos</span>
+    </a>
+  </div>
+            <div id="quarto-search" class="" title="Buscar"></div>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse" aria-controls="navbarCollapse" role="menu" aria-expanded="false" aria-label="Navegación de palanca" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+  <span class="navbar-toggler-icon"></span>
+</button>
+          <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="navbar-nav navbar-nav-scroll me-auto">
+  <li class="nav-item">
+    <a class="nav-link active" href="../../index.html" aria-current="page"> 
+<span class="menu-text">Inicio</span></a>
+  </li>  
+</ul>
+            <ul class="navbar-nav navbar-nav-scroll ms-auto">
+  <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos"> <i class="bi bi-github" role="img" aria-label="Repositorio en GitHub">
+</i> 
+<span class="menu-text">Repositorio</span></a>
+  </li>  
+</ul>
+          </div> <!-- /navcollapse -->
+            <div class="quarto-navbar-tools">
+  <a href="" class="quarto-color-scheme-toggle quarto-navigation-tool  px-1" onclick="window.quartoToggleColorScheme(); return false;" title="Alternar modo oscuro"><i class="bi"></i></a>
+</div>
+      </div> <!-- /container-fluid -->
+    </nav>
+  <nav class="quarto-secondary-nav">
+    <div class="container-fluid d-flex">
+      <button type="button" class="quarto-btn-toggle btn" data-bs-toggle="collapse" role="button" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">
+        <i class="bi bi-layout-text-sidebar-reverse"></i>
+      </button>
+        <nav class="quarto-page-breadcrumbs" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/eda.html">E2 · EDA y preparación de los datos</a></li><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/uso_ia.html">6 · Uso de herramientas de IA</a></li></ol></nav>
+        <a class="flex-grow-1" role="navigation" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item" aria-controls="quarto-sidebar" aria-expanded="false" aria-label="Alternar barra lateral" onclick="if (window.quartoToggleHeadroom) { window.quartoToggleHeadroom(); }">      
+        </a>
+    </div>
+  </nav>
+</header>
+<!-- content -->
+<div id="quarto-content" class="quarto-container page-columns page-rows-contents page-layout-article page-navbar">
+<!-- sidebar -->
+  <nav id="quarto-sidebar" class="sidebar collapse collapse-horizontal quarto-sidebar-collapse-item sidebar-navigation floating overflow-auto">
+    <div class="sidebar-menu-container"> 
+    <ul class="list-unstyled mt-1">
+        <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../index.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Inicio</span></a>
+  </div>
+</li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true">
+ <span class="menu-text">E0 · Comprensión del negocio</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-1" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-1" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/bitacora.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Bitácora</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/canvas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Canvas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/preguntas.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Preguntas de investigación</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/criterio_exito.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Criterio de éxito</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/riesgos_supuestos.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Supuestos y riesgos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+          <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false">
+ <span class="menu-text">Material de respaldo</span></a>
+          <a class="sidebar-item-toggle text-start collapsed" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-2" role="navigation" aria-expanded="false" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-2" class="collapse list-unstyled sidebar-section depth2 ">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E0_comprension_negocio/fuentes/expediente.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">Expediente de fuentes</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true">
+ <span class="menu-text">E1 · Arquitectura del DW</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-3" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-3" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/fuentes.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Fuentes e integración</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/arquitectura.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Arquitectura de tres capas</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/estrella.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Esquema estrella</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Trazabilidad a E0</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E1_arquitectura_dw/uso_ia.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+        <li class="sidebar-item sidebar-item-section">
+      <div class="sidebar-item-container"> 
+            <a class="sidebar-item-text sidebar-link text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true">
+ <span class="menu-text">E2 · EDA y preparación de los datos</span></a>
+          <a class="sidebar-item-toggle text-start" data-bs-toggle="collapse" data-bs-target="#quarto-sidebar-section-4" role="navigation" aria-expanded="true" aria-label="Alternar sección">
+            <i class="bi bi-chevron-right ms-2"></i>
+          </a> 
+      </div>
+      <ul id="quarto-sidebar-section-4" class="collapse list-unstyled sidebar-section depth1 show">  
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/eda.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">1 · Análisis exploratorio</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/preparacion.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">2 · Preparación de los datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/pipeline.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">3 · Pipeline y DW poblado</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/decisiones.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">4 · Decisiones sobre los datos</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/trazabilidad.html" class="sidebar-item-text sidebar-link">
+ <span class="menu-text">5 · Trazabilidad a E0</span></a>
+  </div>
+</li>
+          <li class="sidebar-item">
+  <div class="sidebar-item-container"> 
+  <a href="../../entregas/E2_eda_preparacion/uso_ia.html" class="sidebar-item-text sidebar-link active">
+ <span class="menu-text">6 · Uso de herramientas de IA</span></a>
+  </div>
+</li>
+      </ul>
+  </li>
+    </ul>
+    </div>
+</nav>
+<div id="quarto-sidebar-glass" class="quarto-sidebar-collapse-item" data-bs-toggle="collapse" data-bs-target=".quarto-sidebar-collapse-item"></div>
+<!-- margin-sidebar -->
+    <div id="quarto-margin-sidebar" class="sidebar margin-sidebar">
+        <nav id="TOC" role="doc-toc" class="toc-active">
+    <h2 id="toc-title">En esta página</h2>
+   
+  <ul>
+  <li><a href="#resumen-de-usos" id="toc-resumen-de-usos" class="nav-link active" data-scroll-target="#resumen-de-usos">Resumen de usos</a></li>
+  <li><a href="#uso-1" id="toc-uso-1" class="nav-link" data-scroll-target="#uso-1">Uso 1 · Plan de la entrega y revisión contra el PDF</a></li>
+  <li><a href="#uso-2" id="toc-uso-2" class="nav-link" data-scroll-target="#uso-2">Uso 2 · Análisis exploratorio</a></li>
+  <li><a href="#uso-3" id="toc-uso-3" class="nav-link" data-scroll-target="#uso-3">Uso 3 · Limpieza, reducción y verificación</a></li>
+  <li><a href="#uso-4" id="toc-uso-4" class="nav-link" data-scroll-target="#uso-4">Uso 4 · Pipeline, carga del DW y DataMart</a></li>
+  <li><a href="#uso-5" id="toc-uso-5" class="nav-link" data-scroll-target="#uso-5">Uso 5 · Redacción de las páginas y revisión del sitio</a></li>
+  <li><a href="#interpretaciones" id="toc-interpretaciones" class="nav-link" data-scroll-target="#interpretaciones">Interpretaciones propuestas por el modelo y su contraste</a></li>
+  <li><a href="#kaggle" id="toc-kaggle" class="nav-link" data-scroll-target="#kaggle">Verificación independiente en Kaggle</a></li>
+  <li><a href="#errores" id="toc-errores" class="nav-link" data-scroll-target="#errores">Errores con impacto en las salidas del modelo</a></li>
+  </ul>
+</nav>
+    </div>
+<!-- main -->
+<main class="content" id="quarto-document-content">
+
+
+<header id="title-block-header" class="quarto-title-block default"><nav class="quarto-page-breadcrumbs quarto-title-breadcrumbs d-none d-lg-block" aria-label="breadcrumb"><ol class="breadcrumb"><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/eda.html">E2 · EDA y preparación de los datos</a></li><li class="breadcrumb-item"><a href="../../entregas/E2_eda_preparacion/uso_ia.html">6 · Uso de herramientas de IA</a></li></ol></nav>
+<div class="quarto-title">
+<h1 class="title">6. Uso de herramientas de IA</h1>
+<p class="subtitle lead">Registro de los usos de modelos de lenguaje con impacto en esta entrega</p>
+</div>
+
+
+
+<div class="quarto-title-meta">
+
+    
+    <div>
+    <div class="quarto-title-meta-heading">Fecha de publicación</div>
+    <div class="quarto-title-meta-contents">
+      <p class="date">15 de noviembre de 2026</p>
+    </div>
+  </div>
+  
+    
+  </div>
+  
+
+
+</header>
+
+
+<style>
+  /* Tablas con texto largo en la primera columna (anula la regla global) */
+  body main table td:first-child { white-space: normal; }
+</style>
+<div class="callout callout-style-simple callout-important no-icon callout-titled" title="Declaración general">
+<div class="callout-header d-flex align-content-center">
+<div class="callout-icon-container">
+<i class="callout-icon no-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Importante</span>Declaración general
+</div>
+</div>
+<div class="callout-body-container callout-body">
+<p>El equipo <strong>sí utilizó herramientas de IA</strong> en esta entrega. Un modelo de lenguaje escribió el código del pipeline y del análisis exploratorio, propuso los métodos de preparación y sus alternativas, sugirió interpretaciones de los resultados y propuso redacciones de las páginas. El equipo tomó todas las decisiones, ejecutó todo el código en BigQuery, en sus máquinas y en Kaggle, comprobó las cifras y revisó cada salida antes de publicarla. El modelo no tuvo acceso al proyecto de BigQuery ni a los datos de transacciones.</p>
+</div>
+</div>
+<section id="resumen-de-usos" class="level2">
+<h2 class="anchored" data-anchor-id="resumen-de-usos">Resumen de usos</h2>
+<p>Esta página registra solo los usos que cambiaron el resultado de la entrega. Las consultas sobre el manejo de las herramientas y las tareas mecánicas no se detallan.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 4%">
+<col style="width: 34%">
+<col style="width: 46%">
+<col style="width: 16%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">#</th>
+<th style="text-align: left;">Herramienta y modelo</th>
+<th style="text-align: left;">Tarea</th>
+<th style="text-align: left;">Detalle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">1</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Plan de la entrega y revisión continua contra el PDF</td>
+<td style="text-align: left;"><a href="#uso-1">Uso 1</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">2</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Código del análisis exploratorio e interpretación de resultados</td>
+<td style="text-align: left;"><a href="#uso-2">Uso 2</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">3</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Métodos de limpieza, reducción y verificación antes y después</td>
+<td style="text-align: left;"><a href="#uso-3">Uso 3</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">4</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Pipeline reproducible, carga del DW y DataMart</td>
+<td style="text-align: left;"><a href="#uso-4">Uso 4</a></td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">5</td>
+<td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
+<td style="text-align: left;">Redacción de las páginas y revisión del sitio</td>
+<td style="text-align: left;"><a href="#uso-5">Uso 5</a></td>
+</tr>
+</tbody>
+</table>
+<p>Todos los usos ocurrieron en una sola conversación, del 7 al 15 de noviembre de 2026. No se empleó ninguna otra herramienta de IA. Como en E0 y E1, los prompts se registran como resumen fiel; las instrucciones del equipo que marcaron el trabajo se citan textualmente.</p>
+<hr>
+</section>
+<section id="uso-1" class="level2">
+<h2 class="anchored" data-anchor-id="uso-1">Uso 1 · Plan de la entrega y revisión contra el PDF</h2>
+<p><strong>Tarea.</strong> Leer las indicaciones de E2 junto con lo hecho en E0 y E1, proponer un plan por fases y revisar cada fase contra los requisitos del PDF antes de cerrarla.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo entregó al modelo su documento interno de contexto, los PDF de E0 a E2 y el enlace del repositorio. Pidió primero leer y revisar, sin construir nada, y después un plan por fases. En cada fase pidió una propuesta con las decisiones abiertas, sus alternativas y una recomendación, y no avanzó hasta aprobarla.</p>
+<p><strong>Qué se hizo con la salida.</strong> El equipo aprobó el plan y tomó las decisiones de fondo: cargar la fuente A completa en BigQuery, crear un dataset intermedio (<code>lumen_prep</code>) sin tocar staging ni el DW de E1, orquestar archivos SQL desde Python y usar Kaggle solo para verificar. La revisión contra el PDF detectó dos omisiones del propio modelo, que se corrigieron antes de publicar (ver <a href="#errores">errores</a>).</p>
+<hr>
+</section>
+<section id="uso-2" class="level2">
+<h2 class="anchored" data-anchor-id="uso-2">Uso 2 · Análisis exploratorio</h2>
+<p><strong>Tarea.</strong> Escribir el módulo de análisis (<code>pipeline/eda/</code>): estadística descriptiva, Gini y curva de Lorenz, entropía, figuras, brecha con México y líneas base del tramo revisado. Proponer interpretaciones de los resultados y opciones para los umbrales de las medidas técnicas y para la partición temporal.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió cubrir las cuatro dimensiones de la descriptiva y las medidas de concentración y heterogeneidad del PDF, con cada figura justificada, y una redacción «concreta y concisa, sin perder detalles cruciales, sin em dashes, aprovechando Quarto». Para los umbrales y la partición pidió alternativas con sus consecuencias, no una sola propuesta.</p>
+<p><strong>Cómo se verificó.</strong></p>
+<ul>
+<li>El equipo ejecutó todo el análisis en su máquina, contra la tabla analítica completa en BigQuery.</li>
+<li>El código comprueba en cada corrida que las dos fórmulas del Gini (la del PDF y la de valores ordenados) den lo mismo.</li>
+<li>Cuatro cifras clave se recalcularon en Kaggle con código independiente (ver <a href="#kaggle">verificación en Kaggle</a>).</li>
+<li>Cada interpretación del modelo se contrastó con una cifra antes de entrar a la página (ver <a href="#interpretaciones">interpretaciones</a>).</li>
+</ul>
+<p><strong>Qué se hizo con la salida.</strong> El equipo eligió la partición temporal en bloques de días (1 a 120, 121 a 150 y 151 a 182) y los umbrales: monto cubierto con piso de 7.58 % y meta de 20 %, y aciertos expresados en veces sobre el azar, con meta provisional de 2 veces.</p>
+<hr>
+</section>
+<section id="uso-3" class="level2">
+<h2 class="anchored" data-anchor-id="uso-3">Uso 3 · Limpieza, reducción y verificación</h2>
+<p><strong>Tarea.</strong> Proponer el tratamiento de cada problema de calidad, el método de reducción de dimensionalidad y la comprobación de que la preparación no distorsiona el fenómeno; escribir los pasos <code>limpieza</code>, <code>reduccion</code> y <code>antes_despues</code>.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió una propuesta por problema con la técnica, la justificación y el impacto que exige el PDF, y que todo lo que aprende de los datos se ajustara solo con la partición de entrenamiento. Al revisar los primeros archivos pidió que los comentarios del código y la configuración documentaran el código y los datos, no la conversación.</p>
+<p><strong>Cómo se verificó.</strong></p>
+<ul>
+<li>Antes de entregar cada paso, el modelo lo probó con datos sintéticos: la limpieza en DuckDB, con el SQL traducido, y la reducción con 414,542 filas sintéticas, el tamaño real de entrenamiento.</li>
+<li>Cada paso trae validaciones automáticas: mismas filas y llaves, mismos faltantes columna por columna y marcas iguales al registro.</li>
+<li>Antes de cada corrida, el modelo anunció los conteos esperados y el equipo los comparó con la salida real.</li>
+<li>El paso <code>antes_despues</code> recalcula 43 medidas sobre el dato crudo y el preparado, y falla si cambia una que no debía. Las 28 que debían quedar igual son idénticas.</li>
+</ul>
+<p><strong>Qué se hizo con la salida.</strong> El equipo aprobó no imputar ni borrar filas, marcar duplicados y atípicos sin acotarlos, aplicar la regla del IQR a ln(importe), proteger 16 columnas, los cuatro filtros de reducción y conservar el bloque V original junto con su PCA. También decidió no muestrear y que el balanceo de clases, si hace falta, se decida en E3.</p>
+<hr>
+</section>
+<section id="uso-4" class="level2">
+<h2 class="anchored" data-anchor-id="uso-4">Uso 4 · Pipeline, carga del DW y DataMart</h2>
+<p><strong>Tarea.</strong> Escribir el pipeline completo (ocho pasos, un solo comando), la carga idempotente del esquema estrella de E1 con historia de tipo 2 en <code>dim_dominio_correo</code>, las validaciones de la carga, la ejecución de las vistas del DataMart y el guion de la prueba externa.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió que la carga no modificara nada de E1, que pudiera ejecutarse dos veces con el mismo resultado y que fallara en voz alta ante cualquier inconsistencia. Para la prueba externa pidió un guion que dijera qué registrar sin reemplazar al README.</p>
+<p><strong>Cómo se verificó.</strong></p>
+<ul>
+<li>El modelo probó la carga dos veces y el DataMart con datos sintéticos en DuckDB.</li>
+<li>La carga trae 35 validaciones; entre ellas, que los conteos por miembro de cada dimensión coincidan con los publicados en E1.</li>
+<li>El equipo corrió el pipeline completo dos veces con resultados idénticos y ejecutó la prueba de historia de tipo 2 con una lista de dominios simulada.</li>
+<li>Una integrante que no escribió el pipeline lo ejecutó desde un clon limpio, en su máquina, solo con el README, y obtuvo las mismas cifras.</li>
+<li>El modelo revisó cada commit sobre un clon limpio del repositorio: archivos, ausencia de datos reales y de credenciales, y que el código fuera idéntico al revisado.</li>
+</ul>
+<p><strong>Qué se hizo con la salida.</strong> La prueba externa encontró dos huecos del README: la versión mínima de <code>uv</code> y un rol de BigQuery que faltaba. El equipo los corrigió en el README y en la configuración del entorno.</p>
+<hr>
+</section>
+<section id="uso-5" class="level2">
+<h2 class="anchored" data-anchor-id="uso-5">Uso 5 · Redacción de las páginas y revisión del sitio</h2>
+<p><strong>Tarea.</strong> Proponer la redacción de las páginas de E2, el README y la portada, y revisar la consistencia del sitio.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> Para la página de decisiones, el equipo pidió «un formato y presentación que también sea vistoso y bien organizado para el tipo de persona que en teoría se estaría presentando». Al cierre pidió revisar que las cifras coincidieran entre páginas, que no hubiera enlaces rotos ni pendientes resueltos, y homogeneizar el estilo.</p>
+<p><strong>Qué se hizo con la salida.</strong> El equipo revisó cada página en la vista previa antes de publicarla y reescribió por su cuenta la redacción de <code>eda.qmd</code> y <code>decisiones.qmd</code>. En esa reescritura, la página de decisiones se ajustó con la lectura de una persona ajena al equipo. El modelo revisó después esas versiones: señaló una afirmación nueva que ninguna cifra respaldaba y dos justificaciones que el PDF exige y se habían recortado, y el equipo las corrigió. La revisión de consistencia encontró tres diferencias menores entre páginas, que se corrigieron.</p>
+<hr>
+</section>
+<section id="interpretaciones" class="level2">
+<h2 class="anchored" data-anchor-id="interpretaciones">Interpretaciones propuestas por el modelo y su contraste</h2>
+<p>Ninguna interpretación entró a las páginas sin una cifra que la respaldara. Las que el modelo propuso con más peso para la entrega fueron estas:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 34%">
+<col style="width: 40%">
+<col style="width: 26%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Interpretación propuesta</th>
+<th style="text-align: left;">Cómo se contrastó</th>
+<th style="text-align: left;">Resultado</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">La diferencia de fraude con y sin identidad (7.85 % contra 2.09 %) podría deberse solo a la mezcla de productos</td>
+<td style="text-align: left;">Cruce de identidad por producto: W nunca trae identidad, y dentro de C la tasa es 12.28 % con identidad y 5.82 % sin ella</td>
+<td style="text-align: left;"><strong>Confirmada:</strong> la ausencia es informativa también dentro de un producto (H2)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">El primer mes, con más volumen y menos fraude, sería otro régimen por cambio en la mezcla de productos</td>
+<td style="text-align: left;">Cruce de producto por periodo: H y R tienen unas 20 mil transacciones cada uno en el periodo 1 y unas 2 a 3 mil después</td>
+<td style="text-align: left;"><strong>Confirmada</strong> (H3); motivó la partición en bloques de días</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">El V de Cramér alto de <code>V258</code> vendría de su patrón de faltantes, como en la identidad</td>
+<td style="text-align: left;">V del indicador «falta o no»: 0.114 contra 0.344 de la variable, es decir, ≈ 11 % de la relación</td>
+<td style="text-align: left;"><strong>Rechazada:</strong> la señal está en los valores; se documenta en la <a href="../../entregas/E2_eda_preparacion/preparacion.html#reduccion">preparación</a></td>
+</tr>
+<tr class="even">
+<td style="text-align: left;"><code>D9</code> sería la hora del día</td>
+<td style="text-align: left;">Correlación de Spearman con la hora derivada de <code>TransactionDT</code></td>
+<td style="text-align: left;"><strong>Confirmada</strong> (ρ = 1.000); se descarta como redundante</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Los importes muy bajos, con 7.72 % de fraude, serían cargos pequeños para probar tarjetas</td>
+<td style="text-align: left;">Ningún dato del conjunto permite comprobarlo</td>
+<td style="text-align: left;"><strong>Queda como hipótesis para E3</strong>; las páginas no la presentan como hecho</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">El volumen diario alto se mantendría hasta el día 25, como decía el documento de contexto</td>
+<td style="text-align: left;">Serie diaria del EDA: solo los días 18 a 25 superan 5,500 transacciones</td>
+<td style="text-align: left;"><strong>Corregida:</strong> el EDA dice «días 18 a 25»</td>
+</tr>
+</tbody>
+</table>
+<hr>
+</section>
+<section id="kaggle" class="level2">
+<h2 class="anchored" data-anchor-id="kaggle">Verificación independiente en Kaggle</h2>
+<p>Para no depender solo del código que escribió el modelo, cuatro cifras clave se recalcularon en un notebook de Kaggle, sobre los CSV originales de la competencia, sin BigQuery ni el código del pipeline y con fórmulas distintas: el Gini como 1 − 2 × área bajo la curva de Lorenz, y el tramo ordenando con pandas. El modelo escribió el script; el equipo lo ejecutó. Las cuatro coinciden con el pipeline al último decimal:</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 46%">
+<col style="width: 27%">
+<col style="width: 27%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Cifra</th>
+<th style="text-align: right;">Pipeline</th>
+<th style="text-align: right;">Kaggle</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">Tasa de fraude por producto (C / W)</td>
+<td style="text-align: right;">11.69 % / 2.04 %</td>
+<td style="text-align: right;">11.69 % / 2.04 %</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tasa dentro de C, con / sin identidad</td>
+<td style="text-align: right;">12.28 % / 5.82 %</td>
+<td style="text-align: right;">12.28 % / 5.82 %</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Gini del importe, todas / fraude</td>
+<td style="text-align: right;">0.553 / 0.586</td>
+<td style="text-align: right;">0.553 / 0.586</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Tramo: transacciones, aciertos y monto cubierto</td>
+<td style="text-align: right;">4,517 · 2.97 % · 7.58 %</td>
+<td style="text-align: right;">4,517 · 2.97 % · 7.58 %</td>
+</tr>
+</tbody>
+</table>
+<div id="fig-kaggle" class="quarto-float quarto-figure quarto-figure-center anchored">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-kaggle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<a href="img/e2_kaggle_verificacion.png" class="lightbox" data-gallery="quarto-lightbox-gallery-1" title="Figura&nbsp;1: Salida del notebook de verificación en Kaggle"><img src="img/e2_kaggle_verificacion.png" class="img-fluid figure-img" style="width:80.0%"></a>
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-kaggle-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figura&nbsp;1: Salida del notebook de verificación en Kaggle
+</figcaption>
+</figure>
+</div>
+<div class="callout callout-style-default callout-note callout-titled" title="Código del notebook de verificación">
+<div class="callout-header d-flex align-content-center collapsed" data-bs-toggle="collapse" data-bs-target=".callout-2-contents" aria-controls="callout-2" aria-expanded="false" aria-label="Toggle callout">
+<div class="callout-icon-container">
+<i class="callout-icon"></i>
+</div>
+<div class="callout-title-container flex-fill">
+<span class="screen-reader-only">Nota</span>Código del notebook de verificación
+</div>
+<div class="callout-btn-toggle d-inline-block border-0 py-1 ps-1 pe-0 float-end"><i class="callout-toggle"></i></div>
+</div>
+<div id="callout-2" class="callout-2-contents callout-collapse collapse">
+<div class="callout-body-container callout-body">
+<div class="code-copy-outer-scaffold"><div class="sourceCode" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="co"># Verificación independiente de cifras del EDA de E2 (Pagos Lumen).</span></span>
+<span id="cb1-2"><a href="#cb1-2" aria-hidden="true" tabindex="-1"></a><span class="co"># Se ejecuta en un notebook de Kaggle con los datos de la competencia ieee-fraud-detection.</span></span>
+<span id="cb1-3"><a href="#cb1-3" aria-hidden="true" tabindex="-1"></a><span class="co"># No usa BigQuery ni el código del pipeline: lee los CSV originales y recalcula con</span></span>
+<span id="cb1-4"><a href="#cb1-4" aria-hidden="true" tabindex="-1"></a><span class="co"># fórmulas distintas a las del pipeline.</span></span>
+<span id="cb1-5"><a href="#cb1-5" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> numpy <span class="im">as</span> np</span>
+<span id="cb1-6"><a href="#cb1-6" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
+<span id="cb1-7"><a href="#cb1-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-8"><a href="#cb1-8" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> glob, os</span>
+<span id="cb1-9"><a href="#cb1-9" aria-hidden="true" tabindex="-1"></a>encontrados <span class="op">=</span> glob.glob(<span class="st">"/kaggle/input/**/train_transaction.csv"</span>, recursive<span class="op">=</span><span class="va">True</span>)</span>
+<span id="cb1-10"><a href="#cb1-10" aria-hidden="true" tabindex="-1"></a><span class="cf">assert</span> encontrados, <span class="st">"No se encontró train_transaction.csv en /kaggle/input: revisar el panel Input"</span></span>
+<span id="cb1-11"><a href="#cb1-11" aria-hidden="true" tabindex="-1"></a>RUTA <span class="op">=</span> os.path.dirname(encontrados[<span class="dv">0</span>]) <span class="op">+</span> <span class="st">"/"</span></span>
+<span id="cb1-12"><a href="#cb1-12" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"Datos en:"</span>, RUTA)</span>
+<span id="cb1-13"><a href="#cb1-13" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> pd.read_csv(RUTA <span class="op">+</span> <span class="st">"train_transaction.csv"</span>,</span>
+<span id="cb1-14"><a href="#cb1-14" aria-hidden="true" tabindex="-1"></a>                usecols<span class="op">=</span>[<span class="st">"TransactionID"</span>, <span class="st">"isFraud"</span>, <span class="st">"TransactionDT"</span>, <span class="st">"TransactionAmt"</span>, <span class="st">"ProductCD"</span>])</span>
+<span id="cb1-15"><a href="#cb1-15" aria-hidden="true" tabindex="-1"></a>ids_identidad <span class="op">=</span> <span class="bu">set</span>(pd.read_csv(RUTA <span class="op">+</span> <span class="st">"train_identity.csv"</span>, usecols<span class="op">=</span>[<span class="st">"TransactionID"</span>])[<span class="st">"TransactionID"</span>])</span>
+<span id="cb1-16"><a href="#cb1-16" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"Transacciones: </span><span class="sc">{</span><span class="bu">len</span>(t)<span class="sc">:,}</span><span class="ss">; fraudes: </span><span class="sc">{</span>t<span class="sc">.</span>isFraud<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:,}</span><span class="ss">"</span>)</span>
+<span id="cb1-17"><a href="#cb1-17" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-18"><a href="#cb1-18" aria-hidden="true" tabindex="-1"></a><span class="co"># 1. Tasa de fraude por producto (pipeline: C 11.69 %, W 2.04 %)</span></span>
+<span id="cb1-19"><a href="#cb1-19" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">1. Tasa de fraude por ProductCD (%):"</span>)</span>
+<span id="cb1-20"><a href="#cb1-20" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>((<span class="dv">100</span> <span class="op">*</span> t.groupby(<span class="st">"ProductCD"</span>).isFraud.mean()).<span class="bu">round</span>(<span class="dv">2</span>).to_string())</span>
+<span id="cb1-21"><a href="#cb1-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-22"><a href="#cb1-22" aria-hidden="true" tabindex="-1"></a><span class="co"># 2. Identidad dentro de cada producto (pipeline: W con identidad = 0; C sin 5.82 %, con 12.28 %)</span></span>
+<span id="cb1-23"><a href="#cb1-23" aria-hidden="true" tabindex="-1"></a>t[<span class="st">"con_identidad"</span>] <span class="op">=</span> t.TransactionID.isin(ids_identidad)</span>
+<span id="cb1-24"><a href="#cb1-24" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="st">"</span><span class="ch">\n</span><span class="st">2. Transacciones y tasa de fraude (%) por producto y registro de identidad:"</span>)</span>
+<span id="cb1-25"><a href="#cb1-25" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(t.groupby([<span class="st">"ProductCD"</span>, <span class="st">"con_identidad"</span>]).isFraud.agg(transacciones<span class="op">=</span><span class="st">"size"</span>, tasa<span class="op">=</span><span class="kw">lambda</span> s: <span class="bu">round</span>(<span class="dv">100</span> <span class="op">*</span> s.mean(), <span class="dv">2</span>)).to_string())</span>
+<span id="cb1-26"><a href="#cb1-26" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-27"><a href="#cb1-27" aria-hidden="true" tabindex="-1"></a><span class="co"># 3. Gini del importe como 1 - 2 x área bajo la curva de Lorenz (pipeline: 0.553 todas, 0.586 fraude)</span></span>
+<span id="cb1-28"><a href="#cb1-28" aria-hidden="true" tabindex="-1"></a><span class="kw">def</span> gini_lorenz(x):</span>
+<span id="cb1-29"><a href="#cb1-29" aria-hidden="true" tabindex="-1"></a>    x <span class="op">=</span> np.sort(np.asarray(x, dtype<span class="op">=</span><span class="bu">float</span>))</span>
+<span id="cb1-30"><a href="#cb1-30" aria-hidden="true" tabindex="-1"></a>    acumulado <span class="op">=</span> np.concatenate([[<span class="dv">0</span>], np.cumsum(x) <span class="op">/</span> x.<span class="bu">sum</span>()])</span>
+<span id="cb1-31"><a href="#cb1-31" aria-hidden="true" tabindex="-1"></a>    area <span class="op">=</span> <span class="bu">getattr</span>(np, <span class="st">"trapezoid"</span>, <span class="va">None</span>) <span class="kw">or</span> np.trapz  <span class="co"># NumPy &gt;= 2.0 o anterior</span></span>
+<span id="cb1-32"><a href="#cb1-32" aria-hidden="true" tabindex="-1"></a>    <span class="cf">return</span> <span class="dv">1</span> <span class="op">-</span> <span class="dv">2</span> <span class="op">*</span> area(acumulado, dx<span class="op">=</span><span class="dv">1</span> <span class="op">/</span> <span class="bu">len</span>(x))</span>
+<span id="cb1-33"><a href="#cb1-33" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">3. Gini del importe: todas </span><span class="sc">{</span>gini_lorenz(t.TransactionAmt)<span class="sc">:.3f}</span><span class="ss">; "</span></span>
+<span id="cb1-34"><a href="#cb1-34" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"fraude </span><span class="sc">{</span>gini_lorenz(t.TransactionAmt[t.isFraud <span class="op">==</span> <span class="dv">1</span>])<span class="sc">:.3f}</span><span class="ss">"</span>)</span>
+<span id="cb1-35"><a href="#cb1-35" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb1-36"><a href="#cb1-36" aria-hidden="true" tabindex="-1"></a><span class="co"># 4. Tramo del 0.75 % diario ordenado por mayor importe (pipeline: aciertos 2.97 %, monto cubierto 7.58 %)</span></span>
+<span id="cb1-37"><a href="#cb1-37" aria-hidden="true" tabindex="-1"></a>t[<span class="st">"dia"</span>] <span class="op">=</span> t.TransactionDT <span class="op">//</span> <span class="dv">86400</span></span>
+<span id="cb1-38"><a href="#cb1-38" aria-hidden="true" tabindex="-1"></a>t[<span class="st">"k"</span>] <span class="op">=</span> np.ceil(<span class="fl">0.0075</span> <span class="op">*</span> t.groupby(<span class="st">"dia"</span>).TransactionID.transform(<span class="st">"size"</span>))</span>
+<span id="cb1-39"><a href="#cb1-39" aria-hidden="true" tabindex="-1"></a>t <span class="op">=</span> t.sort_values([<span class="st">"dia"</span>, <span class="st">"TransactionAmt"</span>, <span class="st">"TransactionID"</span>], ascending<span class="op">=</span>[<span class="va">True</span>, <span class="va">False</span>, <span class="va">True</span>])</span>
+<span id="cb1-40"><a href="#cb1-40" aria-hidden="true" tabindex="-1"></a>t[<span class="st">"rango"</span>] <span class="op">=</span> t.groupby(<span class="st">"dia"</span>).cumcount() <span class="op">+</span> <span class="dv">1</span></span>
+<span id="cb1-41"><a href="#cb1-41" aria-hidden="true" tabindex="-1"></a>tramo <span class="op">=</span> t[t.rango <span class="op">&lt;=</span> t.k]</span>
+<span id="cb1-42"><a href="#cb1-42" aria-hidden="true" tabindex="-1"></a><span class="bu">print</span>(<span class="ss">f"</span><span class="ch">\n</span><span class="ss">4. Tramo: </span><span class="sc">{</span><span class="bu">len</span>(tramo)<span class="sc">:,}</span><span class="ss"> transacciones; aciertos </span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> tramo<span class="sc">.</span>isFraud<span class="sc">.</span>mean()<span class="sc">:.2f}</span><span class="ss"> %; "</span></span>
+<span id="cb1-43"><a href="#cb1-43" aria-hidden="true" tabindex="-1"></a>      <span class="ss">f"monto cubierto </span><span class="sc">{</span><span class="dv">100</span> <span class="op">*</span> (tramo.TransactionAmt <span class="op">*</span> tramo.isFraud)<span class="sc">.</span><span class="bu">sum</span>() <span class="op">/</span> (t.TransactionAmt <span class="op">*</span> t.isFraud)<span class="sc">.</span><span class="bu">sum</span>()<span class="sc">:.2f}</span><span class="ss"> %"</span>)</span></code></pre></div><button title="Copiar al portapapeles" class="code-copy-button"><i class="bi"></i></button></div>
+</div>
+</div>
+</div>
+<hr>
+</section>
+<section id="errores" class="level2">
+<h2 class="anchored" data-anchor-id="errores">Errores con impacto en las salidas del modelo</h2>
+<p>Se registran los errores que, sin detectarse, habrían cambiado el cumplimiento de la entrega, una cifra publicada o la reproducibilidad. Muestran por qué ninguna salida se usó sin verificar.</p>
+<table class="caption-top table">
+<colgroup>
+<col style="width: 44%">
+<col style="width: 26%">
+<col style="width: 30%">
+</colgroup>
+<thead>
+<tr class="header">
+<th style="text-align: left;">Error</th>
+<th style="text-align: left;">Cómo se detectó</th>
+<th style="text-align: left;">Corrección</th>
+</tr>
+</thead>
+<tbody>
+<tr class="odd">
+<td style="text-align: left;">La primera reducción omitía tres requisitos del PDF: frecuencia esperada de al menos 5 por celda en el χ², ajuste del umbral de p por comparaciones múltiples y la columna de técnicas en la tabla de decisión</td>
+<td style="text-align: left;">Al releer el propio modelo el PDF contra la página</td>
+<td style="text-align: left;">Se agregaron y la reducción se volvió a correr; ninguna decisión cambió</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Recomendó quitar el paso <code>muestreo</code>, porque no se muestrea</td>
+<td style="text-align: left;">Al releer el propio modelo el PDF: exige pasos nombrados, entre ellos el muestreo</td>
+<td style="text-align: left;">El paso volvió como evaluación que mide los criterios en cada corrida y registra la decisión</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">Atribuyó la tasa de fraude más baja entre dominios a <code>att.net</code></td>
+<td style="text-align: left;">Al contrastar con la tabla antes de redactar</td>
+<td style="text-align: left;">La página dice <code>sbcglobal.net</code> (0.40 %)</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Los comentarios del código y la configuración citaban acuerdos de la conversación en lugar de describir el código</td>
+<td style="text-align: left;">El equipo, al revisar los archivos antes del commit</td>
+<td style="text-align: left;">Se reescribieron en todos los archivos, incluidos los ya publicados</td>
+</tr>
+<tr class="odd">
+<td style="text-align: left;">El README del pipeline no incluía el rol BigQuery Read Session User, necesario para leer tablas desde Python</td>
+<td style="text-align: left;">La prueba externa</td>
+<td style="text-align: left;">Se agregó el rol al proyecto y al README</td>
+</tr>
+<tr class="even">
+<td style="text-align: left;">Usó un término técnico («dato enmascarado») en la página dirigida a personas que no trabajan con datos</td>
+<td style="text-align: left;">Una persona ajena al equipo no lo entendió al leer la página</td>
+<td style="text-align: left;">El equipo reescribió esa decisión sin el término</td>
+</tr>
+</tbody>
+</table>
+
+
+</section>
+
+</main> <!-- /main -->
+<script id="quarto-html-after-body" type="application/javascript">
+  window.document.addEventListener("DOMContentLoaded", function (event) {
+    // Ensure there is a toggle, if there isn't float one in the top right
+    if (window.document.querySelector('.quarto-color-scheme-toggle') === null) {
+      const a = window.document.createElement('a');
+      a.classList.add('top-right');
+      a.classList.add('quarto-color-scheme-toggle');
+      a.href = "";
+      a.onclick = function() { try { window.quartoToggleColorScheme(); } catch {} return false; };
+      const i = window.document.createElement("i");
+      i.classList.add('bi');
+      a.appendChild(i);
+      window.document.body.appendChild(a);
+    }
+    setColorSchemeToggle(hasAlternateSentinel())
+    const icon = "";
+    const anchorJS = new window.AnchorJS();
+    anchorJS.options = {
+      placement: 'right',
+      icon: icon
+    };
+    anchorJS.add('.anchored');
+    const isCodeAnnotation = (el) => {
+      for (const clz of el.classList) {
+        if (clz.startsWith('code-annotation-')) {                     
+          return true;
+        }
+      }
+      return false;
+    }
+    const onCopySuccess = function(e) {
+      // button target
+      const button = e.trigger;
+      // don't keep focus
+      button.blur();
+      // flash "checked"
+      button.classList.add('code-copy-button-checked');
+      var currentTitle = button.getAttribute("title");
+      button.setAttribute("title", "Copiado");
+      let tooltip;
+      if (window.bootstrap) {
+        button.setAttribute("data-bs-toggle", "tooltip");
+        button.setAttribute("data-bs-placement", "left");
+        button.setAttribute("data-bs-title", "Copiado");
+        tooltip = new bootstrap.Tooltip(button, 
+          { trigger: "manual", 
+            customClass: "code-copy-button-tooltip",
+            offset: [0, -8]});
+        tooltip.show();    
+      }
+      setTimeout(function() {
+        if (tooltip) {
+          tooltip.hide();
+          button.removeAttribute("data-bs-title");
+          button.removeAttribute("data-bs-toggle");
+          button.removeAttribute("data-bs-placement");
+        }
+        button.setAttribute("title", currentTitle);
+        button.classList.remove('code-copy-button-checked');
+      }, 1000);
+      // clear code selection
+      e.clearSelection();
+    }
+    const getTextToCopy = function(trigger) {
+      const outerScaffold = trigger.parentElement.cloneNode(true);
+      const codeEl = outerScaffold.querySelector('code');
+      for (const childEl of codeEl.children) {
+        if (isCodeAnnotation(childEl)) {
+          childEl.remove();
+        }
+      }
+      return codeEl.innerText;
+    }
+    const clipboard = new window.ClipboardJS('.code-copy-button:not([data-in-quarto-modal])', {
+      text: getTextToCopy
+    });
+    clipboard.on('success', onCopySuccess);
+    if (window.document.getElementById('quarto-embedded-source-code-modal')) {
+      const clipboardModal = new window.ClipboardJS('.code-copy-button[data-in-quarto-modal]', {
+        text: getTextToCopy,
+        container: window.document.getElementById('quarto-embedded-source-code-modal')
+      });
+      clipboardModal.on('success', onCopySuccess);
+    }
+      var localhostRegex = new RegExp(/^(?:http|https):\/\/localhost\:?[0-9]*\//);
+      var mailtoRegex = new RegExp(/^mailto:/);
+        var filterRegex = new RegExp('/' + window.location.host + '/');
+      var isInternal = (href) => {
+          return filterRegex.test(href) || localhostRegex.test(href) || mailtoRegex.test(href);
+      }
+      // Inspect non-navigation links and adorn them if external
+     var links = window.document.querySelectorAll('a[href]:not(.nav-link):not(.navbar-brand):not(.toc-action):not(.sidebar-link):not(.sidebar-item-toggle):not(.pagination-link):not(.no-external):not([aria-hidden]):not(.dropdown-item):not(.quarto-navigation-tool):not(.about-link)');
+      for (var i=0; i<links.length; i++) {
+        const link = links[i];
+        if (!isInternal(link.href)) {
+          // undo the damage that might have been done by quarto-nav.js in the case of
+          // links that we want to consider external
+          if (link.dataset.originalHref !== undefined) {
+            link.href = link.dataset.originalHref;
+          }
+        }
+      }
+    function tippyHover(el, contentFn, onTriggerFn, onUntriggerFn) {
+      const config = {
+        allowHTML: true,
+        maxWidth: 500,
+        delay: 100,
+        arrow: false,
+        appendTo: function(el) {
+            return el.parentElement;
+        },
+        interactive: true,
+        interactiveBorder: 10,
+        theme: 'quarto',
+        placement: 'bottom-start',
+      };
+      if (contentFn) {
+        config.content = contentFn;
+      }
+      if (onTriggerFn) {
+        config.onTrigger = onTriggerFn;
+      }
+      if (onUntriggerFn) {
+        config.onUntrigger = onUntriggerFn;
+      }
+      window.tippy(el, config); 
+    }
+    const noterefs = window.document.querySelectorAll('a[role="doc-noteref"]');
+    for (var i=0; i<noterefs.length; i++) {
+      const ref = noterefs[i];
+      tippyHover(ref, function() {
+        // use id or data attribute instead here
+        let href = ref.getAttribute('data-footnote-href') || ref.getAttribute('href');
+        try { href = new URL(href).hash; } catch {}
+        const id = href.replace(/^#\/?/, "");
+        const note = window.document.getElementById(id);
+        if (note) {
+          return note.innerHTML;
+        } else {
+          return "";
+        }
+      });
+    }
+    const xrefs = window.document.querySelectorAll('a.quarto-xref');
+    const processXRef = (id, note) => {
+      // Strip column container classes
+      const stripColumnClz = (el) => {
+        el.classList.remove("page-full", "page-columns");
+        if (el.children) {
+          for (const child of el.children) {
+            stripColumnClz(child);
+          }
+        }
+      }
+      stripColumnClz(note)
+      if (id === null || id.startsWith('sec-')) {
+        // Special case sections, only their first couple elements
+        const container = document.createElement("div");
+        if (note.children && note.children.length > 2) {
+          container.appendChild(note.children[0].cloneNode(true));
+          for (let i = 1; i < note.children.length; i++) {
+            const child = note.children[i];
+            if (child.tagName === "P" && child.innerText === "") {
+              continue;
+            } else {
+              container.appendChild(child.cloneNode(true));
+              break;
+            }
+          }
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(container);
+          }
+          return container.innerHTML
+        } else {
+          if (window.Quarto?.typesetMath) {
+            window.Quarto.typesetMath(note);
+          }
+          return note.innerHTML;
+        }
+      } else {
+        // Remove any anchor links if they are present
+        const anchorLink = note.querySelector('a.anchorjs-link');
+        if (anchorLink) {
+          anchorLink.remove();
+        }
+        if (window.Quarto?.typesetMath) {
+          window.Quarto.typesetMath(note);
+        }
+        if (note.classList.contains("callout")) {
+          return note.outerHTML;
+        } else {
+          return note.innerHTML;
+        }
+      }
+    }
+    for (var i=0; i<xrefs.length; i++) {
+      const xref = xrefs[i];
+      tippyHover(xref, undefined, function(instance) {
+        instance.disable();
+        let url = xref.getAttribute('href');
+        let hash = undefined; 
+        if (url.startsWith('#')) {
+          hash = url;
+        } else {
+          try { hash = new URL(url).hash; } catch {}
+        }
+        if (hash) {
+          const id = hash.replace(/^#\/?/, "");
+          const note = window.document.getElementById(id);
+          if (note !== null) {
+            try {
+              const html = processXRef(id, note.cloneNode(true));
+              instance.setContent(html);
+            } finally {
+              instance.enable();
+              instance.show();
+            }
+          } else {
+            // See if we can fetch this
+            fetch(url.split('#')[0])
+            .then(res => res.text())
+            .then(html => {
+              const parser = new DOMParser();
+              const htmlDoc = parser.parseFromString(html, "text/html");
+              const note = htmlDoc.getElementById(id);
+              if (note !== null) {
+                const html = processXRef(id, note);
+                instance.setContent(html);
+              } 
+            }).finally(() => {
+              instance.enable();
+              instance.show();
+            });
+          }
+        } else {
+          // See if we can fetch a full url (with no hash to target)
+          // This is a special case and we should probably do some content thinning / targeting
+          fetch(url)
+          .then(res => res.text())
+          .then(html => {
+            const parser = new DOMParser();
+            const htmlDoc = parser.parseFromString(html, "text/html");
+            const note = htmlDoc.querySelector('main.content');
+            if (note !== null) {
+              // This should only happen for chapter cross references
+              // (since there is no id in the URL)
+              // remove the first header
+              if (note.children.length > 0 && note.children[0].tagName === "HEADER") {
+                note.children[0].remove();
+              }
+              const html = processXRef(null, note);
+              instance.setContent(html);
+            } 
+          }).finally(() => {
+            instance.enable();
+            instance.show();
+          });
+        }
+      }, function(instance) {
+      });
+    }
+        let selectedAnnoteEl;
+        const selectorForAnnotation = ( cell, annotation) => {
+          let cellAttr = 'data-code-cell="' + cell + '"';
+          let lineAttr = 'data-code-annotation="' +  annotation + '"';
+          const selector = 'span[' + cellAttr + '][' + lineAttr + ']';
+          return selector;
+        }
+        const selectCodeLines = (annoteEl) => {
+          const doc = window.document;
+          const targetCell = annoteEl.getAttribute("data-target-cell");
+          const targetAnnotation = annoteEl.getAttribute("data-target-annotation");
+          const annoteSpan = window.document.querySelector(selectorForAnnotation(targetCell, targetAnnotation));
+          const lines = annoteSpan.getAttribute("data-code-lines").split(",");
+          const lineIds = lines.map((line) => {
+            return targetCell + "-" + line;
+          })
+          let top = null;
+          let height = null;
+          let parent = null;
+          if (lineIds.length > 0) {
+              //compute the position of the single el (top and bottom and make a div)
+              const el = window.document.getElementById(lineIds[0]);
+              top = el.offsetTop;
+              height = el.offsetHeight;
+              parent = el.parentElement.parentElement;
+            if (lineIds.length > 1) {
+              const lastEl = window.document.getElementById(lineIds[lineIds.length - 1]);
+              const bottom = lastEl.offsetTop + lastEl.offsetHeight;
+              height = bottom - top;
+            }
+            if (top !== null && height !== null && parent !== null) {
+              // cook up a div (if necessary) and position it 
+              let div = window.document.getElementById("code-annotation-line-highlight");
+              if (div === null) {
+                div = window.document.createElement("div");
+                div.setAttribute("id", "code-annotation-line-highlight");
+                div.style.position = 'absolute';
+                parent.appendChild(div);
+              }
+              div.style.top = top - 2 + "px";
+              div.style.height = height + 4 + "px";
+              div.style.left = 0;
+              let gutterDiv = window.document.getElementById("code-annotation-line-highlight-gutter");
+              if (gutterDiv === null) {
+                gutterDiv = window.document.createElement("div");
+                gutterDiv.setAttribute("id", "code-annotation-line-highlight-gutter");
+                gutterDiv.style.position = 'absolute';
+                const codeCell = window.document.getElementById(targetCell);
+                const gutter = codeCell.querySelector('.code-annotation-gutter');
+                gutter.appendChild(gutterDiv);
+              }
+              gutterDiv.style.top = top - 2 + "px";
+              gutterDiv.style.height = height + 4 + "px";
+            }
+            selectedAnnoteEl = annoteEl;
+          }
+        };
+        const unselectCodeLines = () => {
+          const elementsIds = ["code-annotation-line-highlight", "code-annotation-line-highlight-gutter"];
+          elementsIds.forEach((elId) => {
+            const div = window.document.getElementById(elId);
+            if (div) {
+              div.remove();
+            }
+          });
+          selectedAnnoteEl = undefined;
+        };
+          // Handle positioning of the toggle
+      window.addEventListener(
+        "resize",
+        throttle(() => {
+          elRect = undefined;
+          if (selectedAnnoteEl) {
+            selectCodeLines(selectedAnnoteEl);
+          }
+        }, 10)
+      );
+      function throttle(fn, ms) {
+      let throttle = false;
+      let timer;
+        return (...args) => {
+          if(!throttle) { // first call gets through
+              fn.apply(this, args);
+              throttle = true;
+          } else { // all the others get throttled
+              if(timer) clearTimeout(timer); // cancel #2
+              timer = setTimeout(() => {
+                fn.apply(this, args);
+                timer = throttle = false;
+              }, ms);
+          }
+        };
+      }
+        // Attach click handler to the DT
+        const annoteDls = window.document.querySelectorAll('dt[data-target-cell]');
+        for (const annoteDlNode of annoteDls) {
+          annoteDlNode.addEventListener('click', (event) => {
+            const clickedEl = event.target;
+            if (clickedEl !== selectedAnnoteEl) {
+              unselectCodeLines();
+              const activeEl = window.document.querySelector('dt[data-target-cell].code-annotation-active');
+              if (activeEl) {
+                activeEl.classList.remove('code-annotation-active');
+              }
+              selectCodeLines(clickedEl);
+              clickedEl.classList.add('code-annotation-active');
+            } else {
+              // Unselect the line
+              unselectCodeLines();
+              clickedEl.classList.remove('code-annotation-active');
+            }
+          });
+        }
+    const findCites = (el) => {
+      const parentEl = el.parentElement;
+      if (parentEl) {
+        const cites = parentEl.dataset.cites;
+        if (cites) {
+          return {
+            el,
+            cites: cites.split(' ')
+          };
+        } else {
+          return findCites(el.parentElement)
+        }
+      } else {
+        return undefined;
+      }
+    };
+    var bibliorefs = window.document.querySelectorAll('a[role="doc-biblioref"]');
+    for (var i=0; i<bibliorefs.length; i++) {
+      const ref = bibliorefs[i];
+      const citeInfo = findCites(ref);
+      if (citeInfo) {
+        tippyHover(citeInfo.el, function() {
+          var popup = window.document.createElement('div');
+          citeInfo.cites.forEach(function(cite) {
+            var citeDiv = window.document.createElement('div');
+            citeDiv.classList.add('hanging-indent');
+            citeDiv.classList.add('csl-entry');
+            var biblioDiv = window.document.getElementById('ref-' + cite);
+            if (biblioDiv) {
+              citeDiv.innerHTML = biblioDiv.innerHTML;
+            }
+            popup.appendChild(citeDiv);
+          });
+          return popup.innerHTML;
+        });
+      }
+    }
+  });
+  </script>
+<nav class="page-navigation">
+  <div class="nav-page nav-page-previous">
+      <a href="../../entregas/E2_eda_preparacion/trazabilidad.html" class="pagination-link" aria-label="5 · Trazabilidad a E0">
+        <i class="bi bi-arrow-left-short"></i> <span class="nav-page-text">5 · Trazabilidad a E0</span>
+      </a>          
+  </div>
+  <div class="nav-page nav-page-next">
+  </div>
+</nav>
+</div> <!-- /content -->
+<footer class="footer">
+  <div class="nav-footer">
+    <div class="nav-footer-left">
+      &nbsp;
+    </div>   
+    <div class="nav-footer-center">
+<p>Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM</p>
+</div>
+    <div class="nav-footer-right">
+      <ul class="footer-items list-unstyled">
+    <li class="nav-item">
+    <a class="nav-link" href="https://github.com/alangm-98/Proyecto_Mineria_Datos">
+<p>Repositorio</p>
+</a>
+  </li>  
+</ul>
+    </div>
+  </div>
+</footer>
+<script>var lightboxQuarto = GLightbox({"closeEffect":"zoom","descPosition":"bottom","loop":false,"openEffect":"zoom","selector":".lightbox"});
+(function() {
+  let previousOnload = window.onload;
+  window.onload = () => {
+    if (previousOnload) {
+      previousOnload();
+    }
+    lightboxQuarto.on('slide_before_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      const href = trigger.getAttribute('href');
+      if (href !== null) {
+        const imgEl = window.document.querySelector(`a[href="${href}"] img`);
+        if (imgEl !== null) {
+          const srcAttr = imgEl.getAttribute("src");
+          if (srcAttr && srcAttr.startsWith("data:")) {
+            slideConfig.href = srcAttr;
+          }
+        }
+      } 
+    });
+  
+    lightboxQuarto.on('slide_after_load', (data) => {
+      const { slideIndex, slideNode, slideConfig, player, trigger } = data;
+      if (window.Quarto?.typesetMath) {
+        window.Quarto.typesetMath(slideNode);
+      }
+    });
+  
+  };
+  
+})();
+          </script>
+
+
+
+
+<script src="../../site_libs/quarto-html/zenscroll-min.js"></script>
+</body></html>

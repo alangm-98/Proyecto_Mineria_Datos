@@ -70,6 +70,8 @@ website:
             text: "4 · Decisiones sobre los datos"
           - href: entregas/E2_eda_preparacion/trazabilidad.qmd
             text: "5 · Trazabilidad a E0"
+          - href: entregas/E2_eda_preparacion/uso_ia.qmd
+            text: "6 · Uso de herramientas de IA"
 
   page-footer:
     center: "Proyecto Integrador · Almacenes y Minería de Datos · Facultad de Ciencias, UNAM"
