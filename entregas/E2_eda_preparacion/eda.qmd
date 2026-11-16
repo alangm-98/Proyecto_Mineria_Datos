@@ -86,6 +86,8 @@ explica de dónde viene esta diferencia.
 | Percentiles 25 / 75 | 43.32 / 125.00 | 35.04 / 161.00 | 43.97 / 120.00 |
 | Percentiles 90 / 99 | 275.29 / 1,104 | 335.00 / 994 | 267.11 / 1,104 |
 | Mínimo / máximo | 0.25 / 31,937 | 0.29 / 5,191 | 0.25 / 31,937 |
+| Rango (máximo − mínimo) | 31,937 | 5,191 | 31,937 |
+| Varianza | 57,199 | 53,923 | 57,310 |
 | Desviación estándar | 239.16 | 232.21 | 239.40 |
 | Rango intercuartil (IQR) | 81.68 | 125.96 | 76.03 |
 | Desviación absoluta mediana (MAD) | 38.80 | 46.14 | 38.50 |
@@ -239,6 +241,11 @@ decide en la preparación.
 : Diagnóstico de calidad {#tbl-calidad tbl-colwidths="[22,78]"}
 
 ![Faltantes por columna, en total y con identidad](img/eda/f08_faltantes.png){#fig-faltantes}
+
+La @fig-faltantes muestra los dos patrones de la tabla. Arriba, los faltantes forman escalones:
+grupos de columnas vecinas con el mismo porcentaje, sobre todo en los bloques V e id. Abajo, al
+quedarse solo con las transacciones con identidad, varias columnas D, M y las primeras V llegan al
+100 %: esa ausencia depende de si la transacción trae identidad, no del azar.
 
 ## Cruces: producto, periodo e identidad {#cruces}
 

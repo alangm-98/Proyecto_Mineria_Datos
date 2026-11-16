@@ -127,7 +127,9 @@ se aplica a ln(importe), con cuartiles de entrenamiento, y marca 3.5 % de las fi
 ## Duplicados y negativos
 
 **Posibles duplicados.** No hay dos filas con el mismo `TransactionID`. Hay 6 filas idénticas a
-otra salvo el identificador y 904 idénticas salvo el identificador y el tiempo. Se conservan
+otra salvo el identificador y 904 idénticas salvo el identificador y el tiempo. Son más que las
+3 y 479 del [diagnóstico del EDA](eda.qmd#calidad-de-los-datos) porque aquel cuenta solo las copias
+sobrantes y aquí se marcan todas las filas de cada grupo. Se conservan
 porque el grano es la transacción, y un cobro repetido puede ser legítimo o un intento de fraude.
 Quedan marcadas en `posible_duplicado` (6 fraudes entre las 904, 0.66 %).
 
@@ -223,8 +225,8 @@ de entrenamiento.
 
 ![Varianza explicada acumulada del PCA del bloque V](img/prep/f13_pca_varianza.png){#fig-pca}
 
-Hacen falta **53 componentes para el 90 %** de la varianza (31 para el 80 %), y la primera
-explica solo 10.7 %. Tras quitar las redundancias, el bloque tiene muchas dimensiones medianas, no
+La @fig-pca muestra que hacen falta **53 componentes para el 90 %** de la varianza (31 para el
+80 %), y que la primera explica solo 10.7 %. Tras quitar las redundancias, el bloque tiene muchas dimensiones medianas, no
 unas pocas dominantes.
 
 **Decisión: conservar ambas representaciones.** La vista guarda las columnas originales, que son
