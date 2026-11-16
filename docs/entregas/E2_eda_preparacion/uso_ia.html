@@ -509,7 +509,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
   <li><a href="#uso-2" id="toc-uso-2" class="nav-link" data-scroll-target="#uso-2">Uso 2 · Análisis exploratorio</a></li>
   <li><a href="#uso-3" id="toc-uso-3" class="nav-link" data-scroll-target="#uso-3">Uso 3 · Limpieza, reducción y verificación</a></li>
   <li><a href="#uso-4" id="toc-uso-4" class="nav-link" data-scroll-target="#uso-4">Uso 4 · Pipeline, carga del DW y DataMart</a></li>
-  <li><a href="#uso-5" id="toc-uso-5" class="nav-link" data-scroll-target="#uso-5">Uso 5 · Redacción de las páginas y revisión del sitio</a></li>
+  <li><a href="#uso-5" id="toc-uso-5" class="nav-link" data-scroll-target="#uso-5">Uso 5 · Revisión de redacción de las páginas y del sitio</a></li>
   <li><a href="#interpretaciones" id="toc-interpretaciones" class="nav-link" data-scroll-target="#interpretaciones">Interpretaciones propuestas por el modelo y su contraste</a></li>
   <li><a href="#kaggle" id="toc-kaggle" class="nav-link" data-scroll-target="#kaggle">Verificación independiente en Kaggle</a></li>
   <li><a href="#errores" id="toc-errores" class="nav-link" data-scroll-target="#errores">Errores con impacto en las salidas del modelo</a></li>
@@ -560,12 +560,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 </div>
 </div>
 <div class="callout-body-container callout-body">
-<p>El equipo <strong>sí utilizó herramientas de IA</strong> en esta entrega. Un modelo de lenguaje escribió el código del pipeline y del análisis exploratorio, propuso los métodos de preparación y sus alternativas, sugirió interpretaciones de los resultados y propuso redacciones de las páginas. El equipo tomó todas las decisiones, ejecutó todo el código en BigQuery, en sus máquinas y en Kaggle, comprobó las cifras y revisó cada salida antes de publicarla. El modelo no tuvo acceso al proyecto de BigQuery ni a los datos de transacciones.</p>
+<p>El equipo <strong>sí utilizó herramientas de IA</strong> en esta entrega. Un modelo de lenguaje colaboró en la escritura del código del pipeline y del análisis exploratorio, propuso métodos de preparación y sus alternativas y sugirió interpretaciones de los resultados. El equipo tomó todas las decisiones, ejecutó todo el código en BigQuery, en sus máquinas y en Kaggle, comprobó las cifras y revisó cada salida antes de publicarla. El modelo no tuvo acceso al proyecto de BigQuery ni a los datos de transacciones.</p>
 </div>
 </div>
 <section id="resumen-de-usos" class="level2">
 <h2 class="anchored" data-anchor-id="resumen-de-usos">Resumen de usos</h2>
-<p>Esta página registra solo los usos que cambiaron el resultado de la entrega. Las consultas sobre el manejo de las herramientas y las tareas mecánicas no se detallan.</p>
 <table class="caption-top table">
 <colgroup>
 <col style="width: 4%">
@@ -609,25 +608,24 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <tr class="odd">
 <td style="text-align: left;">5</td>
 <td style="text-align: left;">Claude (Anthropic), modelo Opus 5.5</td>
-<td style="text-align: left;">Redacción de las páginas y revisión del sitio</td>
+<td style="text-align: left;">Revisión de la redacción de las páginas y revisión del sitio</td>
 <td style="text-align: left;"><a href="#uso-5">Uso 5</a></td>
 </tr>
 </tbody>
 </table>
-<p>Todos los usos ocurrieron en una sola conversación, del 7 al 15 de noviembre de 2026. No se empleó ninguna otra herramienta de IA. Como en E0 y E1, los prompts se registran como resumen fiel; las instrucciones del equipo que marcaron el trabajo se citan textualmente.</p>
 <hr>
 </section>
 <section id="uso-1" class="level2">
 <h2 class="anchored" data-anchor-id="uso-1">Uso 1 · Plan de la entrega y revisión contra el PDF</h2>
-<p><strong>Tarea.</strong> Leer las indicaciones de E2 junto con lo hecho en E0 y E1, proponer un plan por fases y revisar cada fase contra los requisitos del PDF antes de cerrarla.</p>
-<p><strong>Prompts empleados (resumen fiel).</strong> El equipo entregó al modelo su documento interno de contexto, los PDF de E0 a E2 y el enlace del repositorio. Pidió primero leer y revisar, sin construir nada, y después un plan por fases. En cada fase pidió una propuesta con las decisiones abiertas, sus alternativas y una recomendación, y no avanzó hasta aprobarla.</p>
-<p><strong>Qué se hizo con la salida.</strong> El equipo aprobó el plan y tomó las decisiones de fondo: cargar la fuente A completa en BigQuery, crear un dataset intermedio (<code>lumen_prep</code>) sin tocar staging ni el DW de E1, orquestar archivos SQL desde Python y usar Kaggle solo para verificar. La revisión contra el PDF detectó dos omisiones del propio modelo, que se corrigieron antes de publicar (ver <a href="#errores">errores</a>).</p>
+<p><strong>Tarea.</strong> Leer las indicaciones de E2 junto con lo hecho en E0 y E1, proponer un plan de trabajo y revisar continua contra los requisitos del PDF.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo entregó al modelo su documento interno de contexto, los PDF de E0 a E2 y el enlace del repositorio. Pidió primero leer y revisar, sin construir nada, y después un plan de trabajo. En cada fase pidió una propuesta con las decisiones abiertas, sus alternativas y una recomendación, y no avanzó hasta aprobarla.</p>
+<p><strong>Qué se hizo con la salida.</strong> El equipo aprobó el plan y tomó las decisiones de fondo: cargar la fuente A completa en BigQuery, crear un dataset intermedio (<code>lumen_prep</code>) sin tocar staging ni el DW de E1 y usar Kaggle solo para verificar. La revisión contra el PDF detectó dos omisiones del propio modelo, que se corrigieron antes de publicar (ver <a href="#errores">errores</a>).</p>
 <hr>
 </section>
 <section id="uso-2" class="level2">
 <h2 class="anchored" data-anchor-id="uso-2">Uso 2 · Análisis exploratorio</h2>
-<p><strong>Tarea.</strong> Escribir el módulo de análisis (<code>pipeline/eda/</code>): estadística descriptiva, Gini y curva de Lorenz, entropía, figuras, brecha con México y líneas base del tramo revisado. Proponer interpretaciones de los resultados y opciones para los umbrales de las medidas técnicas y para la partición temporal.</p>
-<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió cubrir las cuatro dimensiones de la descriptiva y las medidas de concentración y heterogeneidad del PDF, con cada figura justificada, y una redacción «concreta y concisa, sin perder detalles cruciales, sin em dashes, aprovechando Quarto». Para los umbrales y la partición pidió alternativas con sus consecuencias, no una sola propuesta.</p>
+<p><strong>Tarea.</strong> Escribir la propuesta de el módulo de análisis (<code>pipeline/eda/</code>): estadística descriptiva, Gini y curva de Lorenz, entropía, figuras, brecha con México y líneas base del tramo revisado. Proponer interpretaciones de los resultados y opciones para los umbrales de las medidas técnicas y para la partición temporal.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió cubrir las cuatro dimensiones de la descriptiva y las medidas de concentración y heterogeneidad del PDF, con cada figura justificada. Para los umbrales y la partición pidió alternativas con sus consecuencias, no una sola propuesta.</p>
 <p><strong>Cómo se verificó.</strong></p>
 <ul>
 <li>El equipo ejecutó todo el análisis en su máquina, contra la tabla analítica completa en BigQuery.</li>
@@ -641,7 +639,7 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="uso-3" class="level2">
 <h2 class="anchored" data-anchor-id="uso-3">Uso 3 · Limpieza, reducción y verificación</h2>
 <p><strong>Tarea.</strong> Proponer el tratamiento de cada problema de calidad, el método de reducción de dimensionalidad y la comprobación de que la preparación no distorsiona el fenómeno; escribir los pasos <code>limpieza</code>, <code>reduccion</code> y <code>antes_despues</code>.</p>
-<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió una propuesta por problema con la técnica, la justificación y el impacto que exige el PDF, y que todo lo que aprende de los datos se ajustara solo con la partición de entrenamiento. Al revisar los primeros archivos pidió que los comentarios del código y la configuración documentaran el código y los datos, no la conversación.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió una propuesta por problema con la técnica, la justificación y el impacto que exige el PDF, y que todo lo que aprende de los datos se ajustara solo con la partición de entrenamiento.</p>
 <p><strong>Cómo se verificó.</strong></p>
 <ul>
 <li>Antes de entregar cada paso, el modelo lo probó con datos sintéticos: la limpieza en DuckDB, con el SQL traducido, y la reducción con 414,542 filas sintéticas, el tamaño real de entrenamiento.</li>
@@ -655,23 +653,22 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 <section id="uso-4" class="level2">
 <h2 class="anchored" data-anchor-id="uso-4">Uso 4 · Pipeline, carga del DW y DataMart</h2>
 <p><strong>Tarea.</strong> Escribir el pipeline completo (ocho pasos, un solo comando), la carga idempotente del esquema estrella de E1 con historia de tipo 2 en <code>dim_dominio_correo</code>, las validaciones de la carga, la ejecución de las vistas del DataMart y el guion de la prueba externa.</p>
-<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió que la carga no modificara nada de E1, que pudiera ejecutarse dos veces con el mismo resultado y que fallara en voz alta ante cualquier inconsistencia. Para la prueba externa pidió un guion que dijera qué registrar sin reemplazar al README.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> El equipo pidió que la carga no modificara nada de E1, que pudiera ejecutarse dos veces con el mismo resultado y que fallara ante cualquier inconsistencia.</p>
 <p><strong>Cómo se verificó.</strong></p>
 <ul>
 <li>El modelo probó la carga dos veces y el DataMart con datos sintéticos en DuckDB.</li>
 <li>La carga trae 35 validaciones; entre ellas, que los conteos por miembro de cada dimensión coincidan con los publicados en E1.</li>
 <li>El equipo corrió el pipeline completo dos veces con resultados idénticos y ejecutó la prueba de historia de tipo 2 con una lista de dominios simulada.</li>
-<li>Una integrante que no escribió el pipeline lo ejecutó desde un clon limpio, en su máquina, solo con el README, y obtuvo las mismas cifras.</li>
-<li>El modelo revisó cada commit sobre un clon limpio del repositorio: archivos, ausencia de datos reales y de credenciales, y que el código fuera idéntico al revisado.</li>
+<li>Un integrante que no escribió el pipeline lo ejecutó desde un clon limpio, en su máquina, solo con el README, y obtuvo las mismas cifras. reales y de credenciales, y que el código fuera idéntico al revisado.</li>
 </ul>
 <p><strong>Qué se hizo con la salida.</strong> La prueba externa encontró dos huecos del README: la versión mínima de <code>uv</code> y un rol de BigQuery que faltaba. El equipo los corrigió en el README y en la configuración del entorno.</p>
 <hr>
 </section>
 <section id="uso-5" class="level2">
-<h2 class="anchored" data-anchor-id="uso-5">Uso 5 · Redacción de las páginas y revisión del sitio</h2>
-<p><strong>Tarea.</strong> Proponer la redacción de las páginas de E2, el README y la portada, y revisar la consistencia del sitio.</p>
-<p><strong>Prompts empleados (resumen fiel).</strong> Para la página de decisiones, el equipo pidió «un formato y presentación que también sea vistoso y bien organizado para el tipo de persona que en teoría se estaría presentando». Al cierre pidió revisar que las cifras coincidieran entre páginas, que no hubiera enlaces rotos ni pendientes resueltos, y homogeneizar el estilo.</p>
-<p><strong>Qué se hizo con la salida.</strong> El equipo revisó cada página en la vista previa antes de publicarla y reescribió por su cuenta la redacción de <code>eda.qmd</code> y <code>decisiones.qmd</code>. En esa reescritura, la página de decisiones se ajustó con la lectura de una persona ajena al equipo. El modelo revisó después esas versiones: señaló una afirmación nueva que ninguna cifra respaldaba y dos justificaciones que el PDF exige y se habían recortado, y el equipo las corrigió. La revisión de consistencia encontró tres diferencias menores entre páginas, que se corrigieron.</p>
+<h2 class="anchored" data-anchor-id="uso-5">Uso 5 · Revisión de redacción de las páginas y del sitio</h2>
+<p><strong>Tarea.</strong> Proponer la redacción de las páginas de E2 o ajustes de las mismas, el README y la portada, y revisar la consistencia del sitio.</p>
+<p><strong>Prompts empleados (resumen fiel).</strong> Para la página de decisiones, el equipo pidió «un formato y presentación bien organizado para el tipo de persona que en teoría se estaría presentando». Al cierre pidió revisar que las cifras coincidieran entre páginas, que no hubiera enlaces rotos ni pendientes resueltos, y homogeneizar el estilo.</p>
+<p><strong>Qué se hizo con la salida.</strong> El equipo revisó cada página en la vista previa antes de publicarla y reescribió por su cuenta la redacción. En esa reescritura, la página de decisiones se ajustó con la lectura de una persona ajena al equipo. El modelo revisó después esas versiones: señaló una afirmación nueva que ninguna cifra respaldaba y dos justificaciones que el PDF exige y se habían recortado, y el equipo las corrigió. La revisión de consistencia encontró tres diferencias menores entre páginas, que se corrigieron.</p>
 <hr>
 </section>
 <section id="interpretaciones" class="level2">
@@ -867,19 +864,9 @@ Figura&nbsp;1: Salida del notebook de verificación en Kaggle
 <td style="text-align: left;">La página dice <code>sbcglobal.net</code> (0.40 %)</td>
 </tr>
 <tr class="even">
-<td style="text-align: left;">Los comentarios del código y la configuración citaban acuerdos de la conversación en lugar de describir el código</td>
-<td style="text-align: left;">El equipo, al revisar los archivos antes del commit</td>
-<td style="text-align: left;">Se reescribieron en todos los archivos, incluidos los ya publicados</td>
-</tr>
-<tr class="odd">
 <td style="text-align: left;">El README del pipeline no incluía el rol BigQuery Read Session User, necesario para leer tablas desde Python</td>
 <td style="text-align: left;">La prueba externa</td>
 <td style="text-align: left;">Se agregó el rol al proyecto y al README</td>
-</tr>
-<tr class="even">
-<td style="text-align: left;">Usó un término técnico («dato enmascarado») en la página dirigida a personas que no trabajan con datos</td>
-<td style="text-align: left;">Una persona ajena al equipo no lo entendió al leer la página</td>
-<td style="text-align: left;">El equipo reescribió esa decisión sin el término</td>
 </tr>
 </tbody>
 </table>
