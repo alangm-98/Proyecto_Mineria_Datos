@@ -186,7 +186,7 @@
     "href": "entregas/E2_eda_preparacion/decisiones.html",
     "title": "4. Decisiones sobre los datos",
     "section": "",
-    "text": "Antes de buscar los patrones de fraude, hay que revisar los datos (qué contienen y qué errores traen) y escoger qué información conservar. Esta página explica esas decisiones. Los detalles técnicos están en las páginas de análisis exploratorio, preparación y pipeline.\nEn resumen: usamos todas las compras, no inventamos datos que faltaban, corregimos solo lo que estaba mal escrito y quitamos la información vacía o repetida. Al final comprobamos que el fraude se ve exactamente igual que antes de preparar los datos.",
+    "text": "Antes de buscar los patrones de fraude, hay que revisar los datos (qué contienen y qué errores traen) y escoger qué información conservar. Esta página explica esas decisiones. Los detalles técnicos están en las páginas de análisis exploratorio, preparación y pipeline.\nEn resumen: no quitamos ninguna compra ni inventamos datos que faltaban. Lo que sí cambiamos fue la información de cada compra: corregimos lo que estaba mal escrito (el correo) y quitamos los datos vacíos o repetidos, de 438 a 271 por compra. Al final comprobamos que el fraude se ve exactamente igual que antes de preparar los datos.",
     "crumbs": [
       "Inicio",
       "E2 · EDA y preparación de los datos",
@@ -222,7 +222,7 @@
     "href": "entregas/E2_eda_preparacion/decisiones.html#riesgos-que-quedan",
     "title": "4. Decisiones sobre los datos",
     "section": "Riesgos que quedan",
-    "text": "Riesgos que quedan\n\n\n\n\n\n\nAdvertenciaEl fraude del conjunto de datos es mucho mayor que el de México\n\n\n\nEn los datos, el 3.5 % de las compras es fraude. En México, los contracargos del comercio electrónico son del orden de 0.4 % (Banco de México, 2026). Por eso los resultados se manejan como proporciones, nunca como pesos.\n\n\n\n\n\n\n\n\nAdvertenciaOrdenar por monto queda lejos de la meta\n\n\n\nRevisar cada día las compras más caras cubriría el 7.6 % del dinero defraudado. Si esa proporción se mantuviera en el caso, serían unos 0.6 de los 8.2 millones mensuales, frente a la meta de 1.6. Es una proyección condicionada a que el fraude del caso se reparta por montos como en los datos; el modelo tendrá que superarla.\n\n\n\n\n\n\n\n\nAdvertenciaLas fechas son un supuesto\n\n\n\nEl conjunto de datos no dice en qué fechas ocurrieron las compras. Supusimos que empiezan el 2 de diciembre de 2017. Afecta solo a comparaciones por fecha de calendario: si más adelante se analizan el día de la semana o los días festivos, un error de un día en el supuesto los desplazaría.",
+    "text": "Riesgos que quedan\nPreparar los datos no resuelve todo. Estos son los puntos que todavía podrían hacer que los resultados no se cumplan igual en la institución, y que el modelo de la siguiente entrega debe tener en cuenta:\n\n\n\n\n\n\nAdvertenciaLos datos tienen mucho más fraude que las compras en México\n\n\n\nEn los datos, el 3.5 % de las compras es fraude. En México, los contracargos del comercio electrónico son del orden de 0.4 % (Banco de México, 2026). Por eso los resultados se manejan como proporciones, nunca como pesos.\n\n\n\n\n\n\n\n\nAdvertenciaRevisar primero las compras más caras no alcanza la meta\n\n\n\nRevisar cada día las compras más caras cubriría el 7.6 % del dinero defraudado. Si esa proporción se mantuviera en el caso, serían unos 0.6 de los 8.2 millones mensuales, frente a la meta de 1.6. Es una proyección condicionada a que el fraude del caso se reparta por montos como en los datos; el modelo tendrá que superarla.\n\n\n\n\n\n\n\n\nAdvertenciaNo sabemos las fechas reales de las compras\n\n\n\nEl conjunto de datos no dice en qué fechas ocurrieron las compras. Supusimos que empiezan el 2 de diciembre de 2017. Afecta solo a comparaciones por fecha de calendario: si más adelante se analizan el día de la semana o los días festivos, un error de un día en el supuesto los desplazaría.",
     "crumbs": [
       "Inicio",
       "E2 · EDA y preparación de los datos",
@@ -235,6 +235,18 @@
     "title": "4. Decisiones sobre los datos",
     "section": "Glosario",
     "text": "Glosario\n\nAlmacén de datos\n\nBase de datos organizada para responder preguntas de negocio de forma rápida y consistente.\n\nComponente principal\n\nUn resumen que combina varios datos parecidos en uno solo, conservando la mayor parte de su información.\n\nCorrelación\n\nQué tanto se mueven juntos dos datos. Si dos datos están casi perfectamente correlacionados, uno repite al otro.\n\nDato faltante e imputación\n\nUn dato faltante es un hueco en el registro. Imputar es rellenarlo con un valor estimado.\n\nEntrenamiento y evaluación\n\nEl modelo aprende con los primeros datos, y con los posteriores se mide qué tan bien funciona.\n\nMuestreo\n\nUsar solo una parte de los datos, en lugar del conjunto completo.\n\nValor atípico\n\nUn valor muy alejado de los demás, como una compra mucho más cara que las típicas.\n\nVariable o dato por compra\n\nCada característica registrada de una compra: monto, producto, tipo de tarjeta, hora, etc.",
+    "crumbs": [
+      "Inicio",
+      "E2 · EDA y preparación de los datos",
+      "4 · Decisiones sobre los datos"
+    ]
+  },
+  {
+    "objectID": "entregas/E2_eda_preparacion/decisiones.html#prueba-de-lectura",
+    "href": "entregas/E2_eda_preparacion/decisiones.html#prueba-de-lectura",
+    "title": "4. Decisiones sobre los datos",
+    "section": "Prueba de lectura",
+    "text": "Prueba de lectura\n\n\n\n\n\n\nUn familiar de un integrante del equipo, sin formación en datos, leyó esta página el 8 de noviembre de 2026 sin explicación previa y respondió tres preguntas: qué se hizo con los datos, por qué no se borraron ni se rellenaron, y qué riesgo queda. Entendió que no se eliminaron compras ni se rellenaron datos para no falsear la información, pero no distinguió que sí se quitaron datos repetidos y se corrigió el correo, ni identificó los riesgos pendientes. Por su lectura se aclararon el resumen inicial y la presentación de los riesgos.",
     "crumbs": [
       "Inicio",
       "E2 · EDA y preparación de los datos",

@@ -40,9 +40,10 @@ traen) y escoger qué información conservar. Esta página explica esas decision
 :::
 :::
 
-**En resumen:** usamos todas las compras, no inventamos datos que faltaban,
-corregimos solo lo que estaba mal escrito y quitamos la información vacía o repetida. Al final
-comprobamos que el fraude se ve exactamente igual que antes de preparar los datos.
+**En resumen:** no quitamos ninguna compra ni inventamos datos que faltaban. Lo que sí cambiamos
+fue la información de cada compra: corregimos lo que estaba mal escrito (el correo) y quitamos
+los datos vacíos o repetidos, de 438 a 271 por compra. Al final comprobamos que el fraude se ve
+exactamente igual que antes de preparar los datos.
 
 ## Las siete decisiones
 
@@ -171,18 +172,22 @@ cargados en el almacén diseñado en la entrega anterior.
 
 ## Riesgos que quedan
 
-::: {.callout-warning appearance="simple" title="El fraude del conjunto de datos es mucho mayor que el de México"}
+Preparar los datos no resuelve todo. Estos son los puntos que todavía podrían hacer que los
+resultados no se cumplan igual en la institución, y que el modelo de la siguiente entrega debe
+tener en cuenta:
+
+::: {.callout-warning appearance="simple" title="Los datos tienen mucho más fraude que las compras en México"}
 En los datos, el 3.5 % de las compras es fraude. En México, los contracargos del comercio
 electrónico son del orden de 0.4 % (Banco de México, 2026). Por eso los resultados se manejan como proporciones, nunca como pesos.
 :::
 
-::: {.callout-warning appearance="simple" title="Ordenar por monto queda lejos de la meta"}
+::: {.callout-warning appearance="simple" title="Revisar primero las compras más caras no alcanza la meta"}
 Revisar cada día las compras más caras cubriría el 7.6 % del dinero defraudado. Si esa proporción se mantuviera en el caso, serían unos 0.6 de los 8.2 millones mensuales, frente a la meta de 1.6.
 Es una **proyección condicionada** a que el fraude del caso se reparta por montos como en los
 datos; el modelo tendrá que superarla.
 :::
 
-::: {.callout-warning appearance="simple" title="Las fechas son un supuesto"}
+::: {.callout-warning appearance="simple" title="No sabemos las fechas reales de las compras"}
 El conjunto de datos no dice en qué fechas ocurrieron las compras. Supusimos que empiezan el 2 de
 diciembre de 2017. Afecta solo a comparaciones por fecha de calendario: si más adelante se
 analizan el día de la semana o los días festivos, un error de un día en el supuesto los
@@ -215,3 +220,14 @@ Valor atípico
 
 Variable o dato por compra
 :   Cada característica registrada de una compra: monto, producto, tipo de tarjeta, hora, etc.
+
+## Prueba de lectura
+
+::: {.callout-note appearance="minimal"}
+Un familiar de un integrante del equipo, sin formación en datos, leyó esta página el 8 de noviembre
+de 2026 sin explicación previa y respondió tres preguntas: qué se hizo con los datos, por qué no se
+borraron ni se rellenaron, y qué riesgo queda. Entendió que no se eliminaron compras ni se
+rellenaron datos para no falsear la información, pero no distinguió que sí se quitaron datos
+repetidos y se corrigió el correo, ni identificó los riesgos pendientes. Por su lectura se
+aclararon el resumen inicial y la presentación de los riesgos.
+:::
